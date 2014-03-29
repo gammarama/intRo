@@ -29,7 +29,13 @@ shinyUI(fluidPage(
         ),
         
         column(6,
-               tableOutput("data")
+               dataTableOutput("data")
+        )
+    ),
+    
+    fluidRow(
+        column(12,
+            aceEditor("myEditor", "Initial text for editor here", mode="r", theme="ambiance")
         )
     )
 ))

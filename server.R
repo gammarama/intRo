@@ -28,7 +28,7 @@ shinyServer(function(input, output) {
         intro.data
     })
     
-    output$data <- renderTable({
+    output$data <- renderDataTable({
         return(intro.data())
-    })
+    }, options = list(iDisplayLength = 10))
 })
