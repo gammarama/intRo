@@ -5,10 +5,9 @@ shinyUI(fluidPage(
     fluidRow(
         
         column(2,
-               wellPanel(
-                   sliderInput("obs", "Number of observations:",  
-                               min = 1, max = 1000, value = 500)
-               )       
+            includeHTML(""),
+            includeCSS("css/default_style.css"),
+            includeScript("scripts/sidebar.js")
         ),            
         
         column(4,
