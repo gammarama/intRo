@@ -6,29 +6,59 @@
 #
 
 library(shiny)
+library(ggplot2)
 
-shinyServer(function(input, output) {
+textStorage <- ""
+
+numericNames <- function(data) {
+    str <- unlist(lapply(data, class))
+    str <- str[str != "ordered"]
     
-    intro.data <-reactive({
-        # input$data_own will be NULL initially. After the user selects
-        # and uploads a file, it will be a data frame with 'name',
-        # 'size', 'type', and 'datapath' columns. The 'datapath'
-        # column will contain the local filenames where the data can
-        # be found.
-        
-        inFile <- input$data_own
-        
-        intro.data <- NULL
-        if (is.null(inFile) | input$own == FALSE) {
-            intro.data <- eval(parse(text = input$data))
-        } else {
-            intro.data <- read.csv(inFile$datapath)
-        }
-        
-        intro.data
+    names(data[, which(str %in% c("numeric", "integer"))])
+}
+
+shinyServer(function(input, output, session) {
+    
+    source("modules/data.R")
+    source("modules/plot.R")
+    
+    observe({
+        if (input$vars == "onevar") updateSelectInput(session, "plottype", choices = c("Histogram" = "histogram", "Boxplot" = "boxplot1"), selected = "histogram")
     })
     
+    observe({
+        if (input$vars == "onevar") {
+            updateSelectInput(session, "x", choices = numericNames(intro.data()), selected = numericNames(intro.data())[1])
+            updateSelectInput(session, "y", choices = numericNames(intro.data()), selected = numericNames(intro.data())[2])
+        }
+    })
+    
+    observe({
+        if (input$vars == "twovar") updateSelectInput(session, "plottype", choices = c("Scatterplot" = "scatterplot", "Boxplot" = "boxplot2", "Bar Chart" = "barchart", "Pareto Chart" = "paretochart", "Line Chart" = "linechart"), selected = "scatterplot")
+    })
+    
+    observe({
+        if (input$vars == "twovar" & input$plottype %in% c("scatterplot")) {
+            updateSelectInput(session, "x", choices = numericNames(intro.data()), selected = numericNames(intro.data())[1])
+            updateSelectInput(session, "y", choices = numericNames(intro.data()), selected = numericNames(intro.data())[2])
+        }
+    })
+    
+    
+    intro.data <-reactive({
+        data.initial <- data.module(input$data_own, input$data, input$own)
+        textStorage <<- paste(textStorage, paste(c(readLines("modules/data.R")), collapse = "\n"), "\n")
+        updateAceEditor(session, "myEditor", value=textStorage)
+        
+        return(data.initial)
+    })
+
     output$data <- renderDataTable({
         return(intro.data())
     }, options = list(iDisplayLength = 10))
+    
+    output$plot <- renderPlot({
+        str.eval <- paste(input$plottype, "(intro.data(), input$x, input$y)", sep = "")
+        print(eval(parse(text = str.eval)))
+    })
 })
