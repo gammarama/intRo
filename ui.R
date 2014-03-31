@@ -3,7 +3,9 @@ library(shinyAce)
 
 shinyUI(navbarPage("intRo",
    
-    tabPanel("Welcome"),
+    tabPanel(title="", icon=icon("home")),
+    tabPanel(title="", icon=icon("question-circle")),
+    tabPanel(title="", icon=icon("github")),
 
     fluidRow(
 
