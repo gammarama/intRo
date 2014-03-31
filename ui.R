@@ -1,3 +1,6 @@
+library(shiny)
+library(shinyAce)
+
 shinyUI(navbarPage("intRo",
    
     tabPanel("Welcome"),
@@ -62,8 +65,8 @@ shinyUI(navbarPage("intRo",
     fluidRow(
         column(12,
            # conditionalPanel(condition = "input.own == false",
-                aceEditor("myEditor", "Initial text for editor here", mode="r", readOnly=TRUE, theme="github")
+                aceEditor("myEditor", "Initial text for editor here", mode="r", readOnly=TRUE, theme="cloud")
            # )
         )
-    )
+    ), theme="bootstrap.min.css"
 ))
