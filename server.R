@@ -8,14 +8,12 @@
 library(shiny)
 library(ggplot2)
 library(shinyAce)
+library(YaleToolkit)
 
 textStorage <- ""
 
 numericNames <- function(data) {
-    str <- unlist(lapply(data, class))
-    str <- str[str != "ordered"]
-    
-    names(data[, which(str %in% c("numeric", "integer"))])
+    return(subset(whatis(data), type == "numeric")$variable.name)
 }
 
 shinyServer(function(input, output, session) {
@@ -45,6 +43,10 @@ shinyServer(function(input, output, session) {
         }
     })
     
+    observe({
+        updateCheckboxGroupInput(session, "tblvars", choices=names(intro.data()))
+    })
+    
     
     intro.data <-reactive({
         data.initial <- data.module(input$data_own, input$data, input$own)
@@ -62,4 +64,20 @@ shinyServer(function(input, output, session) {
         str.eval <- paste(input$plottype, "(intro.data(), input$x, input$y)", sep = "")
         print(eval(parse(text = str.eval)))
     })
+    
+    output$summary <- renderTable({
+        if (is.null(input$tblvars)){
+            return(NULL)    
+        }
+        else if (length(input$tblvars) == 1) {
+            val <- summary(intro.data()[,input$tblvars])
+            df <- data.frame(paste(names(val), " : ", as.numeric(val)))
+            colnames(df) <- input$tblvars
+            
+            return(df)
+        } else {
+            val <- summary(intro.data()[,input$tblvars])
+            return(val)
+        }
+    }, include.rownames = FALSE)
 })

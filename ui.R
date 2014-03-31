@@ -56,7 +56,17 @@ shinyUI(navbarPage("intRo",
                              plotOutput("plot")
                       )
              ),
-             tabPanel("Numeric")
+             tabPanel("Numeric",
+                      column(4,
+                             wellPanel(
+                                 checkboxGroupInput("tblvars", "Select Variables", choices = list("hi"))
+                             )
+                      ),
+                      
+                      column(8,
+                             tableOutput("summary")
+                      )
+             )
         )
     ),
     
@@ -68,5 +78,5 @@ shinyUI(navbarPage("intRo",
                 aceEditor("myEditor", "Initial text for editor here", mode="r", readOnly=TRUE, theme="cloud")
            # )
         )
-    ), theme="bootstrap.min.css"
+    ), theme = "bootstrap.min.css"
 ))

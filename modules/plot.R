@@ -1,5 +1,9 @@
 require(ggplot2)
 
+scatterplot <- function(data, x, y)  {
+    ggplot() + geom_point(aes_string(x = x, y = y), data = data)
+}
+
 histogram <- function(data, x, y) {        
     ggplot() + geom_histogram(aes_string(x = x), data = data)
 }
