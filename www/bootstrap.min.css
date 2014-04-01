@@ -12,3 +12,11 @@
  .navbar-inner a {
 	font-size: 1.5em;
  }
+ 
+ .navbar-inner .dropdown-menu li a {
+   font-size: 1em;
+ }
+ 
+ .print-button {
+   float: right;
+ }
