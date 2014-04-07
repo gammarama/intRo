@@ -13,7 +13,7 @@ library(YaleToolkit)
 textStorage <- ""
 
 numericNames <- function(data) {
-    return(subset(whatis(data), type == "numeric")$variable.name)
+    return(subset(whatis(data), type == "numeric" & !(variable.name %in% c("year", "month", "day")))$variable.name)
 }
 
 shinyServer(function(input, output, session) {
@@ -34,13 +34,22 @@ shinyServer(function(input, output, session) {
     })
     
     observe({
-        if (input$vars == "twovar") updateSelectInput(session, "plottype", choices = c("Scatterplot" = "scatterplot", "Boxplot" = "boxplot2", "Bar Chart" = "barchart", "Pareto Chart" = "paretochart", "Line Chart" = "linechart"), selected = "scatterplot")
+        if (input$vars == "twovar") updateSelectInput(session, "plottype", choices = c("Scatterplot" = "scatterplot", "Line Chart" = "linechart", "Boxplot" = "boxplot2", "Bar Chart" = "barchart", "Pareto Chart" = "paretochart"), selected = "scatterplot")
     })
     
     observe({
-        if (input$vars == "twovar" & input$plottype %in% c("scatterplot")) {
-            updateSelectInput(session, "x", choices = numericNames(intro.data()), selected = numericNames(intro.data())[1])
-            updateSelectInput(session, "y", choices = numericNames(intro.data()), selected = numericNames(intro.data())[2])
+        nms <- numericNames(intro.data())
+        all.nms <- names(intro.data())
+        new.x <- if (input$x %in% nms) input$x else nms[1]
+        new.y <- if (input$y %in% nms) input$y else nms[2]
+        
+        if (input$vars == "twovar") {
+            updateSelectInput(session, "y", choices = nms, selected = new.y)
+            if (input$plottype %in% c("scatterplot", "linechart")) {
+                updateSelectInput(session, "x", choices = nms, selected = new.x)
+            } else if (input$plottype %in% c("boxplot2", "barchart", "paretochart")) {
+                updateSelectInput(session, "x", choices = all.nms, selected = input$x)
+            }
         }
     })
     

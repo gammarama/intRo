@@ -12,7 +12,7 @@ shinyUI(navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                       wellPanel(
                                         conditionalPanel(
                                           condition = "input.own == false",
-                                          selectInput("data", "Choose Dataset", c("Air Quality" = "airquality", "MPG" = "mpg", "Iris" = "iris", "Diamonds" = "diamonds"), selected = NULL)
+                                          selectInput("data", "Choose Dataset", c("MPG" = "mpg", "Air Quality" = "airquality", "Iris" = "iris", "Diamonds" = "diamonds"), selected = "MPG")
                                         ),
                                         conditionalPanel(
                                           condition = "input.own == true",
