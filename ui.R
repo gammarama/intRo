@@ -76,7 +76,10 @@ shinyUI(navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                ),
                                
                                column(8,
+                                      tags$b("Parameter Estimates"),
                                       tableOutput("regtable"),
+                                      hr(),
+                                      tags$b("Plot of Fit"),
                                       plotOutput("regplot")
                                )
                       )
