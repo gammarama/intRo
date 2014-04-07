@@ -1,7 +1,13 @@
 scatterplotreg <- function(data, x, y)  {
+    lm.fit <- lm(data[,y] ~ data[,x])
+    
+    coord <- c(min(data[,x]) + 1, max(data[,y]))
+    if (coef(lm.fit)[2] < 0) coord <- c(min(data[,x]) + 1, min(data[,y]))
+    
     ggplot() + geom_point(aes_string(x = x, y = y), data = data) +
         ggtitle(paste("Regression of", y, "on", x)) +
-        geom_smooth(aes_string(x = x, y = y), data = data, method = "lm")
+        geom_smooth(aes_string(x = x, y = y), data = data, method = "lm") +
+        annotate("text", label = paste("R^2 =", round(summary(lm.fit)$r.squared, digits = 4)), x = coord[1], y = coord[2], size = 6)
 }
 
 tablereg <- function(data, x, y) {
