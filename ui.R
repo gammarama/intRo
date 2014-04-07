@@ -64,6 +64,21 @@ shinyUI(navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                column(8,
                                       tableOutput("summary")
                                )
+                      ),
+                      "-----",
+                      "Statistics",
+                      tabPanel("Regression",
+                               column(4,
+                                      wellPanel(
+                                          selectInput("xreg", "Independent Variable (x)", choices = NULL),
+                                          selectInput("yreg", "Dependent Variable (y)", choices = NULL)
+                                      )
+                               ),
+                               
+                               column(8,
+                                      tableOutput("regtable"),
+                                      plotOutput("regplot")
+                               )
                       )
          )
        ),

@@ -20,6 +20,7 @@ shinyServer(function(input, output, session) {
     
     source("modules/data.R")
     source("modules/plot.R")
+    source("modules/regression.R")
     
     observe({
         if (input$vars == "onevar") updateSelectInput(session, "plottype", choices = c("Histogram" = "histogram", "Boxplot" = "boxplot1"), selected = "histogram")
@@ -47,6 +48,10 @@ shinyServer(function(input, output, session) {
         updateCheckboxGroupInput(session, "tblvars", choices=names(intro.data()))
     })
     
+    observe({
+        updateSelectInput(session, "xreg", choices = numericNames(intro.data()), selected = numericNames(intro.data())[1])
+        updateSelectInput(session, "yreg", choices = numericNames(intro.data()), selected = numericNames(intro.data())[2])
+    })
     
     intro.data <-reactive({
         data.initial <- data.module(input$data_own, input$data, input$own)
@@ -80,4 +85,12 @@ shinyServer(function(input, output, session) {
             return(val)
         }
     }, include.rownames = FALSE)
+    
+    output$regplot <- renderPlot({
+        return(print(scatterplotreg(intro.data(), input$xreg, input$yreg)))
+    })
+    
+    output$regtable <- renderTable({
+        return(tablereg(intro.data(), input$xreg, input$yreg))
+    })
 })
