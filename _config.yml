@@ -1,0 +1,27 @@
+name: intRo
+pygments: true
+markdown: rdiscount
+baseurl: /intRo
+permalink: :categories/:title
+rdiscount extensions: [smart]
+
+links:
+- name: intRo
+  href: '#'
+  class: fa-home
+  target: _self
+- name: help
+  href: '#'
+  class: fa-question-circle
+  target: _self
+- name: github
+  href: http://github.com/harekaplan/intRo
+  class: fa-github
+  target: _blank
+- name: contact
+  href: '#'
+  class: fa-envelope
+  target: _self
+
+
+

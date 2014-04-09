@@ -1,0 +1,14 @@
+---
+layout: layout
+title: gravicom
+---
+{% for nav in site.data.nav.structure %}
+	{% for sub in nav.subsection %}
+	<article id={{ sub }} class="panel">
+		{% capture foo %}{{ sub }}.html{% endcapture %}
+		{% include {{foo}} %}
+	</article>
+	{% endfor %}
+{% endfor %}
+
+

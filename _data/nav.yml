@@ -1,0 +1,6 @@
+structure:
+- section: Welcome
+  subsection: [background]
+- section: Modules
+  subsection: [data, graphical-summaries, numeric-summaries, simple-linear-regression]
+
