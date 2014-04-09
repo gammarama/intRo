@@ -1,8 +1,8 @@
 scatterplotreg <- function(data, x, y)  {
     lm.fit <- lm(data[,y] ~ data[,x])
     
-    coord <- c(min(data[,x]) + 1, max(data[,y]))
-    if (coef(lm.fit)[2] < 0) coord <- c(min(data[,x]) + 1, min(data[,y]))
+    coord <- c(min(data[,x], na.rm = TRUE) + 1, max(data[,y], na.rm = TRUE))
+    if (coef(lm.fit)[2] < 0) coord <- c(min(data[,x], na.rm = TRUE) + 1, min(data[,y], na.rm = TRUE))
     
     ggplot() + geom_point(aes_string(x = x, y = y), data = data) +
         ggtitle(paste("Regression of", y, "on", x)) +
