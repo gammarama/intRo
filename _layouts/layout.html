@@ -42,8 +42,8 @@
 		<!-- Begin Body -->
 		<div class="container">
 			<div class="row">
-				<div class="col-md-3" id="leftCol">              	
-					<div class="well"> 
+				<!--<div class="col-md-3" id="leftCol">              	-->
+					<div class="span2 well"> 
 					<ul class="nav nav-list" id="sidebar">
 						{% for nav in site.data.nav.structure %}
 							{% assign first = forloop.first %}
@@ -55,8 +55,9 @@
 						{% endfor %}
 					</ul>
 					</div>
-				</div>  
-				<div class="col-md-9" id="main">
+				<!--</div>  -->
+				<!--<div class="col-md-9" id="main">-->
+				<div class="span10" id="main">
 				
 					{{ content }}
 					
