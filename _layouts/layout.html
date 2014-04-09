@@ -41,6 +41,7 @@
 		
 		<!-- Begin Body -->
 			<div class="row-fluid">
+				<div class="row-fluid">
 					<div class="span2 well"> 
 					<ul class="nav nav-list" id="sidebar">
 						{% for nav in site.data.nav.structure %}
@@ -53,11 +54,12 @@
 						{% endfor %}
 					</ul>
 					</div>
-				<div class="span10" id="main">
-				
-					{{ content }}
+					<div class="span10" id="main">
 					
-				</div> 
+						{{ content }}
+						
+					</div>
+				</div>
 			</div>
         <script type='text/javascript' src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script type='text/javascript' src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
