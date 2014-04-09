@@ -1,6 +1,8 @@
 structure:
 - section: Welcome
-  subsection: [background]
+  subsection: [motivation]
 - section: Modules
   subsection: [data, graphical-summaries, numeric-summaries, simple-linear-regression]
+- section: Utilities
+  subsection: [printing, code]
 
