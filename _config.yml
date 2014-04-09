@@ -11,7 +11,7 @@ links:
   class: fa-home
   target: _self
 - name: help
-  href: '#'
+  href: ''
   class: fa-question-circle
   target: _self
 - name: github

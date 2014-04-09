@@ -34,7 +34,7 @@
 			</div>
 			<nav class="collapse navbar-collapse" id="nav" role="navigation">
 					{% for item in site.links %}
-						<a href="{{ item.href }}" class="fa {{ item.class }} {% if forloop.first %}active{% endif %} " target="{{ item.target }}"><span>{{ item.name | capitalize }}</span></a>
+						<a href="{{ item.href }}" class="fa {{ item.class }} {% if forloop.index == 2 %}active{% endif %} " target="{{ item.target }}"><span>{{ item.name | capitalize }}</span></a>
 					{% endfor %}
 			</nav>
 		  </div>
