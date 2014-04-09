@@ -12,7 +12,7 @@
         <![endif]-->
 
         <!-- Custom CSS -->
-        <link rel="stylesheet" type="text/css" href="assets/stylesheets/style.css">
+        <!--<link rel="stylesheet" type="text/css" href="assets/stylesheets/style.css">-->
         <link rel="stylesheet" type="text/css" href="assets/stylesheets/bootstrap.min.css">
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">        
 		<script src="assets/javascripts/active_toggle.js"></script>
@@ -22,24 +22,20 @@
     <!-- HTML code from Bootply.com editor -->
     
     <body>
-		<header class="navbar navbar-default navbar-static-top" role="banner">
-		  <div class="container">
-			<div class="navbar-header">
-			  <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			  </button>
-			  <a href="/" class="navbar-brand">{{ site.name }}</a>
-			</div>
-			<nav class="collapse navbar-collapse" id="nav" role="navigation">
-					{% for item in site.links %}
-						<a href="{{ item.href }}" class="fa {{ item.class }} {% if forloop.index == 2 %}active{% endif %} " target="{{ item.target }}"><span>{{ item.name | capitalize }}</span></a>
-					{% endfor %}
-			</nav>
+		<div class="navbar navbar-default navbar-static-top">
+		  <div class="navbar-inner">
+			  <div class="container">
+				<span class="brand pull-left">{{ site.name }}</span>
+				<ul class="nav">
+						{% for item in site.links %}
+							<li>
+								<a href="{{ item.href }}" class="fa {{ item.class }} {% if forloop.index == 2 %}active{% endif %} " target="{{ item.target }}"></a>
+							</li>
+						{% endfor %}
+				<ul>
+			  </div>
 		  </div>
-		</header>
+		</div>
 		
 
 		
@@ -48,13 +44,14 @@
 			<div class="row">
 				<div class="col-md-3" id="leftCol">              	
 					<div class="well"> 
-					<ul class="nav nav-stacked" id="sidebar">
+					<ul class="nav nav-list" id="sidebar">
 						{% for nav in site.data.nav.structure %}
 							{% assign first = forloop.first %}
-							<h5>{{ nav.section }}</h5>
+							<li class='nav-header'>{{ nav.section }}</li>
 							{% for sub in nav.subsection %}
 								<li class='{% if forloop.first and first %}active{% endif %}'><a class='{% if forloop.first and first %}active{% endif %}' href='#{{ sub }}'>{{ sub | replace: '-', ' ' | capitalize }}</a></li>
 							{% endfor %}
+							<li class='divider'></li>
 						{% endfor %}
 					</ul>
 					</div>
