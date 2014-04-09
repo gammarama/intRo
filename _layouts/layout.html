@@ -40,24 +40,26 @@
 
 		
 		<!-- Begin Body -->
-			<div class="row-fluid">
+			<div class="container-fluid">
 				<div class="row-fluid">
-					<div class="span2 well"> 
-					<ul class="nav nav-list" id="sidebar">
-						{% for nav in site.data.nav.structure %}
-							{% assign first = forloop.first %}
-							<li class='nav-header'>{{ nav.section }}</li>
-							{% for sub in nav.subsection %}
-								<li class='{% if forloop.first and first %}active{% endif %}'><a class='{% if forloop.first and first %}active{% endif %}' href='#{{ sub }}'>{{ sub | replace: '-', ' ' | capitalize }}</a></li>
+					<div class="row-fluid">
+						<div class="span2 well"> 
+						<ul class="nav nav-list" id="sidebar">
+							{% for nav in site.data.nav.structure %}
+								{% assign first = forloop.first %}
+								<li class='nav-header'>{{ nav.section }}</li>
+								{% for sub in nav.subsection %}
+									<li class='{% if forloop.first and first %}active{% endif %}'><a class='{% if forloop.first and first %}active{% endif %}' href='#{{ sub }}'>{{ sub | replace: '-', ' ' | capitalize }}</a></li>
+								{% endfor %}
+								<li class='divider'></li>
 							{% endfor %}
-							<li class='divider'></li>
-						{% endfor %}
-					</ul>
-					</div>
-					<div class="span10" id="main">
-					
-						{{ content }}
+						</ul>
+						</div>
+						<div class="span10" id="main">
 						
+							{{ content }}
+							
+						</div>
 					</div>
 				</div>
 			</div>
