@@ -46,6 +46,11 @@ shinyUI(navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                         conditionalPanel(
                                           condition = "input.vars == 'twovar'",
                                           selectInput("y", "Dependent Variable (y)", choices = NULL)
+                                        ),
+                                        
+                                        conditionalPanel(
+                                            condition = "input.plottype == 'barchart' || input.plottype == 'paretochart'",
+                                            radioButtons("bartype", "Y Variable Type", choices = c("Count" = "length", "Mean" = "mean", "Median" = "median"))
                                         )
                                       )
                                ),

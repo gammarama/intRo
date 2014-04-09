@@ -75,7 +75,7 @@ shinyServer(function(input, output, session) {
     }, options = list(iDisplayLength = 10))
     
     output$plot <- renderPlot({
-        str.eval <- paste(input$plottype, "(intro.data(), input$x, input$y)", sep = "")
+        str.eval <- paste(input$plottype, "(intro.data(), input$x, input$y, input$bartype)", sep = "")
         print(eval(parse(text = str.eval)))
     })
     
