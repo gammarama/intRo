@@ -50,7 +50,7 @@ shinyUI(navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                         
                                         conditionalPanel(
                                             condition = "input.plottype == 'barchart' || input.plottype == 'paretochart'",
-                                            radioButtons("bartype", "Y Variable Type", choices = c("Count" = "length", "Identity" = "identity", "Mean" = "mean", "Median" = "median"))
+                                            radioButtons("bartype", "Y Variable Type", choices = c("Count" = "length", "Sum" = "sum", "Mean" = "mean", "Median" = "median"))
                                         )
                                       )
                                ),
