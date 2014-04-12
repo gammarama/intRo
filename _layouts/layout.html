@@ -6,7 +6,7 @@
         <meta name="generator" content="Bootply" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-		<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-responsive.min.css" rel="stylesheet">
+		<!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-responsive.min.css" rel="stylesheet">-->
         
         <!--[if lt IE 9]>
           <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -14,6 +14,7 @@
 
         <!-- Custom CSS -->
         <!--<link rel="stylesheet" type="text/css" href="assets/stylesheets/style.css">-->
+        <link rel="stylesheet" type="text/css" href="assets/stylesheets/bootstrap-responsive.min.css">
         <link rel="stylesheet" type="text/css" href="assets/stylesheets/bootstrap.min.css">
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">        
 		<script src="assets/javascripts/active_toggle.js"></script>
@@ -23,15 +24,29 @@
     <!-- HTML code from Bootply.com editor -->
     
     <body>
-		<div class="navbar navbar-default navbar-static-top">
+		<div class="navbar navbar-static-top">
 		  <div class="navbar-inner">
 			  <div class="container">
 				<span class="brand pull-left">{{ site.name }}</span>
-				<ul class="nav">
+				<ul class="nav" id="top-nav">
 						{% for item in site.links %}
-							<li>
-								<a href="{{ item.href }}" class="fa {{ item.class }} {% if forloop.index == 2 %}active{% endif %} " target="{{ item.target }}"></a>
+						{% if item.level == 1 %}
+							<li class="{% if forloop.index == 2 %}active{% endif %} {% if item.type == 'dropdown' %}dropdown{% endif %} ">
+								<a href="{{ item.href }}" class="{% if item.type == 'dropdown' %}dropdown-toggle{% endif %}" data-toggle="{% if item.type == 'dropdown' %}dropdown{% endif %}"target="{{ item.target }}">
+									<i class="fa {{ item.class }} fa-fw"></i>
+									{% if item.type == 'dropdown' %}<b class="caret"></b>{% endif%}
+								</a>
+								{% if item.type == 'dropdown' %}<ul class="dropdown-menu">
+									{% for dd in site.links %}
+									{% if dd.level == 2 && dd.parent == item.name%}
+									<li><a href="{{ dd.href }}" target="{{ dd.target }}">
+									{{ dd.name }}
+									</a></li>
+									{% endif %}
+									{% endfor %}
+								</ul>{% endif%}
 							</li>
+						{% endif %}
 						{% endfor %}
 				<ul>
 			  </div>
@@ -44,7 +59,7 @@
 			<div class="container-fluid">
 				<div class="row-fluid">
 					<div class="row-fluid">
-						<div class="span2 well"> 
+						<div class="span3 well"> 
 						<ul class="nav nav-list" id="sidebar">
 							{% for nav in site.data.nav.structure %}
 								{% assign first = forloop.first %}
@@ -56,7 +71,7 @@
 							{% endfor %}
 						</ul>
 						</div>
-						<div class="span10" id="main">
+						<div class="span9" id="main">
 						
 							{{ content }}
 							

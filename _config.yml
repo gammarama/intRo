@@ -10,18 +10,35 @@ links:
   href: '#'
   class: fa-home
   target: _self
+  level: 1
 - name: help
   href: ''
   class: fa-question-circle
   target: _self
+  level: 1
 - name: github
   href: http://github.com/harekaplan/intRo
   class: fa-github
   target: _blank
+  level: 1
 - name: contact
   href: '#'
   class: fa-envelope
   target: _self
+  level: 1
+  type: dropdown
+- name: Eric Hare
+  href: http://erichare.net
+  class: ''
+  target: _blank
+  level: 2
+  parent: contact
+- name: Andee Kaplan
+  href: http://andeekaplan.com
+  class: ''
+  target: _blank
+  level: 2
+  parent: contact
 
 
 
