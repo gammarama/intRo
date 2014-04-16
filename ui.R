@@ -1,7 +1,8 @@
 library(shiny)
 library(shinyAce)
 
-shinyUI(navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
+shinyUI(
+navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
     tabPanel(title="", icon=icon("home"),
        fluidRow(
          
@@ -115,9 +116,7 @@ shinyUI(navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
        
        fluidRow(
          column(12,
-                # conditionalPanel(condition = "input.own == false",
                 aceEditor("myEditor", "Initial text for editor here", mode="r", readOnly=TRUE, theme="chrome")
-                # )
          )
        )       
              
@@ -128,6 +127,7 @@ shinyUI(navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
     navbarMenu("", icon=icon("envelope"),
                tabPanel("Eric Hare"),
                tabPanel("Andee Kaplan")),
+	tabPanel(title="", icon=icon('code'), value = "javascript:$('#myEditor').slideToggle(); $('.fa-code').parent().parent().toggleClass('active');"),
     tabPanel(title="", icon=icon("print"), value = "javascript:window.print()"),
-    includeScript("scripts/top-nav-links.js")
+    footer=includeScript("scripts/top-nav-links.js")
 ))

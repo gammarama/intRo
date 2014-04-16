@@ -17,3 +17,5 @@ var andee_dd = $('.dropdown-menu a:contains("Andee Kaplan")');
 andee_dd.attr("href", "http://andeekaplan.com");
 andee_dd.attr("data-toggle", null);
 andee_dd.attr("target", "_blank");
+
+$('#myEditor').css("display", "none");
