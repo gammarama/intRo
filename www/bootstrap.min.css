@@ -20,3 +20,20 @@
  .print-button {
    float: right;
  }
+ 
+ @media print {
+  body * {
+    visibility: hidden;
+  }
+  .span8 * {
+    visibility: visible;
+  }
+  .span8 {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  #myEditor * {
+    visibility: visible;
+  }
+}

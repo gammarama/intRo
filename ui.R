@@ -110,7 +110,7 @@ shinyUI(navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                       )
          )
        ),
-       
+              
        hr(),
        
        fluidRow(
@@ -128,6 +128,6 @@ shinyUI(navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
     navbarMenu("", icon=icon("envelope"),
                tabPanel("Eric Hare"),
                tabPanel("Andee Kaplan")),
-    tabPanel(title="", icon=icon("print")),
+    tabPanel(title="", icon=icon("print"), value = "javascript:window.print()"),
     includeScript("scripts/top-nav-links.js")
 ))
