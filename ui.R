@@ -5,7 +5,7 @@ shinyUI(navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
     tabPanel(title="", icon=icon("home"),
        fluidRow(
          
-         navlistPanel(widths = c(2, 10),
+         navlistPanel(id = "side-nav", widths = c(2, 10),
                       "Data",
                       tabPanel("Sources",
                                column(4,
