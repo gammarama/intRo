@@ -34,6 +34,11 @@ shinyServer(function(input, output, session) {
             updateSelectInput(session, "x", choices = numericNames(intro.data()), selected = numericNames(intro.data())[1])
             updateSelectInput(session, "y", choices = numericNames(intro.data()), selected = numericNames(intro.data())[2])
         }
+        updateSelectInput(session, "group1", choices = numericNames(intro.data()), selected = numericNames(intro.data())[1])
+        
+        if (input$varts == "twovart") {
+            updateSelectInput(session, "group2", choices = numericNames(intro.data()), selected = numericNames(intro.data())[2])
+        }
     })
     
     observe({
@@ -115,5 +120,9 @@ shinyServer(function(input, output, session) {
     
     output$regtable <- renderTable({
         return(tablereg(intro.data(), input$xreg, input$yreg))
+    })
+    
+    output$ttesttable <- renderText({
+        return(ttesttable(intro.data(), input$group1, input$group2, input$varts == "twovart"))
     })
 })

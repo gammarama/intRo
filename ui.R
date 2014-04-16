@@ -87,6 +87,26 @@ shinyUI(navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                       tags$b("Plot of Fit"),
                                       plotOutput("regplot")
                                )
+                      ),
+                      tabPanel("t-Test",
+                               column(4,
+                                      wellPanel(
+                                          radioButtons("varts", "Type", choices=c("One Variable" = "onevart", "Two Variables" = "twovart")),
+
+                                          hr(),
+                                          
+                                          selectInput("group1", "Group 1 (x)", choices = NULL),
+                                          conditionalPanel(
+                                              condition = "input.varts == 'twovart'",
+                                              selectInput("group2", "Group 2 (y)", choices = NULL)
+                                          )
+                                      )
+                               ),
+                               
+                               column(8,
+                                      tags$b("t-Test Results"),
+                                      verbatimTextOutput("ttesttable")
+                               )
                       )
          )
        ),
