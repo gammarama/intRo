@@ -5,7 +5,7 @@ shinyUI(
 navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
     tabPanel(title="", icon=icon("home"),
        fluidRow(
-         
+         div(class='intRoPrint', h3('Results from intRo session:')),
          navlistPanel(id = "side-nav", widths = c(2, 10),
                       "Data",
                       tabPanel("Sources",
@@ -116,18 +116,18 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
        
        fluidRow(
          column(12,
-                aceEditor("myEditor", "Initial text for editor here", mode="r", readOnly=TRUE, theme="chrome")
+                aceEditor("myEditor", "Initial text for editor here", mode="r", readOnly=TRUE, theme="chrome"),
+                div(class='codePrint',div(id='codePrint'))
          )
-       )       
-             
-             
+       )     
              ),
     tabPanel(title="", value="http://harekaplan.github.io/intRo", icon=icon('question-circle')),
     tabPanel(title="", value="http://github.com/harekaplan/intRo", icon=icon("github")),
     navbarMenu("", icon=icon("envelope"),
                tabPanel("Eric Hare"),
                tabPanel("Andee Kaplan")),
-	tabPanel(title="", icon=icon('code'), value = "javascript:$('#myEditor').slideToggle(); $('.fa-code').parent().parent().toggleClass('active');"),
-    tabPanel(title="", icon=icon("print"), value = "javascript:window.print()"),
-    footer=includeScript("scripts/top-nav-links.js")
+	tabPanel(title="", icon=icon('code'), value = "javascript:$('#myEditor').slideToggle(); $('.fa-code').parent().parent().toggleClass('active'); $('div.codePrint').toggle()"),
+    tabPanel(title="", icon=icon("print"), value = "javascript:print_intRo();"),
+    footer=tagList(includeScript("scripts/top-nav-links.js"),
+                   includeScript("scripts/print.js"))
 ))

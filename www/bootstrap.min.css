@@ -21,19 +21,38 @@
    float: right;
  }
  
+ #codePrint {
+   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+   font-size: 12px;
+ }
+ 
+ div.codePrint, div.intRoPrint {
+   height: 0px;
+   overflow: hidden;
+ }
+ 
  @media print {
   body * {
-    visibility: hidden;
+   visibility: hidden;
   }
+  
+  .navbar, .well *, #myEditor {
+    display: none;
+  }
+  
   .span8 * {
     visibility: visible;
   }
-  .span8 {
-    position: absolute;
-    left: 0;
-    top: 0;
+  
+  .intRoPrint * {
+    visibility: visible;
   }
-  #myEditor * {
+  
+  div.codePrint, div.intRoPrint {
+    height: auto;  
+  }
+  
+  #codePrint {
     visibility: visible;
   }
 }
