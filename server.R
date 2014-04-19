@@ -105,13 +105,21 @@ shinyServer(function(input, output, session) {
             updateAceEditor(session, "myEditor", value=textStorage)
         }
     })
+    
+    observe({
+        ## Binwidth
+        if (!is.null(input$x) & input$x != "") {
+            rng <- range(intro.data()[,input$x])
+            updateNumericInput(session, "binwidth", value=round((rng[2] - rng[1])/30, digits = 2))
+        }
+    })
 
     output$data <- renderDataTable({
         return(intro.data())
     }, options = list(iDisplayLength = 10))
     
     output$plot <- renderPlot({
-        str.eval <- paste(input$plottype, "(intro.data(), input$x, input$y, input$bartype)", sep = "")
+        str.eval <- paste(input$plottype, "(intro.data(), input$x, input$y, input$bartype, input$binwidth)", sep = "")
         print(eval(parse(text = str.eval)))
     })
     

@@ -10,7 +10,7 @@ linechart <- function (data, x, y, ...)  {
 }
 
 histogram <- function (data, x, y, ...) {        
-    ggplot() + geom_histogram(aes_string(x = x), data = data)
+    ggplot() + geom_histogram(aes_string(x = x), data = data, binwidth = list(...)[[2]])
 }
 
 boxplot1 <- function (data, x, y, ...) {        
@@ -22,16 +22,16 @@ boxplot2 <- function (data, x, y, ...) {
     ggplot() + geom_boxplot(aes_string(x = x, y = y), data = data)
 }
 
-barchart <- function (data, x, y, type = "identity", ...) {  
+barchart <- function (data, x, y, ...) {  
     data[,x] <- factor(data[,x])
-    data <- eval(parse(text = paste("summarise(group_by(data, ", x, "), ", y, " = ", type, "(", y, "))", sep = "")))
+    data <- eval(parse(text = paste("summarise(group_by(data, ", x, "), ", y, " = ", list(...)[[1]], "(", y, "))", sep = "")))
             
     ggplot() + geom_bar(aes_string(x = x, y = y), stat = "identity", data = data)
 }
 
-paretochart <- function (data, x, y, type = "identity", ...) {
+paretochart <- function (data, x, y, ...) {
     data[,x] <- factor(data[,x])
-    data <- eval(parse(text = paste("summarise(group_by(data, ", x, "), ", y, " = ", type, "(", y, "))", sep = "")))
+    data <- eval(parse(text = paste("summarise(group_by(data, ", x, "), ", y, " = ", list(...)[[1]], "(", y, "))", sep = "")))
     
     data[,x] <- eval(parse(text = paste("with(data, reorder(", x, ", ", y, "))", sep = "")))
     data[,x] <- factor(data[,x], levels = rev(levels(data[,x])))
