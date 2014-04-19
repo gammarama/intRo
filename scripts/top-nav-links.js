@@ -24,3 +24,15 @@ andee_dd.attr("data-toggle", null);
 andee_dd.attr("target", "_blank");
 
 $('.fa-code').parent().parent().toggleClass('active');
+
+var space_width = (
+$('.container').innerWidth() - 
+$('.brand').outerWidth() -
+eval($('.navbar a').map(function(){
+    return $(this).parent().width();
+}).get().join("+")) + 
+$('a:contains("hide_me")').parent().width() - 20);
+
+//spacing of navbar
+$('a:contains("hide_me")').css("visibility", "hidden");
+$('a:contains("hide_me")').css("width", space_width);

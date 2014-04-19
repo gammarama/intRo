@@ -60,7 +60,6 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                      plotOutput("plot"),
                                      fluidRow(
                                          column(8,
-                                            h4("Plot Options"),
                                             conditionalPanel(
                                                 condition = "input.plottype == 'histogram'",
                                                 numericInput("binwidth", "Bin Width", value = 1, step=0.01)
@@ -135,7 +134,8 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
     navbarMenu("", icon=icon("envelope"),
                tabPanel("Eric Hare"),
                tabPanel("Andee Kaplan")),
-	tabPanel(title="", icon=icon('code'), value = "javascript:$('#myEditor').slideToggle(); $('.fa-code').parent().parent().toggleClass('active'); $('div.codePrint').toggle()"),
+    tabPanel(title="hide_me"),
+	  tabPanel(title="", icon=icon('code'), value = "javascript:$('#myEditor').slideToggle(); $('.fa-code').parent().parent().toggleClass('active'); $('div.codePrint').toggle()"),
     tabPanel(title="", icon=icon("print"), value = "javascript:print_intRo();"),
     footer=tagList(includeScript("scripts/top-nav-links.js"),
                    includeScript("scripts/print.js"))
