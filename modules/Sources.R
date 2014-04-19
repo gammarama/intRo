@@ -1,4 +1,4 @@
-data.module <- function(inFile, dataset, own) {        
+data.module <- function (inFile, dataset, own) {        
     intro.data <- NULL
     if (is.null(inFile) | !own) {
         intro.data <- eval(parse(text = dataset))

@@ -1,4 +1,4 @@
-scatterplotreg <- function(data, x, y)  {
+scatterplotreg <- function (data, x, y)  {
     lm.fit <- lm(data[,y] ~ data[,x])
     
     my.range <- range(data[,x], na.rm = TRUE)
@@ -14,7 +14,7 @@ scatterplotreg <- function(data, x, y)  {
         annotate("text", label = paste("R^2 =", round(summary(lm.fit)$r.squared, digits = 4)), x = coord[1], y = coord[2], size = 6)
 }
 
-tablereg <- function(data, x, y) {
+tablereg <- function (data, x, y) {
     lm.fit <- lm(data[,y] ~ data[,x])
     
     tbl.fit <- coef(summary(lm.fit))

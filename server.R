@@ -88,6 +88,11 @@ shinyServer(function(input, output, session) {
         if (!values$firstrun) {
             new.str <-  paste("### ", paste(input$`side-nav`, "\n", paste(readLines(paste("modules/", input$`side-nav`, ".R", sep = "")), collapse = "\n"), sep = ""), "\n\n", sep = "")
             
+            ### Special case for plots
+            if (input$`side-nav` == "Graphical") {
+                new.str <- paste("### ", paste(input$`side-nav`, "\n", input$plottype, " <- ", paste(deparse(get(input$plottype)), collapse = "\n"), sep = ""), "\n\n", sep = "")
+            }
+            
             text.split <- strsplit(textStorage, "### ")[[1]]
             text.split <- text.split[-(text.split == "")]
             text.ind <- grep(input$`side-nav`, text.split)

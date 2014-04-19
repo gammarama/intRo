@@ -1,4 +1,4 @@
-ttesttable <- function(data, x, y = NULL, twovar = FALSE) {
+ttesttable <- function (data, x, y = NULL, twovar = FALSE) {
     if (is.null(y) | y == "" | !twovar) {
         ttest <- t.test(data[,x])
     } else {

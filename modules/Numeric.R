@@ -1,4 +1,4 @@
-summarytable <- function(data, tblvars) {
+summarytable <- function (data, tblvars) {
     if (is.null(tblvars)){
         return(NULL)    
     }
