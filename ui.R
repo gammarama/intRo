@@ -13,7 +13,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                       wellPanel(
                                         conditionalPanel(
                                           condition = "input.own == false",
-                                          selectInput("data", "Choose Dataset", c("MPG" = "mpg", "Air Quality" = "airquality", "Iris" = "iris", "Diamonds" = "diamonds"), selected = "MPG")
+                                          selectInput("data", "Choose Dataset", c("MPG" = "mpg", "Air Quality" = "airquality", "Diamonds" = "diamonds"), selected = "MPG")
                                         ),
                                         conditionalPanel(
                                           condition = "input.own == true",
@@ -57,7 +57,16 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                ),
                                
                                column(8,
-                                      plotOutput("plot")
+                                     plotOutput("plot"),
+                                     fluidRow(
+                                         column(8,
+                                            h4("Plot Options"),
+                                            conditionalPanel(
+                                                condition = "input.plottype == 'histogram'",
+                                                numericInput("binwidth", "Bin Width", value = 1, step=0.01)
+                                            )
+                                         )
+                                     )
                                )
                       ),
                       tabPanel("Numeric",
