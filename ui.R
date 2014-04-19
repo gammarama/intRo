@@ -60,7 +60,6 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                      plotOutput("plot"),
                                      fluidRow(
                                          column(8,
-                                            h4("Plot Options"),
                                             conditionalPanel(
                                                 condition = "input.plottype == 'histogram'",
                                                 numericInput("binwidth", "Bin Width", value = 1, step=0.01)

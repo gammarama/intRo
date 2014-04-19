@@ -62,6 +62,16 @@ shinyServer(function(input, output, session) {
     })
     
     observe({
+        ## Binwidth
+        curdata <- intro.data()
+        curx <- input$x
+        if (!is.null(curx) & curx %in% names(curdata)) {
+            rng <- range(curdata[,input$x], na.rm = TRUE)
+            updateNumericInput(session, "binwidth", value=round((rng[2] - rng[1])/30, digits = 2))
+        }
+    })
+    
+    observe({
         updateCheckboxGroupInput(session, "tblvars", choices=names(intro.data()))
     })
     
@@ -103,14 +113,6 @@ shinyServer(function(input, output, session) {
             textStorage <<- paste(text.split, collapse = "")
             
             updateAceEditor(session, "myEditor", value=textStorage)
-        }
-    })
-    
-    observe({
-        ## Binwidth
-        if (!is.null(input$x) & input$x != "") {
-            rng <- range(intro.data()[,input$x])
-            updateNumericInput(session, "binwidth", value=round((rng[2] - rng[1])/30, digits = 2))
         }
     })
 
