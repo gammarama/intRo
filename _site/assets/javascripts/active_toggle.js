@@ -6,5 +6,5 @@ function set_visible() {
 
 	//set only active to visible
 	$('#main article').css("display", "none");
-	$('#main article[id="'+act+'"]').toggle(400);
+	$('#main article[id="'+act+'"]').toggle("fast");
 }

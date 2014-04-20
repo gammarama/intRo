@@ -7,6 +7,10 @@ title: intRo
 	<article id={{ sub }} class="panel">
 		{% capture foo %}{{ sub }}.html{% endcapture %}
 		{% include {{foo}} %}
+		<ul class="pager">
+			<li><a id="previous" href="#">← Previous</a></li>
+			<li><a id="next" href="#">Next →</a></li>
+		</ul>
 	</article>
 	{% endfor %}
 {% endfor %}
