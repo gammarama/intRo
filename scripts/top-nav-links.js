@@ -33,6 +33,9 @@ eval($('.navbar a').map(function(){
 }).get().join("+")) + 
 $('a:contains("hide_me")').parent().width() - 20);
 
+var test = $('a:contains("hide_me")').parent().parent().parent().parent().width() - 87 - 59 - 59 - 59 - 73 - 59 - 59 - 25;
+
 //spacing of navbar
 $('a:contains("hide_me")').css("visibility", "hidden");
-$('a:contains("hide_me")').css("width", space_width);
+$('a:contains("hide_me")').parent().parent().parent().css("width", "100%");
+$('a:contains("hide_me")').parent().css("width", test);
