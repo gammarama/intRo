@@ -4,5 +4,5 @@ structure:
 - section: Modules
   subsection: [data, graphical-summaries, numeric-summaries, regression, t-test]
 - section: Utilities
-  subsection: [printing, code]
+  subsection: [code, printing]
 
