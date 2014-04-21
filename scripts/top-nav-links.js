@@ -25,6 +25,8 @@ andee_dd.attr("target", "_blank");
 
 $('.fa-code').parent().parent().toggleClass('active');
 
+$('a:contains("hide_me")').parent().parent().parent().css("width", "100%");
+
 var space_width = (
 $('.container').innerWidth() - 
 $('.brand').outerWidth() -
