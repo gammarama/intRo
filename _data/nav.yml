@@ -1,6 +1,6 @@
 structure:
 - section: Welcome
-  subsection: [motivation]
+  subsection: [motivation, interface]
 - section: Modules
   subsection: [data, graphical-summaries, numeric-summaries, regression]
 - section: Utilities
