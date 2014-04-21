@@ -7,8 +7,8 @@ function manageNextPrev() {
 	act = act.substring(1, act.length);
 
 	//set only active to visible
-	$('#main article').css("display", "none");
-	$('#main article[id="'+act+'"]').toggle("fast");
+	/*$('#main article').css("display", "none");
+	$('#main article[id="'+act+'"]').toggle("fast");*/
 }
 
 $('a#next').click(function(e) {
