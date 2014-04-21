@@ -2,7 +2,7 @@ structure:
 - section: Welcome
   subsection: [motivation, interface]
 - section: Modules
-  subsection: [data, graphical-summaries, numeric-summaries, regression]
+  subsection: [data, graphical-summaries, numeric-summaries, regression, t-test]
 - section: Utilities
   subsection: [printing, code]
 
