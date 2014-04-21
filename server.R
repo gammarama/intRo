@@ -70,7 +70,9 @@ shinyServer(function(input, output, session) {
     })
     
     observe({
-        updateCheckboxGroupInput(session, "tblvars", choices=names(intro.data()))
+        nms <- names(intro.data())
+        varrange <- 1:min(4, length(nms))
+        updateCheckboxGroupInput(session, "tblvars", choices=nms, selected=c(nms[varrange]))
     })
     
     observe({
