@@ -1,6 +1,8 @@
 function manageNextPrev() {
    $('a#next').parent().toggleClass('disabled', $('.nav-list li.active').nextAll('li:not(.nav-header, .divider)').size() == 0);
+   $('a#next').toggleClass('disabled', $('.nav-list li.active').nextAll('li:not(.nav-header, .divider)').size() == 0);
    $('a#previous').parent().toggleClass('disabled', $('.nav-list li.active').prevAll('li:not(.nav-header, .divider)').size() == 0);   
+   $('a#previous').toggleClass('disabled', $('.nav-list li.active').prevAll('li:not(.nav-header, .divider)').size() == 0);  
 
 	//get active link
 	var act = $('#sidebar .active a').attr("href");
