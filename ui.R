@@ -1,3 +1,5 @@
+addResourcePath(prefix="images", directoryPath="images/")
+
 library(shiny)
 library(shinyAce)
 
@@ -143,5 +145,6 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
 	  tabPanel(title="", icon=icon('code'), value = "javascript:$('#myEditor').slideToggle(); $('.fa-code').parent().parent().toggleClass('active'); $('div.codePrint').toggle()"),
     tabPanel(title="", icon=icon("print"), value = "javascript:print_intRo();"),
     footer=tagList(includeScript("scripts/top-nav-links.js"),
-                   includeScript("scripts/print.js"))
+                   includeScript("scripts/print.js")),
+    tags$head(tags$link(rel="shortcut icon", href="images/icon.png"))
 ))
