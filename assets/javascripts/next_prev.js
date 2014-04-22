@@ -11,28 +11,34 @@ function manageNextPrev() {
 	$('#main article[id="'+act+'"]').css("display", "block");
 }
 
-$('a#next').click(function(e) {
+$('li:not(.disabled) a#next').click(function(e) {
    e.preventDefault();
    var active_nav = $('.nav-list li.active');
-   location.href = active_nav.nextAll('li:not(.nav-header, .divider)').first().find('a').attr('href');
+   if(active_nav.nextAll('li:not(.nav-header, .divider)').first().find('a').attr('href')) { 	location.href = active_nav.nextAll('li:not(.nav-header, .divider)').first().find('a').attr('href');
    
    //set nav active
    active_nav.toggleClass("active");
    active_nav.nextAll('li:not(.nav-header, .divider)').first().toggleClass("active");
    
    manageNextPrev();
+   } else {
+		return;
+   }
 });
 
-$('a#previous').click(function(e) {
+$('li:not(.disabled) a#previous').click(function(e) {
    e.preventDefault();
    var active_nav = $('.nav-list li.active');
-   location.href = active_nav.prevAll('li:not(.nav-header, .divider)').first().find('a').attr('href');
+   if(active_nav.prevAll('li:not(.nav-header, .divider)').first().find('a').attr('href')) { location.href = active_nav.prevAll('li:not(.nav-header, .divider)').first().find('a').attr('href');
    
    //set nav active
    active_nav.toggleClass("active");
    active_nav.prevAll('li:not(.nav-header, .divider)').first().toggleClass("active");
    
    manageNextPrev();
+   } else {
+	   return;
+   }
 });
 
 manageNextPrev() 
