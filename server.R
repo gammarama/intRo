@@ -85,15 +85,14 @@ shinyServer(function(input, output, session) {
         
         if (values$firstrun) textStorage <<- paste(textStorage, "### ", input$`side-nav`,"\n", paste(c(readLines(paste("modules/", input$`side-nav`, ".R", sep = ""))), collapse = "\n"), "\n\n", sep = "")
         
-        if (values$firstrun) updateAceEditor(session, "myEditor", value=textStorage)
+        if (values$firstrun) {
+            updateAceEditor(session, "myEditor", value=textStorage)
+            values$firstrun <- FALSE
+        }
                 
         return(data.initial)
     })
-    
-    observe({
-        if (input$`side-nav` != "Sources") values$firstrun <- FALSE
-    })
-    
+
     observe({
         if (!values$firstrun) {
             new.tab <- input$`side-nav`
