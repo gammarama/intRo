@@ -96,7 +96,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                       plotOutput("regplot")
                                )
                       ),
-                      tabPanel("T-test",
+                      tabPanel("T test",
                                column(4,
                                       wellPanel(
                                           radioButtons("varts", "Type", choices=c("One Variable" = "onevart", "Two Variables" = "twovart")),
@@ -118,7 +118,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                ),
                                
                                column(8,
-                                      tags$b("T-test Results"),
+                                      tags$b("T test Results"),
                                       verbatimTextOutput("ttesttable")
                                )
                       )
@@ -129,7 +129,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
        
        fluidRow(
          column(12,
-                aceEditor("myEditor", "Initial text for editor here", mode="r", readOnly=TRUE, theme="chrome"),
+                aceEditor("myEditor", "", mode="r", readOnly=TRUE, theme="chrome"),
                 div(class='codePrint',div(id='codePrint'))
          )
        )     
