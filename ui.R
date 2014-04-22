@@ -47,11 +47,6 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                         conditionalPanel(
                                           condition = "input.vars == 'twovar'",
                                           selectInput("y", "Dependent Variable (y)", choices = NULL)
-                                        ),
-                                        
-                                        conditionalPanel(
-                                            condition = "input.plottype == 'barchart' || input.plottype == 'paretochart'",
-                                            radioButtons("bartype", "Y Variable Type", choices = c("Count" = "length", "Sum" = "sum", "Mean" = "mean", "Median" = "median"))
                                         )
                                       )
                                ),
@@ -63,6 +58,10 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                             conditionalPanel(
                                                 condition = "input.plottype == 'histogram'",
                                                 numericInput("binwidth", "Bin Width", value = 1, step=0.01)
+                                            ),
+                                            conditionalPanel(
+                                                condition = "input.plottype == 'barchart' || input.plottype == 'paretochart'",
+                                                radioButtons("bartype", "Y Variable Type", choices = c("Count" = "length", "Sum" = "sum", "Mean" = "mean", "Median" = "median"))
                                             )
                                          )
                                      )
@@ -97,7 +96,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                       plotOutput("regplot")
                                )
                       ),
-                      tabPanel("t-Test",
+                      tabPanel("T-test",
                                column(4,
                                       wellPanel(
                                           radioButtons("varts", "Type", choices=c("One Variable" = "onevart", "Two Variables" = "twovart")),
@@ -108,12 +107,18 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                           conditionalPanel(
                                               condition = "input.varts == 'twovart'",
                                               selectInput("group2", "Group 2 (y)", choices = NULL)
-                                          )
+                                          ),
+                                          
+                                          hr(),
+                                          
+                                          selectInput("althyp", "Alternative Hypothesis", c("Two-Sided" = "two.sided", "Greater" = "greater", "Less" = "less")),
+                                          numericInput("hypval", "Hypothesized Value", value = 0),
+                                          sliderInput("conflevel", "Confidence Level", min=0.01, max=0.99, step=0.01, value=0.95)
                                       )
                                ),
                                
                                column(8,
-                                      tags$b("t-Test Results"),
+                                      tags$b("T-test Results"),
                                       verbatimTextOutput("ttesttable")
                                )
                       )

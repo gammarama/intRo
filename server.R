@@ -138,6 +138,6 @@ shinyServer(function(input, output, session) {
     })
     
     output$ttesttable <- renderText({
-        return(ttesttable(intro.data(), input$group1, input$group2, input$varts == "twovart"))
+        return(ttesttable(intro.data(), input$group1, input$group2, input$varts == "twovart", input$conflevel, input$althyp, input$hypval))
     })
 })
