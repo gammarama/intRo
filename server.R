@@ -12,7 +12,7 @@ library(YaleToolkit)
 library(lubridate)
 
 numericNames <- function(data) {
-    return(subset(whatis(data), type == "numeric" & !(variable.name %in% c("year", "month", "day")))$variable.name)
+    return(subset(whatis(data), type == "numeric" & !(variable.name %in% c("year", "month", "day", "Year", "Month", "Day")))$variable.name)
 }
 
 shinyServer(function(input, output, session) {
@@ -64,8 +64,10 @@ shinyServer(function(input, output, session) {
         curdata <- intro.data()
         curx <- input$x
         if (!is.null(curx) & curx %in% names(curdata)) {
-            rng <- range(curdata[,input$x], na.rm = TRUE)
-            updateNumericInput(session, "binwidth", value=round((rng[2] - rng[1])/30, digits = 2))
+            if (is.numeric(curdata[,curx])) {
+                rng <- range(curdata[,curx], na.rm = TRUE)
+                updateNumericInput(session, "binwidth", value=round((rng[2] - rng[1])/30, digits = 2))
+            }
         }
     })
     
