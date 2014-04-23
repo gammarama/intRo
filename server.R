@@ -10,6 +10,7 @@ library(ggplot2)
 library(shinyAce)
 library(YaleToolkit)
 library(lubridate)
+library(gridExtra)
 
 numericNames <- function(data) {
     return(subset(whatis(data), type == "numeric" & !(variable.name %in% c("year", "month", "day", "Year", "Month", "Day")))$variable.name)
@@ -135,9 +136,13 @@ shinyServer(function(input, output, session) {
         return(print(scatterplotreg(intro.data(), input$xreg, input$yreg)))
     })
     
+    output$resplots <- renderPlot({
+        return(print(residualreg(intro.data(), input$xreg, input$yreg)))
+    })
+    
     output$regtable <- renderTable({
         return(tablereg(intro.data(), input$xreg, input$yreg))
-    })
+    }, digits = 4)
     
     output$ttesttable <- renderText({
         return(ttesttable(intro.data(), input$group1, input$group2, input$varts == "twovart", input$conflevel, input$althyp, input$hypval))
