@@ -1,6 +1,7 @@
 .Rproj.user
 .Rhistory
 .RData
-
+images/Thumbs.db
 _site
+shinyapps
 *.Rproj
