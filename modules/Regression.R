@@ -33,8 +33,8 @@ residualreg <- function (data, x, y) {
     int <- yy[1] - slope * xx[1]
     
     p1 <- ggplot() + geom_point(data = data, aes_string(x = x, y = "residuals")) +
-                     geom_hline(yintercept = 0, linetype = 2) + theme(aspect.ratio = 1)
-    p2 <- qplot(sample = data$residuals, stat = "qq") + geom_abline(slope = slope, intercept = int, linetype = 2) + theme(aspect.ratio = 1)
+                     geom_hline(yintercept = 0, linetype = 2) + theme(aspect.ratio = 1) + ggtitle(paste("Residuals vs", x))
+    p2 <- qplot(sample = data$residuals, stat = "qq") + geom_abline(slope = slope, intercept = int, linetype = 2) + theme(aspect.ratio = 1) + ggtitle("Normal Quantile Plot")
     
     grid.arrange(p1, p2, ncol = 2)
 }
