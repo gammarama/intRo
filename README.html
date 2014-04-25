@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>intRo</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+
+
+
+
+</head>
+
+<body>
+<h1>intRo</h1>
+
+<p>Shiny-based statistics learning application available at <a href="http://erichare.shinyapps.io/intRo">http://erichare.shinyapps.io/intRo</a> . </p>
+
+<p>Detailed documentation and tutorial for use available at <a href="http://harekaplan.github.io/intRo">http://harekaplan.github.io/intRo</a> .</p>
+
+<h2>Motivation</h2>
+
+<p>The goal of intRo is to foster a student interest in coding while learning basic statistics, or at a minimum, help students to learn a bit more about working with data. This project serves as a prototype of this application, with functionality that exhibits the basic user experience.</p>
+
+<p>As a web-based application, this tool is immediately more familiar to students than a desktop application. The need for dealing with software licenses, installation configuration, and supported platforms has been eliminated. This allows students to spend more time working with the data and learning statistics than having to struggle to get the software running.</p>
+
+<h2>Running Locally</h2>
+
+<p>To run the application locally, clone the repository and checkout branch <code>master</code>. Navigate to the directory and execute the following in <code>R</code>:</p>
+
+<pre><code>library(shiny)
+runApp()
+</code></pre>
+
+<p>To run the documentation locally on a machine with Jekyll installed and configured for GitHub Pages, checkout the <code>gh-pages</code> branch and execute the following command in the terminal: </p>
+
+<pre><code>bundle exec jekyll serve --baseurl &#39;&#39;
+</code></pre>
+
+<p>For more information on installing Jekyll and configuring for GitHub Pages, please see <a href="https://help.github.com/articles/using-jekyll-with-pages">https://help.github.com/articles/using-jekyll-with-pages</a> .</p>
+
+</body>
+
+</html>
+
