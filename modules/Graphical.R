@@ -27,7 +27,9 @@ barchart <- function (data, x, y, ...) {
     data$x <- data[,x]
     data$y <- data[,y]
     
-    data <- data %.% group_by(x) %.% summarise(y = list(...)[[1]](y))
+    my.func <- list(...)[[1]]
+    
+    data <- data %.% group_by(x) %.% summarise(y = my.func(y))
     
     data$x <- factor(data$x, levels = rev(levels(data$x)))
     
@@ -40,7 +42,9 @@ paretochart <- function (data, x, y, ...) {
     data$x <- data[,x]
     data$y <- data[,y]
     
-    data <- data %.% group_by(x) %.% summarise(y = list(...)[[1]](y))
+    my.func <- list(...)[[1]]
+    
+    data <- data %.% group_by(x) %.% summarise(y = my.func(y))
     
     data$x <- reorder(data$x, data$y)
     data$x <- factor(data$x, levels = rev(levels(data$x)))
