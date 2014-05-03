@@ -23,6 +23,12 @@ shinyServer(function(input, output, session) {
     
     sourceDir <- function(path, ...) { for (nm in list.files(path, pattern = "\\.[Rr]$")) { source(file.path(path, nm), ...) } }
     sourceDir("modules")
+    valid.datasets <- list(mpg = mpg, airquality = airquality, diamonds = diamonds)
+    valid.plottypes <- list(scatterplot = scatterplot, linechart = linechart,
+                            histogram = histogram, boxplot1 = boxplot1,
+                            boxplot2 = boxplot2, barchart = barchart,
+                            paretochart = paretochart)
+    valid.bartypes <- list(length = length, sum = sum, mean = mean, median = median)
     
     observe({
         if (input$vars == "onevar") updateSelectInput(session, "plottype", choices = c("Histogram" = "histogram", "Boxplot" = "boxplot1"), selected = "histogram")
@@ -84,7 +90,7 @@ shinyServer(function(input, output, session) {
     })
     
     intro.data <-reactive({
-        data.initial <- data.module(input$data_own, input$data, input$own)
+        data.initial <- data.module(input$data_own, chosen.data(), input$own)
         
         if (values$firstrun) textStorage <<- paste(textStorage, "### ", input$`side-nav`,"\n", paste(c(readLines(paste("modules/", input$`side-nav`, ".R", sep = ""))), collapse = "\n"), "\n\n", sep = "")
         
@@ -118,14 +124,25 @@ shinyServer(function(input, output, session) {
             updateAceEditor(session, "myEditor", value=textStorage)
         }
     })
+    
+    chosen.data <- reactive({
+        return(valid.datasets[[input$data]])
+    })
+    
+    chosen.plot <- reactive({
+        return(valid.plottypes[[input$plottype]])
+    })
+    
+    chosen.bartype <- reactive({
+        return(valid.bartypes[[input$bartype]])
+    })
 
     output$data <- renderDataTable({
         return(intro.data())
     }, options = list(iDisplayLength = 10))
     
     output$plot <- renderPlot({
-        str.eval <- paste(input$plottype, "(intro.data(), input$x, input$y, input$bartype, input$binwidth)", sep = "")
-        print(eval(parse(text = str.eval)))
+        return(print(chosen.plot()(intro.data(), input$x, input$y, chosen.bartype(), input$binwidth)))
     })
     
     output$summary <- renderTable({

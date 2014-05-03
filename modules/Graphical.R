@@ -23,18 +23,28 @@ boxplot2 <- function (data, x, y, ...) {
 }
 
 barchart <- function (data, x, y, ...) {  
-    data[,x] <- factor(data[,x])
-    data <- eval(parse(text = paste("summarise(group_by(data, ", x, "), ", y, " = ", list(...)[[1]], "(", y, "))", sep = "")))
-            
-    ggplot() + geom_bar(aes_string(x = x, y = y), stat = "identity", data = data)
+    data[,x] <- factor(data[,x])    
+    data$x <- data[,x]
+    data$y <- data[,y]
+    
+    data <- data %.% group_by(x) %.% summarise(y = list(...)[[1]](y))
+    
+    data$x <- factor(data$x, levels = rev(levels(data$x)))
+    
+    ggplot() + geom_bar(aes(x = x, y = y), stat = "identity", data = data) +
+        xlab(x) + ylab(y)
 }
 
 paretochart <- function (data, x, y, ...) {
-    data[,x] <- factor(data[,x])
-    data <- eval(parse(text = paste("summarise(group_by(data, ", x, "), ", y, " = ", list(...)[[1]], "(", y, "))", sep = "")))
+    data[,x] <- factor(data[,x])    
+    data$x <- data[,x]
+    data$y <- data[,y]
     
-    data[,x] <- eval(parse(text = paste("with(data, reorder(", x, ", ", y, "))", sep = "")))
-    data[,x] <- factor(data[,x], levels = rev(levels(data[,x])))
+    data <- data %.% group_by(x) %.% summarise(y = list(...)[[1]](y))
     
-    ggplot() + geom_bar(aes_string(x = x, y = y), stat = "identity", data = data)
+    data$x <- reorder(data$x, data$y)
+    data$x <- factor(data$x, levels = rev(levels(data$x)))
+    
+    ggplot() + geom_bar(aes(x = x, y = y), stat = "identity", data = data) +
+        xlab(x) + ylab(y)
 }
