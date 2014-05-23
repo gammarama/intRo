@@ -1,7 +1,7 @@
 intRo
 =====
 
-Shiny-based statistics learning application available at http://erichare.shinyapps.io/intRo . 
+Shiny-based statistics learning application available at http://www.intro-stats.com . 
 
 Detailed documentation and tutorial for use available at http://harekaplan.github.io/intRo .
 
