@@ -7,7 +7,7 @@ rdiscount extensions: [smart]
 
 links:
 - name: intRo
-  href: https://erichare.shinyapps.io/intRo/
+  href: http://www.intro-stats.com
   class: fa-home
   target: _blank
   level: 1
