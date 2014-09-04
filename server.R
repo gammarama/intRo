@@ -7,6 +7,7 @@
 
 library(shiny)
 library(ggplot2)
+library(ggvis)
 library(shinyAce)
 library(YaleToolkit)
 library(lubridate)
@@ -89,6 +90,14 @@ shinyServer(function(input, output, session) {
         updateSelectInput(session, "yreg", choices = numericNames(intro.data()), selected = numericNames(intro.data())[2])
     })
     
+    observe({
+        curdata <- intro.data()
+        curx <- input$x
+        if (!is.null(curx) & curx %in% names(curdata)) {
+            chosen.plot()(intro.data(), input$x, input$y, chosen.bartype(), input$binwidth) %>% bind_shiny("plot")
+        }
+    })
+    
     intro.data <-reactive({
         data.initial <- data.module(input$data_own, chosen.data(), input$own)
         
@@ -140,10 +149,6 @@ shinyServer(function(input, output, session) {
     output$data <- renderDataTable({
         return(intro.data())
     }, options = list(iDisplayLength = 10))
-    
-    output$plot <- renderPlot({
-        return(print(chosen.plot()(intro.data(), input$x, input$y, chosen.bartype(), input$binwidth)))
-    })
     
     output$summary <- renderTable({
         return(summarytable(intro.data(), input$tblvars))

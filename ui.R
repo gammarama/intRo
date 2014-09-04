@@ -2,6 +2,7 @@ addResourcePath(prefix="images", directoryPath="images/")
 
 library(shiny)
 library(shinyAce)
+library(ggvis)
 
 shinyUI(
 navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
@@ -54,7 +55,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                ),
                                
                                column(8,
-                                     plotOutput("plot"),
+                                     ggvisOutput("plot"),
                                      fluidRow(
                                          column(8,
                                             conditionalPanel(

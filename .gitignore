@@ -4,3 +4,4 @@
 *.Rproj
 images/Thumbs.db
 shinyapps/erichare/intRo.dcf
+packrat/lib*/

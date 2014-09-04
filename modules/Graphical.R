@@ -1,25 +1,36 @@
 require(ggplot2)
+require(ggvis)
 require(dplyr)
 
 scatterplot <- function (data, x, y, ...)  {
-    ggplot() + geom_point(aes_string(x = x, y = y), data = data)
+    data %>%
+        ggvis(x = as.name(x), y = as.name(y)) %>%
+        layer_points()
 }
 
 linechart <- function (data, x, y, ...)  {
-    ggplot() + geom_line(aes_string(x = x, y = y), data = data)
+    data %>%
+        ggvis(x = as.name(x), y = as.name(y)) %>%
+        layer_lines()
 }
 
 histogram <- function (data, x, y, ...) {        
-    ggplot() + geom_histogram(aes_string(x = x), data = data, binwidth = list(...)[[2]])
+    data %>%
+        ggvis(x = as.name(x)) %>%
+        layer_histograms()
 }
 
 boxplot1 <- function (data, x, y, ...) {        
-    ggplot() + geom_boxplot(data = data, aes_string(x = 0, y = x)) + xlab("") + theme(axis.text.x = element_blank(), axis.ticks.x = element_blank()) + coord_flip()
+    data %>%
+        ggvis(x = as.name(x)) %>%
+        layer_points()
 }
 
 boxplot2 <- function (data, x, y, ...) {
     data[,x] <- factor(data[,x])
-    ggplot() + geom_boxplot(aes_string(x = x, y = y), data = data)
+    data %>%
+        ggvis(x = as.name(x), y = as.name(y)) %>%
+        layer_points()
 }
 
 barchart <- function (data, x, y, ...) {  
@@ -29,12 +40,15 @@ barchart <- function (data, x, y, ...) {
     
     my.func <- list(...)[[1]]
     
-    data <- data %.% group_by(x) %.% summarise(y = my.func(y))
+    data <- data %>% group_by(x) %>% summarise(y = my.func(y))
     
     data$x <- factor(data$x, levels = rev(levels(data$x)))
     
-    ggplot() + geom_bar(aes(x = x, y = y), stat = "identity", data = data) +
-        xlab(x) + ylab(y)
+    data %>%
+        ggvis(x = ~x, y = ~y) %>%
+        layer_bars() %>%
+        add_axis("x", title = x) %>%
+        add_axis("y", title = y)
 }
 
 paretochart <- function (data, x, y, ...) {
@@ -44,11 +58,14 @@ paretochart <- function (data, x, y, ...) {
     
     my.func <- list(...)[[1]]
     
-    data <- data %.% group_by(x) %.% summarise(y = my.func(y))
+    data <- data %>% group_by(x) %>% summarise(y = my.func(y))
     
     data$x <- reorder(data$x, data$y)
     data$x <- factor(data$x, levels = rev(levels(data$x)))
     
-    ggplot() + geom_bar(aes(x = x, y = y), stat = "identity", data = data) +
-        xlab(x) + ylab(y)
+    data %>%
+        ggvis(x = ~x, y = ~y) %>%
+        layer_bars() %>%
+        add_axis("x", title = x) %>%
+        add_axis("y", title = y)
 }
