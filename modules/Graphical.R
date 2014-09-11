@@ -23,14 +23,14 @@ histogram <- function (data, x, y, ...) {
 boxplot1 <- function (data, x, y, ...) {        
     data %>%
         ggvis(x = as.name(x)) %>%
-        layer_points()
+        layer_boxplots()
 }
 
 boxplot2 <- function (data, x, y, ...) {
     data[,x] <- factor(data[,x])
     data %>%
         ggvis(x = as.name(x), y = as.name(y)) %>%
-        layer_points()
+        layer_boxplots()
 }
 
 barchart <- function (data, x, y, ...) {  
