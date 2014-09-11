@@ -3,9 +3,15 @@ require(ggvis)
 require(dplyr)
 
 scatterplot <- function (data, x, y, ...)  {
+    all_values <- function(x) {
+        if (is.null(x)) return(NULL)
+        paste0(names(x), ": ", format(x), collapse = "<br />")
+    }
+    
     data %>%
         ggvis(x = as.name(x), y = as.name(y)) %>%
-        layer_points()
+        layer_points() %>%
+        add_tooltip(all_values, "hover")
 }
 
 linechart <- function (data, x, y, ...)  {
