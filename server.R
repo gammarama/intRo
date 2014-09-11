@@ -94,7 +94,31 @@ shinyServer(function(input, output, session) {
         curdata <- intro.data()
         curx <- input$x
         if (!is.null(curx) & curx %in% names(curdata)) {
-            chosen.plot()(intro.data(), input$x, input$y, chosen.bartype(), input$binwidth) %>% bind_shiny("plot")
+            chosen.plot()(curdata, input$x, input$y, chosen.bartype(), input$binwidth) %>% bind_shiny("plot")
+        }
+    })
+    
+    observe({
+        curdata <- intro.data()
+        curxreg <- input$xreg
+        if (!is.null(curxreg) & curxreg %in% names(curdata)) {
+            scatterplotreg(curdata, input$xreg, input$yreg) %>% bind_shiny("regplot")
+        }
+    })
+    
+    observe({
+        curdata <- intro.data()
+        curxreg <- input$xreg
+        if (!is.null(curxreg) & curxreg %in% names(curdata)) {
+            residualreg1(intro.data(), input$xreg, input$yreg) %>% bind_shiny("resplot1")
+        }
+    })
+    
+    observe({
+        curdata <- intro.data()
+        curxreg <- input$xreg
+        if (!is.null(curxreg) & curxreg %in% names(curdata)) {
+            #residualreg2(intro.data(), input$xreg, input$yreg) %>% bind_shiny("resplot2")
         }
     })
     
@@ -153,14 +177,6 @@ shinyServer(function(input, output, session) {
     output$summary <- renderTable({
         return(summarytable(intro.data(), input$tblvars))
     }, include.rownames = FALSE)
-    
-    output$regplot <- renderPlot({
-        return(print(scatterplotreg(intro.data(), input$xreg, input$yreg)))
-    })
-    
-    output$resplots <- renderPlot({
-        return(print(residualreg(intro.data(), input$xreg, input$yreg)))
-    })
     
     output$regtable <- renderTable({
         return(tablereg(intro.data(), input$xreg, input$yreg))

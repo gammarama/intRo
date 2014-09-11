@@ -8,10 +8,16 @@ scatterplotreg <- function (data, x, y)  {
     
     if (coef(lm.fit)[2] < 0) coord <- c(min(data[,x], na.rm = TRUE) + adjustment, min(data[,y], na.rm = TRUE))
     
-    ggplot() + geom_point(aes_string(x = x, y = y), data = data) +
-        ggtitle(paste("Regression of", y, "on", x)) +
-        geom_smooth(aes_string(x = x, y = y), data = data, method = "lm") +
-        annotate("text", label = paste("R^2 =", round(summary(lm.fit)$r.squared, digits = 4)), x = coord[1], y = coord[2], size = 6)
+    all_values <- function(x) {
+        if (is.null(x)) return(NULL)
+        paste0(names(x), ": ", format(x), collapse = "<br />")
+    }
+    
+    data %>%
+        ggvis(x = as.name(x), y = as.name(y)) %>%
+        layer_points() %>%
+        layer_model_predictions(model = "lm") %>%
+        add_tooltip(all_values, "hover")
 }
 
 tablereg <- function (data, x, y) {
@@ -23,7 +29,25 @@ tablereg <- function (data, x, y) {
     return(tbl.fit)
 }
 
-residualreg <- function (data, x, y) {
+residualreg1 <- function (data, x, y) {
+    lm.fit <- lm(data[,y] ~ data[,x])
+    data$residuals <- resid(lm.fit)
+    
+    p1 <- ggplot() + geom_point(data = data, aes_string(x = x, y = "residuals")) +
+                     geom_hline(yintercept = 0, linetype = 2) + theme(aspect.ratio = 1) + ggtitle(paste("Residuals vs", x))
+    
+    all_values <- function(x) {
+        if (is.null(x)) return(NULL)
+        paste0(names(x), ": ", format(x), collapse = "<br />")
+    }
+        
+    data %>%
+        ggvis(x = as.name(x), y = as.name("residuals")) %>%
+        layer_points() %>%
+        add_tooltip(all_values, "hover")
+}
+
+residualreg2 <- function (data, x, y) {
     lm.fit <- lm(data[,y] ~ data[,x])
     data$residuals <- resid(lm.fit)
     
@@ -32,9 +56,5 @@ residualreg <- function (data, x, y) {
     slope <- diff(yy) / diff(xx)
     int <- yy[1] - slope * xx[1]
     
-    p1 <- ggplot() + geom_point(data = data, aes_string(x = x, y = "residuals")) +
-                     geom_hline(yintercept = 0, linetype = 2) + theme(aspect.ratio = 1) + ggtitle(paste("Residuals vs", x))
-    p2 <- qplot(sample = data$residuals, stat = "qq") + geom_abline(slope = slope, intercept = int, linetype = 2) + theme(aspect.ratio = 1) + ggtitle("Normal Quantile Plot")
-    
-    grid.arrange(p1, p2, ncol = 2)
+    qplot(sample = data$residuals, stat = "qq") + geom_abline(slope = slope, intercept = int, linetype = 2) + theme(aspect.ratio = 1) + ggtitle("Normal Quantile Plot")
 }

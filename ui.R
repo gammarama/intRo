@@ -96,9 +96,15 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                       tableOutput("regtable"),
                                       hr(),
                                       tags$b("Plot of Fit"),
-                                      plotOutput("regplot"),
+                                      ggvisOutput("regplot"),
                                       tags$b("Residual Plots"),
-                                      plotOutput("resplots")
+                                      
+                                      column(6, 
+                                             ggvisOutput("resplot1")
+                                      ),
+                                      column(6, 
+                                             ggvisOutput("resplot2")
+                                      )
                                )
                       ),
                       tabPanel("T test",
