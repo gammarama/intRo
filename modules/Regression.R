@@ -56,5 +56,16 @@ residualreg2 <- function (data, x, y) {
     slope <- diff(yy) / diff(xx)
     int <- yy[1] - slope * xx[1]
     
-    qplot(sample = data$residuals, stat = "qq") + geom_abline(slope = slope, intercept = int, linetype = 2) + theme(aspect.ratio = 1) + ggtitle("Normal Quantile Plot")
+    all_values <- function(x) {
+        if (is.null(x)) return(NULL)
+        paste0(names(x), ": ", format(x), collapse = "<br />")
+    }
+    
+    data$yy <- qnorm(seq(0, 1, by = (1/(length(data$residuals) + 1)))[-c(1, (length(data$residuals) + 2))])
+    data$residuals <- sort(data$residuals)
+    #  qplot(sample = data$residuals, stat = "qq") + geom_abline(slope = slope, intercept = int, linetype = 2) + theme(aspect.ratio = 1) + ggtitle("Normal Quantile Plot")
+
+    data %>%
+        ggvis(x = as.name("yy"), y = as.name("residuals")) %>%
+        layer_points()
 }
