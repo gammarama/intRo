@@ -44,7 +44,8 @@ residualreg1 <- function (data, x, y) {
     data %>%
         ggvis(x = as.name(x), y = as.name("residuals")) %>%
         layer_points() %>%
-        add_tooltip(all_values, "hover")
+        add_tooltip(all_values, "hover") %>%
+        set_options(width = 150, height = 150)
 }
 
 residualreg2 <- function (data, x, y) {
@@ -63,9 +64,20 @@ residualreg2 <- function (data, x, y) {
     
     data$yy <- qnorm(seq(0, 1, by = (1/(length(data$residuals) + 1)))[-c(1, (length(data$residuals) + 2))])
     data$residuals <- sort(data$residuals)
-    #  qplot(sample = data$residuals, stat = "qq") + geom_abline(slope = slope, intercept = int, linetype = 2) + theme(aspect.ratio = 1) + ggtitle("Normal Quantile Plot")
 
     data %>%
         ggvis(x = as.name("yy"), y = as.name("residuals")) %>%
-        layer_points()
+        layer_points() %>%
+        add_tooltip(all_values, "hover") %>%
+        set_options(width = 150, height = 150)
+}
+
+residualreg3 <- function (data, x, y) {
+    lm.fit <- lm(data[,y] ~ data[,x])
+    data$residuals <- resid(lm.fit)
+    
+    data %>%
+        ggvis(x = as.name("residuals")) %>%
+        layer_histograms() %>%
+        set_options(width = 150, height = 150)
 }

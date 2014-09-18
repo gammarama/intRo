@@ -99,11 +99,16 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                       ggvisOutput("regplot"),
                                       tags$b("Residual Plots"),
                                       
-                                      column(6, 
-                                             ggvisOutput("resplot1")
-                                      ),
-                                      column(6, 
-                                             ggvisOutput("resplot2")
+                                      fluidRow(
+                                          column(4, 
+                                                 ggvisOutput("resplot1")
+                                          ),
+                                          column(4, 
+                                                 ggvisOutput("resplot2")
+                                          ),
+                                          column(4, 
+                                                 ggvisOutput("resplot3")
+                                          )
                                       )
                                )
                       ),

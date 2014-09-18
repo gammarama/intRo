@@ -111,14 +111,8 @@ shinyServer(function(input, output, session) {
         curxreg <- input$xreg
         if (!is.null(curxreg) & curxreg %in% names(curdata)) {
             residualreg1(intro.data(), input$xreg, input$yreg) %>% bind_shiny("resplot1")
-        }
-    })
-    
-    observe({
-        curdata <- intro.data()
-        curxreg <- input$xreg
-        if (!is.null(curxreg) & curxreg %in% names(curdata)) {
             residualreg2(intro.data(), input$xreg, input$yreg) %>% bind_shiny("resplot2")
+            residualreg3(intro.data(), input$xreg, input$yreg) %>% bind_shiny("resplot3")
         }
     })
     
