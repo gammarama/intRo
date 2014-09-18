@@ -176,6 +176,14 @@ shinyServer(function(input, output, session) {
         return(tablereg(intro.data(), input$xreg, input$yreg))
     }, digits = 4)
     
+    output$r <- renderText({
+        return(r(intro.data(), input$xreg, input$yreg))
+    })
+    
+    output$r2 <- renderText({
+        return(r2(intro.data(), input$xreg, input$yreg))
+    })
+    
     output$ttesttable <- renderText({
         return(ttesttable(intro.data(), input$group1, input$group2, input$varts == "twovart", input$conflevel, input$althyp, input$hypval))
     })

@@ -29,6 +29,16 @@ tablereg <- function (data, x, y) {
     return(tbl.fit)
 }
 
+r <- function (data, x, y) {
+    return(paste("r =", round(cor(data[,y], data[,x]), digits = 4)))
+}
+
+r2 <- function (data, x, y) {
+    lm.fit <- lm(data[,y] ~ data[,x])
+    
+    return(paste("R^2 =", round(summary(lm.fit)$r.squared, digits = 4)))
+}
+
 residualreg1 <- function (data, x, y) {
     lm.fit <- lm(data[,y] ~ data[,x])
     data$residuals <- resid(lm.fit)
@@ -45,7 +55,7 @@ residualreg1 <- function (data, x, y) {
         ggvis(x = as.name(x), y = as.name("residuals")) %>%
         layer_points() %>%
         add_tooltip(all_values, "hover") %>%
-        set_options(width = 150, height = 150)
+        set_options(width = 200, height = 200)
 }
 
 residualreg2 <- function (data, x, y) {
@@ -69,7 +79,7 @@ residualreg2 <- function (data, x, y) {
         ggvis(x = as.name("yy"), y = as.name("residuals")) %>%
         layer_points() %>%
         add_tooltip(all_values, "hover") %>%
-        set_options(width = 150, height = 150)
+        set_options(width = 200, height = 200)
 }
 
 residualreg3 <- function (data, x, y) {
@@ -79,5 +89,5 @@ residualreg3 <- function (data, x, y) {
     data %>%
         ggvis(x = as.name("residuals")) %>%
         layer_histograms() %>%
-        set_options(width = 150, height = 150)
+        set_options(width = 200, height = 200)
 }
