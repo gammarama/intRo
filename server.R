@@ -28,11 +28,12 @@ shinyServer(function(input, output, session) {
     valid.plottypes <- list(scatterplot = scatterplot, linechart = linechart,
                             histogram = histogram, boxplot1 = boxplot1,
                             boxplot2 = boxplot2, barchart = barchart,
-                            paretochart = paretochart)
+                            paretochart = paretochart,
+                            quantileplot = quantileplot)
     valid.bartypes <- list(length = length, sum = sum, mean = mean, median = median)
     
     observe({
-        if (input$vars == "onevar") updateSelectInput(session, "plottype", choices = c("Histogram" = "histogram", "Boxplot" = "boxplot1"), selected = "histogram")
+        if (input$vars == "onevar") updateSelectInput(session, "plottype", choices = c("Histogram" = "histogram", "Boxplot" = "boxplot1", "Normal Quantile Plot" = "quantileplot"), selected = "histogram")
     })
     
     observe({

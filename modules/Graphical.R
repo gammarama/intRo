@@ -75,3 +75,23 @@ paretochart <- function (data, x, y, ...) {
         add_axis("x", title = x) %>%
         add_axis("y", title = y)
 }
+
+quantileplot <- function (data, x, y, ...) {
+    yy <- quantile(data[,x], na.rm = TRUE, c(0.25, 0.75))
+    xx <- qnorm(c(0.25, 0.75))
+    slope <- diff(yy) / diff(xx)
+    int <- yy[1] - slope * xx[1]
+    
+    all_values <- function(x) {
+        if (is.null(x)) return(NULL)
+        paste0(names(x), ": ", format(x), collapse = "<br />")
+    }
+    
+    data$yy <- qnorm(seq(0, 1, by = (1/(length(data[,x]) + 1)))[-c(1, (length(data[,x]) + 2))])
+    data[,x] <- sort(data[,x])
+    
+    data %>%
+        ggvis(x = as.name("yy"), y = as.name(x)) %>%
+        layer_points() %>%
+        add_tooltip(all_values, "hover")
+}
