@@ -153,6 +153,13 @@ shinyServer(function(input, output, session) {
         }
     })
     
+    output$downloaddata <- downloadHandler(
+        filename = function() { paste0("intro_data_", today(), ".csv") },
+        content = function(file) {
+            write.csv(intro.data(), file)
+        }
+    )
+    
     chosen.data <- reactive({
         return(valid.datasets[[input$data]])
     })
