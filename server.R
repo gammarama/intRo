@@ -118,6 +118,7 @@ shinyServer(function(input, output, session) {
     })
     
     intro.data <-reactive({
+        cat(str(input$subs))
         data.initial <- data.module(input$data_own, chosen.data(), input$own)
         
         if (values$firstrun) textStorage <<- paste(textStorage, "### ", input$`side-nav`,"\n", paste(c(readLines(paste("modules/", input$`side-nav`, ".R", sep = ""))), collapse = "\n"), "\n\n", sep = "")

@@ -29,6 +29,8 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                         
                                         hr(),
                                         
+                                        tags$button("", id = "savesubset", type = "button", class = "btn action-button", onclick="var vals = []; var subsets = $('input[type = \"text\"][placeholder]'); for(i = 0; i < subsets.length; i++) {vals.push(subsets[i].value);}; Shiny.onInputChange(\"subs\", vals)", list(icon("save"), "Save Subset")),
+                                        br(), br(),
                                         downloadButton("downloaddata", "Download Data")
                                       )
                                ),
