@@ -117,9 +117,39 @@ shinyServer(function(input, output, session) {
         }
     })
     
+    process_logical <- function(data, x) {
+        if (is.null(x)) {
+            return(data)
+        }
+
+        relevant_cols <- names(data)[nchar(x) > 0]
+        my_strs <- strsplit(x, split = ",")
+        new_strs <- my_strs[unlist(lapply(my_strs, length)) > 0]
+
+        new_data <- data
+        if (length(new_strs) > 0) {
+            for (i in 1:length(new_strs)) {
+                test <- new_strs[[i]]
+                col <- relevant_cols[i]
+                                
+                test[1] <- ifelse(test[1] == "", -Inf, test[1])
+                test[2] <- ifelse(test[2] == "", Inf, test[2])
+                if (is.na(test[2])) test[2] <- Inf
+                                
+                subset_str <- paste(test[1], "<=", col, "&", col, "<=", test[2])
+                                
+                new_data <- eval(parse(text = paste0("subset(new_data, ", subset_str, ")")))
+            }
+        }
+                
+        return(new_data)
+    }
+    
     intro.data <-reactive({
         cat(str(input$subs))
+                
         data.initial <- data.module(input$data_own, chosen.data(), input$own)
+        data.initial <- process_logical(data.initial, input$subs)
         
         if (values$firstrun) textStorage <<- paste(textStorage, "### ", input$`side-nav`,"\n", paste(c(readLines(paste("modules/", input$`side-nav`, ".R", sep = ""))), collapse = "\n"), "\n\n", sep = "")
         
