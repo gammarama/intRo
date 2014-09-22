@@ -1,13 +1,6 @@
 scatterplotreg <- function (data, x, y)  {
     lm.fit <- lm(data[,y] ~ data[,x])
-    
-    my.range <- range(data[,x], na.rm = TRUE)
-    adjustment <- (my.range[2] - my.range[1]) / 10
-    
-    coord <- c(min(data[,x], na.rm = TRUE) + adjustment, max(data[,y], na.rm = TRUE))
-    
-    if (coef(lm.fit)[2] < 0) coord <- c(min(data[,x], na.rm = TRUE) + adjustment, min(data[,y], na.rm = TRUE))
-    
+
     all_values <- function(x) {
         if (is.null(x)) return(NULL)
         paste0(names(x), ": ", format(x), collapse = "<br />")
@@ -30,7 +23,7 @@ tablereg <- function (data, x, y) {
 }
 
 r <- function (data, x, y) {
-    return(paste("r =", round(cor(data[,y], data[,x]), digits = 4)))
+    return(paste("r =", round(cor(data[,y], data[,x], use = "complete.obs"), digits = 4)))
 }
 
 r2 <- function (data, x, y) {
@@ -40,17 +33,17 @@ r2 <- function (data, x, y) {
 }
 
 residualreg1 <- function (data, x, y) {
-    lm.fit <- lm(data[,y] ~ data[,x], na.action = na.exclude)
-    data$residuals <- resid(lm.fit)
+    lm.fit <- lm(data[,y] ~ data[,x])
+    
+    mydat <- data.frame(residuals = resid(lm.fit), x = data[as.numeric(names(resid(lm.fit))),x])
+    names(mydat)[2] <- x
     
     all_values <- function(x) {
         if (is.null(x)) return(NULL)
         paste0(names(x), ": ", format(x), collapse = "<br />")
     }
-    
-    data <- data[!is.na(data$residuals),]
-        
-    data %>%
+            
+    mydat %>%
         ggvis(x = as.name(x), y = as.name("residuals")) %>%
         layer_points() %>%
         add_tooltip(all_values, "hover") %>%
@@ -83,7 +76,7 @@ residualreg2 <- function (data, x, y) {
 
 residualreg3 <- function (data, x, y) {
     lm.fit <- lm(data[,y] ~ data[,x])
-    mydat <- data.frame(residuals <- resid(lm.fit))
+    mydat <- data.frame(residuals = resid(lm.fit))
     
     mydat %>%
         ggvis(x = as.name("residuals")) %>%
