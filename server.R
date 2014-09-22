@@ -123,7 +123,7 @@ shinyServer(function(input, output, session) {
         }
 
         relevant_cols <- names(data)[nchar(x) > 0]
-        my_strs <- strsplit(x, split = ",")
+        my_strs <- strsplit(gsub(",", " , ", x), split = ",")
         new_strs <- my_strs[unlist(lapply(my_strs, length)) > 0]
 
         new_data <- data
@@ -131,13 +131,21 @@ shinyServer(function(input, output, session) {
             for (i in 1:length(new_strs)) {
                 test <- new_strs[[i]]
                 col <- relevant_cols[i]
-                                
-                test[1] <- ifelse(test[1] == "", -Inf, test[1])
-                test[2] <- ifelse(test[2] == "", Inf, test[2])
-                if (is.na(test[2])) test[2] <- Inf
-                                
-                subset_str <- paste(test[1], "<=", col, "&", col, "<=", test[2])
-                                
+                
+                subset_str <- ""
+                if (length(test) == 1) {
+                    if (is.na(as.numeric(test[1]))) {
+                        subset_str <- paste0("'", test[1], "' == ", col)
+                    } else {
+                        subset_str <- paste(test[1], "==", col)
+                    }
+                } else {
+                    test[1] <- ifelse(test[1] == " ", -Inf, test[1])
+                    test[2] <- ifelse(test[2] == " ", Inf, test[2])
+                    if (is.na(test[2])) test[2] <- Inf
+                    
+                    subset_str <- paste(test[1], "<=", col, "&", col, "<=", test[2])
+                }          
                 new_data <- eval(parse(text = paste0("subset(new_data, ", subset_str, ")")))
             }
         }
@@ -145,11 +153,9 @@ shinyServer(function(input, output, session) {
         return(new_data)
     }
     
-    intro.data <-reactive({
-        cat(str(input$subs))
-                
+    mydat <- NULL
+    intro.start <- reactive({                
         data.initial <- data.module(input$data_own, chosen.data(), input$own)
-        data.initial <- process_logical(data.initial, input$subs)
         
         if (values$firstrun) textStorage <<- paste(textStorage, "### ", input$`side-nav`,"\n", paste(c(readLines(paste("modules/", input$`side-nav`, ".R", sep = ""))), collapse = "\n"), "\n\n", sep = "")
         
@@ -157,8 +163,19 @@ shinyServer(function(input, output, session) {
             updateAceEditor(session, "myEditor", value=textStorage)
             values$firstrun <- FALSE
         }
+        
+        mydat <<- data.initial
                 
         return(data.initial)
+    })
+    
+    intro.data <- reactive({
+        if (is.null(intro.start())) return(NULL)
+        
+        data.subset <- process_logical(mydat, input$subs)
+        mydat <<- data.subset
+        
+        return(data.subset)
     })
 
     observe({
