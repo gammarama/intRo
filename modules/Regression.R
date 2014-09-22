@@ -40,16 +40,15 @@ r2 <- function (data, x, y) {
 }
 
 residualreg1 <- function (data, x, y) {
-    lm.fit <- lm(data[,y] ~ data[,x])
+    lm.fit <- lm(data[,y] ~ data[,x], na.action = na.exclude)
     data$residuals <- resid(lm.fit)
-    
-    p1 <- ggplot() + geom_point(data = data, aes_string(x = x, y = "residuals")) +
-                     geom_hline(yintercept = 0, linetype = 2) + theme(aspect.ratio = 1) + ggtitle(paste("Residuals vs", x))
     
     all_values <- function(x) {
         if (is.null(x)) return(NULL)
         paste0(names(x), ": ", format(x), collapse = "<br />")
     }
+    
+    data <- data[!is.na(data$residuals),]
         
     data %>%
         ggvis(x = as.name(x), y = as.name("residuals")) %>%
@@ -59,7 +58,7 @@ residualreg1 <- function (data, x, y) {
 }
 
 residualreg2 <- function (data, x, y) {
-    lm.fit <- lm(data[,y] ~ data[,x])
+    lm.fit <- lm(data[,y] ~ data[,x], na.action = na.exclude)
     data$residuals <- resid(lm.fit)
     
     yy <- quantile(data$residuals, na.rm = TRUE, c(0.25, 0.75))
@@ -72,10 +71,10 @@ residualreg2 <- function (data, x, y) {
         paste0(names(x), ": ", format(x), collapse = "<br />")
     }
     
-    data$yy <- qnorm(seq(0, 1, by = (1/(length(data$residuals) + 1)))[-c(1, (length(data$residuals) + 2))])
-    data$residuals <- sort(data$residuals)
+    mydat <- data.frame(yy = qnorm(seq(0, 1, by = (1/(length(na.omit(data$residuals)) + 1)))[-c(1, (length(na.omit(data$residuals)) + 2))]),
+                        residuals = sort(data$residuals))
 
-    data %>%
+    mydat %>%
         ggvis(x = as.name("yy"), y = as.name("residuals")) %>%
         layer_points() %>%
         add_tooltip(all_values, "hover") %>%
@@ -84,9 +83,9 @@ residualreg2 <- function (data, x, y) {
 
 residualreg3 <- function (data, x, y) {
     lm.fit <- lm(data[,y] ~ data[,x])
-    data$residuals <- resid(lm.fit)
+    mydat <- data.frame(residuals <- resid(lm.fit))
     
-    data %>%
+    mydat %>%
         ggvis(x = as.name("residuals")) %>%
         layer_histograms() %>%
         set_options(width = 200, height = 200)

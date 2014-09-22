@@ -21,7 +21,7 @@ linechart <- function (data, x, y, ...)  {
 }
 
 histogram <- function (data, x, y, ...) {        
-    data %>%
+    na.omit(data) %>%
         ggvis(x = as.name(x)) %>%
         layer_histograms()
 }
