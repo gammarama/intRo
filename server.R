@@ -38,13 +38,15 @@ shinyServer(function(input, output, session) {
     
     observe({
         if (input$vars == "onevar") {
-            updateSelectInput(session, "x", choices = numericNames(intro.data()), selected = numericNames(intro.data())[1])
-            updateSelectInput(session, "y", choices = numericNames(intro.data()), selected = numericNames(intro.data())[2])
+            updateSelectInput(session, "x", choices = numericNames(intro.data()), selected = NA)
+            updateSelectInput(session, "y", choices = numericNames(intro.data()), selected = NA)
         }
-        updateSelectInput(session, "group1", choices = numericNames(intro.data()), selected = numericNames(intro.data())[1])
+        updateSelectInput(session, "group1", choices = numericNames(intro.data()), selected = NA)
+        updateSelectInput(session, "xreg", choices = numericNames(intro.data()), selected = NA)
+        updateSelectInput(session, "yreg", choices = numericNames(intro.data()), selected = NA)   
         
         if (input$varts == "twovart") {
-            updateSelectInput(session, "group2", choices = numericNames(intro.data()), selected = numericNames(intro.data())[2])
+            updateSelectInput(session, "group2", choices = numericNames(intro.data()))
         }
     })
     
@@ -58,6 +60,8 @@ shinyServer(function(input, output, session) {
         new.x <- if (input$x %in% nms) input$x else nms[1]
         new.y <- if (input$y %in% nms) input$y else nms[2]
         
+        updateCheckboxGroupInput(session, "tblvars", choices=all.nms, selected = NA)
+        
         if (input$vars == "twovar") {
             updateSelectInput(session, "y", choices = nms, selected = new.y)
             if (input$plottype %in% c("scatterplot", "linechart")) {
@@ -69,51 +73,29 @@ shinyServer(function(input, output, session) {
     })
     
     observe({
-        ## Binwidth
         curdata <- intro.data()
         curx <- input$x
+        cury <- input$y
         if (!is.null(curx) & curx %in% names(curdata)) {
             if (is.numeric(curdata[,curx])) {
                 rng <- range(curdata[,curx], na.rm = TRUE)
                 updateNumericInput(session, "binwidth", value=round((rng[2] - rng[1])/30, digits = 2))
             }
+            
+            if (input$vars == "onevar" | (!is.null(cury) & cury %in% names(curdata))) chosen.plot()(curdata, input$x, input$y, chosen.bartype(), input$binwidth) %>% bind_shiny("plot")
         }
     })
-    
-    observe({
-        nms <- names(intro.data())
-        varrange <- 1:min(4, length(nms))
-        updateCheckboxGroupInput(session, "tblvars", choices=nms, selected=c(nms[varrange]))
-    })
-    
-    observe({
-        updateSelectInput(session, "xreg", choices = numericNames(intro.data()), selected = numericNames(intro.data())[1])
-        updateSelectInput(session, "yreg", choices = numericNames(intro.data()), selected = numericNames(intro.data())[2])
-    })
-    
-    observe({
-        curdata <- intro.data()
-        curx <- input$x
-        if (!is.null(curx) & curx %in% names(curdata)) {
-            chosen.plot()(curdata, input$x, input$y, chosen.bartype(), input$binwidth) %>% bind_shiny("plot")
-        }
-    })
-    
+
     observe({
         curdata <- intro.data()
         curxreg <- input$xreg
-        if (!is.null(curxreg) & curxreg %in% names(curdata)) {
+        curyreg <- input$yreg
+                        
+        if (!is.null(curxreg) & !is.null(curyreg) & curxreg %in% names(curdata) & curyreg %in% names(curdata)) {
             scatterplotreg(curdata, input$xreg, input$yreg) %>% bind_shiny("regplot")
-        }
-    })
-    
-    observe({
-        curdata <- intro.data()
-        curxreg <- input$xreg
-        if (!is.null(curxreg) & curxreg %in% names(curdata)) {
-            residualreg1(intro.data(), input$xreg, input$yreg) %>% bind_shiny("resplot1")
-            residualreg2(intro.data(), input$xreg, input$yreg) %>% bind_shiny("resplot2")
-            residualreg3(intro.data(), input$xreg, input$yreg) %>% bind_shiny("resplot3")
+            residualreg1(intro.data(), curxreg, curyreg) %>% bind_shiny("resplot1")
+            residualreg2(intro.data(), curxreg, curyreg) %>% bind_shiny("resplot2")
+            residualreg3(intro.data(), curxreg, curyreg) %>% bind_shiny("resplot3")
         }
     })
     
@@ -229,18 +211,22 @@ shinyServer(function(input, output, session) {
     }, include.rownames = FALSE)
     
     output$regtable <- renderTable({
-        return(tablereg(intro.data(), input$xreg, input$yreg))
+        if (is.null(input$xreg) | !(input$xreg %in% numericNames(intro.data())) | is.null(input$yreg) | !(input$yreg %in% numericNames(intro.data()))) return(NULL)
+        else return(tablereg(intro.data(), input$xreg, input$yreg))
     }, digits = 4)
     
     output$r <- renderText({
-        return(r(intro.data(), input$xreg, input$yreg))
+        if (is.null(input$xreg) | !(input$xreg %in% numericNames(intro.data())) | is.null(input$yreg) | !(input$yreg %in% numericNames(intro.data()))) return(NULL)
+        else return(r(intro.data(), input$xreg, input$yreg))
     })
     
     output$r2 <- renderText({
+        if (is.null(input$xreg) | !(input$xreg %in% numericNames(intro.data())) | is.null(input$yreg) | !(input$yreg %in% numericNames(intro.data()))) return(NULL)
         return(r2(intro.data(), input$xreg, input$yreg))
     })
     
     output$ttesttable <- renderText({
+        if (is.null(input$group1) | !(input$group1 %in% numericNames(intro.data()))) return(NULL)
         return(ttesttable(intro.data(), input$group1, input$group2, input$varts == "twovart", input$conflevel, input$althyp, input$hypval))
     })
 })

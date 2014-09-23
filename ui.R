@@ -79,7 +79,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                       tabPanel("Numeric",
                                column(4,
                                       wellPanel(
-                                        checkboxGroupInput("tblvars", "Select Variables", choices = list("hi"))
+                                        checkboxGroupInput("tblvars", "Select Variables", choices = list(""))
                                       )
                                ),
                                
