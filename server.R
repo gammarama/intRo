@@ -136,7 +136,11 @@ shinyServer(function(input, output, session) {
     }
     
     mydat <- NULL
-    intro.start <- reactive({                
+    intro.start <- reactive({
+        
+        #dependency on input$clearssubset
+        input$clearselection
+      
         data.initial <- data.module(input$data_own, chosen.data(), input$own)
         
         if (values$firstrun) textStorage <<- paste(textStorage, "### ", input$`side-nav`,"\n", paste(c(readLines(paste("modules/", input$`side-nav`, ".R", sep = ""))), collapse = "\n"), "\n\n", sep = "")
@@ -153,7 +157,7 @@ shinyServer(function(input, output, session) {
     
     intro.data <- reactive({
         if (is.null(intro.start())) return(NULL)
-        
+        cat(input$subs)
         data.subset <- process_logical(mydat, input$subs)
         mydat <<- data.subset
         

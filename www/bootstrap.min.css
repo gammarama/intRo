@@ -37,7 +37,7 @@
    visibility: hidden;
   }
   
-  .navbar, .well *, #myEditor {
+  .navbar, .well *, .span4, #myEditor {
     display: none;
   }
   
