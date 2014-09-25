@@ -41,13 +41,16 @@ shinyServer(function(input, output, session) {
             updateSelectInput(session, "x", choices = numericNames(intro.data()), selected = NA)
             updateSelectInput(session, "y", choices = numericNames(intro.data()), selected = NA)
         }
-        updateSelectInput(session, "group1", choices = numericNames(intro.data()), selected = NA)
-        updateSelectInput(session, "xreg", choices = numericNames(intro.data()), selected = NA)
-        updateSelectInput(session, "yreg", choices = numericNames(intro.data()), selected = NA)   
-        
+
         if (input$varts == "twovart") {
             updateSelectInput(session, "group2", choices = numericNames(intro.data()))
         }
+    })
+    
+    observe({
+        updateSelectInput(session, "group1", choices = numericNames(intro.data()), selected = NA)
+        updateSelectInput(session, "xreg", choices = numericNames(intro.data()), selected = NA)
+        updateSelectInput(session, "yreg", choices = numericNames(intro.data()), selected = NA)
     })
     
     observe({
