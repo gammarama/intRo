@@ -95,7 +95,11 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                column(4,
                                       wellPanel(
                                           selectInput("xreg", "Independent Variable (x)", choices = NULL),
-                                          selectInput("yreg", "Dependent Variable (y)", choices = NULL)
+                                          selectInput("yreg", "Dependent Variable (y)", choices = NULL),
+                                          
+                                          hr(),
+                                          
+                                          actionButton("saveresid", "Save Residuals/Fitted", icon = icon("save"))
                                       )
                                ),
                                

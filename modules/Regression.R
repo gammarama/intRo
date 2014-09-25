@@ -83,3 +83,11 @@ residualreg3 <- function (data, x, y) {
         layer_histograms() %>%
         set_options(width = 200, height = 200)
 }
+
+savefit <- function (data, x, y) { 
+    lm.fit <- lm(data[,y] ~ data[,x])
+    data$fitted <- predict(lm.fit)
+    data$resid <- resid(lm.fit)
+    
+    return(data)
+}
