@@ -139,7 +139,7 @@ shinyServer(function(input, output, session) {
     intro.start <- reactive({
         
         #dependency on input$clearssubset
-        input$clearselection
+        input$clearsubset
       
         data.initial <- data.module(input$data_own, chosen.data(), input$own)
         
@@ -159,7 +159,7 @@ shinyServer(function(input, output, session) {
     
     intro.data <- reactive({
         if (is.null(intro.start())) return(NULL)
-        cat(input$subs)
+
         data.subset <- process_logical(mydat, input$subs)
         mydat <<- data.subset
         
