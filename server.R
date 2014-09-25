@@ -151,13 +151,26 @@ shinyServer(function(input, output, session) {
         return(data.initial)
     })
     
+    oldsaveresid <- 0
+    
     intro.data <- reactive({
         if (is.null(intro.start())) return(NULL)
         
         data.subset <- process_logical(mydat, input$subs)
         mydat <<- data.subset
         
-        return(data.subset)
+        if (input$saveresid > oldsaveresid) {
+            curxreg <- input$xreg
+            curyreg <- input$yreg
+            
+            if (!is.null(curxreg) & !is.null(curyreg) & curxreg %in% names(mydat) & curyreg %in% names(mydat)) {
+                mydat <<- savefit(mydat, input$xreg, input$yreg)
+            }
+            
+            oldsaveresid <<- input$saveresid
+        }
+        
+        return(mydat)
     })
 
     observe({
