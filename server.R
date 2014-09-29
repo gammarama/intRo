@@ -152,7 +152,10 @@ shinyServer(function(input, output, session) {
             updateAceEditor(session, "myEditor", value=textStorage)
             values$firstrun <- FALSE
         }
-        
+                
+        if (input$randomsub) {
+            data.initial <- dplyr::sample_n(mydat, input$randomsubrows)
+        }
         mydat <<- data.initial
                 
         return(data.initial)

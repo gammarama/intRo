@@ -28,7 +28,12 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                         checkboxInput("own", "Upload Dataset"),
                                         
                                         hr(),
-                                        
+                                        fluidRow(
+                                            column(6, checkboxInput("randomsub", "Random Subset")), 
+                                            conditionalPanel(condition = "input.randomsub == true", 
+                                                             column(6, numericInput("randomsubrows", "Number of Rows", value = 10))
+                                            )
+                                        ),
                                         tags$button("", id = "savesubset", type = "button", class = "btn action-button", onclick="var vals = []; var subsets = $('input[type = \"text\"][placeholder]'); for(i = 0; i < subsets.length; i++) {vals.push(subsets[i].value);}; Shiny.onInputChange(\"subs\", vals)", list(icon("save"), "Save Subset")),
                                         br(), br(),
                                         tags$button("", id = "clearsubset", type = "button", class = "btn action-button", onclick="Shiny.onInputChange(\"subs\", null)", list(icon("eraser"), "Clear Subset")),
