@@ -139,10 +139,14 @@ shinyServer(function(input, output, session) {
     }
     
     mydat <- NULL
+    oldval <- 0
     intro.start <- reactive({
         
         #dependency on input$clearssubset
-        input$clearsubset
+        if (input$clearsubset > oldval) {
+            updateCheckboxInput(session, "randomsub", value = FALSE)
+            oldval <<- input$clearsubset
+        }
       
         data.initial <- data.module(input$data_own, chosen.data(), input$own)
         
@@ -153,7 +157,9 @@ shinyServer(function(input, output, session) {
             values$firstrun <- FALSE
         }
                 
-        if (input$randomsub) {
+        if (input$randomsub & all(input$subs == "")) {
+            data.initial <- dplyr::sample_n(data.initial, input$randomsubrows)
+        } else if (input$randomsub) {
             data.initial <- dplyr::sample_n(mydat, input$randomsubrows)
         }
         mydat <<- data.initial
