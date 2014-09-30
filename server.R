@@ -233,7 +233,7 @@ shinyServer(function(input, output, session) {
 
     output$data <- renderDataTable({
         return(intro.data())
-    }, options = list(iDisplayLength = 10))
+    }, options = list(pageLength = 10))
     
     output$summary <- renderTable({
         return(summarytable(intro.data(), input$tblvars))
