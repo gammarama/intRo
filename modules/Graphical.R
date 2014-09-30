@@ -26,11 +26,11 @@ histogram <- function (data, x, y, ...) {
         layer_histograms()
 }
 
-boxplot1 <- function (data, x, y, ...) {        
-    data %>%
-        ggvis(x = as.name(x)) %>%
-        layer_boxplots()
-}
+#boxplot1 <- function (data, x, y, ...) {        
+#    data %>%
+#        ggvis(x = as.name(x)) %>%
+#        layer_boxplots()
+#}
 
 boxplot2 <- function (data, x, y, ...) {
     data[,x] <- factor(data[,x])
