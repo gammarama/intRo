@@ -51,17 +51,13 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                       tabPanel("Graphical",
                                column(4,
                                       wellPanel(
-                                        radioButtons("vars", "Type", choices=c("One Variable" = "onevar", "Two Variables" = "twovar")),
-                                        
-                                        hr(),
-                                        
-                                        selectInput("plottype", "Plot Type", choices = NULL),
+                                        selectInput("plottype", "Plot Type", choices = c("Histogram" = "histogram", "Normal Quantile Plot" = "quantileplot", "Scatterplot" = "scatterplot", "Line Chart" = "linechart", "Boxplot" = "boxplot", "Bar Chart" = "barchart", "Pareto Chart" = "paretochart")),
                                         
                                         hr(),
                                         
                                         selectInput("x", "Independent Variable (x)", choices = NULL),
                                         conditionalPanel(
-                                          condition = "input.vars == 'twovar'",
+                                          condition = "input.plottype != 'histogram' && input.plottype != 'quantileplot'",
                                           selectInput("y", "Dependent Variable (y)", choices = NULL)
                                         )
                                       )

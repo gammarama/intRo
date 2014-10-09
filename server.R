@@ -20,65 +20,32 @@ shinyServer(function(input, output, session) {
     valid.datasets <- list(mpg = mpg, airquality = airquality, diamonds = diamonds)
     valid.plottypes <- list(scatterplot = scatterplot, linechart = linechart,
                             histogram = histogram,
-                            boxplot2 = boxplot2, barchart = barchart,
+                            boxplot = boxplot, barchart = barchart,
                             paretochart = paretochart,
                             quantileplot = quantileplot)
     valid.bartypes <- list(length = length, sum = sum, mean = mean, median = median)
     
-    observe({
-        if (input$vars == "onevar") updateSelectInput(session, "plottype", choices = c("Histogram" = "histogram", "Normal Quantile Plot" = "quantileplot"), selected = "histogram")
-    })
-    
-    observe({
-        if (input$vars == "onevar") {
-            updateSelectInput(session, "x", choices = numericNames(intro.data()), selected = NA)
-            updateSelectInput(session, "y", choices = numericNames(intro.data()), selected = NA)
-        }
+    checkVariable <- function(data, var) {
+        return(nchar(var) > 0 & var %in% names(data))
+    }
 
-        if (input$varts == "twovart") {
-            updateSelectInput(session, "group2", choices = numericNames(intro.data()))
-        }
-    })
-    
     observe({
-        updateSelectInput(session, "group1", choices = numericNames(intro.data()), selected = NA)
-        updateSelectInput(session, "xreg", choices = numericNames(intro.data()), selected = NA)
-        updateSelectInput(session, "yreg", choices = numericNames(intro.data()), selected = NA)
-    })
-    
-    observe({
-        if (input$vars == "twovar") updateSelectInput(session, "plottype", choices = c("Scatterplot" = "scatterplot", "Line Chart" = "linechart", "Boxplot" = "boxplot2", "Bar Chart" = "barchart", "Pareto Chart" = "paretochart"), selected = "scatterplot")
-    })
-    
-    observe({
-        nms <- numericNames(intro.data())
-        all.nms <- names(intro.data())
-        new.x <- if (input$x %in% nms) input$x else nms[1]
-        new.y <- if (input$y %in% nms) input$y else nms[2]
-        
-        updateCheckboxGroupInput(session, "tblvars", choices=all.nms, selected = NA)
-        
-        if (input$vars == "twovar") {
-            updateSelectInput(session, "y", choices = nms, selected = new.y)
-            if (input$plottype %in% c("scatterplot", "linechart")) {
-                updateSelectInput(session, "x", choices = nms, selected = new.x)
-            } else if (input$plottype %in% c("boxplot2", "barchart", "paretochart")) {
-                updateSelectInput(session, "x", choices = all.nms, selected = input$x)
-            }
-        }
+        updateSelectInput(session, "x", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$x), input$x, numericNames(intro.data())[1]))
+        updateSelectInput(session, "y", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$y), input$y, numericNames(intro.data())[2]))
+        updateSelectInput(session, "xreg", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$xreg), input$xreg, numericNames(intro.data())[1]))
+        updateSelectInput(session, "yreg", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$yreg), input$yreg, numericNames(intro.data())[2]))
+        updateSelectInput(session, "group1", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$group1), input$group1, numericNames(intro.data())[1]))
+        updateSelectInput(session, "group2", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$group2), input$group2, numericNames(intro.data())[2]))
+        updateCheckboxGroupInput(session, "tblvars", choices = names(intro.data()))
     })
     
     observe({
         curdata <- intro.data()
         curx <- input$x
         cury <- input$y
-        if (!is.null(curx) & curx %in% names(curdata)) {
-            if (is.numeric(curdata[,curx])) {
-                rng <- range(curdata[,curx], na.rm = TRUE)
-                updateNumericInput(session, "binwidth", value=round((rng[2] - rng[1])/30, digits = 2))
-            }
-            
-            if (input$vars == "onevar" | (!is.null(cury) & cury %in% names(curdata))) chosen.plot()(curdata, input$x, input$y, chosen.bartype(), input$binwidth) %>% bind_shiny("plot")
+        
+        if (checkVariable(curdata, curx) & checkVariable(curdata, cury)) {
+            chosen.plot()(curdata, curx, cury, chosen.bartype(), input$binwidth) %>% bind_shiny("plot")
         }
     })
 
@@ -87,7 +54,7 @@ shinyServer(function(input, output, session) {
         curxreg <- input$xreg
         curyreg <- input$yreg
                         
-        if (!is.null(curxreg) & !is.null(curyreg) & curxreg %in% names(curdata) & curyreg %in% names(curdata)) {
+        if (curxreg %in% names(curdata) & curyreg %in% names(curdata)) {
             scatterplotreg(curdata, input$xreg, input$yreg) %>% bind_shiny("regplot")
             residualreg1(intro.data(), curxreg, curyreg) %>% bind_shiny("resplot1")
             residualreg2(intro.data(), curxreg, curyreg) %>% bind_shiny("resplot2")
