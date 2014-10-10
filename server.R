@@ -39,16 +39,29 @@ shinyServer(function(input, output, session) {
         updateCheckboxGroupInput(session, "tblvars", choices = names(intro.data()))
     })
     
+    ### Plot Options Observe
+    ### Can't be in above because of inter-dependency with plot call
     observe({
         curdata <- intro.data()
         curx <- input$x
         cury <- input$y
         
         if (checkVariable(curdata, curx) & checkVariable(curdata, cury)) {
-            chosen.plot()(curdata, curx, cury, chosen.bartype(), input$binwidth) %>% bind_shiny("plot")
+            updateNumericInput(session, "binwidth", value = (range(curdata[,curx], na.rm = TRUE)[2] - range(curdata[,curx], na.rm = TRUE)[1]) / 30, step = (range(curdata[,curx], na.rm = TRUE)[2] - range(curdata[,curx], na.rm = TRUE)[1]) / 300)
         }
     })
-
+    
+    observe({
+        curdata <- intro.data()
+        curx <- input$x
+        cury <- input$y
+        binwidth <- input$binwidth
+        
+        if (checkVariable(curdata, curx) & checkVariable(curdata, cury)) {
+            chosen.plot()(curdata, curx, cury, chosen.bartype(), binwidth) %>% bind_shiny("plot")
+        }
+    })
+    
     observe({
         curdata <- intro.data()
         curxreg <- input$xreg

@@ -34,9 +34,9 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                                              column(6, numericInput("randomsubrows", "Number of Rows", value = 10))
                                             )
                                         ),
-                                        tags$button("", id = "savesubset", type = "button", class = "btn action-button", onclick="var vals = []; var subsets = $('input[type = \"text\"][placeholder]'); for(i = 0; i < subsets.length; i++) {vals.push(subsets[i].value);}; Shiny.onInputChange(\"subs\", vals); wait_clear();", list(icon("save"), "Save Subset")),
+                                        tags$button("", id = "savesubset", type = "button", class = "btn action-button", onclick="var vals = []; var subsets = $('input[type = \"text\"][placeholder]'); for(i = 0; i < subsets.length; i++) {vals.push(subsets[i].value);}; Shiny.onInputChange(\"subs\", vals);", list(icon("save"), "Save Subset")),
                                         br(), br(),
-                                        tags$button("", id = "clearsubset", type = "button", class = "btn action-button", onclick="Shiny.onInputChange(\"subs\", null); wait_clear();", list(icon("eraser"), "Clear Subset")),
+                                        tags$button("", id = "clearsubset", type = "button", class = "btn action-button", onclick="Shiny.onInputChange(\"subs\", null);", list(icon("eraser"), "Clear Subset")),
                                         br(), br(),
                                         downloadButton("downloaddata", "Download Data")
                                       )
@@ -59,24 +59,23 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                         conditionalPanel(
                                           condition = "input.plottype != 'histogram' && input.plottype != 'quantileplot'",
                                           selectInput("y", "Dependent Variable (y)", choices = NULL)
+                                        ),
+                                        
+                                        hr(),
+                                        
+                                        conditionalPanel(
+                                            condition = "input.plottype == 'histogram'",
+                                            numericInput("binwidth", "Bin Width", value = 0)
+                                        ),
+                                        conditionalPanel(
+                                            condition = "input.plottype == 'barchart' || input.plottype == 'paretochart'",
+                                            radioButtons("bartype", "Y Variable Type", choices = c("Count" = "length", "Sum" = "sum", "Mean" = "mean", "Median" = "median"))
                                         )
                                       )
                                ),
                                
                                column(8,
-                                     ggvisOutput("plot"),
-                                     fluidRow(
-                                         column(8,
-                                            conditionalPanel(
-                                                condition = "input.plottype == 'histogram'",
-                                                numericInput("binwidth", "Bin Width", value = 1, step=0.01)
-                                            ),
-                                            conditionalPanel(
-                                                condition = "input.plottype == 'barchart' || input.plottype == 'paretochart'",
-                                                radioButtons("bartype", "Y Variable Type", choices = c("Count" = "length", "Sum" = "sum", "Mean" = "mean", "Median" = "median"))
-                                            )
-                                         )
-                                     )
+                                     ggvisOutput("plot")  
                                )
                       ),
                       tabPanel("Numeric",
@@ -100,7 +99,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                           
                                           hr(),
                                           
-                                          tags$button("", id = "saveresid", type = "button", class = "btn action-button", onclick="wait_clear();", list(icon("save"), "Save Residuals/Fitted"))
+                                          tags$button("", id = "saveresid", type = "button", class = "btn action-button", list(icon("save"), "Save Residuals/Fitted"))
                                           #actionButton("saveresid", "Save Residuals/Fitted", icon = icon("save"))
                                       )
                                ),
@@ -177,8 +176,8 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
 	  tabPanel(title="", icon=icon('code'), value = "javascript:$('#myEditor').slideToggle(); $('.fa-code').parent().parent().toggleClass('active'); $('div.codePrint').toggle()"),
     tabPanel(title="", icon=icon("print"), value = "javascript:print_intRo();"),
     footer=tagList(includeScript("scripts/top-nav-links.js"),
-                   includeScript("scripts/print.js"),
-                   includeScript("scripts/ggvis-helpers.js")
+                   includeScript("scripts/print.js")
+                  # includeScript("scripts/ggvis-helpers.js")
                    ),
     tags$head(tags$link(rel="shortcut icon", href="images/icon.png"))
 ))
