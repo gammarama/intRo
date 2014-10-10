@@ -46,6 +46,24 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                       dataTableOutput("data")
                                )
                       ),
+                      
+                      tabPanel("Transform",
+                               column(4,
+                                      wellPanel(
+                                          selectInput("var_trans", "Select Variable", choices = NULL),
+                                          radioButtons("trans", "Choose Transformation", choices = c("None" = "I", "Log" = "log", "Square Root" = "sqrt")),
+                                          
+                                          hr(),
+                                          
+                                          tags$button("", id = "savetrans", type = "button", class = "btn action-button", list(icon("save"), "Save Transformation"))
+                                      )
+                               ),
+                               
+                               column(8,
+                                      ggvisOutput("trans_plot"),
+                                      verbatimTextOutput("trans_out")
+                               )
+                      ),
                       "-----",
                       "Summaries",
                       tabPanel("Graphical",
@@ -65,7 +83,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                         
                                         conditionalPanel(
                                             condition = "input.plottype == 'histogram'",
-                                            numericInput("binwidth", "Bin Width", value = 0)
+                                            numericInput("binwidth", "Bin Width", value = 1)
                                         ),
                                         conditionalPanel(
                                             condition = "input.plottype == 'barchart' || input.plottype == 'paretochart'",
