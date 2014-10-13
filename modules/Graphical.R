@@ -33,41 +33,63 @@ boxplot <- function (data, x, y, ...) {
         layer_boxplots()
 }
 
-barchart <- function (data, x, y, ...) {  
+barchart <- function (data, x, y, ...) { 
     data[,x] <- factor(data[,x])    
     data$x <- data[,x]
-    data$y <- data[,y]
+    
+    addy <- list(...)[[3]]
     
     my.func <- list(...)[[1]]
     
-    data <- data %>% group_by(x) %>% summarise(y = my.func(y))
-    
-    data$x <- factor(data$x, levels = rev(levels(data$x)))
-    
-    data %>%
-        ggvis(x = ~x, y = ~y) %>%
-        layer_bars() %>%
-        add_axis("x", title = x) %>%
-        add_axis("y", title = y)
+    if (addy) {
+        data$y <- data[,y]
+        
+        data <- data %>% group_by(x) %>% summarise(y = my.func(y))
+        
+        data$x <- factor(data$x, levels = rev(levels(data$x)))
+        data <- as.data.frame(data)
+        
+        data %>%
+            ggvis(x = ~x, y = ~y) %>%
+            layer_bars() %>%
+            add_axis("x", title = x) %>%
+            add_axis("y", title = y)
+    } else {
+        data %>%
+            ggvis(x = ~x) %>%
+            layer_bars() %>%
+            add_axis("x", title = x)
+    }
 }
 
 paretochart <- function (data, x, y, ...) {
-    data[,x] <- factor(data[,x])    
+    data[,x] <- factor(data[,x], levels = names(sort(table(data[,x]), decreasing = TRUE)))    
     data$x <- data[,x]
-    data$y <- data[,y]
     
+    addy <- list(...)[[3]]
     my.func <- list(...)[[1]]
     
-    data <- data %>% group_by(x) %>% summarise(y = my.func(y))
-    
-    data$x <- reorder(data$x, data$y)
-    data$x <- factor(data$x, levels = rev(levels(data$x)))
-    
-    data %>%
-        ggvis(x = ~x, y = ~y) %>%
-        layer_bars() %>%
-        add_axis("x", title = x) %>%
-        add_axis("y", title = y)
+    if (addy) {
+        data$y <- data[,y]
+        
+        data <- data %>% group_by(x) %>% summarise(y = my.func(y))
+        
+        data$x <- reorder(data$x, data$y)
+        data$x <- factor(data$x, levels = rev(levels(data$x)))
+        
+        data <- as.data.frame(data)
+        
+        data %>%
+            ggvis(x = ~x, y = ~y) %>%
+            layer_bars() %>%
+            add_axis("x", title = x) %>%
+            add_axis("y", title = y)
+    } else {
+        data %>%
+            ggvis(x = ~x) %>%
+            layer_bars() %>%
+            add_axis("x", title = x)
+    }
 }
 
 quantileplot <- function (data, x, y, ...) {

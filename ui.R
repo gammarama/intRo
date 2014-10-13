@@ -29,14 +29,14 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                         
                                         hr(),
                                         fluidRow(
-                                            column(6, checkboxInput("randomsub", "Random Subset")), 
+                                            column(6, checkboxInput("randomsub", "Random Subset")),
                                             conditionalPanel(condition = "input.randomsub == true", 
-                                                             column(6, numericInput("randomsubrows", "Number of Rows", value = 10))
+                                                column(6, numericInput("randomsubrows", "Rows", value = 10))
                                             )
                                         ),
                                         tags$button("", id = "savesubset", type = "button", class = "btn action-button", onclick="var vals = []; var subsets = $('input[type = \"text\"][placeholder]'); for(i = 0; i < subsets.length; i++) {vals.push(subsets[i].value);}; Shiny.onInputChange(\"subs\", vals);", list(icon("save"), "Save Subset")),
                                         br(), br(),
-                                        tags$button("", id = "clearsubset", type = "button", class = "btn action-button", onclick="Shiny.onInputChange(\"subs\", null);", list(icon("eraser"), "Clear Subset")),
+                                        tags$button("", id = "clearsubset", type = "button", class = "btn action-button", onclick="Shiny.onInputChange(\"subs\", null);", list(icon("eraser"), "Reset Data")),
                                         br(), br(),
                                         downloadButton("downloaddata", "Download Data")
                                       )
@@ -75,7 +75,11 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                         
                                         selectInput("x", "Independent Variable (x)", choices = NULL),
                                         conditionalPanel(
-                                          condition = "input.plottype != 'histogram' && input.plottype != 'quantileplot'",
+                                            condition = "input.plottype == 'barchart' || input.plottype == 'paretochart'",
+                                            checkboxInput("addy", "Y Variable")
+                                        ),
+                                        conditionalPanel(
+                                          condition = "(input.plottype != 'histogram' && input.plottype != 'quantileplot' && input.plottype != 'barchart' && input.plottype != 'paretochart') || input.addy == true",
                                           selectInput("y", "Dependent Variable (y)", choices = NULL)
                                         ),
                                         
@@ -86,7 +90,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                             numericInput("binwidth", "Bin Width", value = 1)
                                         ),
                                         conditionalPanel(
-                                            condition = "input.plottype == 'barchart' || input.plottype == 'paretochart'",
+                                            condition = "(input.plottype == 'barchart' || input.plottype == 'paretochart') && input.addy == true",
                                             radioButtons("bartype", "Y Variable Type", choices = c("Count" = "length", "Sum" = "sum", "Mean" = "mean", "Median" = "median"))
                                         )
                                       )
