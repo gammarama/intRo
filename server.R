@@ -23,7 +23,8 @@ shinyServer(function(input, output, session) {
                             histogram = histogram,
                             boxplot = boxplot, barchart = barchart,
                             paretochart = paretochart,
-                            quantileplot = quantileplot)
+                            quantileplot = quantileplot,
+                            mosaicplot = mosaicplot)
     valid.bartypes <- list(length = length, sum = sum, mean = mean, median = median)
     
     checkVariable <- function(data, var) {

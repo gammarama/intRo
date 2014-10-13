@@ -69,7 +69,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                       tabPanel("Graphical",
                                column(4,
                                       wellPanel(
-                                        selectInput("plottype", "Plot Type", choices = c("Histogram" = "histogram", "Normal Quantile Plot" = "quantileplot", "Scatterplot" = "scatterplot", "Line Chart" = "linechart", "Boxplot" = "boxplot", "Bar Chart" = "barchart", "Pareto Chart" = "paretochart")),
+                                        selectInput("plottype", "Plot Type", choices = c("Histogram" = "histogram", "Normal Quantile Plot" = "quantileplot", "Scatterplot" = "scatterplot", "Line Chart" = "linechart", "Boxplot" = "boxplot", "Bar Chart" = "barchart", "Pareto Chart" = "paretochart", "Mosaic Plot" = "mosaicplot")),
                                         
                                         hr(),
                                         
@@ -116,12 +116,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                           selectInput("yreg", "Dependent Variable (y)", choices = NULL),
                                           
                                           hr(),
-                                          
-<<<<<<< HEAD
-                                          tags$button("", id = "saveresid", type = "button", class = "btn action-button", onclick="%wait_clear();", list(icon("save"), "Save Residuals/Fitted"))
-=======
                                           tags$button("", id = "saveresid", type = "button", class = "btn action-button", list(icon("save"), "Save Residuals/Fitted"))
->>>>>>> 96e3fd48169040833cc6f1c681977bab4f1a57ed
                                           #actionButton("saveresid", "Save Residuals/Fitted", icon = icon("save"))
                                       )
                                ),
