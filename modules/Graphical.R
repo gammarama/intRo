@@ -23,7 +23,7 @@ linechart <- function (data, x, y, ...)  {
 histogram <- function (data, x, y, ...) {        
     na.omit(data) %>%
         ggvis(x = as.name(x)) %>%
-        layer_histograms()
+        layer_histograms(width = list(...)[[2]])
 }
 
 boxplot <- function (data, x, y, ...) {

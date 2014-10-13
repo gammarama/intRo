@@ -17,6 +17,7 @@ shinyServer(function(input, output, session) {
     
     sourceDir <- function(path, ...) { for (nm in list.files(path, pattern = "\\.[Rr]$")) { source(file.path(path, nm), ...) } }
     sourceDir("modules")
+    valid.trans <- list(I = I, log = log, sqrt = sqrt)
     valid.datasets <- list(mpg = mpg, airquality = airquality, diamonds = diamonds)
     valid.plottypes <- list(scatterplot = scatterplot, linechart = linechart,
                             histogram = histogram,
@@ -30,6 +31,7 @@ shinyServer(function(input, output, session) {
     }
 
     observe({
+        updateSelectInput(session, "var_trans", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$var_trans), input$var_trans, numericNames(intro.data())[1]))
         updateSelectInput(session, "x", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$x), input$x, numericNames(intro.data())[1]))
         updateSelectInput(session, "y", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$y), input$y, numericNames(intro.data())[2]))
         updateSelectInput(session, "xreg", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$xreg), input$xreg, numericNames(intro.data())[1]))
@@ -41,14 +43,38 @@ shinyServer(function(input, output, session) {
     
     observe({
         curdata <- intro.data()
+        curx <- input$var_trans
+        
+        if (checkVariable(curdata, curx)) {
+            trans_x <- valid.trans[[input$trans]](curdata[,curx])
+            curdata[,curx] <- as.numeric(trans_x)
+            plot_var_trans(curdata, curx) %>% bind_shiny("trans_plot")
+        }
+    })
+    
+    ### Plot Options Observe
+    ### Can't be in above because of inter-dependency with plot call
+    observe({
+        curdata <- intro.data()
         curx <- input$x
         cury <- input$y
         
         if (checkVariable(curdata, curx) & checkVariable(curdata, cury)) {
-            chosen.plot()(curdata, curx, cury, chosen.bartype(), input$binwidth) %>% bind_shiny("plot")
+            updateNumericInput(session, "binwidth", value = (range(curdata[,curx], na.rm = TRUE)[2] - range(curdata[,curx], na.rm = TRUE)[1]) / 30, step = (range(curdata[,curx], na.rm = TRUE)[2] - range(curdata[,curx], na.rm = TRUE)[1]) / 300)
         }
     })
-
+    
+    observe({
+        curdata <- intro.data()
+        curx <- input$x
+        cury <- input$y
+        binwidth <- input$binwidth
+        
+        if (checkVariable(curdata, curx) & checkVariable(curdata, cury)) {
+            chosen.plot()(curdata, curx, cury, chosen.bartype(), binwidth) %>% bind_shiny("plot")
+        }
+    })
+    
     observe({
         curdata <- intro.data()
         curxreg <- input$xreg
@@ -128,6 +154,7 @@ shinyServer(function(input, output, session) {
     })
     
     oldsaveresid <- 0
+    oldsavetrans <- 0
     
     intro.data <- reactive({
         if (is.null(intro.start())) return(NULL)
@@ -139,11 +166,23 @@ shinyServer(function(input, output, session) {
             curxreg <- input$xreg
             curyreg <- input$yreg
             
-            if (!is.null(curxreg) & !is.null(curyreg) & curxreg %in% names(mydat) & curyreg %in% names(mydat)) {
+            if (curxreg %in% names(mydat) & curyreg %in% names(mydat)) {
                 mydat <<- savefit(mydat, input$xreg, input$yreg)
             }
             
             oldsaveresid <<- input$saveresid
+        }
+        
+        if (input$savetrans > oldsavetrans) {
+            curtrans <- input$var_trans
+            
+            if (curtrans %in% names(mydat)) {
+                trans_x <- valid.trans[[input$trans]](mydat[,curtrans])
+                mydat[,curtrans] <<- as.numeric(trans_x)
+                updateRadioButtons(session, "trans", selected = "I")
+            }
+            
+            oldsavetrans <<- input$savetrans
         }
         
         return(mydat)
@@ -195,27 +234,31 @@ shinyServer(function(input, output, session) {
         return(intro.data())
     }, options = list(pageLength = 10))
     
+    output$trans_out <- renderText({
+        return(valid.trans[[input$trans]](intro.data()[,input$var_trans])[1:min(10, nrow(intro.data()))])
+    })
+    
     output$summary <- renderTable({
         return(summarytable(intro.data(), input$tblvars))
     }, include.rownames = FALSE)
     
     output$regtable <- renderTable({
-        if (is.null(input$xreg) | !(input$xreg %in% numericNames(intro.data())) | is.null(input$yreg) | !(input$yreg %in% numericNames(intro.data()))) return(NULL)
+        if (!(input$xreg %in% numericNames(intro.data())) | !(input$yreg %in% numericNames(intro.data()))) return(NULL)
         else return(tablereg(intro.data(), input$xreg, input$yreg))
     }, digits = 4)
     
     output$r <- renderText({
-        if (is.null(input$xreg) | !(input$xreg %in% numericNames(intro.data())) | is.null(input$yreg) | !(input$yreg %in% numericNames(intro.data()))) return(NULL)
+        if (!(input$xreg %in% numericNames(intro.data())) | !(input$yreg %in% numericNames(intro.data()))) return(NULL)
         else return(r(intro.data(), input$xreg, input$yreg))
     })
     
     output$r2 <- renderText({
-        if (is.null(input$xreg) | !(input$xreg %in% numericNames(intro.data())) | is.null(input$yreg) | !(input$yreg %in% numericNames(intro.data()))) return(NULL)
+        if (!(input$xreg %in% numericNames(intro.data())) | !(input$yreg %in% numericNames(intro.data()))) return(NULL)
         return(r2(intro.data(), input$xreg, input$yreg))
     })
     
     output$ttesttable <- renderText({
-        if (is.null(input$group1) | !(input$group1 %in% numericNames(intro.data()))) return(NULL)
+        if (!(input$group1 %in% numericNames(intro.data()))) return(NULL)
         return(ttesttable(intro.data(), input$group1, input$group2, input$varts == "twovart", input$conflevel, input$althyp, input$hypval))
     })
 })
