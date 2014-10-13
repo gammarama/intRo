@@ -159,8 +159,8 @@ shinyServer(function(input, output, session) {
         data.subset <- process_logical(mydat, input$subs)
         mydat <<- data.subset
         if (input$randomsub) { 
-            mydatbak <<- mydat
-            mydat <<- dplyr::sample_n(mydat, input$randomsubrows)
+            mydatbak <<- mydat            
+            mydat <<- dplyr::sample_n(intro.start(), input$randomsubrows)
         } else if (!input$randomsub & !is.null(mydatbak)) {
             mydat <<- mydatbak
             mydatbak <<- NULL
