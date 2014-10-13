@@ -144,11 +144,6 @@ shinyServer(function(input, output, session) {
             values$firstrun <- FALSE
         }
                 
-        if (input$randomsub & all(input$subs == "")) {
-            data.initial <- dplyr::sample_n(data.initial, input$randomsubrows)
-        } else if (input$randomsub) {
-            data.initial <- dplyr::sample_n(mydat, input$randomsubrows)
-        }
         mydat <<- data.initial
                 
         return(data.initial)
@@ -156,12 +151,20 @@ shinyServer(function(input, output, session) {
     
     oldsaveresid <- 0
     oldsavetrans <- 0
+    mydatbak <- NULL
     
     intro.data <- reactive({
         if (is.null(intro.start())) return(NULL)
 
         data.subset <- process_logical(mydat, input$subs)
         mydat <<- data.subset
+        if (input$randomsub) { 
+            mydatbak <<- mydat
+            mydat <<- dplyr::sample_n(mydat, input$randomsubrows)
+        } else if (!input$randomsub & !is.null(mydatbak)) {
+            mydat <<- mydatbak
+            mydatbak <<- NULL
+        }
         
         if (input$saveresid > oldsaveresid) {
             curxreg <- input$xreg
