@@ -43,6 +43,7 @@ barchart <- function (data, x, y, ...) {
     data <- data %>% group_by(x) %>% summarise(y = my.func(y))
     
     data$x <- factor(data$x, levels = rev(levels(data$x)))
+    data <- as.data.frame(data)
     
     data %>%
         ggvis(x = ~x, y = ~y) %>%

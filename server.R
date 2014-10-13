@@ -47,8 +47,8 @@ shinyServer(function(input, output, session) {
         
         if (checkVariable(curdata, curx)) {
             trans_x <- valid.trans[[input$trans]](curdata[,curx])
-            curdata[,curx] <- as.numeric(trans_x)
-            plot_var_trans(curdata, curx) %>% bind_shiny("trans_plot")
+            curdata[, paste(curx, input$trans, sep = "_")] <- as.numeric(trans_x)
+            plot_var_trans(curdata, paste(curx, input$trans, sep = "_")) %>% bind_shiny("trans_plot")
         }
     })
     
@@ -178,7 +178,8 @@ shinyServer(function(input, output, session) {
             
             if (curtrans %in% names(mydat)) {
                 trans_x <- valid.trans[[input$trans]](mydat[,curtrans])
-                mydat[,curtrans] <<- as.numeric(trans_x)
+                mydat[,paste(curtrans, input$trans, sep = "_")] <<- as.numeric(trans_x)
+                
                 updateRadioButtons(session, "trans", selected = "I")
             }
             
