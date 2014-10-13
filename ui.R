@@ -75,7 +75,11 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                         
                                         selectInput("x", "Independent Variable (x)", choices = NULL),
                                         conditionalPanel(
-                                          condition = "input.plottype != 'histogram' && input.plottype != 'quantileplot'",
+                                            condition = "input.plottype == 'barchart' || input.plottype == 'paretochart'",
+                                            checkboxInput("addy", "Y Variable")
+                                        ),
+                                        conditionalPanel(
+                                          condition = "(input.plottype != 'histogram' && input.plottype != 'quantileplot' && input.plottype != 'barchart' && input.plottype != 'paretochart') || input.addy == true",
                                           selectInput("y", "Dependent Variable (y)", choices = NULL)
                                         ),
                                         
@@ -86,7 +90,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                             numericInput("binwidth", "Bin Width", value = 1)
                                         ),
                                         conditionalPanel(
-                                            condition = "input.plottype == 'barchart' || input.plottype == 'paretochart'",
+                                            condition = "(input.plottype == 'barchart' || input.plottype == 'paretochart') && input.addy == true",
                                             radioButtons("bartype", "Y Variable Type", choices = c("Count" = "length", "Sum" = "sum", "Mean" = "mean", "Median" = "median"))
                                         )
                                       )

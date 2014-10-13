@@ -29,17 +29,6 @@ shinyServer(function(input, output, session) {
     checkVariable <- function(data, var) {
         return(nchar(var) > 0 & var %in% names(data))
     }
-
-    observe({
-        updateSelectInput(session, "var_trans", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$var_trans), input$var_trans, numericNames(intro.data())[1]))
-        updateSelectInput(session, "x", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$x), input$x, numericNames(intro.data())[1]))
-        updateSelectInput(session, "y", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$y), input$y, numericNames(intro.data())[2]))
-        updateSelectInput(session, "xreg", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$xreg), input$xreg, numericNames(intro.data())[1]))
-        updateSelectInput(session, "yreg", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$yreg), input$yreg, numericNames(intro.data())[2]))
-        updateSelectInput(session, "group1", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$group1), input$group1, numericNames(intro.data())[1]))
-        updateSelectInput(session, "group2", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$group2), input$group2, numericNames(intro.data())[2]))
-        updateCheckboxGroupInput(session, "tblvars", choices = names(intro.data()))
-    })
     
     observe({
         curdata <- intro.data()
@@ -69,9 +58,10 @@ shinyServer(function(input, output, session) {
         curx <- input$x
         cury <- input$y
         binwidth <- input$binwidth
+        addy <- input$addy
         
-        if (checkVariable(curdata, curx) & checkVariable(curdata, cury)) {
-            chosen.plot()(curdata, curx, cury, chosen.bartype(), binwidth) %>% bind_shiny("plot")
+        if (checkVariable(curdata, curx) & (checkVariable(curdata, cury) | !addy)) {
+            chosen.plot()(curdata, curx, cury, chosen.bartype(), binwidth, addy) %>% bind_shiny("plot")
         }
     })
     
@@ -86,6 +76,17 @@ shinyServer(function(input, output, session) {
             residualreg2(intro.data(), curxreg, curyreg) %>% bind_shiny("resplot2")
             residualreg3(intro.data(), curxreg, curyreg) %>% bind_shiny("resplot3")
         }
+    })
+    
+    observe({
+        updateSelectInput(session, "var_trans", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$var_trans), input$var_trans, numericNames(intro.data())[1]))
+        updateSelectInput(session, "x", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$x), input$x, numericNames(intro.data())[1]))
+        updateSelectInput(session, "y", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$y), input$y, numericNames(intro.data())[2]))
+        updateSelectInput(session, "xreg", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$xreg), input$xreg, numericNames(intro.data())[1]))
+        updateSelectInput(session, "yreg", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$yreg), input$yreg, numericNames(intro.data())[2]))
+        updateSelectInput(session, "group1", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$group1), input$group1, numericNames(intro.data())[1]))
+        updateSelectInput(session, "group2", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$group2), input$group2, numericNames(intro.data())[2]))
+        updateCheckboxGroupInput(session, "tblvars", choices = names(intro.data()))
     })
     
     process_logical <- function(data, x) {
