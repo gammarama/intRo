@@ -240,10 +240,6 @@ shinyServer(function(input, output, session) {
         return(intro.data())
     }, options = list(pageLength = 10))
     
-    output$trans_out <- renderText({
-        return(valid.trans[[input$trans]](intro.data()[,input$var_trans])[1:min(10, nrow(intro.data()))])
-    })
-    
     output$summary <- renderTable({
         return(summarytable(intro.data(), input$tblvars))
     }, include.rownames = FALSE)

@@ -60,8 +60,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                ),
                                
                                column(8,
-                                      ggvisOutput("trans_plot"),
-                                      verbatimTextOutput("trans_out")
+                                      ggvisOutput("trans_plot")
                                )
                       ),
                       "-----",
