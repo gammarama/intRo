@@ -92,7 +92,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                         
                                         conditionalPanel(
                                             condition = "input.plottype == 'histogram'",
-                                            numericInput("binwidth", "Bin Width", value = 1)
+                                            numericInput("binwidth", "Bin Width", value = NA, min = 0.1, step = 0.1)
                                         ),
                                         conditionalPanel(
                                             condition = "(input.plottype == 'barchart' || input.plottype == 'paretochart') && input.addy == true",

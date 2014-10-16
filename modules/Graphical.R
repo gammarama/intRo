@@ -20,10 +20,11 @@ linechart <- function (data, x, y, ...)  {
         layer_lines()
 }
 
-histogram <- function (data, x, y, ...) {        
+histogram <- function (data, x, y, ...) {     
+    bw <- if (is.na(list(...)[[2]])) NULL else list(...)[[2]]
     na.omit(data) %>%
         ggvis(x = as.name(x)) %>%
-        layer_histograms(width = list(...)[[2]])
+        layer_histograms(width = bw)
 }
 
 boxplot <- function (data, x, y, ...) {

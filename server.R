@@ -46,15 +46,15 @@ shinyServer(function(input, output, session) {
     
     ### Plot Options Observe
     ### Can't be in above because of inter-dependency with plot call
-    observe({
-        curdata <- intro.data()
-        curx <- input$x
-        cury <- input$y
-        
-        if (checkVariable(curdata, curx) & checkVariable(curdata, cury)) {
-            updateNumericInput(session, "binwidth", value = (range(curdata[,curx], na.rm = TRUE)[2] - range(curdata[,curx], na.rm = TRUE)[1]) / 30, step = (range(curdata[,curx], na.rm = TRUE)[2] - range(curdata[,curx], na.rm = TRUE)[1]) / 300)
-        }
-    })
+#     observe({
+#         curdata <- intro.data()
+#         curx <- input$x
+#         cury <- input$y
+#         
+#         if (checkVariable(curdata, curx) & checkVariable(curdata, cury)) {
+#             updateNumericInput(session, "binwidth", step = (range(curdata[,curx], na.rm = TRUE)[2] - range(curdata[,curx], na.rm = TRUE)[1]) / 300)
+#         }
+#     })
     
     observe({
         curdata <- intro.data()
