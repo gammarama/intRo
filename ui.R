@@ -126,12 +126,14 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                       tabPanel("Numeric",
                                column(4,
                                       wellPanel(
-                                        checkboxGroupInput("tblvars", "Select Variables", choices = list(""))
+                                        checkboxGroupInput("tblvars", "Select Variables", choices = list("")),
+                                        selectInput("grouping", "Select Grouping Variable", choices = NULL)
                                       )
                                ),
                                
                                column(8,
-                                      tableOutput("summary")
+                                      #tableOutput("summary")
+                                      verbatimTextOutput("new_summary")
                                )
                       ),
                       "-----",

@@ -1,5 +1,6 @@
 library(shiny)
 library(ggplot2)
+library(dplyr)
 library(ggvis)
 library(shinyAce)
 library(YaleToolkit)
@@ -8,6 +9,10 @@ library(gridExtra)
 
 numericNames <- function(data) {
     return(as.character(subset(whatis(data), type == "numeric" & !(variable.name %in% c("year", "month", "day", "Year", "Month", "Day")))$variable.name))
+}
+
+my.summary <- function(x) {
+    return(c(summary(x), "SD" = sd(x, na.rm = TRUE)))
 }
 
 shinyServer(function(input, output, session) {
@@ -89,6 +94,7 @@ shinyServer(function(input, output, session) {
         updateSelectInput(session, "yreg", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$yreg), input$yreg, numericNames(intro.data())[2]))
         updateSelectInput(session, "group1", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$group1), input$group1, numericNames(intro.data())[1]))
         updateSelectInput(session, "group2", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$group2), input$group2, numericNames(intro.data())[2]))
+        updateSelectInput(session, "grouping", choices = c("None" = "none", numericNames(intro.data())))
         updateCheckboxGroupInput(session, "tblvars", choices = names(intro.data()))
     })
     
@@ -224,6 +230,24 @@ shinyServer(function(input, output, session) {
             write.csv(intro.data(), file)
         }
     )
+
+    q1 <- function(x) { return(quantile(x, .25)) }
+    q3 <- function(x) { return(quantile(x, .75)) }
+
+    output$new_summary <- renderPrint({
+        if (is.null(input$tblvars)){
+            return(NULL)    
+        } else if (input$grouping == "none") {
+            return(summary(intro.data()[,input$tblvars]))
+        } else {
+            dat <- intro.data()
+            dat$intro_grouping <- dat[,input$grouping]
+            
+            dat.dplyr <- dat %>% group_by(intro_grouping) %>% summarise_each(funs(min, q1, median, q3, max, mean, sd))
+            
+            return(dat.dplyr)
+        }
+    })
     
     chosen.data <- reactive({
         return(valid.datasets[[input$data]])
