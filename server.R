@@ -64,7 +64,7 @@ shinyServer(function(input, output, session) {
         addy <- input$addy
         
         if (checkVariable(curdata, curx) & (checkVariable(curdata, cury) | !addy)) {
-            chosen.plot()(curdata, curx, cury, chosen.bartype(), binwidth, addy) %>% bind_shiny("plot")
+            chosen.plot()(curdata, curx, cury, chosen.bartype(), binwidth, addy, input$xmin, input$xmax, input$ymin, input$ymax) %>% bind_shiny("plot")
         }
     })
     

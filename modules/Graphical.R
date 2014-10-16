@@ -8,10 +8,22 @@ scatterplot <- function (data, x, y, ...)  {
         paste0(names(x), ": ", format(x), collapse = "<br />")
     }
     
+    args <- list(...)
+    
+    domainx <- if (!is.na(args[[4]]) | !is.na(args[[5]])) c(args[[4]], args[[5]]) else NULL
+    nicex <- if (is.null(domainx)) NULL else FALSE
+    clampx <- if (is.null(domainx)) NULL else TRUE
+    
+    domainy <- if (!is.na(args[[6]]) | !is.na(args[[7]])) c(args[[6]], args[[7]]) else NULL
+    nicey <- if (is.null(domainy)) NULL else FALSE
+    clampy <- if (is.null(domainy)) NULL else TRUE
+    
     data %>%
         ggvis(x = as.name(x), y = as.name(y)) %>%
         layer_points() %>%
-        add_tooltip(all_values, "hover")
+        add_tooltip(all_values, "hover") %>%
+        scale_numeric("x", domain = domainx, nice = nicex, clamp = clampx) %>%
+        scale_numeric("y", domain = domainy, nice = nicey, clamp = clampy)
 }
 
 linechart <- function (data, x, y, ...)  {
