@@ -36,10 +36,10 @@ shinyServer(function(input, output, session) {
         curx <- input$var_trans
         
         if (checkVariable(curdata, curx)) {
-            trans_x <- if (input$trans == "I") curdata[,curx] else if (input$power == 0) log(curdata[,curx]) else (curdata[,curx])^(input$power)
-            curdata[, paste(curx, ifelse(input$trans == "I", "none", input$power), sep = "_")] <- as.numeric(trans_x)
+            trans_x <- if (is.na(input$power) | input$trans == "I") curdata[,curx] else if (input$power == 0) log(curdata[,curx]) else (curdata[,curx])^(input$power)
+            curdata[, paste(curx, ifelse(is.na(input$power) | input$trans == "I", "none", input$power), sep = "_")] <- as.numeric(trans_x)
             
-            plot_var_trans(curdata, paste(curx, ifelse(input$trans == "I", "none", input$power), sep = "_")) %>% bind_shiny("trans_plot")
+            plot_var_trans(curdata, paste(curx, ifelse(is.na(input$power) | input$trans == "I", "none", input$power), sep = "_")) %>% bind_shiny("trans_plot")
             plot_var_trans(curdata, curx) %>% bind_shiny("var_plot")
         }
     })
@@ -183,7 +183,7 @@ shinyServer(function(input, output, session) {
         if (input$savetrans > oldsavetrans) {
             curtrans <- input$var_trans
             
-            if (curtrans %in% names(mydat) & input$trans == "power") {
+            if (curtrans %in% names(mydat) & input$trans == "power" & !is.na(input$power)) {
                 trans_x <- if (input$power == 0) log(mydat[,curtrans]) else (mydat[,curtrans])^(input$power)
                 mydat[, paste(curtrans, sub("\\.", "", input$power), sep = "_")] <<- as.numeric(trans_x)                
                 updateRadioButtons(session, "trans", selected = "I")
