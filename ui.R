@@ -76,7 +76,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                       tabPanel("Graphical",
                                column(4,
                                       wellPanel(
-                                        selectInput("plottype", "Plot Type", choices = c("Histogram" = "histogram", "Normal Quantile Plot" = "quantileplot", "Scatterplot" = "scatterplot", "Line Chart" = "linechart", "Boxplot" = "boxplot", "Bar Chart" = "barchart", "Pareto Chart" = "paretochart")),
+                                        selectInput("plottype", "Plot Type", choices = c("Histogram" = "histogram", "Normal Quantile Plot" = "quantileplot", "Scatterplot" = "scatterplot", "Line Chart" = "linechart", "Boxplot" = "boxplot", "Bar Chart" = "barchart", "Pareto Chart" = "paretochart", "Mosaic Plot" = "mosaicplot")),
                                         
                                         hr(),
                                         
@@ -122,7 +122,12 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                ),
                                
                                column(8,
-                                     ggvisOutput("plot")  
+                                      conditionalPanel(condition = "input.plottype != 'mosaicplot'",
+                                            ggvisOutput("plot")
+                                      ),
+                                      conditionalPanel(condition = "input.plottype == 'mosaicplot'",
+                                            plotOutput("mosaicplot")
+                                      )
                                )
                       ),
                       tabPanel("Numeric",

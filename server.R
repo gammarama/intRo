@@ -32,7 +32,8 @@ shinyServer(function(input, output, session) {
                             histogram = histogram,
                             boxplot = boxplot, barchart = barchart,
                             paretochart = paretochart,
-                            quantileplot = quantileplot
+                            quantileplot = quantileplot,
+                            mosaicplot = mosaicplot)
     valid.bartypes <- list(length = length, sum = sum, mean = mean, median = median)
     
     checkVariable <- function(data, var) {
@@ -59,7 +60,7 @@ shinyServer(function(input, output, session) {
         binwidth <- input$binwidth
         addy <- input$addy
         
-        if (checkVariable(curdata, curx) & (checkVariable(curdata, cury) | !addy)) {
+        if (checkVariable(curdata, curx) & (checkVariable(curdata, cury) | !addy) & input$plottype != "mosaicplot") {
             chosen.plot()(curdata, curx, cury, chosen.bartype(), binwidth, addy, input$xmin, input$xmax, input$ymin, input$ymax) %>% bind_shiny("plot")
         }
     })
@@ -81,7 +82,7 @@ shinyServer(function(input, output, session) {
         updateSelectInput(session, "var_trans", choices = names(intro.data()), selected = ifelse(checkVariable(intro.data(), input$var_trans), input$var_trans, names(intro.data())[1]))
         if (input$var_trans %in% numericNames(intro.data())) updateRadioButtons(session, "trans", choices = c("None" = "I", "Type" = "type", "Power" = "power")) else updateRadioButtons(session, "trans", choices = c("None" = "I", "Type" = "type"))
         if (input$plottype %in% c("boxplot", "barchart", "paretochart", "mosaicplot")) updateSelectInput(session, "x", choices = categoricNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$x), input$x, categoricNames(intro.data()))[1]) else updateSelectInput(session, "x", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$x), input$x, numericNames(intro.data())[1]))
-        if (input$plottype %in% c("mosaicplot")) updateSelectInput(session, "y", choices = categoricNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$y), input$y, categoicNames(intro.data())[1])) else updateSelectInput(session, "y", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$y), input$y, numericNames(intro.data())[2]))
+        if (input$plottype %in% c("mosaicplot")) updateSelectInput(session, "y", choices = categoricNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$y), input$y, categoricNames(intro.data())[1])) else updateSelectInput(session, "y", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$y), input$y, numericNames(intro.data())[2]))
         updateSelectInput(session, "xreg", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$xreg), input$xreg, numericNames(intro.data())[1]))
         updateSelectInput(session, "yreg", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$yreg), input$yreg, numericNames(intro.data())[2]))
         updateSelectInput(session, "group1", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$group1), input$group1, numericNames(intro.data())[1]))
@@ -282,6 +283,9 @@ shinyServer(function(input, output, session) {
       return( intro.data())
     }, options = dt.options)
 
+    output$mosaicplot <- renderPlot({
+        return(print(mosaicplot(intro.data(), input$x, input$y)))
+    })
     
     output$summary <- renderTable({
         return(summarytable(intro.data(), input$tblvars))
