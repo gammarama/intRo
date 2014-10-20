@@ -16,7 +16,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                       wellPanel(
                                         conditionalPanel(
                                           condition = "input.own == false",
-                                          selectInput("data", "Choose Dataset", c("MPG" = "mpg", "Air Quality" = "airquality", "Diamonds" = "diamonds"), selected = "MPG")
+                                          selectInput("data", "Choose Dataset", c("MPG" = "mpg", "Air Quality" = "airquality", "Diamonds" = "diamonds"), selected = "mpg")
                                         ),
                                         conditionalPanel(
                                           condition = "input.own == true",
