@@ -8,7 +8,7 @@ library(lubridate)
 library(gridExtra)
 
 numericNames <- function(data) {
-    return(as.character(subset(whatis(data), type == "numeric" & !(variable.name %in% c("year", "month", "day", "Year", "Month", "Day")))$variable.name))
+    return(as.character(subset(whatis(data), type == "numeric")$variable.name))
 }
 
 categoricNames <- function(data) {
