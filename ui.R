@@ -52,12 +52,14 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                       wellPanel(
                                           selectInput("var_trans", "Select Variable", choices = NULL),
                                           
-                                          
-                                          radioButtons("trans", "Choose Transformation", choices = c("None" = "I", "Power" = "power")),
-                                          conditionalPanel(condition = "input.trans == 'power'",
-                                              numericInput("power", "Power", value = 1, min = -5, max = 5, step = 0.1)
-                                          ),
-                                          
+                                           radioButtons("trans", "Choose Transformation", choices = c("None" = "I", "Type" = "type", "Power" = "power")),
+                                           conditionalPanel(condition = "input.trans == 'power'",
+                                                            numericInput("power", "Power", value = 1, min = -5, max = 5, step = 0.1)
+                                           ),
+                                           conditionalPanel(condition = "input.trans == 'type'",
+                                                           selectInput("var_type", "Type", choices = c("Quantitative" = "quantitative", "Categorical" = "categorical"))
+                                           ),
+
                                           hr(),
                                           
                                           tags$button("", id = "savetrans", type = "button", class = "btn action-button", list(icon("save"), "Save Transformation"))
@@ -78,14 +80,14 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                         
                                         hr(),
                                         
-                                        selectInput("x", "Independent Variable (x)", choices = NULL),
+                                        selectInput("x", "X Variable (x)", choices = NULL),
                                         conditionalPanel(
                                             condition = "input.plottype == 'barchart' || input.plottype == 'paretochart'",
                                             checkboxInput("addy", "Y Variable")
                                         ),
                                         conditionalPanel(
                                           condition = "(input.plottype != 'histogram' && input.plottype != 'quantileplot' && input.plottype != 'barchart' && input.plottype != 'paretochart') || input.addy == true",
-                                          selectInput("y", "Dependent Variable (y)", choices = NULL)
+                                          selectInput("y", "Y Variable (y)", choices = NULL)
                                         ),
                                         
                                         hr(),

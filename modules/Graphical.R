@@ -27,32 +27,68 @@ scatterplot <- function (data, x, y, ...)  {
 }
 
 linechart <- function (data, x, y, ...)  {
+    args <- list(...)
+    
+    domainx <- if (!is.na(args[[4]]) | !is.na(args[[5]])) c(args[[4]], args[[5]]) else NULL
+    nicex <- if (is.null(domainx)) NULL else FALSE
+    clampx <- if (is.null(domainx)) NULL else TRUE
+    
+    domainy <- if (!is.na(args[[6]]) | !is.na(args[[7]])) c(args[[6]], args[[7]]) else NULL
+    nicey <- if (is.null(domainy)) NULL else FALSE
+    clampy <- if (is.null(domainy)) NULL else TRUE
+    
     data %>%
         ggvis(x = as.name(x), y = as.name(y)) %>%
-        layer_lines()
+        layer_lines() %>%
+        scale_numeric("x", domain = domainx, nice = nicex, clamp = clampx) %>%
+        scale_numeric("y", domain = domainy, nice = nicey, clamp = clampy)
 }
 
 histogram <- function (data, x, y, ...) {     
+    args <- list(...)
+    
+    domainx <- if (!is.na(args[[4]]) | !is.na(args[[5]])) c(args[[4]], args[[5]]) else NULL
+    nicex <- if (is.null(domainx)) NULL else FALSE
+    clampx <- if (is.null(domainx)) NULL else TRUE
+    
+    domainy <- if (!is.na(args[[6]]) | !is.na(args[[7]])) c(args[[6]], args[[7]]) else NULL
+    nicey <- if (is.null(domainy)) NULL else FALSE
+    clampy <- if (is.null(domainy)) NULL else TRUE
+    
     bw <- if (is.na(list(...)[[2]])) NULL else list(...)[[2]]
     na.omit(data) %>%
         ggvis(x = as.name(x)) %>%
-        layer_histograms(width = bw)
+        layer_histograms(width = bw) %>%
+        scale_numeric("x", domain = domainx, nice = nicex, clamp = clampx) %>%
+        scale_numeric("y", domain = domainy, nice = nicey, clamp = clampy)
 }
 
 boxplot <- function (data, x, y, ...) {
+    args <- list(...)
+    
+    domainy <- if (!is.na(args[[6]]) | !is.na(args[[7]])) c(args[[6]], args[[7]]) else NULL
+    nicey <- if (is.null(domainy)) NULL else FALSE
+    clampy <- if (is.null(domainy)) NULL else TRUE
+    
     data[,x] <- factor(data[,x])
     data %>%
         ggvis(x = as.name(x), y = as.name(y)) %>%
-        layer_boxplots()
+        layer_boxplots() %>%
+        scale_numeric("y", domain = domainy, nice = nicey, clamp = clampy)
 }
 
 barchart <- function (data, x, y, ...) { 
     data[,x] <- factor(data[,x])    
     data$x <- data[,x]
     
-    addy <- list(...)[[3]]
+    args <- list(...)
     
-    my.func <- list(...)[[1]]
+    addy <- args[[3]]
+    my.func <- args[[1]]
+    
+    domainy <- if (!is.na(args[[6]]) | !is.na(args[[7]])) c(args[[6]], args[[7]]) else NULL
+    nicey <- if (is.null(domainy)) NULL else FALSE
+    clampy <- if (is.null(domainy)) NULL else TRUE
     
     if (addy) {
         data$y <- data[,y]
@@ -66,12 +102,14 @@ barchart <- function (data, x, y, ...) {
             ggvis(x = ~x, y = ~y) %>%
             layer_bars() %>%
             add_axis("x", title = x) %>%
-            add_axis("y", title = y)
+            add_axis("y", title = y) %>%
+            scale_numeric("y", domain = domainy, nice = nicey, clamp = clampy)
     } else {
         data %>%
             ggvis(x = ~x) %>%
             layer_bars() %>%
-            add_axis("x", title = x)
+            add_axis("x", title = x) %>%
+            scale_numeric("y", domain = domainy, nice = nicey, clamp = clampy)
     }
 }
 
@@ -79,8 +117,14 @@ paretochart <- function (data, x, y, ...) {
     data[,x] <- factor(data[,x], levels = names(sort(table(data[,x]), decreasing = TRUE)))    
     data$x <- data[,x]
     
-    addy <- list(...)[[3]]
-    my.func <- list(...)[[1]]
+    args <- list(...)
+    
+    addy <- args[[3]]
+    my.func <- args[[1]]
+    
+    domainy <- if (!is.na(args[[6]]) | !is.na(args[[7]])) c(args[[6]], args[[7]]) else NULL
+    nicey <- if (is.null(domainy)) NULL else FALSE
+    clampy <- if (is.null(domainy)) NULL else TRUE
     
     if (addy) {
         data$y <- data[,y]
@@ -96,12 +140,14 @@ paretochart <- function (data, x, y, ...) {
             ggvis(x = ~x, y = ~y) %>%
             layer_bars() %>%
             add_axis("x", title = x) %>%
-            add_axis("y", title = y)
+            add_axis("y", title = y) %>%
+            scale_numeric("y", domain = domainy, nice = nicey, clamp = clampy)
     } else {
         data %>%
             ggvis(x = ~x) %>%
             layer_bars() %>%
-            add_axis("x", title = x)
+            add_axis("x", title = x) %>%
+            scale_numeric("y", domain = domainy, nice = nicey, clamp = clampy)
     }
 }
 
@@ -110,6 +156,16 @@ quantileplot <- function (data, x, y, ...) {
     xx <- qnorm(c(0.25, 0.75))
     slope <- diff(yy) / diff(xx)
     int <- yy[1] - slope * xx[1]
+    
+    args <- list(...)
+    
+    domainx <- if (!is.na(args[[4]]) | !is.na(args[[5]])) c(args[[4]], args[[5]]) else NULL
+    nicex <- if (is.null(domainx)) NULL else FALSE
+    clampx <- if (is.null(domainx)) NULL else TRUE
+    
+    domainy <- if (!is.na(args[[6]]) | !is.na(args[[7]])) c(args[[6]], args[[7]]) else NULL
+    nicey <- if (is.null(domainy)) NULL else FALSE
+    clampy <- if (is.null(domainy)) NULL else TRUE
     
     all_values <- function(x) {
         if (is.null(x)) return(NULL)
@@ -122,7 +178,9 @@ quantileplot <- function (data, x, y, ...) {
     data %>%
         ggvis(x = as.name("yy"), y = as.name(x)) %>%
         layer_points() %>%
-        add_tooltip(all_values, "hover")
+        add_tooltip(all_values, "hover") %>%
+        scale_numeric("x", domain = domainx, nice = nicex, clamp = clampx) %>%
+        scale_numeric("y", domain = domainy, nice = nicey, clamp = clampy)
 }
 
 mosaicplot <- function (data, x, y, ...) {

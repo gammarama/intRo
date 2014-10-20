@@ -38,3 +38,6 @@ $('a:contains("hide_me")').parent().width() - 20);
 //spacing of navbar
 $('a:contains("hide_me")').css("visibility", "hidden");
 $('a:contains("hide_me")').parent().css("width", space_width);
+
+//hide the transform checkbox
+document.getElementById("show_trans").style.display="none";
