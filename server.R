@@ -153,7 +153,8 @@ shinyServer(function(input, output, session) {
     
     oldsaveresid <- 0
     oldsavetrans <- 0
-    mydatbak <- NULL
+    oldsavesub <- 0
+    mydat_rand <- NULL
     
     intro.data <- reactive({
         if (is.null(intro.start())) return(NULL)
@@ -161,11 +162,12 @@ shinyServer(function(input, output, session) {
         data.subset <- process_logical(mydat, input$subs)
         mydat <<- data.subset
         if (input$randomsub) { 
-            mydatbak <<- mydat            
-            mydat <<- dplyr::sample_n(intro.start(), input$randomsubrows)
-        } else if (!input$randomsub & !is.null(mydatbak)) {
-            mydat <<- mydatbak
-            mydatbak <<- NULL
+            mydat_rand <<- dplyr::sample_n(data.subset, input$randomsubrows)
+            if (input$savesubset > oldsavesub) {
+                mydat <<- mydat_rand
+                updateCheckboxInput(session, "randomsub", value = FALSE)
+                oldsavesub <<- input$savesubset
+            }
         }
         
         if (input$saveresid > oldsaveresid) {
