@@ -269,23 +269,26 @@ shinyServer(function(input, output, session) {
     chosen.bartype <- reactive({
         return(valid.bartypes[[input$bartype]])
     })
-
-    output$data <- renderDataTable({
-        return(intro.data())
+    
+    data_hack <- NULL
+    output$data <- renderDataTable({  
+      data_hack <<- intro.data()
+      return(data_hack)
     }, options = list(pageLength = 10,
-                      bFilter=0,
-                      headerCallback = I(paste0("function(thead, data, start, end, display) {
+                      searching=0,
+                      headerCallback =  I(paste0("function(thead, data, start, end, display) {
                                                //color code the header items
                                                var col_types = [", 
-                                               paste(paste0("'", ifelse(grepl("factor", whatis(mpg)$type), "categorical", ifelse(grepl("character", whatis(mpg)$type), "categorical", "quantitative")),"'"),
+                                               paste(paste0("'", ifelse(grepl("factor", whatis(intro.data())$type), "categorical", ifelse(grepl("character", whatis(intro.data())$type), "categorical", "quantitative")),"'"),
                                                 collapse=", "),
                                                "]
-                                               var headers = $('thead').find('th');
-
-                                               for(i = 0; i < col_types.length; i++) {
-                                                if(col_types[i] == 'categorical') headers[i].style.color = '#e41a1c';
-                                                else headers[i].style.color = '#377eb8';
-                                               }
+                                               var headers = $(thead).find('th');
+                                              
+                                                console.log(col_types);
+                                               //for(i = 0; i < col_types.length; i++) {
+                                              //  if(col_types[i] == 'categorical') headers[i].style.color = '#e41a1c';
+                                              //  else headers[i].style.color = '#377eb8';
+                                               //}
 
                                               $('.dataTables_length').parent().next().append('<div, style=\"float:right\"><span style=\"color:rgb(228, 26, 28)\">Categorical Variable</span><span style=\"color:rgb(55, 126, 184)\">     Numeric Variable</span></div>')
                                             }")
