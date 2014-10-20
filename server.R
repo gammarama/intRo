@@ -32,8 +32,7 @@ shinyServer(function(input, output, session) {
                             histogram = histogram,
                             boxplot = boxplot, barchart = barchart,
                             paretochart = paretochart,
-                            quantileplot = quantileplot,
-                            mosaicplot = mosaicplot)
+                            quantileplot = quantileplot
     valid.bartypes <- list(length = length, sum = sum, mean = mean, median = median)
     
     checkVariable <- function(data, var) {
@@ -52,18 +51,6 @@ shinyServer(function(input, output, session) {
             plot_var_trans(curdata, curx) %>% bind_shiny("var_plot")
         }
     })
-    
-    ### Plot Options Observe
-    ### Can't be in above because of inter-dependency with plot call
-#     observe({
-#         curdata <- intro.data()
-#         curx <- input$x
-#         cury <- input$y
-#         
-#         if (checkVariable(curdata, curx) & checkVariable(curdata, cury)) {
-#             updateNumericInput(session, "binwidth", step = (range(curdata[,curx], na.rm = TRUE)[2] - range(curdata[,curx], na.rm = TRUE)[1]) / 300)
-#         }
-#     })
     
     observe({
         curdata <- intro.data()
@@ -93,8 +80,8 @@ shinyServer(function(input, output, session) {
     observe({
         updateSelectInput(session, "var_trans", choices = names(intro.data()), selected = ifelse(checkVariable(intro.data(), input$var_trans), input$var_trans, names(intro.data())[1]))
         if (input$var_trans %in% numericNames(intro.data())) updateRadioButtons(session, "trans", choices = c("None" = "I", "Type" = "type", "Power" = "power")) else updateRadioButtons(session, "trans", choices = c("None" = "I", "Type" = "type"))
-        if (input$plottype %in% c("boxplot", "barchart", "paretochart")) updateSelectInput(session, "x", choices = categoricNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$x), input$x, categoricNames(intro.data()))[1]) else updateSelectInput(session, "x", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$x), input$x, numericNames(intro.data())[1]))
-        updateSelectInput(session, "y", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$y), input$y, numericNames(intro.data())[2]))
+        if (input$plottype %in% c("boxplot", "barchart", "paretochart", "mosaicplot")) updateSelectInput(session, "x", choices = categoricNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$x), input$x, categoricNames(intro.data()))[1]) else updateSelectInput(session, "x", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$x), input$x, numericNames(intro.data())[1]))
+        if (input$plottype %in% c("mosaicplot")) updateSelectInput(session, "y", choices = categoricNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$y), input$y, categoicNames(intro.data())[1])) else updateSelectInput(session, "y", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$y), input$y, numericNames(intro.data())[2]))
         updateSelectInput(session, "xreg", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$xreg), input$xreg, numericNames(intro.data())[1]))
         updateSelectInput(session, "yreg", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$yreg), input$yreg, numericNames(intro.data())[2]))
         updateSelectInput(session, "group1", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$group1), input$group1, numericNames(intro.data())[1]))

@@ -184,7 +184,9 @@ quantileplot <- function (data, x, y, ...) {
 }
 
 mosaicplot <- function (data, x, y, ...) {
-  stopifnot(class(data[,x]) == "factor" & class(data[,y]) == "factor")
+    data[,x] <- factor(data[,x])
+    data[,y] <- factor(data[,y])
+  #stopifnot(class(data[,x]) == "factor" & class(data[,y]) == "factor")
   
   lev_x <- length(levels(data[,x]))
   lev_y <- length(levels(data[,y]))
