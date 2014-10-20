@@ -274,7 +274,7 @@ shinyServer(function(input, output, session) {
                                                 else headers[i].style.color = '#377eb8';
                                                }
 
-                                              $('.dataTables_length').parent().next().append('<div, style=\"float:right\"><span style=\"color:rgb(228, 26, 28)\">Categorical Variable</span><span style=\"color:rgb(55, 126, 184)\">     Numeric Variable</span></div>')
+                                              if($('.dataTables_length').parent().next().find('span').length == 0) $('.dataTables_length').parent().next().append('<div, style=\"float:right\"><span style=\"color:rgb(228, 26, 28)\">Categorical Variable</span><span style=\"color:rgb(55, 126, 184)\">     Numeric Variable</span></div>')
                                             }")
                                  ))})
 
