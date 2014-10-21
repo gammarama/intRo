@@ -274,11 +274,11 @@ shinyServer(function(input, output, session) {
                                                var headers = $(thead).find('th');
 
                                                for(i = 0; i < col_types.length; i++) {
-                                                if(col_types[i] == 'categorical') headers[i].style.color = '#e41a1c';
-                                                else headers[i].style.color = '#377eb8';
+                                                if(col_types[i] == 'categorical') headers[i].style.color = '#95a5a6';
+                                                else headers[i].style.color = '#3498db';
                                                }
 
-                                              if($('.dataTables_length').parent().next().find('span').length == 0) $('.dataTables_length').parent().next().append('<div, style=\"float:right\"><span style=\"color:rgb(228, 26, 28)\">Categorical Variable</span><span style=\"color:rgb(55, 126, 184)\">     Numeric Variable</span></div>')
+                                              if($('.dataTables_length').parent().next().find('span').length == 0) $('.dataTables_length').parent().next().append('<div, style=\"float:right\"><span style=\"color:#95a5a6\">Categorical Variable</span><span style=\"color:#3498db\">     Numeric Variable</span></div>')
                                             }")
                                  ))})
 
