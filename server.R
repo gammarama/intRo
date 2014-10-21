@@ -27,7 +27,8 @@ shinyServer(function(input, output, session) {
     sourceDir <- function(path, ...) { for (nm in list.files(path, pattern = "\\.[Rr]$")) { source(file.path(path, nm), ...) } }
     sourceDir("modules")
     valid.trans <- list(I = I, log = log, sqrt = sqrt)
-    valid.datasets <- list(mpg = mpg, airquality = airquality, diamonds = diamonds)
+    
+    valid.datasets <- list(mpg = mpg, airquality = airquality, diamonds = read.csv("data/diamonds_sub.csv"))
     valid.plottypes <- list(scatterplot = scatterplot, linechart = linechart,
                             histogram = histogram,
                             boxplot = boxplot, barchart = barchart,
