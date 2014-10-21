@@ -57,7 +57,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                                             numericInput("power", "Power", value = 1, min = -5, max = 5, step = 0.1)
                                            ),
                                            conditionalPanel(condition = "input.trans == 'type'",
-                                                           selectInput("var_type", "Type", choices = c("Quantitative" = "quantitative", "Categorical" = "categorical"))
+                                                           selectInput("var_type", "Type", choices = c("Numeric" = "numeric", "Categorical" = "categorical"))
                                            ),
 
                                           hr(),

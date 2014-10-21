@@ -189,7 +189,7 @@ shinyServer(function(input, output, session) {
                 mydat[, paste(curtrans, sub("\\.", "", input$power), sep = "_")] <<- as.numeric(trans_x)                
                 updateRadioButtons(session, "trans", selected = "I")
             } else if (curtrans %in% names(mydat) & input$trans == "type") {
-                trans_x <- if (input$var_type == "quantitative") as.numeric(mydat[,curtrans]) else factor(mydat[,curtrans])
+                trans_x <- if (input$var_type == "numeric") as.numeric(mydat[,curtrans]) else factor(mydat[,curtrans])
                 mydat[, paste(curtrans, "trans", sep = "_")] <<- trans_x             
                 updateRadioButtons(session, "trans", selected = "I")
             }
@@ -268,7 +268,7 @@ shinyServer(function(input, output, session) {
                                  headerCallback =  I(paste0("function(thead, data, start, end, display) {
                                                //color code the header items
                                                var col_types = [", 
-                                                            paste(paste0("'", ifelse(grepl("factor", whatis(intro.data())$type), "categorical", ifelse(grepl("character", whatis(intro.data())$type), "categorical", "quantitative")),"'"),
+                                                            paste(paste0("'", ifelse(grepl("factor", whatis(intro.data())$type), "categorical", ifelse(grepl("character", whatis(intro.data())$type), "categorical", "numeric")),"'"),
                                                                   collapse=", "),
                                                             "]
                                                var headers = $(thead).find('th');
