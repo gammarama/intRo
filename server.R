@@ -8,11 +8,17 @@ library(lubridate)
 library(gridExtra)
 
 numericNames <- function(data) {
-    return(as.character(subset(whatis(data), type == "numeric")$variable.name))
+    vec <- as.character(subset(whatis(data), type == "numeric")$variable.name)
+    if (length(vec) == 0) vec <- ""
+    
+    return(vec)
 }
 
 categoricNames <- function(data) {
-    return(names(data)[!(names(data) %in% numericNames(data))])
+    vec <- as.character(subset(whatis(data), type != "numeric")$variable.name)
+    if (length(vec) == 0) vec <- ""
+    
+    return(vec)
 }
 
 my.summary <- function(x) {
@@ -296,7 +302,7 @@ shinyServer(function(input, output, session) {
     
     output$conttable <- renderTable({
         return(cont.table(intro.data(), input$xcont, input$ycont))
-    })
+    }, digits = 0)
     
     output$summary <- renderTable({
         return(summarytable(intro.data(), input$tblvars))
