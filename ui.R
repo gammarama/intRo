@@ -34,7 +34,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                                 column(6, numericInput("randomsubrows", "Rows", value = 10))
                                             )
                                         ),
-                                        tags$button("", id = "savesubset", type = "button", class = "btn action-button", onclick="var vals = []; var subsets = $('input[type = \"text\"][placeholder]'); for(i = 0; i < subsets.length; i++) {vals.push(subsets[i].value);}; Shiny.onInputChange(\"subs\", vals);", list(icon("save"), "Save Subset")),
+                                        tags$button("", id = "savesubset", type = "button", class = "btn action-button", onclick="var vals = []; var subsets = $('input[type = \"text\"][placeholder]'); for(i = 0; i < subsets.length; i++) {vals.push(subsets[i].value);}; Shiny.onInputChange(\"subs\", vals); $('#side-nav :contains(\"Sources\")').highlight();", list(icon("save"), "Save Subset")),
                                         br(), br(),
                                         tags$button("", id = "clearsubset", type = "button", class = "btn action-button", onclick="Shiny.onInputChange(\"subs\", null);", list(icon("eraser"), "Reset Data")),
                                         br(), br(),
@@ -249,8 +249,9 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
 	  tabPanel(title="", icon=icon('code'), value = "javascript:$('#myEditor').slideToggle(); $('.fa-code').parent().parent().toggleClass('active'); $('div.codePrint').toggle()"),
     tabPanel(title="", icon=icon("print"), value = "javascript:print_intRo();"),
     footer=tagList(includeScript("scripts/top-nav-links.js"),
-                   includeScript("scripts/print.js")
-                  # includeScript("scripts/ggvis-helpers.js")
+                   includeScript("scripts/print.js"),
+                   includeScript("http://code.jquery.com/color/jquery.color-2.1.2.min.js"),
+                   includeScript("scripts/other-helpers.js")
                    ),
     tags$head(tags$link(rel="shortcut icon", href="images/icon.png"))
 ))
