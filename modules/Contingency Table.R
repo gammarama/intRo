@@ -1,6 +1,6 @@
 cont.table <- function(data, x, y) {  
     if (x %in% names(data) & y %in% names(data)) {
-        my.tbl <- table(data[,x], data[,y])
+        my.tbl <- table(data[,y], data[,x])
         
         totalsum <- sum(my.tbl)
         
