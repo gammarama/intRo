@@ -1,16 +1,17 @@
 jQuery.fn.highlight = function() {
   $(this).each(function() {
         var el = $(this);
-        el.before("<div/>")
-        el.prev()
-            .width(el.outerWidth())
-            .height(el.outerHeight())
-            .css({
-                "position": "absolute",
-                "background-color": "#ffff99",
-                "opacity": ".5"   
-            })
-            .fadeOut(1000);
+        $("<div/>")
+          .width(el.outerWidth())
+          .height(el.outerHeight())
+          .css({
+              "position": "absolute",
+              "left": el.offset().left,
+              "top": el.offset().top,
+              "background-color": "#ffff99",
+              "opacity": ".7",
+              "z-index": "9999999"
+          }).appendTo('body').fadeOut(1000).queue(function () { $(this).remove(); });
     });
 }
 
