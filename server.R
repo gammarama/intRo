@@ -83,9 +83,11 @@ shinyServer(function(input, output, session) {
         updateSelectInput(session, "var_trans", choices = names(intro.data()), selected = ifelse(checkVariable(intro.data(), input$var_trans), input$var_trans, names(intro.data())[1]))
         if (input$var_trans %in% numericNames(intro.data())) updateRadioButtons(session, "trans", choices = c("None" = "I", "Type" = "type", "Power" = "power")) else updateRadioButtons(session, "trans", choices = c("None" = "I", "Type" = "type"))
         if (input$plottype %in% c("boxplot", "barchart", "paretochart", "mosaicplot")) updateSelectInput(session, "x", choices = categoricNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$x), input$x, categoricNames(intro.data()))[1]) else updateSelectInput(session, "x", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$x), input$x, numericNames(intro.data())[1]))
-        if (input$plottype %in% c("mosaicplot")) updateSelectInput(session, "y", choices = categoricNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$y), input$y, categoricNames(intro.data())[1])) else updateSelectInput(session, "y", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$y), input$y, numericNames(intro.data())[2]))
+        if (input$plottype %in% c("mosaicplot")) updateSelectInput(session, "y", choices = categoricNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$y), input$y, categoricNames(intro.data())[2])) else updateSelectInput(session, "y", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$y), input$y, numericNames(intro.data())[2]))
         updateSelectInput(session, "xreg", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$xreg), input$xreg, numericNames(intro.data())[1]))
         updateSelectInput(session, "yreg", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$yreg), input$yreg, numericNames(intro.data())[2]))
+        updateSelectInput(session, "xcont", choices = categoricNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$xcont), input$xcont, categoricNames(intro.data())[1]))
+        updateSelectInput(session, "ycont", choices = categoricNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$ycont), input$ycont, categoricNames(intro.data())[2]))
         updateSelectInput(session, "group1", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$group1), input$group1, numericNames(intro.data())[1]))
         updateSelectInput(session, "group2", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$group2), input$group2, numericNames(intro.data())[2]))
         updateSelectInput(session, "grouping", choices = c("None" = "none", names(intro.data())))
@@ -290,6 +292,10 @@ shinyServer(function(input, output, session) {
 
     output$mosaicplot <- renderPlot({
         return(print(mosaicplot(intro.data(), input$x, input$y)))
+    })
+    
+    output$conttable <- renderTable({
+        return(cont.table(intro.data(), input$xcont, input$ycont))
     })
     
     output$summary <- renderTable({
