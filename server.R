@@ -68,7 +68,8 @@ shinyServer(function(input, output, session) {
         addy <- input$addy
         
         if (checkVariable(curdata, curx) & (checkVariable(curdata, cury) | !addy) & input$plottype != "mosaicplot") {
-            chosen.plot()(curdata, curx, cury, chosen.bartype(), binwidth, addy, input$xmin, input$xmax, input$ymin, input$ymax) %>% bind_shiny("plot")
+            result <- chosen.plot()(curdata, curx, cury, chosen.bartype(), binwidth, addy, input$xmin, input$xmax, input$ymin, input$ymax)
+            if (!is.null(result)) result %>% bind_shiny("plot")
         }
     })
     
