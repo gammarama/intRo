@@ -145,7 +145,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                       ),
                       "-----",
                       "Statistics",
-                      tabPanel("Contingency Table",
+                      tabPanel("Contingency",
                                column(4,
                                       wellPanel(
                                           selectInput("xcont", "X Variable (x)", choices = NULL),
