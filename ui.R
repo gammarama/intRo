@@ -94,20 +94,28 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                         
                                         fluidRow(
                                             column(5,
-                                                   numericInput("xmin", "X Min", value = NA, step = 0.1)
+                                                   conditionalPanel(condition = "input.plottype != 'mosaicplot'",
+                                                       numericInput("xmin", "X Min", value = NA, step = 0.1)
+                                                   )
                                             ),
                                             column(2),
                                             column(5,
-                                                   numericInput("xmax", "X Max", value = NA, step = 0.1)
+                                                   conditionalPanel(condition = "input.plottype != 'mosaicplot'",
+                                                        numericInput("xmax", "X Max", value = NA, step = 0.1)                    
+                                                   )
                                             )
                                         ),
                                         fluidRow(
                                             column(5,
-                                                   numericInput("ymin", "Y Min", value = NA, step = 0.1)
+                                                   conditionalPanel(condition = "input.plottype != 'mosaicplot'",
+                                                       numericInput("ymin", "Y Min", value = NA, step = 0.1)
+                                                   )
                                             ),
                                             column(2),
                                             column(5,
-                                                   numericInput("ymax", "Y Max", value = NA, step = 0.1)
+                                                   conditionalPanel(condition = "input.plottype != 'mosaicplot'",
+                                                       numericInput("ymax", "Y Max", value = NA, step = 0.1)
+                                                   )
                                             )
                                         ),
                                         conditionalPanel(

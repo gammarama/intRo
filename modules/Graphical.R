@@ -200,7 +200,9 @@ mosaicplot <- function (data, x, y, ...) {
   
   ggplot(plot_data, aes(x_center, y_height)) +
     geom_bar(stat = "identity", aes_string(width= "margin_x", fill = y), col = "Black") +
-    geom_text(aes_string(label = x, x = "x_center", y = "1.05")) +
+    geom_text(aes_string(label = x, x = "x_center", y = "1.05"), angle = 45, hjust = 0) +
+    xlim(c(0, 1.2)) +
+    ylim(c(0, 1.2)) +
     xlab(x) + ylab(y) +
     theme_bw()
   
