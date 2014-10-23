@@ -3,6 +3,8 @@ require(ggvis)
 require(dplyr)
 
 scatterplot <- function (data, x, y, ...)  {
+    if (!is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
+    
     all_values <- function(x) {
         if (is.null(x)) return(NULL)
         paste0(names(x), ": ", format(x), collapse = "<br />")
@@ -27,6 +29,8 @@ scatterplot <- function (data, x, y, ...)  {
 }
 
 linechart <- function (data, x, y, ...)  {
+    if (!is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
+    
     args <- list(...)
     
     domainx <- if (!is.na(args[[4]]) | !is.na(args[[5]])) c(args[[4]], args[[5]]) else NULL
@@ -44,7 +48,9 @@ linechart <- function (data, x, y, ...)  {
         scale_numeric("y", domain = domainy, nice = nicey, clamp = clampy)
 }
 
-histogram <- function (data, x, y, ...) {     
+histogram <- function (data, x, y, ...) {
+    if (!is.numeric(data[,x])) return(NULL)
+    
     args <- list(...)
     
     domainx <- if (!is.na(args[[4]]) | !is.na(args[[5]])) c(args[[4]], args[[5]]) else NULL
@@ -64,6 +70,8 @@ histogram <- function (data, x, y, ...) {
 }
 
 boxplot <- function (data, x, y, ...) {
+    if (is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
+    
     args <- list(...)
     
     domainy <- if (!is.na(args[[6]]) | !is.na(args[[7]])) c(args[[6]], args[[7]]) else NULL
@@ -77,14 +85,16 @@ boxplot <- function (data, x, y, ...) {
         scale_numeric("y", domain = domainy, nice = nicey, clamp = clampy)
 }
 
-barchart <- function (data, x, y, ...) { 
-    data[,x] <- factor(data[,x])    
-    data$x <- data[,x]
-    
+barchart <- function (data, x, y, ...) {
     args <- list(...)
     
     addy <- args[[3]]
     my.func <- args[[1]]
+    
+    if (is.numeric(data[,x]) | (!addy & !is.numeric(data[,y]))) return(NULL)
+    
+    data[,x] <- factor(data[,x])    
+    data$x <- data[,x]
     
     domainy <- if (!is.na(args[[6]]) | !is.na(args[[7]])) c(args[[6]], args[[7]]) else NULL
     nicey <- if (is.null(domainy)) NULL else FALSE
@@ -114,13 +124,15 @@ barchart <- function (data, x, y, ...) {
 }
 
 paretochart <- function (data, x, y, ...) {
-    data[,x] <- factor(data[,x], levels = names(sort(table(data[,x]), decreasing = TRUE)))    
-    data$x <- data[,x]
-    
     args <- list(...)
     
     addy <- args[[3]]
     my.func <- args[[1]]
+    
+    if (is.numeric(data[,x]) | (addy & !is.numeric(data[,y]))) return(NULL)
+    
+    data[,x] <- factor(data[,x], levels = names(sort(table(data[,x]), decreasing = TRUE)))    
+    data$x <- data[,x]
     
     domainy <- if (!is.na(args[[6]]) | !is.na(args[[7]])) c(args[[6]], args[[7]]) else NULL
     nicey <- if (is.null(domainy)) NULL else FALSE
@@ -152,6 +164,8 @@ paretochart <- function (data, x, y, ...) {
 }
 
 quantileplot <- function (data, x, y, ...) {
+    if (!is.numeric(data[,x])) return(NULL)
+        
     yy <- quantile(data[,x], na.rm = TRUE, c(0.25, 0.75))
     xx <- qnorm(c(0.25, 0.75))
     slope <- diff(yy) / diff(xx)
@@ -184,6 +198,8 @@ quantileplot <- function (data, x, y, ...) {
 }
 
 mosaicplot <- function (data, x, y, ...) {
+    if (is.numeric(data[,x]) | is.numeric(data(,y))) return(NULL)
+
     data[,x] <- factor(data[,x])
     data[,y] <- factor(data[,y])
   #stopifnot(class(data[,x]) == "factor" & class(data[,y]) == "factor")
