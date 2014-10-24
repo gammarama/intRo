@@ -62,7 +62,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
 
                                           hr(),
                                           
-                                          tags$button("", id = "savetrans", type = "button", class = "btn action-button", list(icon("save"), "Save Transformation"))
+                                          tags$button("", id = "savetrans", type = "button", class = "btn action-button", list(icon("save"), "Save Transformation"), onclick = "$('#side-nav :contains(\"Sources\")').highlight();")
                                       )
                                ),
                                
@@ -172,7 +172,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                           selectInput("yreg", "Dependent Variable (y)", choices = NULL),
                                           
                                           hr(),
-                                          tags$button("", id = "saveresid", type = "button", class = "btn action-button", list(icon("save"), "Save Residuals/Fitted"))
+                                          tags$button("", id = "saveresid", type = "button", class = "btn action-button", list(icon("save"), "Save Residuals/Fitted"), onclick = "$('#side-nav :contains(\"Sources\")').highlight();")
                                           #actionButton("saveresid", "Save Residuals/Fitted", icon = icon("save"))
                                       )
                                ),
