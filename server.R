@@ -53,10 +53,12 @@ shinyServer(function(input, output, session) {
         
         if (checkVariable(curdata, curx) & (curx %in% numericNames(curdata))) {
             trans_x <- if (is.na(input$power) | input$trans == "I") curdata[,curx] else if (input$power == 0) log(curdata[,curx]) else (curdata[,curx])^(input$power)
-            curdata[, paste(curx, ifelse(is.na(input$power) | input$trans == "I", "none", input$power), sep = "_")] <- as.numeric(trans_x)
-            
-            plot_var_trans(curdata, paste(curx, ifelse(is.na(input$power) | input$trans == "I", "none", input$power), sep = "_")) %>% bind_shiny("trans_plot")
-            plot_var_trans(curdata, curx) %>% bind_shiny("var_plot")
+            if (all(!is.infinite(trans_x))) {
+                curdata[, paste(curx, ifelse(is.na(input$power) | input$trans == "I", "none", input$power), sep = "_")] <- as.numeric(trans_x)
+                
+                plot_var_trans(curdata, paste(curx, ifelse(is.na(input$power) | input$trans == "I", "none", input$power), sep = "_")) %>% bind_shiny("trans_plot")
+                plot_var_trans(curdata, curx) %>% bind_shiny("var_plot")
+            }
         }
     })
     
@@ -199,8 +201,10 @@ shinyServer(function(input, output, session) {
             
             if (curtrans %in% numericNames(mydat) & input$trans == "power" & !is.na(input$power)) {
                 trans_x <- if (input$power == 0) log(mydat[,curtrans]) else (mydat[,curtrans])^(input$power)
-                mydat[, paste(curtrans, sub("\\.", "", input$power), sep = "_")] <<- as.numeric(trans_x)                
-                updateRadioButtons(session, "trans", selected = "I")
+                if (all(!is.infinite(trans_x))) {
+                    mydat[, paste(curtrans, sub("\\.", "", input$power), sep = "_")] <<- as.numeric(trans_x)                
+                    updateRadioButtons(session, "trans", selected = "I")
+                }
             } else if (curtrans %in% names(mydat) & input$trans == "type") {
                 trans_x <- if (input$var_type == "numeric") as.numeric(mydat[,curtrans]) else factor(mydat[,curtrans])
                 mydat[, paste(curtrans, "trans", sep = "_")] <<- trans_x             
