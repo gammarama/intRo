@@ -31,7 +31,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                         fluidRow(
                                             column(6, checkboxInput("randomsub", "Random Subset")),
                                             conditionalPanel(condition = "input.randomsub == true", 
-                                                column(6, numericInput("randomsubrows", "Rows", value = 10))
+                                                column(6, numericInput("randomsubrows", "Rows", value = 1, min = 1))
                                             )
                                         ),
                                         tags$button("", id = "savesubset", type = "button", class = "btn action-button", onclick="var vals = []; var subsets = $('input[type = \"text\"][placeholder]'); for(i = 0; i < subsets.length; i++) {vals.push(subsets[i].value);}; Shiny.onInputChange(\"subs\", vals); $('#side-nav :contains(\"Sources\")').highlight();", list(icon("save"), "Save Subset")),

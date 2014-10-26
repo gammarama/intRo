@@ -98,6 +98,7 @@ shinyServer(function(input, output, session) {
         updateSelectInput(session, "group1", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$group1), input$group1, numericNames(intro.data())[1]))
         updateSelectInput(session, "group2", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$group2), input$group2, numericNames(intro.data())[2]))
         updateSelectInput(session, "grouping", choices = c("None" = "none", names(intro.data())))
+        updateNumericInput(session, "randomsubrows", max = nrow(intro.data()))
         updateCheckboxGroupInput(session, "tblvars", choices = names(intro.data()))
     })
     
@@ -172,11 +173,13 @@ shinyServer(function(input, output, session) {
         data.subset <- process_logical(mydat, input$subs)
         mydat <<- data.subset
         if (input$randomsub) { 
-            mydat_rand <<- dplyr::sample_n(data.subset, input$randomsubrows)
-            if (input$savesubset > oldsavesub) {
-                mydat <<- mydat_rand
-                updateCheckboxInput(session, "randomsub", value = FALSE)
-                oldsavesub <<- input$savesubset
+            if (is.numeric(input$randomsubrows) & input$randomsubrows >= 1 & input$randomsubrows <= nrow(mydat)) {
+                mydat_rand <<- dplyr::sample_n(data.subset, input$randomsubrows)
+                if (input$savesubset > oldsavesub) {
+                    mydat <<- mydat_rand
+                    updateCheckboxInput(session, "randomsub", value = FALSE)
+                    oldsavesub <<- input$savesubset
+                }
             }
         }
         
