@@ -3,6 +3,7 @@ require(ggvis)
 require(dplyr)
 
 scatterplot <- function (data, x, y, ...)  {
+    if (!(x %in% names(data)) | !(y %in% names(data))) return(NULL)
     if (!is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
     
     all_values <- function(x) {
@@ -29,6 +30,7 @@ scatterplot <- function (data, x, y, ...)  {
 }
 
 linechart <- function (data, x, y, ...)  {
+    if (!(x %in% names(data)) | !(y %in% names(data))) return(NULL)
     if (!is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
     
     args <- list(...)
@@ -49,6 +51,7 @@ linechart <- function (data, x, y, ...)  {
 }
 
 histogram <- function (data, x, y, ...) {
+    if (!(x %in% names(data))) return(NULL)
     if (!is.numeric(data[,x])) return(NULL)
     
     args <- list(...)
@@ -70,6 +73,7 @@ histogram <- function (data, x, y, ...) {
 }
 
 boxplot <- function (data, x, y, ...) {
+    if (!(x %in% names(data)) | !(y %in% names(data))) return(NULL)
     if (is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
     
     args <- list(...)
@@ -90,7 +94,8 @@ barchart <- function (data, x, y, ...) {
     
     addy <- args[[3]]
     my.func <- args[[1]]
-    
+
+    if ((addy & (!(x %in% names(data)) | !(y %in% names(data)))) | !addy & ((!(x %in% names(data)))))
     if (is.numeric(data[,x]) | (!addy & !is.numeric(data[,y]))) return(NULL)
     
     data[,x] <- factor(data[,x])    
@@ -129,6 +134,7 @@ paretochart <- function (data, x, y, ...) {
     addy <- args[[3]]
     my.func <- args[[1]]
     
+    if ((addy & (!(x %in% names(data)) | !(y %in% names(data)))) | !addy & ((!(x %in% names(data))))) return(NULL)
     if (is.numeric(data[,x]) | (addy & !is.numeric(data[,y]))) return(NULL)
     
     data[,x] <- factor(data[,x], levels = names(sort(table(data[,x]), decreasing = TRUE)))    
@@ -164,6 +170,7 @@ paretochart <- function (data, x, y, ...) {
 }
 
 quantileplot <- function (data, x, y, ...) {
+    if (!(x %in% names(data))) return(NULL)
     if (!is.numeric(data[,x])) return(NULL)
         
     yy <- quantile(data[,x], na.rm = TRUE, c(0.25, 0.75))
@@ -198,6 +205,7 @@ quantileplot <- function (data, x, y, ...) {
 }
 
 mosaicplot <- function (data, x, y, ...) {
+    if (!(x %in% names(data)) | !(y %in% names(data))) return(NULL)
     if (is.numeric(data[,x]) | is.numeric(data(,y))) return(NULL)
 
     data[,x] <- factor(data[,x])
