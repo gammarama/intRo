@@ -380,21 +380,25 @@ shinyServer(function(input, output, session) {
     
     output$regtable <- renderTable({
         if (!(input$xreg %in% intro.numericnames()) | !(input$yreg %in% intro.numericnames())) return(NULL)
-        else return(tablereg(intro.data(), input$xreg, input$yreg, intro.regression()))
-    }, digits = 4)
+        
+        return(tablereg(intro.data(), input$xreg, input$yreg, intro.regression()))
+    })
     
     output$r <- renderText({
         if (!(input$xreg %in% intro.numericnames()) | !(input$yreg %in% intro.numericnames())) return(NULL)
-        else return(r(intro.data(), input$xreg, input$yreg, intro.regression()))
+        
+        return(r(intro.data(), input$xreg, input$yreg, intro.regression()))
     })
     
     output$r2 <- renderText({
         if (!(input$xreg %in% intro.numericnames()) | !(input$yreg %in% intro.numericnames())) return(NULL)
+        
         return(r2(intro.data(), input$xreg, input$yreg, intro.regression()))
     })
     
     output$ttesttable <- renderText({
         if (!(input$group1 %in% intro.numericnames())) return(NULL)
+        
         return(ttesttable(intro.data(), input$group1, input$group2, input$varts == "twovart", input$conflevel, input$althyp, input$hypval))
     })
 })

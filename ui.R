@@ -214,7 +214,6 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                       hr(),
                                       
                                       tags$b("Residual Plots"),
-                                      
                                       fluidRow(
                                           column(4, 
                                                  ggvisOutput("resplot1")
