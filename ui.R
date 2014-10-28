@@ -4,6 +4,20 @@ library(shiny)
 library(shinyAce)
 library(ggvis)
 
+numericNames <- function(data) {
+    vec <- as.character(subset(whatis(data), type == "numeric")$variable.name)
+    if (length(vec) == 0) vec <- ""
+    
+    return(vec)
+}
+
+categoricNames <- function(data) {
+    vec <- as.character(subset(whatis(data), type != "numeric")$variable.name)
+    if (length(vec) == 0) vec <- ""
+    
+    return(vec)
+}
+
 shinyUI(
 navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
     tabPanel(title="", icon=icon("home"),
@@ -50,7 +64,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                       tabPanel("Transform",
                                column(4,
                                       wellPanel(
-                                          selectInput("var_trans", "Select Variable", choices = NULL),
+                                          selectInput("var_trans", "Select Variable", choices = names(mpg)),
                                           
                                            radioButtons("trans", "Choose Transformation", choices = c("Type" = "type", "Power" = "power")),
                                            conditionalPanel(condition = "input.trans == 'power'",
@@ -79,11 +93,11 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                       tabPanel("Graphical",
                                column(4,
                                       wellPanel(
-                                        selectInput("plottype", "Plot Type", choices = c("Histogram" = "histogram", "Normal Quantile Plot" = "quantileplot", "Scatterplot" = "scatterplot", "Line Chart" = "linechart", "Boxplot" = "boxplot", "Bar Chart" = "barchart", "Pareto Chart" = "paretochart", "Mosaic Plot" = "mosaicplot")),
+                                        selectInput("plottype", "Plot Type", choices = c("Histogram" = "histogram", "Normal Quantile Plot" = "quantileplot", "Scatterplot" = "scatterplot", "Line Chart" = "linechart", "Boxplot" = "boxplot", "Bar Chart" = "barchart", "Pareto Chart" = "paretochart", "Mosaic Plot" = "mosaicplot"), selected = "histogram"),
                                         
                                         hr(),
                                         
-                                        selectInput("x", "X Variable (x)", choices = NULL),
+                                        selectInput("x", "X Variable (x)", choices = numericNames(mpg)),
                                         conditionalPanel(
                                             condition = "input.plottype == 'barchart' || input.plottype == 'paretochart'",
                                             checkboxInput("addy", "Y Variable")
@@ -144,8 +158,8 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                       tabPanel("Numerical",
                                column(4,
                                       wellPanel(
-                                        checkboxGroupInput("tblvars", "Select Variables", choices = list("")),
-                                        selectInput("grouping", "Select Grouping Variable", choices = NULL)
+                                        checkboxGroupInput("tblvars", "Select Variables", choices = names(mpg)),
+                                        selectInput("grouping", "Select Grouping Variable", choices = names(mpg))
                                       )
                                ),
                                
@@ -159,8 +173,8 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                       tabPanel("Contingency",
                                column(4,
                                       wellPanel(
-                                          selectInput("xcont", "X Variable (x)", choices = NULL),
-                                          selectInput("ycont", "Y Variable (y)", choices = NULL)
+                                          selectInput("xcont", "X Variable (x)", choices = categoricNames(mpg), selected = categoricNames(mpg)[5]),
+                                          selectInput("ycont", "Y Variable (y)", choices = categoricNames(mpg), selected = categoricNames(mpg)[6])
                                       )
                                ),
                                
@@ -171,8 +185,8 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                       tabPanel("Regression",
                                column(4,
                                       wellPanel(
-                                          selectInput("xreg", "Independent Variable (x)", choices = NULL),
-                                          selectInput("yreg", "Dependent Variable (y)", choices = NULL),
+                                          selectInput("xreg", "Independent Variable (x)", choices = numericNames(mpg),  selected = numericNames(mpg)[4]),
+                                          selectInput("yreg", "Dependent Variable (y)", choices = numericNames(mpg), selected = numericNames(mpg)[5]),
                                           
                                           hr(),
                                           tags$button("", id = "saveresid", type = "button", class = "btn action-button", list(icon("save"), "Save Residuals/Fitted"), onclick = "$('#side-nav :contains(\"Sources\")').highlight();")
@@ -219,10 +233,10 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
 
                                           hr(),
                                           
-                                          selectInput("group1", "Group 1 (x)", choices = NULL),
+                                          selectInput("group1", "Group 1 (x)", choices = numericNames(mpg)),
                                           conditionalPanel(
                                               condition = "input.varts == 'twovart'",
-                                              selectInput("group2", "Group 2 (y)", choices = NULL)
+                                              selectInput("group2", "Group 2 (y)", choices = numericNames(mpg))
                                           ),
                                           
                                           hr(),
