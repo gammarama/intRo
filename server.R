@@ -32,7 +32,6 @@ shinyServer(function(input, output, session) {
     
     sourceDir <- function(path, ...) { for (nm in list.files(path, pattern = "\\.[Rr]$")) { source(file.path(path, nm), ...) } }
     sourceDir("modules")
-    valid.trans <- list(I = I, log = log, sqrt = sqrt)
     
     valid.datasets <- list(mpg = mpg, airquality = airquality, diamonds = read.csv("data/diamonds_sub.csv"))
     valid.plottypes <- list(scatterplot = scatterplot, linechart = linechart,
@@ -49,17 +48,32 @@ shinyServer(function(input, output, session) {
     
     observe({
         curdata <- intro.data()
-        curx <- input$var_trans
+        curtrans <- input$var_trans
         
-        if (checkVariable(curdata, curx) & (curx %in% numericNames(curdata))) {
-            trans_x <- if (is.na(input$power) | input$trans == "I") curdata[,curx] else if (input$power == 0) log(curdata[,curx]) else (curdata[,curx])^(input$power)
+        colname <- ""
+        
+        if (curtrans %in% numericNames(curdata) & input$trans == "power" & !is.na(input$power)) {
+            trans_x <- if (input$power == 0) log(curdata[,curtrans]) else (curdata[,curtrans])^(input$power)
             if (all(!is.infinite(trans_x))) {
-                curdata[, paste(curx, ifelse(is.na(input$power) | input$trans == "I", "none", input$power), sep = "_")] <- as.numeric(trans_x)
-                
-                plot_var_trans(curdata, paste(curx, ifelse(is.na(input$power) | input$trans == "I", "none", input$power), sep = "_")) %>% bind_shiny("trans_plot")
-                plot_var_trans(curdata, curx) %>% bind_shiny("var_plot")
+                colname <- paste(curtrans, sub("\\.", "", input$power), sep = "_")
+                curdata[, colname] <- as.numeric(trans_x)
             }
+        } else if (curtrans %in% names(curdata) & input$trans == "type") {
+            trans_x <- if (input$var_type == "numeric") as.numeric(curdata[,curtrans]) else factor(curdata[,curtrans])
+            colname <- paste(curtrans, "trans", sep = "_")
+            curdata[, colname] <- trans_x
         }
+        
+        result <- plot_var_trans(curdata, colname)
+        if (!is.null(result)) result %>% bind_shiny("trans_plot")
+    })
+    
+    observe({
+        curdata <- intro.data()
+        curtrans <- input$var_trans
+        
+        result <- plot_var_trans(curdata, curtrans)
+        if (!is.null(result)) result %>% bind_shiny("var_plot")
     })
     
     observe({
@@ -90,7 +104,8 @@ shinyServer(function(input, output, session) {
     
     observe({
         updateSelectInput(session, "var_trans", choices = names(intro.data()), selected = ifelse(checkVariable(intro.data(), input$var_trans), input$var_trans, names(intro.data())[1]))
-        if (input$var_trans %in% numericNames(intro.data())) updateRadioButtons(session, "trans", choices = c("None" = "I", "Type" = "type", "Power" = "power")) else updateRadioButtons(session, "trans", choices = c("None" = "I", "Type" = "type"))
+        updateSelectInput(session, "var_type", choices = (if (input$var_trans %in% numericNames(intro.data())) c("Categorical" = "categorical") else c("Numeric" = "numeric")))
+        if (input$var_trans %in% numericNames(intro.data())) updateRadioButtons(session, "trans", choices = c("Type" = "type", "Power" = "power")) else updateRadioButtons(session, "trans", choices = c("Type" = "type"))
         if (input$plottype %in% c("boxplot", "barchart", "paretochart", "mosaicplot")) updateSelectInput(session, "x", choices = categoricNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$x), input$x, categoricNames(intro.data()))[1]) else updateSelectInput(session, "x", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$x), input$x, numericNames(intro.data())[1]))
         if (input$plottype %in% c("mosaicplot")) updateSelectInput(session, "y", choices = categoricNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$y), input$y, categoricNames(intro.data())[2])) else updateSelectInput(session, "y", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$y), input$y, numericNames(intro.data())[2]))
         updateSelectInput(session, "xreg", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$xreg), input$xreg, numericNames(intro.data())[1]))
@@ -174,20 +189,15 @@ shinyServer(function(input, output, session) {
 
         data.subset <- process_logical(mydat, input$subs)
         mydat <<- data.subset
-        
         if (input$randomsub) { 
             if (is.numeric(input$randomsubrows) & input$randomsubrows >= 1 & input$randomsubrows <= nrow(mydat)) {
                 mydat_rand <<- dplyr::sample_n(data.subset, input$randomsubrows)
+                if (input$savesubset > oldsavesub) {
+                    mydat <<- mydat_rand
+                    updateCheckboxInput(session, "randomsub", value = FALSE)
+                    oldsavesub <<- input$savesubset
+                }
             }
-        }
-        
-        if (input$savesubset > oldsavesub) {
-            if (input$randomsub) {
-                mydat <<- mydat_rand
-                updateCheckboxInput(session, "randomsub", value = FALSE)
-                updateNumericInput(session, "randomsubrows", value = 1)
-            }
-            oldsavesub <<- input$savesubset
         }
         
         if (input$saveresid > oldsaveresid) {
@@ -207,13 +217,11 @@ shinyServer(function(input, output, session) {
             if (curtrans %in% numericNames(mydat) & input$trans == "power" & !is.na(input$power)) {
                 trans_x <- if (input$power == 0) log(mydat[,curtrans]) else (mydat[,curtrans])^(input$power)
                 if (all(!is.infinite(trans_x))) {
-                    mydat[, paste(curtrans, sub("\\.", "", input$power), sep = "_")] <<- as.numeric(trans_x)                
-                    updateRadioButtons(session, "trans", selected = "I")
+                    mydat[, paste(curtrans, sub("\\.", "", input$power), sep = "_")] <<- as.numeric(trans_x)
                 }
             } else if (curtrans %in% names(mydat) & input$trans == "type") {
                 trans_x <- if (input$var_type == "numeric") as.numeric(mydat[,curtrans]) else factor(mydat[,curtrans])
-                mydat[, paste(curtrans, "trans", sep = "_")] <<- trans_x             
-                updateRadioButtons(session, "trans", selected = "I")
+                mydat[, paste(curtrans, "trans", sep = "_")] <<- trans_x
             }
             
             oldsavetrans <<- input$savetrans

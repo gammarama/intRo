@@ -52,7 +52,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                       wellPanel(
                                           selectInput("var_trans", "Select Variable", choices = NULL),
                                           
-                                           radioButtons("trans", "Choose Transformation", choices = c("None" = "I", "Type" = "type", "Power" = "power")),
+                                           radioButtons("trans", "Choose Transformation", choices = c("Type" = "type", "Power" = "power")),
                                            conditionalPanel(condition = "input.trans == 'power'",
                                                             sliderInput("power", "Power", value = 1, min = -5, max = 5, step = 0.1)
                                            ),
@@ -67,7 +67,10 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                ),
                                
                                column(8,
+                                      tags$b("Original Data"),
                                       ggvisOutput("var_plot"),
+                                      hr(),
+                                      tags$b("Transformed Data"),
                                       ggvisOutput("trans_plot")
                                )
                       ),
