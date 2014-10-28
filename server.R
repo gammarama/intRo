@@ -50,6 +50,14 @@ shinyServer(function(input, output, session) {
         curdata <- intro.data()
         curtrans <- input$var_trans
         
+        result <- plot_var_trans(curdata, curtrans)
+        if (!is.null(result)) result %>% bind_shiny("var_plot")
+    })
+    
+    observe({
+        curdata <- intro.data()
+        curtrans <- input$var_trans
+        
         colname <- ""
         
         if (curtrans %in% numericNames(curdata) & input$trans == "power" & !is.na(input$power)) {
@@ -66,14 +74,6 @@ shinyServer(function(input, output, session) {
         
         result <- plot_var_trans(curdata, colname)
         if (!is.null(result)) result %>% bind_shiny("trans_plot")
-    })
-    
-    observe({
-        curdata <- intro.data()
-        curtrans <- input$var_trans
-        
-        result <- plot_var_trans(curdata, curtrans)
-        if (!is.null(result)) result %>% bind_shiny("var_plot")
     })
     
     observe({
@@ -105,7 +105,7 @@ shinyServer(function(input, output, session) {
     observe({
         updateSelectInput(session, "var_trans", choices = names(intro.data()), selected = ifelse(checkVariable(intro.data(), input$var_trans), input$var_trans, names(intro.data())[1]))
         updateSelectInput(session, "var_type", choices = (if (input$var_trans %in% numericNames(intro.data())) c("Categorical" = "categorical") else c("Numeric" = "numeric")))
-        if (input$var_trans %in% numericNames(intro.data())) updateRadioButtons(session, "trans", choices = c("Type" = "type", "Power" = "power")) else updateRadioButtons(session, "trans", choices = c("Type" = "type"))
+        if (input$var_trans %in% numericNames(intro.data())) updateRadioButtons(session, "trans", choices = c("Type" = "type", "Power" = "power"), selected = ifelse(input$trans == "power", "power", "type")) else updateRadioButtons(session, "trans", choices = c("Type" = "type"))
         if (input$plottype %in% c("boxplot", "barchart", "paretochart", "mosaicplot")) updateSelectInput(session, "x", choices = categoricNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$x), input$x, categoricNames(intro.data()))[1]) else updateSelectInput(session, "x", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$x), input$x, numericNames(intro.data())[1]))
         if (input$plottype %in% c("mosaicplot")) updateSelectInput(session, "y", choices = categoricNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$y), input$y, categoricNames(intro.data())[2])) else updateSelectInput(session, "y", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$y), input$y, numericNames(intro.data())[2]))
         updateSelectInput(session, "xreg", choices = numericNames(intro.data()), selected = ifelse(checkVariable(intro.data(), input$xreg), input$xreg, numericNames(intro.data())[1]))
