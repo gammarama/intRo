@@ -174,15 +174,20 @@ shinyServer(function(input, output, session) {
 
         data.subset <- process_logical(mydat, input$subs)
         mydat <<- data.subset
+        
         if (input$randomsub) { 
             if (is.numeric(input$randomsubrows) & input$randomsubrows >= 1 & input$randomsubrows <= nrow(mydat)) {
                 mydat_rand <<- dplyr::sample_n(data.subset, input$randomsubrows)
-                if (input$savesubset > oldsavesub) {
-                    mydat <<- mydat_rand
-                    updateCheckboxInput(session, "randomsub", value = FALSE)
-                    oldsavesub <<- input$savesubset
-                }
             }
+        }
+        
+        if (input$savesubset > oldsavesub) {
+            if (input$randomsub) {
+                mydat <<- mydat_rand
+                updateCheckboxInput(session, "randomsub", value = FALSE)
+                updateNumericInput(session, "randomsubrows", value = 1)
+            }
+            oldsavesub <<- input$savesubset
         }
         
         if (input$saveresid > oldsaveresid) {
