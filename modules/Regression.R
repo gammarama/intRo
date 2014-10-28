@@ -1,9 +1,4 @@
-scatterplotreg <- function (data, x, y)  {
-    if (!(x %in% names(data)) | !(y %in% names(data))) return(NULL)
-    if (!is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
-    
-    lm.fit <- lm(data[,y] ~ data[,x])
-
+scatterplotreg <- function (data, x, y, lm.fit)  {
     all_values <- function(x) {
         if (is.null(x)) return(NULL)
         paste0(names(x), ": ", format(x), collapse = "<br />")
@@ -16,40 +11,25 @@ scatterplotreg <- function (data, x, y)  {
         add_tooltip(all_values, "hover")
 }
 
-tablereg <- function (data, x, y) {
-    if (!(x %in% names(data)) | !(y %in% names(data))) return(NULL)
-    if (!is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
-    
-    lm.fit <- lm(data[,y] ~ data[,x])
-    
+tablereg <- function (data, x, y, lm.fit) {
     tbl.fit <- coef(summary(lm.fit))
     rownames(tbl.fit)[2] <- x
     
     return(tbl.fit)
 }
 
-r <- function (data, x, y) {
+r <- function (data, x, y, lm.fit) {
     if (!(x %in% names(data)) | !(y %in% names(data))) return(NULL)
     if (!is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
     
     return(paste("r =", round(cor(data[,y], data[,x], use = "complete.obs"), digits = 4)))
 }
 
-r2 <- function (data, x, y) {
-    if (!(x %in% names(data)) | !(y %in% names(data))) return(NULL)
-    if (!is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
-    
-    lm.fit <- lm(data[,y] ~ data[,x])
-    
+r2 <- function (data, x, y, lm.fit) {
     return(paste("R^2 =", round(summary(lm.fit)$r.squared, digits = 4)))
 }
 
-residualreg1 <- function (data, x, y) {
-    if (!(x %in% names(data)) | !(y %in% names(data))) return(NULL)
-    if (!is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
-    
-    lm.fit <- lm(data[,y] ~ data[,x])
-    
+residualreg1 <- function (data, x, y, lm.fit) {
     mydat <- data.frame(residuals = resid(lm.fit), x = data[as.numeric(names(resid(lm.fit))),x])
     names(mydat)[2] <- x
     
@@ -65,11 +45,7 @@ residualreg1 <- function (data, x, y) {
         set_options(width = 200, height = 200)
 }
 
-residualreg2 <- function (data, x, y) {
-    if (!(x %in% names(data)) | !(y %in% names(data))) return(NULL)
-    if (!is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
-    
-    lm.fit <- lm(data[,y] ~ data[,x], na.action = na.exclude)
+residualreg2 <- function (data, x, y, lm.fit) {
     data$residuals <- resid(lm.fit)
     
     yy <- quantile(data$residuals, na.rm = TRUE, c(0.25, 0.75))
@@ -92,11 +68,7 @@ residualreg2 <- function (data, x, y) {
         set_options(width = 200, height = 200)
 }
 
-residualreg3 <- function (data, x, y) {
-    if (!(x %in% names(data)) | !(y %in% names(data))) return(NULL)
-    if (!is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
-    
-    lm.fit <- lm(data[,y] ~ data[,x])
+residualreg3 <- function (data, x, y, lm.fit) {
     mydat <- data.frame(residuals = resid(lm.fit))
     
     mydat %>%
@@ -105,11 +77,7 @@ residualreg3 <- function (data, x, y) {
         set_options(width = 200, height = 200)
 }
 
-savefit <- function (data, x, y) { 
-    if (!(x %in% names(data)) | !(y %in% names(data))) return(NULL)
-    if (!is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
-    
-    lm.fit <- lm(data[,y] ~ data[,x])
+savefit <- function (data, x, y, lm.fit) { 
     data$fitted <- predict(lm.fit)
     data$resid <- resid(lm.fit)
     

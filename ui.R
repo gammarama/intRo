@@ -2,6 +2,8 @@ addResourcePath(prefix="images", directoryPath="images/")
 
 library(shiny)
 library(shinyAce)
+library(YaleToolkit)
+library(ggplot2)
 library(ggvis)
 
 numericNames <- function(data) {

@@ -1,10 +1,17 @@
 require(ggplot2)
 require(ggvis)
 require(dplyr)
+require(YaleToolkit)
 
-scatterplot <- function (data, x, y, ...)  {
-    if (!(x %in% names(data)) | !(y %in% names(data))) return(NULL)
-    if (!is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
+blank.ggvis <- data.frame(x = 0, y = 0) %>% 
+    ggvis(~x, ~y, fillOpacity := 0, opacity := 0) %>% 
+    layer_points()
+
+blank.ggplot <- data.frame(x = 0, y = 0) %>% ggplot(aes(x = x, y = y)) + geom_blank() + theme_bw()
+
+scatterplot <- function (data, x, y, numnames, catnames, ...)  {
+    if (!(x %in% numnames)) return(blank.ggvis)
+    if (!(y %in% numnames)) return(blank.ggvis)
     
     all_values <- function(x) {
         if (is.null(x)) return(NULL)
@@ -29,9 +36,9 @@ scatterplot <- function (data, x, y, ...)  {
         scale_numeric("y", domain = domainy, nice = nicey, clamp = clampy)
 }
 
-linechart <- function (data, x, y, ...)  {
-    if (!(x %in% names(data)) | !(y %in% names(data))) return(NULL)
-    if (!is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
+linechart <- function (data, x, y, numnames, catnames, ...)  {
+    if (!(x %in% numnames)) return(blank.ggvis)
+    if (!(y %in% numnames)) return(blank.ggvis)
     
     args <- list(...)
     
@@ -50,9 +57,8 @@ linechart <- function (data, x, y, ...)  {
         scale_numeric("y", domain = domainy, nice = nicey, clamp = clampy)
 }
 
-histogram <- function (data, x, y, ...) {
-    if (!(x %in% names(data))) return(NULL)
-    if (!is.numeric(data[,x])) return(NULL)
+histogram <- function (data, x, y, numnames, catnames, ...) {
+    if (!(x %in% numnames)) return(blank.ggvis)
     
     args <- list(...)
     
@@ -72,9 +78,9 @@ histogram <- function (data, x, y, ...) {
         scale_numeric("y", domain = domainy, nice = nicey, clamp = clampy)
 }
 
-boxplot <- function (data, x, y, ...) {
-    if (!(x %in% names(data)) | !(y %in% names(data))) return(NULL)
-    if (is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
+boxplot <- function (data, x, y, numnames, catnames, ...) {
+    if (!(x %in% catnames)) return(blank.ggvis)
+    if (!(y %in% numnames)) return(blank.ggvis)
     
     args <- list(...)
     
@@ -89,14 +95,14 @@ boxplot <- function (data, x, y, ...) {
         scale_numeric("y", domain = domainy, nice = nicey, clamp = clampy)
 }
 
-barchart <- function (data, x, y, ...) {
+barchart <- function (data, x, y, numnames, catnames, ...) {
     args <- list(...)
     
     addy <- args[[3]]
     my.func <- args[[1]]
 
-    if ((addy & (!(x %in% names(data)) | !(y %in% names(data)))) | !addy & ((!(x %in% names(data)))))
-    if (is.numeric(data[,x]) | (!addy & !is.numeric(data[,y]))) return(NULL)
+    if (!(x %in% catnames)) return(blank.ggvis)
+    if (addy & !(y %in% numnames)) return(blank.ggvis)
     
     data[,x] <- factor(data[,x])    
     data$x <- data[,x]
@@ -128,14 +134,14 @@ barchart <- function (data, x, y, ...) {
     }
 }
 
-paretochart <- function (data, x, y, ...) {
+paretochart <- function (data, x, y, numnames, catnames, ...) {
     args <- list(...)
     
     addy <- args[[3]]
     my.func <- args[[1]]
     
-    if ((addy & (!(x %in% names(data)) | !(y %in% names(data)))) | !addy & ((!(x %in% names(data))))) return(NULL)
-    if (is.numeric(data[,x]) | (addy & !is.numeric(data[,y]))) return(NULL)
+    if (!(x %in% catnames)) return(blank.ggvis)
+    if (addy & !(y %in% numnames)) return(blank.ggvis)
     
     data[,x] <- factor(data[,x], levels = names(sort(table(data[,x]), decreasing = TRUE)))    
     data$x <- data[,x]
@@ -169,9 +175,8 @@ paretochart <- function (data, x, y, ...) {
     }
 }
 
-quantileplot <- function (data, x, y, ...) {
-    if (!(x %in% names(data))) return(NULL)
-    if (!is.numeric(data[,x])) return(NULL)
+quantileplot <- function (data, x, y, numnames, catnames, ...) {
+    if (!(x %in% numnames)) return(blank.ggvis)
         
     yy <- quantile(data[,x], na.rm = TRUE, c(0.25, 0.75))
     xx <- qnorm(c(0.25, 0.75))
@@ -204,9 +209,9 @@ quantileplot <- function (data, x, y, ...) {
         scale_numeric("y", domain = domainy, nice = nicey, clamp = clampy)
 }
 
-mosaicplot <- function (data, x, y, ...) {
-    if (!(x %in% names(data)) | !(y %in% names(data))) return(NULL)
-    if (is.numeric(data[,x]) | is.numeric(data(,y))) return(NULL)
+mosaicplot <- function (data, x, y, numnames, catnames, ...) {
+    if (!(x %in% catnames)) return(blank.ggvis)
+    if (!(y %in% catnames)) return(blank.ggvis)
 
     data[,x] <- factor(data[,x])
     data[,y] <- factor(data[,y])
