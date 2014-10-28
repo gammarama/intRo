@@ -183,23 +183,30 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                column(8,
                                       tags$b("Parameter Estimates"),
                                       tableOutput("regtable"),
+                                      
                                       hr(),
+                                      
                                       tags$b("Correlation"),
                                       textOutput("r"),
                                       textOutput("r2"),
+                                      
                                       hr(),
+                                      
                                       tags$b("Plot of Fit"),
                                       ggvisOutput("regplot"),
+                                      
+                                      hr(),
+                                      
                                       tags$b("Residual Plots"),
                                       
                                       fluidRow(
                                           column(4, 
                                                  ggvisOutput("resplot1")
                                           ),
-                                          column(4, 
+                                          column(4,
                                                  ggvisOutput("resplot2")
                                           ),
-                                          column(4, 
+                                          column(4,
                                                  ggvisOutput("resplot3")
                                           )
                                       )

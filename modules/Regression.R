@@ -1,4 +1,7 @@
 scatterplotreg <- function (data, x, y)  {
+    if (!(x %in% names(data)) | !(y %in% names(data))) return(NULL)
+    if (!is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
+    
     lm.fit <- lm(data[,y] ~ data[,x])
 
     all_values <- function(x) {
@@ -14,6 +17,9 @@ scatterplotreg <- function (data, x, y)  {
 }
 
 tablereg <- function (data, x, y) {
+    if (!(x %in% names(data)) | !(y %in% names(data))) return(NULL)
+    if (!is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
+    
     lm.fit <- lm(data[,y] ~ data[,x])
     
     tbl.fit <- coef(summary(lm.fit))
@@ -23,16 +29,25 @@ tablereg <- function (data, x, y) {
 }
 
 r <- function (data, x, y) {
+    if (!(x %in% names(data)) | !(y %in% names(data))) return(NULL)
+    if (!is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
+    
     return(paste("r =", round(cor(data[,y], data[,x], use = "complete.obs"), digits = 4)))
 }
 
 r2 <- function (data, x, y) {
+    if (!(x %in% names(data)) | !(y %in% names(data))) return(NULL)
+    if (!is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
+    
     lm.fit <- lm(data[,y] ~ data[,x])
     
     return(paste("R^2 =", round(summary(lm.fit)$r.squared, digits = 4)))
 }
 
 residualreg1 <- function (data, x, y) {
+    if (!(x %in% names(data)) | !(y %in% names(data))) return(NULL)
+    if (!is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
+    
     lm.fit <- lm(data[,y] ~ data[,x])
     
     mydat <- data.frame(residuals = resid(lm.fit), x = data[as.numeric(names(resid(lm.fit))),x])
@@ -51,6 +66,9 @@ residualreg1 <- function (data, x, y) {
 }
 
 residualreg2 <- function (data, x, y) {
+    if (!(x %in% names(data)) | !(y %in% names(data))) return(NULL)
+    if (!is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
+    
     lm.fit <- lm(data[,y] ~ data[,x], na.action = na.exclude)
     data$residuals <- resid(lm.fit)
     
@@ -75,16 +93,22 @@ residualreg2 <- function (data, x, y) {
 }
 
 residualreg3 <- function (data, x, y) {
+    if (!(x %in% names(data)) | !(y %in% names(data))) return(NULL)
+    if (!is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
+    
     lm.fit <- lm(data[,y] ~ data[,x])
     mydat <- data.frame(residuals = resid(lm.fit))
     
     mydat %>%
-        ggvis(x = as.name("residuals")) %>%
+        ggvis(x = ~residuals) %>%
         layer_histograms() %>%
         set_options(width = 200, height = 200)
 }
 
 savefit <- function (data, x, y) { 
+    if (!(x %in% names(data)) | !(y %in% names(data))) return(NULL)
+    if (!is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
+    
     lm.fit <- lm(data[,y] ~ data[,x])
     data$fitted <- predict(lm.fit)
     data$resid <- resid(lm.fit)

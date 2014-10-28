@@ -90,19 +90,6 @@ shinyServer(function(input, output, session) {
     })
     
     observe({
-        curdata <- intro.data()
-        curxreg <- input$xreg
-        curyreg <- input$yreg
-                        
-        if (curxreg %in% names(curdata) & curyreg %in% names(curdata)) {
-            scatterplotreg(curdata, input$xreg, input$yreg) %>% bind_shiny("regplot")
-            residualreg1(intro.data(), curxreg, curyreg) %>% bind_shiny("resplot1")
-            residualreg2(intro.data(), curxreg, curyreg) %>% bind_shiny("resplot2")
-            residualreg3(intro.data(), curxreg, curyreg) %>% bind_shiny("resplot3")
-        }
-    })
-    
-    observe({
         updateSelectInput(session, "var_trans", choices = names(intro.data()), selected = ifelse(checkVariable(intro.data(), input$var_trans), input$var_trans, names(intro.data())[1]))
         updateSelectInput(session, "var_type", choices = (if (input$var_trans %in% numericNames(intro.data())) c("Categorical" = "categorical") else c("Numeric" = "numeric")))
         if (input$var_trans %in% numericNames(intro.data())) updateRadioButtons(session, "trans", choices = c("Type" = "type", "Power" = "power"), selected = ifelse(input$trans == "power", "power", "type")) else updateRadioButtons(session, "trans", choices = c("Type" = "type"))
@@ -117,6 +104,44 @@ shinyServer(function(input, output, session) {
         updateSelectInput(session, "grouping", choices = c("None" = "none", names(intro.data())))
         updateNumericInput(session, "randomsubrows", max = nrow(intro.data()))
         updateCheckboxGroupInput(session, "tblvars", choices = names(intro.data()))
+    })
+    
+    observe({
+        curdata <- intro.data()
+        curxreg <- input$xreg
+        curyreg <- input$yreg
+        
+        result4 <- residualreg3(curdata, curxreg, curyreg)
+        
+        if (!(is.null(result4))) {
+            result4 %>% bind_shiny("resplot3")
+        }
+    })
+    
+    observe({
+        curdata <- intro.data()
+        curxreg <- input$xreg
+        curyreg <- input$yreg
+        
+        result1 <- scatterplotreg(curdata, curxreg, curyreg)
+        
+        if (!(is.null(result1))) {
+            result1 %>% bind_shiny("regplot")
+        }
+    })
+    
+    observe({
+        curdata <- intro.data()
+        curxreg <- input$xreg
+        curyreg <- input$yreg
+        
+        result2 <- residualreg1(curdata, curxreg, curyreg)
+        result3 <- residualreg2(curdata, curxreg, curyreg)
+        
+        if (!(is.null(result2) | is.null(result3))) {
+            result2 %>% bind_shiny("resplot1")
+            result3 %>% bind_shiny("resplot2")
+        }
     })
     
     process_logical <- function(data, x) {
