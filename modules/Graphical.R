@@ -228,6 +228,7 @@ mosaicplot <- function (data, x, y, ...) {
     xlim(c(0, 1.2)) +
     ylim(c(0, 1.2)) +
     xlab(x) + ylab(y) +
-    theme_bw()
+    theme_bw() +
+    coord_fixed()
   
 }
