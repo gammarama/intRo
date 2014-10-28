@@ -260,6 +260,7 @@ shinyServer(function(input, output, session) {
         
         if (input$savetrans > oldsavetrans) {
             values$mydat <<- curdata
+            oldsavetrans <<- input$savetrans
         }
         
         return(curdata)
