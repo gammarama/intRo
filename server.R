@@ -123,9 +123,7 @@ shinyServer(function(input, output, session) {
     
     ## Transform Observers
     observe({
-        updateSelectInput(session, "var_trans", choices = names(intro.data()), selected = ifelse(checkVariable(intro.data(), input$var_trans), input$var_trans, names(intro.data())[1]))
-        updateSelectInput(session, "var_type", choices = (if (input$var_trans %in% intro.numericnames()) c("Categorical" = "categorical") else c("Numeric" = "numeric")))
-        updateRadioButtons(session, "trans", choices = (if (input$var_trans %in% intro.numericnames()) c("Type" = "type", "Power" = "power") else c("Type" = "type")))
+        updateSelectInput(session, "var_trans", choices = (if (input$trans %in% c("power", "categorical")) intro.numericnames() else intro.categoricnames()))
     })
     
     ## Regression Observers
@@ -233,35 +231,44 @@ shinyServer(function(input, output, session) {
         curtrans <- input$var_trans
         colname <- ""
         
-        if (curtrans %in% numericNames(curdata) & input$trans == "power" & !is.na(input$power)) {
+        if (input$trans == "power") {
             colname <- paste(curtrans, sub("\\.", "", input$power), sep = "_")
-        } else if (curtrans %in% names(curdata) & input$trans == "type") {
+        } else if (input$trans %in% c("categorical", "numeric")) {
             colname <- paste(curtrans, "trans", sep = "_")
         }
         
         return(colname)
     })
     
+    output$var_trans_text <- renderText({
+        if (is.null(intro.transform())) return(NULL)
+        
+        return(paste("Selected Variable:", input$var_trans))
+    })
+    
     intro.transform <- reactive({
         if (is.null(intro.data())) return(NULL)
-        
+                        
         curdata <- intro.data()
         curtrans <- input$var_trans
-        
-        if (curtrans %in% numericNames(curdata) & input$trans == "power" & !is.na(input$power)) {
+                
+        if (input$trans == "power") {
             trans_x <- if (input$power == 0) log(curdata[,curtrans]) else (curdata[,curtrans])^(input$power)
             if (all(!is.infinite(trans_x))) {
                 curdata[, intro.transform.colname()] <- as.numeric(trans_x)
             }
-        } else if (curtrans %in% names(curdata) & input$trans == "type") {
-            trans_x <- if (input$var_type == "numeric") as.numeric(curdata[,curtrans]) else factor(curdata[,curtrans])
+        } else if (input$trans %in% c("categorical", "numeric")) {
+            trans_x <- if (input$trans == "numeric") as.numeric(curdata[,curtrans]) else factor(curdata[,curtrans])
             curdata[, intro.transform.colname()] <- trans_x
         }
-        
+                
         if (input$savetrans > oldsavetrans) {
             values$mydat <<- curdata
             oldsavetrans <<- input$savetrans
         }
+        
+        if (is.numeric(curdata[,curtrans])) curdata$var <- curdata[,curtrans] else curdata$var <- 0
+        if (is.numeric(curdata[,intro.transform.colname()])) curdata$trans_var <- curdata[,intro.transform.colname()] else curdata$trans_var <- 0
         
         return(curdata)
     })
@@ -283,33 +290,77 @@ shinyServer(function(input, output, session) {
         return(lm.fit)
     })
     
-    reactive({
-        plot_var_trans(intro.data(), input$var_trans)
-    }) %>% bind_shiny("var_plot")
+    intro.transform %>%
+        ggvis(x = ~var) %>%
+        layer_histograms() %>%
+        bind_shiny("var_plot")
 
-    reactive({
-        plot_var_trans(intro.transform(), intro.transform.colname())
-    }) %>% bind_shiny("trans_plot")
+    intro.transform %>%
+        ggvis(x = ~trans_var) %>%
+        layer_histograms() %>%
+        bind_shiny("trans_plot")
     
     reactive({        
         valid.plottypes[[input$plottype]](intro.data(), input$x, input$y, intro.numericnames(), intro.categoricnames(), valid.bartypes[[input$bartype]], input$binwidth, input$addy, input$xmin, input$xmax, input$ymin, input$ymax)
     }) %>% bind_shiny("plot")
     
-    reactive({
-        scatterplotreg(intro.data(), input$xreg, input$yreg, intro.regression())
-    }) %>% bind_shiny("regplot")
+    reg.data <- reactive({
+        if (is.null(intro.regression())) return(NULL)
+        
+        reg.data <- intro.data()
+        reg.data$xreg <- reg.data[,input$xreg]
+        reg.data$yreg <- reg.data[,input$yreg]
+        
+        return(reg.data)
+    })
     
-    reactive({
-        residualreg1(intro.data(), input$xreg, input$yreg, intro.regression())
-    }) %>% bind_shiny("resplot1")
+    reg.data %>%
+        ggvis(x = ~xreg, y = ~yreg) %>%
+        layer_points() %>%
+        layer_model_predictions(model = "lm") %>% 
+        bind_shiny("regplot")
     
-    reactive({
-        residualreg2(intro.data(), input$xreg, input$yreg, intro.regression())
-    }) %>% bind_shiny("resplot2")
+    reg.resid1 <- reactive({
+        if (is.null(intro.regression())) return(NULL)
+        
+        mydat <- data.frame(residuals = resid(intro.regression()), x = intro.data()[as.numeric(names(resid(intro.regression()))),input$xreg])
+        
+        return(mydat)
+    })
     
-    reactive({
-        residualreg3(intro.data(), input$xreg, input$yreg, intro.regression())
-    }) %>% bind_shiny("resplot3")
+    reg.resid1 %>%
+        ggvis(x = ~x, y = ~residuals) %>%
+        layer_points() %>%
+        set_options(width = 200, height = 200) %>% 
+        bind_shiny("resplot1")
+    
+    reg.resid2 <- reactive({
+        if (is.null(intro.regression())) return(NULL)
+        
+        myresid <- resid(intro.regression())
+        
+        yy <- quantile(myresid, na.rm = TRUE, c(0.25, 0.75))
+        xx <- qnorm(c(0.25, 0.75))
+        slope <- diff(yy) / diff(xx)
+        int <- yy[1] - slope * xx[1]
+        
+        mydat <- data.frame(yy = qnorm(seq(0, 1, by = (1/(length(na.omit(myresid)) + 1)))[-c(1, (length(na.omit(myresid)) + 2))]),
+                            residuals = sort(myresid))
+        
+        return(mydat)
+    })
+    
+    reg.resid2 %>%
+        ggvis(x = ~yy, y = ~residuals) %>%
+        layer_points() %>%
+        set_options(width = 200, height = 200) %>% 
+        bind_shiny("resplot2")
+    
+    reg.resid1 %>%
+        ggvis(x = ~residuals) %>%
+        layer_histograms() %>%
+        set_options(width = 200, height = 200) %>%
+        bind_shiny("resplot3")
 
     dt.options <- reactive({list(pageLength = 10,
                                  searching=0,

@@ -65,15 +65,11 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                       
                       tabPanel("Transform",
                                column(4,
-                                      wellPanel(
-                                          selectInput("var_trans", "Select Variable", choices = names(mpg)),
-                                          
-                                           radioButtons("trans", "Choose Transformation", choices = c("Type" = "type", "Power" = "power")),
+                                      wellPanel(                                          
+                                           selectInput("trans", "Choose Transformation", choices = c("Power" = "power", "Categorical" = "categorical", "Numeric" = "numeric")),
+                                           selectInput("var_trans", "Select Variable", choices = numericNames(mpg)),
                                            conditionalPanel(condition = "input.trans == 'power'",
                                                             sliderInput("power", "Power", value = 1, min = -5, max = 5, step = 0.1)
-                                           ),
-                                           conditionalPanel(condition = "input.trans == 'type'",
-                                                           selectInput("var_type", "Type", choices = c("Numeric" = "numeric", "Categorical" = "categorical"))
                                            ),
 
                                           hr(),
@@ -83,11 +79,21 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                ),
                                
                                column(8,
-                                      tags$b("Original Data"),
-                                      ggvisOutput("var_plot"),
+                                      textOutput("var_trans_text"),
+                                      
                                       hr(),
-                                      tags$b("Transformed Data"),
-                                      ggvisOutput("trans_plot")
+                                      
+                                      conditionalPanel(condition = "input.trans == 'power'",
+                                          tags$b("Original Data"),
+                                          ggvisOutput("var_plot")
+                                      ),
+                                      
+                                      hr(),
+                                      
+                                      conditionalPanel(condition = "input.trans == 'power'",
+                                          tags$b("Transformed Data"),
+                                          ggvisOutput("trans_plot")
+                                      )
                                )
                       ),
                       "-----",
@@ -106,7 +112,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                         ),
                                         conditionalPanel(
                                           condition = "(input.plottype != 'histogram' && input.plottype != 'quantileplot' && input.plottype != 'barchart' && input.plottype != 'paretochart') || input.addy == true",
-                                          selectInput("y", "Y Variable (y)", choices = NULL)
+                                          selectInput("y", "Y Variable (y)", choices = numericNames(mpg))
                                         ),
                                         
                                         hr(),
