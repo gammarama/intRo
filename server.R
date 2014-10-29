@@ -106,19 +106,21 @@ shinyServer(function(input, output, session) {
     })
     
     x_selected <- reactive({
-        if (input$x %in% x_choices()) input$x
-        else x_choices()[1]
+        x_choices()[1]
     })
     
     y_selected <- reactive({
-        if (input$y %in% y_choices()) input$y
-        else y_choices()[1]
+        y_choices()[1]
     })
     
     ## Graphical Observers
     observe({
-        updateSelectInput(session, "x", choices = names(intro.data()))
-        updateSelectInput(session, "y", choices = names(intro.data()))
+        input$plottype
+        updateSelectInput(session, "x", choices = x_choices(), selected = x_selected())
+    })
+    observe({
+        input$plottype
+        updateSelectInput(session, "y", choices = y_choices(), selected = y_selected())
     })
     
     ## Transform Observers
@@ -300,14 +302,13 @@ shinyServer(function(input, output, session) {
         layer_histograms() %>%
         bind_shiny("trans_plot")
     
-    #reactive({        
-    #    valid.plottypes[[input$plottype]](intro.data(), input$x, input$y, intro.numericnames(), intro.categoricnames(), valid.bartypes[[input$bartype]], input$binwidth, input$addy, input$xmin, input$xmax, input$ymin, input$ymax)
-    #}) %>% bind_shiny("plot")
-    
     intro.plot <- reactive({
         if (is.null(intro.data())) return(NULL)
         
         mydat <- intro.data()
+        
+        cat(paste("\n X is", input$x, "\n"))
+        cat(paste("\n Y is", input$y, "\n"))
         
         mydat$intro_x_cat <- factor(mydat[,input$x]) 
         mydat$intro_x_num <- as.numeric(mydat[,input$x])
@@ -336,7 +337,7 @@ shinyServer(function(input, output, session) {
     })
     
     intro.plot %>%
-        ggvis(x = ~intro_x_num) %>%
+        ggvis(x = ~intro_x_num, y = ~intro_y_num) %>%
         layer_histograms() %>%
         bind_shiny("histogram")
     

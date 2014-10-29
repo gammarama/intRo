@@ -101,7 +101,7 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                       tabPanel("Graphical",
                                column(4,
                                       wellPanel(
-                                        selectInput("plottype", "Plot Type", choices = c("Histogram" = "histogram", "Normal Quantile Plot" = "quantileplot", "Scatterplot" = "scatterplot", "Line Chart" = "linechart", "Boxplot" = "boxplot", "Bar Chart" = "barchart", "Pareto Chart" = "paretochart", "Mosaic Plot" = "mosaicplot"), selected = "histogram"),
+                                        selectInput("plottype", "Plot Type", choices = c("Histogram" = "histogram", "Normal Quantile Plot" = "quantileplot", "Scatterplot" = "scatterplot", "Line Chart" = "linechart", "Boxplot" = "boxplot", "Bar Chart" = "barchart", "Pareto Chart" = "paretochart", "Mosaic Plot" = "mosaicplot")),
                                         
                                         hr(),
                                         
