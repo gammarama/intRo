@@ -105,14 +105,14 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                         
                                         hr(),
                                         
-                                        selectInput("x", "X Variable (x)", choices = names(mpg)),
+                                        selectInput("x", "X Variable (x)", choices = numericNames(mpg)),
                                         conditionalPanel(
                                             condition = "input.plottype == 'barchart' || input.plottype == 'paretochart'",
                                             checkboxInput("addy", "Y Variable")
                                         ),
                                         conditionalPanel(
                                           condition = "(input.plottype != 'histogram' && input.plottype != 'quantileplot' && input.plottype != 'barchart' && input.plottype != 'paretochart') || input.addy == true",
-                                          selectInput("y", "Y Variable (y)", choices = names(mpg))
+                                          selectInput("y", "Y Variable (y)", choices = numericNames(mpg))
                                         ),
                                         
                                         hr(),
@@ -145,7 +145,6 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                         #),
                                         conditionalPanel(
                                             condition = "input.plottype == 'histogram'",
-                                            helpText("Bin Width"),
                                             uiOutput("histogram_ui")
                                             #numericInput("binwidth", "Bin Width", value = NA, min = 0.1, step = 0.1)
                                         )

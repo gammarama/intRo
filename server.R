@@ -335,7 +335,7 @@ shinyServer(function(input, output, session) {
     
    intro.plot %>%
         ggvis(x = ~intro_x_num, y = ~intro_y_num) %>%
-        layer_histograms(width = input_slider(1, 20, 1, animate = TRUE)) %>% 
+        layer_histograms(width = input_slider(1, 20, 1, label = "Bin Width")) %>% 
         bind_shiny("histogram", "histogram_ui")  
 
     intro.quant %>%
