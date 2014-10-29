@@ -333,12 +333,11 @@ shinyServer(function(input, output, session) {
         return(mydat)
     })
     
-    intro.plot %>%
+   intro.plot %>%
         ggvis(x = ~intro_x_num, y = ~intro_y_num) %>%
-        layer_histograms() %>%
-        #add_axis("x", title = xlab) %>% 
-        bind_shiny("histogram")
-    
+        layer_histograms(width = input_slider(1, 20, 1, animate = TRUE)) %>% 
+        bind_shiny("histogram", "histogram_ui")  
+
     intro.quant %>%
         ggvis(x = ~intro_quant, y = ~intro_x_num) %>%
         layer_points() %>%

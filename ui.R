@@ -117,40 +117,42 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                         
                                         hr(),
                                         
-                                        fluidRow(
-                                            column(5,
-                                                   conditionalPanel(condition = "input.plottype != 'mosaicplot'",
-                                                       numericInput("xmin", "X Min", value = NA, step = 0.1)
-                                                   )
-                                            ),
-                                            column(2),
-                                            column(5,
-                                                   conditionalPanel(condition = "input.plottype != 'mosaicplot'",
-                                                        numericInput("xmax", "X Max", value = NA, step = 0.1)                    
-                                                   )
-                                            )
-                                        ),
-                                        fluidRow(
-                                            column(5,
-                                                   conditionalPanel(condition = "input.plottype != 'mosaicplot'",
-                                                       numericInput("ymin", "Y Min", value = NA, step = 0.1)
-                                                   )
-                                            ),
-                                            column(2),
-                                            column(5,
-                                                   conditionalPanel(condition = "input.plottype != 'mosaicplot'",
-                                                       numericInput("ymax", "Y Max", value = NA, step = 0.1)
-                                                   )
-                                            )
-                                        ),
+#                                         fluidRow(
+#                                             column(5,
+#                                                    conditionalPanel(condition = "input.plottype != 'mosaicplot'",
+#                                                        numericInput("xmin", "X Min", value = NA, step = 0.1)
+#                                                    )
+#                                             ),
+#                                             column(2),
+#                                             column(5,
+#                                                    conditionalPanel(condition = "input.plottype != 'mosaicplot'",
+#                                                         numericInput("xmax", "X Max", value = NA, step = 0.1)                    
+#                                                    )
+#                                             )
+#                                         ),
+                                        #fluidRow(
+                                        #    column(5,
+                                        #           conditionalPanel(condition = "input.plottype != 'mosaicplot'",
+                                        #               numericInput("ymin", "Y Min", value = NA, step = 0.1)
+                                        #           )
+                                        #    ),
+                                        #    column(2),
+                                        #    column(5,
+                                        #           conditionalPanel(condition = "input.plottype != 'mosaicplot'",
+                                        #               numericInput("ymax", "Y Max", value = NA, step = 0.1)
+                                        #           )
+                                        #    )
+                                        #),
                                         conditionalPanel(
                                             condition = "input.plottype == 'histogram'",
-                                            numericInput("binwidth", "Bin Width", value = NA, min = 0.1, step = 0.1)
-                                        ),
-                                        conditionalPanel(
-                                            condition = "(input.plottype == 'barchart' || input.plottype == 'paretochart') && input.addy == true",
-                                            radioButtons("bartype", "Y Variable Type", choices = c("Count" = "length", "Sum" = "sum", "Mean" = "mean", "Median" = "median"))
+                                            helpText("Bin Width"),
+                                            uiOutput("histogram_ui")
+                                            #numericInput("binwidth", "Bin Width", value = NA, min = 0.1, step = 0.1)
                                         )
+                                        #conditionalPanel(
+                                        #    condition = "(input.plottype == 'barchart' || input.plottype == 'paretochart') && input.addy == true",
+                                        #    radioButtons("bartype", "Y Variable Type", choices = c("Count" = "length", "Sum" = "sum", "Mean" = "mean", "Median" = "median"))
+                                        #)
                                       )
                                ),
                                
