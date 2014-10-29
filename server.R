@@ -116,11 +116,11 @@ shinyServer(function(input, output, session) {
     ## Graphical Observers
     observe({
         input$plottype
-        updateSelectInput(session, "x", choices = x_choices(), selected = x_selected())
+        updateSelectInput(session, "x", choices = names(intro.data()))
     })
     observe({
         input$plottype
-        updateSelectInput(session, "y", choices = y_choices(), selected = y_selected())
+        updateSelectInput(session, "y", choices = names(intro.data()))
     })
     
     ## Transform Observers
@@ -305,7 +305,7 @@ shinyServer(function(input, output, session) {
     intro.plot <- reactive({
         if (is.null(intro.data())) return(NULL)
         
-        mydat <- intro.data()
+        mydat <- na.omit(intro.data())
 
         mydat$intro_x_cat <- factor(mydat[,input$x]) 
         mydat$intro_x_num <- as.numeric(mydat[,input$x])

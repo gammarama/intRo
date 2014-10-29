@@ -32,7 +32,7 @@ shinyUI(
                                                          wellPanel(
                                                              conditionalPanel(
                                                                  condition = "input.own == false",
-                                                                 selectInput("data", "Choose Dataset", c("MPG" = "mpg", "Air Quality" = "airquality", "Diamonds" = "diamonds"), selected = "mpg")
+                                                                 selectInput("data", "Choose Dataset", c("MPG" = "mpg", "Air Quality" = "airquality", "Diamonds" = "diamonds"))
                                                              ),
                                                              conditionalPanel(
                                                                  condition = "input.own == true",
@@ -105,14 +105,14 @@ shinyUI(
                                                              
                                                              hr(),
                                                              
-                                                             selectInput("x", "X Variable (x)", choices = numericNames(mpg)),
+                                                             selectInput("x", "X Variable (x)", choices = names(mpg)),
                                                              #conditionalPanel(
                                                              #    condition = "input.plottype == 'barchart' || input.plottype == 'paretochart'",
                                                              #    checkboxInput("addy", "Y Variable")
                                                              #),
                                                              conditionalPanel(
                                                                  condition = "(input.plottype != 'histogram' && input.plottype != 'quantileplot' && input.plottype != 'barchart' && input.plottype != 'paretochart') || input.addy == true",
-                                                                 selectInput("y", "Y Variable (y)", choices = numericNames(mpg))
+                                                                 selectInput("y", "Y Variable (y)", choices = names(mpg))
                                                              ),
                                                              
                                                              hr(),
@@ -195,8 +195,8 @@ shinyUI(
                                          tabPanel("Contingency",
                                                   column(4,
                                                          wellPanel(
-                                                             selectInput("xcont", "X Variable (x)", choices = categoricNames(mpg), selected = categoricNames(mpg)[5]),
-                                                             selectInput("ycont", "Y Variable (y)", choices = categoricNames(mpg), selected = categoricNames(mpg)[6])
+                                                             selectInput("xcont", "X Variable (x)", choices = categoricNames(mpg)),
+                                                             selectInput("ycont", "Y Variable (y)", choices = categoricNames(mpg))
                                                          )
                                                   ),
                                                   
@@ -207,8 +207,8 @@ shinyUI(
                                          tabPanel("Regression",
                                                   column(4,
                                                          wellPanel(
-                                                             selectInput("xreg", "Independent Variable (x)", choices = numericNames(mpg),  selected = numericNames(mpg)[4]),
-                                                             selectInput("yreg", "Dependent Variable (y)", choices = numericNames(mpg), selected = numericNames(mpg)[5]),
+                                                             selectInput("xreg", "Independent Variable (x)", choices = numericNames(mpg)),
+                                                             selectInput("yreg", "Dependent Variable (y)", choices = numericNames(mpg)),
                                                              
                                                              hr(),
                                                              tags$button("", id = "saveresid", type = "button", class = "btn action-button", list(icon("save"), "Save Residuals/Fitted"), onclick = "$('#side-nav :contains(\"Sources\")').highlight();")
