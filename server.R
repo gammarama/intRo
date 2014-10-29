@@ -306,10 +306,7 @@ shinyServer(function(input, output, session) {
         if (is.null(intro.data())) return(NULL)
         
         mydat <- intro.data()
-        
-        cat(paste("\n X is", input$x, "\n"))
-        cat(paste("\n Y is", input$y, "\n"))
-        
+
         mydat$intro_x_cat <- factor(mydat[,input$x]) 
         mydat$intro_x_num <- as.numeric(mydat[,input$x])
         mydat$intro_y_cat <- factor(mydat[,input$y])
@@ -339,6 +336,7 @@ shinyServer(function(input, output, session) {
     intro.plot %>%
         ggvis(x = ~intro_x_num, y = ~intro_y_num) %>%
         layer_histograms() %>%
+        #add_axis("x", title = xlab) %>% 
         bind_shiny("histogram")
     
     intro.quant %>%
