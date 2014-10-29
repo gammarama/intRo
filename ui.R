@@ -105,14 +105,14 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                         
                                         hr(),
                                         
-                                        selectInput("x", "X Variable (x)", choices = numericNames(mpg)),
+                                        selectInput("x", "X Variable (x)", choices = names(mpg)),
                                         conditionalPanel(
                                             condition = "input.plottype == 'barchart' || input.plottype == 'paretochart'",
                                             checkboxInput("addy", "Y Variable")
                                         ),
                                         conditionalPanel(
                                           condition = "(input.plottype != 'histogram' && input.plottype != 'quantileplot' && input.plottype != 'barchart' && input.plottype != 'paretochart') || input.addy == true",
-                                          selectInput("y", "Y Variable (y)", choices = numericNames(mpg))
+                                          selectInput("y", "Y Variable (y)", choices = names(mpg))
                                         ),
                                         
                                         hr(),
@@ -155,11 +155,29 @@ navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                                ),
                                
                                column(8,
-                                      conditionalPanel(condition = "input.plottype != 'mosaicplot'",
-                                            ggvisOutput("plot")
+                                      conditionalPanel(condition = "input.plottype == 'histogram'",
+                                            ggvisOutput("histogram")
+                                      ),
+                                      conditionalPanel(condition = "input.plottype == 'quantileplot'",
+                                                       ggvisOutput("quantileplot")
+                                      ),
+                                      conditionalPanel(condition = "input.plottype == 'scatterplot'",
+                                                       ggvisOutput("scatterplot")
+                                      ),
+                                      conditionalPanel(condition = "input.plottype == 'linechart'",
+                                                       ggvisOutput("linechart")
+                                      ),
+                                      conditionalPanel(condition = "input.plottype == 'boxplot'",
+                                                       ggvisOutput("boxplot")
                                       ),
                                       conditionalPanel(condition = "input.plottype == 'mosaicplot'",
                                             plotOutput("mosaicplot")
+                                      ),
+                                      conditionalPanel(condition = "input.plottype == 'barchart'",
+                                                       plotOutput("barchart")
+                                      ),
+                                      conditionalPanel(condition = "input.plottype == 'paretochart'",
+                                                       plotOutput("paretochart")
                                       )
                                )
                       ),
