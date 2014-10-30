@@ -126,10 +126,18 @@ shinyServer(function(input, output, session) {
     })
     
     ## Regression Observers
-    observe({
-        updateSelectInput(session, "xreg", choices = intro.numericnames(),  selected = ifelse(checkVariable(intro.data(), input$xreg), input$xreg, intro.numericnames()[1]))
-        updateSelectInput(session, "yreg", choices = intro.numericnames(),  selected = ifelse(checkVariable(intro.data(), input$yreg), input$yreg, intro.numericnames()[2]))
-    })
+#     observe({
+#         updateSelectInput(session, "xreg", choices = intro.numericnames(),  selected = ifelse(checkVariable(intro.data(), input$xreg), input$xreg, intro.numericnames()[1]))
+#         updateSelectInput(session, "yreg", choices = intro.numericnames(),  selected = ifelse(checkVariable(intro.data(), input$yreg), input$yreg, intro.numericnames()[2]))
+#     })
+
+source("modules/Regression_Observes.R")
+observe({
+    x <- reg_observers(session, intro.numericnames())
+    for (i in x) {
+        i
+    }
+})
     
     ## Other Input Observers
     observe({
@@ -272,22 +280,22 @@ shinyServer(function(input, output, session) {
         return(curdata)
     })
     
-    intro.regression <- reactive({
-        if (is.null(intro.data())) return(NULL)
-        
-        lm.fit <- lm(intro.data()[,input$yreg] ~ intro.data()[,input$xreg])
-        
-        if (input$saveresid > oldsaveresid) {
-            curxreg <- input$xreg
-            curyreg <- input$yreg
-            
-            values$mydat <<- savefit(intro.data(), input$xreg, input$yreg, lm.fit)
-            
-            oldsaveresid <<- input$saveresid
-        }
-        
-        return(lm.fit)
-    })
+#     intro.regression <- reactive({
+#         if (is.null(intro.data())) return(NULL)
+#         
+#         lm.fit <- lm(intro.data()[,input$yreg] ~ intro.data()[,input$xreg])
+#         
+#         if (input$saveresid > oldsaveresid) {
+#             curxreg <- input$xreg
+#             curyreg <- input$yreg
+#             
+#             values$mydat <<- savefit(intro.data(), input$xreg, input$yreg, lm.fit)
+#             
+#             oldsaveresid <<- input$saveresid
+#         }
+#         
+#         return(lm.fit)
+#     })
     
     intro.transform %>%
         ggvis(x = ~var) %>%
@@ -392,63 +400,63 @@ shinyServer(function(input, output, session) {
         scale_numeric("y", domain = input_ydomain, clamp = TRUE, nice = TRUE) %>%
         bind_shiny("paretochart")
     
-    reg.data <- reactive({
-        if (is.null(intro.regression())) return(NULL)
-        
-        reg.data <- intro.data()
-        reg.data$xreg <- reg.data[,input$xreg]
-        reg.data$yreg <- reg.data[,input$yreg]
-        
-        return(reg.data)
-    })
+#     reg.data <- reactive({
+#         if (is.null(intro.regression())) return(NULL)
+#         
+#         reg.data <- intro.data()
+#         reg.data$xreg <- reg.data[,input$xreg]
+#         reg.data$yreg <- reg.data[,input$yreg]
+#         
+#         return(reg.data)
+#     })
     
-    reg.data %>%
-        ggvis(x = ~xreg, y = ~yreg) %>%
-        layer_points() %>%
-        layer_model_predictions(model = "lm") %>% 
-        bind_shiny("regplot")
+#     reg.data %>%
+#         ggvis(x = ~xreg, y = ~yreg) %>%
+#         layer_points() %>%
+#         layer_model_predictions(model = "lm") %>% 
+#         bind_shiny("regplot")
     
-    reg.resid1 <- reactive({
-        if (is.null(intro.regression())) return(NULL)
-        
-        mydat <- data.frame(residuals = resid(intro.regression()), x = intro.data()[as.numeric(names(resid(intro.regression()))),input$xreg])
-        
-        return(mydat)
-    })
+#     reg.resid1 <- reactive({
+#         if (is.null(intro.regression())) return(NULL)
+#         
+#         mydat <- data.frame(residuals = resid(intro.regression()), x = intro.data()[as.numeric(names(resid(intro.regression()))),input$xreg])
+#         
+#         return(mydat)
+#     })
     
-    reg.resid1 %>%
-        ggvis(x = ~x, y = ~residuals) %>%
-        layer_points() %>%
-        set_options(width = 200, height = 200) %>% 
-        bind_shiny("resplot1")
+#     reg.resid1 %>%
+#         ggvis(x = ~x, y = ~residuals) %>%
+#         layer_points() %>%
+#         set_options(width = 200, height = 200) %>% 
+#         bind_shiny("resplot1")
     
-    reg.resid2 <- reactive({
-        if (is.null(intro.regression())) return(NULL)
-        
-        myresid <- resid(intro.regression())
-        
-        yy <- quantile(myresid, na.rm = TRUE, c(0.25, 0.75))
-        xx <- qnorm(c(0.25, 0.75))
-        slope <- diff(yy) / diff(xx)
-        int <- yy[1] - slope * xx[1]
-        
-        mydat <- data.frame(yy = qnorm(seq(0, 1, by = (1/(length(na.omit(myresid)) + 1)))[-c(1, (length(na.omit(myresid)) + 2))]),
-                            residuals = sort(myresid))
-        
-        return(mydat)
-    })
+#     reg.resid2 <- reactive({
+#         if (is.null(intro.regression())) return(NULL)
+#         
+#         myresid <- resid(intro.regression())
+#         
+#         yy <- quantile(myresid, na.rm = TRUE, c(0.25, 0.75))
+#         xx <- qnorm(c(0.25, 0.75))
+#         slope <- diff(yy) / diff(xx)
+#         int <- yy[1] - slope * xx[1]
+#         
+#         mydat <- data.frame(yy = qnorm(seq(0, 1, by = (1/(length(na.omit(myresid)) + 1)))[-c(1, (length(na.omit(myresid)) + 2))]),
+#                             residuals = sort(myresid))
+#         
+#         return(mydat)
+#     })
     
-    reg.resid2 %>%
-        ggvis(x = ~yy, y = ~residuals) %>%
-        layer_points() %>%
-        set_options(width = 200, height = 200) %>% 
-        bind_shiny("resplot2")
-    
-    reg.resid1 %>%
-        ggvis(x = ~residuals) %>%
-        layer_histograms() %>%
-        set_options(width = 200, height = 200) %>%
-        bind_shiny("resplot3")
+#     reg.resid2 %>%
+#         ggvis(x = ~yy, y = ~residuals) %>%
+#         layer_points() %>%
+#         set_options(width = 200, height = 200) %>% 
+#         bind_shiny("resplot2")
+#     
+#     reg.resid1 %>%
+#         ggvis(x = ~residuals) %>%
+#         layer_histograms() %>%
+#         set_options(width = 200, height = 200) %>%
+#         bind_shiny("resplot3")
 
     dt.options <- reactive({list(pageLength = 10,
                                  searching=0,
@@ -521,24 +529,28 @@ shinyServer(function(input, output, session) {
             return(dat.dplyr.df)
         }
     })
+
+source("modules/Regression_Reactives.R")
+reacts <- regression_react(intro.data(), input)
+reg_output(reacts)
     
-    output$regtable <- renderTable({
-        if (!(input$xreg %in% intro.numericnames()) | !(input$yreg %in% intro.numericnames())) return(NULL)
-        
-        return(tablereg(intro.data(), input$xreg, input$yreg, intro.regression()))
-    })
-    
-    output$r <- renderText({
-        if (!(input$xreg %in% intro.numericnames()) | !(input$yreg %in% intro.numericnames())) return(NULL)
-        
-        return(r(intro.data(), input$xreg, input$yreg, intro.regression()))
-    })
-    
-    output$r2 <- renderText({
-        if (!(input$xreg %in% intro.numericnames()) | !(input$yreg %in% intro.numericnames())) return(NULL)
-        
-        return(r2(intro.data(), input$xreg, input$yreg, intro.regression()))
-    })
+#     output$regtable <- renderTable({
+#         if (!(input$xreg %in% intro.numericnames()) | !(input$yreg %in% intro.numericnames())) return(NULL)
+#         
+#         return(tablereg(intro.data(), input$xreg, input$yreg, intro.regression()))
+#     })
+#     
+#     output$r <- renderText({
+#         if (!(input$xreg %in% intro.numericnames()) | !(input$yreg %in% intro.numericnames())) return(NULL)
+#         
+#         return(r(intro.data(), input$xreg, input$yreg, intro.regression()))
+#     })
+#     
+#     output$r2 <- renderText({
+#         if (!(input$xreg %in% intro.numericnames()) | !(input$yreg %in% intro.numericnames())) return(NULL)
+#         
+#         return(r2(intro.data(), input$xreg, input$yreg, intro.regression()))
+#     })
     
     output$ttesttable <- renderText({
         if (!(input$group1 %in% intro.numericnames())) return(NULL)
