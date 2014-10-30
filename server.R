@@ -106,11 +106,11 @@ shinyServer(function(input, output, session) {
     })
     
     x_selected <- reactive({
-        if (checkVariable(intro.data(), input$x)) input$x else x_choices()[1]
+        x_choices()[1]
     })
     
     y_selected <- reactive({
-        if (checkVariable(intro.data(), input$y)) input$y else y_choices()[1]
+        y_choices()[2]
     })
     
     ## Graphical Observers
