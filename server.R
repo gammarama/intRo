@@ -106,21 +106,18 @@ shinyServer(function(input, output, session) {
     })
     
     x_selected <- reactive({
-        x_choices()[1]
+        if (checkVariable(intro.data(), input$x)) input$x else x_choices()[1]
     })
     
     y_selected <- reactive({
-        y_choices()[1]
+        if (checkVariable(intro.data(), input$y)) input$y else y_choices()[1]
     })
     
     ## Graphical Observers
     observe({
         input$plottype
-        updateSelectInput(session, "x", choices = names(intro.data()))
-    })
-    observe({
-        input$plottype
-        updateSelectInput(session, "y", choices = names(intro.data()))
+        updateSelectInput(session, "x", choices = x_choices(), selected = x_selected())
+        updateSelectInput(session, "y", choices = y_choices(), selected = y_selected())
     })
     
     ## Transform Observers
@@ -306,11 +303,14 @@ shinyServer(function(input, output, session) {
         if (is.null(intro.data())) return(NULL)
         
         mydat <- na.omit(intro.data())
+        
+        xvar <- if (checkVariable(intro.data(), input$x)) input$x else 1
+        yvar <- if (checkVariable(intro.data(), input$y)) input$y else 2
 
-        mydat$intro_x_cat <- factor(mydat[,input$x]) 
-        mydat$intro_x_num <- as.numeric(mydat[,input$x])
-        mydat$intro_y_cat <- factor(mydat[,input$y])
-        mydat$intro_y_num <- as.numeric(mydat[,input$y])
+        mydat$intro_x_cat <- factor(mydat[,xvar])
+        mydat$intro_x_num <- as.numeric(mydat[,xvar])
+        mydat$intro_y_cat <- factor(mydat[,yvar])
+        mydat$intro_y_num <- as.numeric(mydat[,yvar])
         
         if (input$plottype == "paretochart") mydat$intro_x_cat <- factor(mydat$intro_x_cat, levels = names(sort(table(mydat$intro_x_cat), decreasing = TRUE)))
         

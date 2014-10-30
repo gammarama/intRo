@@ -105,14 +105,14 @@ shinyUI(
                                                              
                                                              hr(),
                                                              
-                                                             selectInput("x", "X Variable (x)", choices = names(mpg)),
+                                                             selectInput("x", "X Variable (x)", choices = numericNames(mpg)),
                                                              #conditionalPanel(
                                                              #    condition = "input.plottype == 'barchart' || input.plottype == 'paretochart'",
                                                              #    checkboxInput("addy", "Y Variable")
                                                              #),
                                                              conditionalPanel(
                                                                  condition = "(input.plottype != 'histogram' && input.plottype != 'quantileplot' && input.plottype != 'barchart' && input.plottype != 'paretochart') || input.addy == true",
-                                                                 selectInput("y", "Y Variable (y)", choices = names(mpg))
+                                                                 selectInput("y", "Y Variable (y)", choices = numericNames(mpg))
                                                              ),
                                                              
                                                              hr(),
