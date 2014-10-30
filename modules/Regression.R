@@ -1,40 +1,67 @@
-scatterplotreg <- function (data, x, y)  {
-    lm.fit <- lm(data[,y] ~ data[,x])
-    
-    my.range <- range(data[,x], na.rm = TRUE)
-    adjustment <- (my.range[2] - my.range[1]) / 10
-    
-    coord <- c(min(data[,x], na.rm = TRUE) + adjustment, max(data[,y], na.rm = TRUE))
-    
-    if (coef(lm.fit)[2] < 0) coord <- c(min(data[,x], na.rm = TRUE) + adjustment, min(data[,y], na.rm = TRUE))
-    
-    ggplot() + geom_point(aes_string(x = x, y = y), data = data) +
-        ggtitle(paste("Regression of", y, "on", x)) +
-        geom_smooth(aes_string(x = x, y = y), data = data, method = "lm") +
-        annotate("text", label = paste("R^2 =", round(summary(lm.fit)$r.squared, digits = 4)), x = coord[1], y = coord[2], size = 6)
+scatterplotreg <- function (data, x, y, lm.fit)  {
+    data %>%
+        ggvis(x = as.name(x), y = as.name(y)) %>%
+        layer_points() %>%
+        layer_model_predictions(model = "lm")
 }
 
-tablereg <- function (data, x, y) {
-    lm.fit <- lm(data[,y] ~ data[,x])
-    
+tablereg <- function (data, x, y, lm.fit) {
     tbl.fit <- coef(summary(lm.fit))
     rownames(tbl.fit)[2] <- x
     
     return(tbl.fit)
 }
 
-residualreg <- function (data, x, y) {
-    lm.fit <- lm(data[,y] ~ data[,x])
+r <- function (data, x, y, lm.fit) {
+    if (!(x %in% names(data)) | !(y %in% names(data))) return(NULL)
+    if (!is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
+    
+    return(paste("r =", round(cor(data[,y], data[,x], use = "complete.obs"), digits = 4)))
+}
+
+r2 <- function (data, x, y, lm.fit) {
+    return(paste("R^2 =", round(summary(lm.fit)$r.squared, digits = 4)))
+}
+
+residualreg1 <- function (data, x, y, lm.fit) {
+    mydat <- data.frame(residuals = resid(lm.fit), x = data[as.numeric(names(resid(lm.fit))),x])
+    names(mydat)[2] <- x
+            
+    mydat %>%
+        ggvis(x = as.name(x), y = as.name("residuals")) %>%
+        layer_points() %>%
+        set_options(width = 200, height = 200)
+}
+
+residualreg2 <- function (data, x, y, lm.fit) {
     data$residuals <- resid(lm.fit)
     
     yy <- quantile(data$residuals, na.rm = TRUE, c(0.25, 0.75))
     xx <- qnorm(c(0.25, 0.75))
     slope <- diff(yy) / diff(xx)
     int <- yy[1] - slope * xx[1]
+
+    mydat <- data.frame(yy = qnorm(seq(0, 1, by = (1/(length(na.omit(data$residuals)) + 1)))[-c(1, (length(na.omit(data$residuals)) + 2))]),
+                        residuals = sort(data$residuals))
+
+    mydat %>%
+        ggvis(x = as.name("yy"), y = as.name("residuals")) %>%
+        layer_points() %>%
+        set_options(width = 200, height = 200)
+}
+
+residualreg3 <- function (data, x, y, lm.fit) {
+    mydat <- data.frame(residuals = resid(lm.fit))
     
-    p1 <- ggplot() + geom_point(data = data, aes_string(x = x, y = "residuals")) +
-                     geom_hline(yintercept = 0, linetype = 2) + theme(aspect.ratio = 1) + ggtitle(paste("Residuals vs", x))
-    p2 <- qplot(sample = data$residuals, stat = "qq") + geom_abline(slope = slope, intercept = int, linetype = 2) + theme(aspect.ratio = 1) + ggtitle("Normal Quantile Plot")
+    mydat %>%
+        ggvis(x = ~residuals) %>%
+        layer_histograms() %>%
+        set_options(width = 200, height = 200)
+}
+
+savefit <- function (data, x, y, lm.fit) { 
+    data$fitted <- predict(lm.fit)
+    data$resid <- resid(lm.fit)
     
-    grid.arrange(p1, p2, ncol = 2)
+    return(data)
 }
