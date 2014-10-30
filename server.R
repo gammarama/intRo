@@ -488,10 +488,15 @@ shinyServer(function(input, output, session) {
     output$mosaicplot <- renderPlot({
         return(print(mosaicplot(intro.data(), input$x, input$y, intro.numericnames(), intro.categoricnames())))
     })
+   
+    my.digits <- reactive({
+        if (input$conttype %in% c("totalpercs", "rowpercs", "columnpercs")) return(3)
+        else return(0)
+    })
     
     output$conttable <- renderTable({
-        return(cont.table(intro.data(), input$xcont, input$ycont))
-    }, digits = 0)
+        return(cont.table(intro.data(), input$xcont, input$ycont, input$conttype, my.digits()))
+    }, digits = my.digits())
     
     output$summary <- renderTable({
         return(summarytable(intro.data(), input$tblvars))

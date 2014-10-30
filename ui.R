@@ -196,7 +196,11 @@ shinyUI(
                                                   column(4,
                                                          wellPanel(
                                                              selectInput("xcont", "X Variable (x)", choices = categoricNames(mpg)),
-                                                             selectInput("ycont", "Y Variable (y)", choices = categoricNames(mpg))
+                                                             selectInput("ycont", "Y Variable (y)", choices = categoricNames(mpg)),
+                                                             
+                                                             hr(),
+                                                             
+                                                             radioButtons("conttype", "Type", choices = c("Counts" = "counts", "Row Percentages" = "rowpercs", "Column Percentages" = "columnpercs", "Total Percentages" = "totalpercs"))
                                                          )
                                                   ),
                                                   
