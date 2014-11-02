@@ -1,0 +1,17 @@
+output$regtable <- renderTable({
+  if (!(input$xreg %in% intro.numericnames()) | !(input$yreg %in% intro.numericnames())) return(NULL)
+  
+  return(tablereg(intro.data(), input$xreg, input$yreg, intro.regression()))
+})
+
+output$r <- renderText({
+  if (!(input$xreg %in% intro.numericnames()) | !(input$yreg %in% intro.numericnames())) return(NULL)
+  
+  return(r(intro.data(), input$xreg, input$yreg, intro.regression()))
+})
+
+output$r2 <- renderText({
+  if (!(input$xreg %in% intro.numericnames()) | !(input$yreg %in% intro.numericnames())) return(NULL)
+  
+  return(r2(intro.data(), input$xreg, input$yreg, intro.regression()))
+})
