@@ -1,24 +1,7 @@
 addResourcePath(prefix="images", directoryPath="images/")
 
-library(shiny)
-library(shinyAce)
-library(YaleToolkit)
-library(ggplot2)
-library(ggvis)
-
-numericNames <- function(data) {
-    vec <- as.character(subset(whatis(data), type == "numeric")$variable.name)
-    if (length(vec) == 0) vec <- ""
-    
-    return(vec)
-}
-
-categoricNames <- function(data) {
-    vec <- as.character(subset(whatis(data), type != "numeric")$variable.name)
-    if (length(vec) == 0) vec <- ""
-    
-    return(vec)
-}
+## Source Regression ui
+source('modules/regression.ui', local=TRUE)
 
 shinyUI(
     navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
@@ -65,58 +48,7 @@ shinyUI(
                                          
                                          "-----",
                                          "Statistics",
-                                         tabPanel("Regression",
-                                                  column(4,
-                                                         wellPanel(
-                                                             selectInput("xreg", "Independent Variable (x)", choices = numericNames(mpg), selected = numericNames(mpg)[4]),
-                                                             selectInput("yreg", "Dependent Variable (y)", choices = numericNames(mpg), selected = numericNames(mpg)[5]),
-                                                             
-                                                             hr(),
-                                                             tags$button("", id = "saveresid", type = "button", class = "btn action-button", list(icon("save"), "Save Residuals/Fitted"), onclick = "$('#side-nav :contains(\"Sources\")').highlight();")
-                                                             #actionButton("saveresid", "Save Residuals/Fitted", icon = icon("save"))
-                                                         )
-                                                  ),
-                                                  
-                                                  column(8,
-                                                         tags$b("Parameter Estimates"),
-                                                         tableOutput("regtable"),
-                                                         
-                                                         hr(),
-                                                         
-                                                         tags$b("Correlation"),
-                                                         textOutput("r"),
-                                                         textOutput("r2"),
-                                                         
-                                                         hr(),
-                                                         
-                                                         tags$b("Plot of Fit"),
-                                                         ggvisOutput("regplot"),
-                                                         
-                                                         hr(),
-                                                         
-                                                         tags$b("Residual Plots"),
-                                                         fluidRow(
-                                                             column(4, 
-                                                                    ggvisOutput("resplot1")
-                                                             ),
-                                                             column(4,
-                                                                    ggvisOutput("resplot2")
-                                                             ),
-                                                             column(4,
-                                                                    ggvisOutput("resplot3")
-                                                             )
-                                                         )
-                                                  )
-                                         )
-                            )
-                        ),
-                        
-                        hr(),
-                        
-                        fluidRow(
-                            column(12,
-                                   aceEditor("myEditor", "", mode="r", readOnly=TRUE, theme="chrome"),
-                                   div(class='codePrint',div(id='codePrint'))
+                                         reg_ui
                             )
                         )     
                ),
@@ -126,7 +58,6 @@ shinyUI(
                           tabPanel("Eric Hare"),
                           tabPanel("Andee Kaplan")),
                tabPanel(title="hide_me"),
-               tabPanel(title="", icon=icon('code'), value = "javascript:$('#myEditor').slideToggle(); $('.fa-code').parent().parent().toggleClass('active'); $('div.codePrint').toggle()"),
                tabPanel(title="", icon=icon("print"), value = "javascript:print_intRo();"),
                footer=tagList(includeScript("scripts/top-nav-links.js"),
                               includeScript("scripts/print.js"),
