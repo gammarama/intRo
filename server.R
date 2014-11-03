@@ -54,25 +54,14 @@ process_logical <- function(data, x) {
 shinyServer(function(input, output, session) {
     values <- reactiveValues(firstrun = TRUE, mydat = NULL, mydat_rand = NULL)    
     valid.datasets <- list(mpg = mpg, airquality = airquality, diamonds = read.csv("data/diamonds_sub.csv"))
+
+    types <- c("helper", "observe", "static", "reactive", "output")
+    modules <- read.table("modules/modules.txt", header = FALSE)[,1]
     
-    ## Source Helper Functions
-    source("modules/sources.helper", local=TRUE)
-    source("modules/regression.helper", local=TRUE)
-    
-    ## Source Observes
-    source("modules/sources.observe", local=TRUE)
-    source("modules/regression.observe", local=TRUE)
-    
-    ## Source Statics
-    source("modules/sources.static", local=TRUE)
-    source("modules/regression.static", local=TRUE)
-    
-    ## Source Reactives
-    source("modules/sources.reactive", local=TRUE)
-    source("modules/regression.reactive", local=TRUE)
-    
-    ## Source Outputs
-    source("modules/sources.output", local=TRUE)
-    source("modules/regression.output", local=TRUE)
+    for(type in types){
+      for(mod in modules) {      
+        source(paste0("modules/", paste(mod, type, sep=".")), local=TRUE)
+      }
+    }
 
 })
