@@ -31,3 +31,5 @@ sourceDir <- function(path, type, local = FALSE, ...) {
     source(file.path(path, nm), local=local) 
   } 
 }
+
+module_info <- read.table("modules/modules.txt", header = TRUE, sep=",")

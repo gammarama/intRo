@@ -1,2 +1,8 @@
-sources
-regression
+heading, module
+data, sources
+data, transform
+summaries, graphical
+summaries, numerical
+statistics, contingency,
+statistics, regression
+statistics, t_test

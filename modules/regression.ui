@@ -1,4 +1,4 @@
-reg_ui <- tabPanel("Regression",
+regression_ui <- tabPanel("Regression",
          column(4,
                 wellPanel(
                   selectInput("xreg", "Independent Variable (x)", choices = numericNames(mpg), selected = numericNames(mpg)[4]),

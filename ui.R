@@ -11,11 +11,17 @@ shinyUI(
                             div(class='intRoPrint', h3('Results from intRo session:')),
                             navlistPanel(id = "side-nav", widths = c(2, 10),
                                          "Data",
-                                         sources_ui,                                         
+                                         sources_ui,
+                                         transform_ui,
+                                         "-----",
+                                         "Summaries",
+                                         graphical_ui,
+                                         numerical_ui,
                                          "-----",
                                          "Statistics",
-                                         reg_ui
-
+                                         contingency_ui,
+                                         regression_ui,
+                                         t_test_ui
                             )
                         )     
                ),

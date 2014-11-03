@@ -56,10 +56,11 @@ shinyServer(function(input, output, session) {
     valid.datasets <- list(mpg = mpg, airquality = airquality, diamonds = read.csv("data/diamonds_sub.csv"))
 
     types <- c("helper", "observe", "static", "reactive", "output")
-    modules <- read.table("modules/modules.txt", header = FALSE)[,1]
+    
     
     for(type in types){
-      for(mod in modules) {      
+      #for(mod in module_info$module) { 
+      for(mod in c("sources", "regression")) {
         source(paste0("modules/", paste(mod, type, sep=".")), local=TRUE)
       }
     }
