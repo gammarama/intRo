@@ -6,6 +6,7 @@ library(ggvis)
 library(dplyr)
 library(lubridate)
 library(gridExtra)
+library(R.utils)
 
 
 ###
@@ -23,4 +24,10 @@ categoricNames <- function(data) {
   if (length(vec) == 0) vec <- ""
   
   return(vec)
+}
+
+sourceDir <- function(path, type, local = FALSE, ...) { 
+  for (nm in list.files(path, pattern = paste0("\\.", type, "$"))) { 
+    source(file.path(path, nm), local=local) 
+  } 
 }
