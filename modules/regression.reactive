@@ -25,12 +25,6 @@ reg.data <- reactive({
   return(reg.data)
 })
 
-reg.data %>%
-  ggvis(x = ~xreg, y = ~yreg) %>%
-  layer_points() %>%
-  layer_model_predictions(model = "lm") %>% 
-  bind_shiny("regplot")
-
 reg.resid1 <- reactive({
   if (is.null(intro.regression())) return(NULL)
   
@@ -38,12 +32,6 @@ reg.resid1 <- reactive({
   
   return(mydat)
 })
-
-reg.resid1 %>%
-  ggvis(x = ~x, y = ~residuals) %>%
-  layer_points() %>%
-  set_options(width = 200, height = 200) %>% 
-  bind_shiny("resplot1")
 
 reg.resid2 <- reactive({
   if (is.null(intro.regression())) return(NULL)
@@ -60,15 +48,3 @@ reg.resid2 <- reactive({
   
   return(mydat)
 })
-
-reg.resid2 %>%
-  ggvis(x = ~yy, y = ~residuals) %>%
-  layer_points() %>%
-  set_options(width = 200, height = 200) %>% 
-  bind_shiny("resplot2")
-
-reg.resid1 %>%
-  ggvis(x = ~residuals) %>%
-  layer_histograms() %>%
-  set_options(width = 200, height = 200) %>%
-  bind_shiny("resplot3")
