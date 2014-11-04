@@ -8,7 +8,6 @@ library(lubridate)
 library(gridExtra)
 library(R.utils)
 
-
 ###
 ### Global Helper Functions
 ###
@@ -30,6 +29,10 @@ sourceDir <- function(path, type, local = FALSE, ...) {
   for (nm in list.files(path, pattern = paste0("\\.", type, "$"))) { 
     source(file.path(path, nm), local=local) 
   } 
+}
+
+checkVariable <- function(data, var) {
+    return(nchar(var) > 0 & var %in% names(data))
 }
 
 module_info <- read.table("modules/modules.txt", header = TRUE, sep=",")

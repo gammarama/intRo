@@ -1,7 +1,7 @@
 intro.regression <- reactive({
   if (is.null(intro.data())) return(NULL)
   
-  lm.fit <- lm(intro.data()[,input$yreg] ~ intro.data()[,input$xreg])
+  lm.fit <- lm(intro.data()[,input$yreg] ~ intro.data()[,input$xreg], na.action = na.exclude)
   
   if (input$saveresid > oldsaveresid) {
     curxreg <- input$xreg
