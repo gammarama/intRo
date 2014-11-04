@@ -1,4 +1,4 @@
-intRo-dev
+intRo
 =====
 
 Shiny-based statistics learning application available at http://www.intro-stats.com . 
