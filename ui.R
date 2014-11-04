@@ -1,8 +1,7 @@
 addResourcePath(prefix="images", directoryPath="images/")
 
-
 ## Source ui
-sourceDir("modules", "ui")
+sapply(file.path("modules", dir("modules")[dir("modules") != "modules.txt"], "ui.R"), source)
 
 shinyUI(
     navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
