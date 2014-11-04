@@ -54,14 +54,9 @@ process_logical <- function(data, x) {
 shinyServer(function(input, output, session) {
     values <- reactiveValues(firstrun = TRUE, mydat = NULL, mydat_rand = NULL)    
     types <- c("helper.R", "static.R", "observe.R", "reactive.R", "output.R")
-    
-    #modules_tosource <- file.path("modules", apply(expand.grid(module_info$module, types), 1, paste, collapse = "/"))
-    #sapply(modules_tosource, source, local = TRUE)
-    
-    for(type in types){
-        for(mod in module_info$module) { 
-            source(file.path("modules", mod, type), local=TRUE)
-        }
-    }
+    modules_tosource <- file.path("modules", apply(expand.grid(module_info$module, types), 1, paste, collapse = "/"))
 
+    for (mod in modules_tosource) {
+        source(mod, local = TRUE)
+    }
 })
