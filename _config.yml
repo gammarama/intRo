@@ -17,7 +17,7 @@ links:
   target: _self
   level: 1
 - name: github
-  href: http://github.com/harekaplan/intRo
+  href: http://github.com/gammarama/intRo
   class: fa-github
   target: _blank
   level: 1
