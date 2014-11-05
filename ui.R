@@ -24,8 +24,8 @@ shinyUI(
                             )
                         )     
                ),
-               tabPanel(title="", value="http://harekaplan.github.io/intRo", icon=icon('question-circle')),
-               tabPanel(title="", value="http://github.com/harekaplan/intRo", icon=icon("github")),
+               tabPanel(title="", value="http://gammarama.github.io/intRo", icon=icon('question-circle')),
+               tabPanel(title="", value="http://github.com/gammarama/intRo", icon=icon("github")),
                navbarMenu("", icon=icon("envelope"),
                           tabPanel("Eric Hare"),
                           tabPanel("Andee Kaplan")),
