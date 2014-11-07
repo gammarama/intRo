@@ -38,12 +38,10 @@ process_logical <- function(data, x) {
 }
 
 data.module <- function (inFile, dataset, own) {        
-    intro.data <- NULL
     if (is.null(inFile) | !own) {
-        intro.data <- dataset
+        cat_and_eval(paste0("intro.data <- get('", dataset, "')"))
     } else {
-        intro.data <- read.csv(inFile$datapath)
+        cat_and_eval(paste0("intro.data <- read.csv(", inFile[,"datapath"], ")"))
     }
-    
-    intro.data
+    return(intro.data)
 }

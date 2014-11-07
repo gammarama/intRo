@@ -1,16 +1,9 @@
     output$summary <- renderPrint({
-        if (is.null(input$tblvars)){
-            return(NULL)    
-        } else if (input$grouping == "none") {
-            return(summary(intro.data()[,input$tblvars]))
-        } else {
-            dat <- intro.data()[,input$tblvars]
-            dat$intro_grouping <- intro.data()[,input$grouping]
-            
-            dat.dplyr <- dat[,names(dat) %in% c("intro_grouping", numericNames(dat))] %>% group_by(intro_grouping) %>% summarise_each(funs(min, q1, median, q3, max, mean, sd))
-            dat.dplyr.df <- as.data.frame(dat.dplyr)
-            names(dat.dplyr.df)[1] <- input$grouping
-            
-            return(dat.dplyr.df)
-        }
+        intro.inputs <- list("intro.data", input$tblvars, input$grouping)
+        get_code(generateSummary, intro.inputs)
+        
+        intro.inputs[[grep("intro.", intro.inputs)]] <- get(intro.inputs[[grep("intro.", intro.inputs)]])()
+        result <- do.call(generateSummary, intro.inputs)
+        
+        return(result)
     })

@@ -6,7 +6,10 @@ shinyServer(function(input, output, session) {
     options(shiny.maxRequestSize=10*1024^2)
     
     ## Reactive values
-    values <- reactiveValues(firstrun = TRUE, mydat = NULL, mydat_rand = NULL)    
+    values <- reactiveValues(mydat = NULL, mydat_rand = NULL)    
+    
+    cat(paste(readLines("global.R"), collapse = "\n"), file = "test.R", append = TRUE)
+    cat("\n\n", file = "test.R", append = TRUE)
     
     ## Modules
     types <- c("helper.R", "static.R", "observe.R", "reactive.R", "output.R")

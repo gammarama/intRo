@@ -1,14 +1,16 @@
 intro.start <- reactive({
     input$clearsubset
-
-    data.initial <- data.module(input$data_own, valid.datasets[[input$data]], input$own)
     
-    if (values$firstrun) {
-        values$firstrun <- FALSE
-    }
+    intro.inputs <- list(input$data_own, input$data, input$own)
+    get_code(data.module, intro.inputs)
+    
+    #intro.inputs[[grep("intro.", intro.inputs)]] <- get(intro.inputs[[grep("intro.", intro.inputs)]])()
+    result <- do.call(data.module, intro.inputs)
+    
+    data.initial <- do.call(data.module, intro.inputs)
             
     values$mydat <<- data.initial
-            
+                
     return(data.initial)
 })
 
