@@ -32,7 +32,6 @@ shinyUI(
                #tabPanel(title="", icon=icon("print"), value = "javascript:print_intRo();"),
                footer=tagList(includeScript("scripts/top-nav-links.js"),
                               includeScript("scripts/print.js"),
-                              includeScript("http://code.jquery.com/color/jquery.color-2.1.2.min.js"),
                               includeScript("scripts/other-helpers.js")
                ),
                tags$head(tags$link(rel="shortcut icon", href="images/icon.png"))
