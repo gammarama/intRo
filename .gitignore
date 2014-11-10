@@ -7,3 +7,5 @@ shinyapps/erichare/intRo.dcf
 packrat/lib*/
 shinyapps/erichare/intRo-dev.dcf
 packrat/*
+
+*.pdf
