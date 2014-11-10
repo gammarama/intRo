@@ -1,0 +1,61 @@
+---
+title: 'Introducing statistics with \texttt{intRo}'
+author: "Andee Kaplan & Eric Hare"
+date: "December 14, 2014"
+output:
+  pdf_document:
+    number_sections: yes
+    includes:
+      in_header: preamble.tex
+fontsize: 11pt
+geometry: margin=1in
+---
+
+\begin{abstract}
+Your abstract goes here...
+...
+\end{abstract}
+
+\newpage
+
+# Introduction
+
+# What is \texttt{intRo}?
+\texttt{intRo} is a web-based tool to accompany and introductory statistics class. It is meant to assist in the learning of statistics rather than a stand-alone deliverer of statistics education, with the intention of being used in conjunction with a guided class. 
+
+We have multiple philosophies that guided the creation of \texttt{intRo}, and this comes out in the design. Primarily, \texttt{intRo} is \emph{easy} to use and can be an \emph{exciting} part of learning statistics. Additionally, \texttt{intRo} is an \emph{extensible} tool, allowing for a user of \texttt{intRo} to tailor the tool for his or her own classroom needs.
+
+## Easy
+In order for an application to be useful to students in their first statistics course, it can't hog the spotlight. Statistics as a subject should shine through as a fun and interesting topic to study, rather than being bogged down by difficult to use software. With this in mind, in the development of \texttt{intRo} we focused on aspects of the user interface (UI) and output that make it easy to pick up without extensive training. We used large, easy to click icons in the page header to help students find exactly what they need easily. With this easy to use framework, we also made the functionality available in \texttt{intRo} the minimal necessary for an introductory statistics course. Additional functionality is nice, but if it clutters the UI beyond the point of usability, it will frustrate an introductory student. 
+
+Beyong being simple, \texttt{intRo} is also consistent. The tool is organized around specific tasks a student may perform in the process of a data analysis, called modules. Each module maintains a consistent layout, helping the user to become familiar with the location of the options, the results, and the code. In figure~\ref{fig:ui}, we highlight the five elements that comprise the intRo interface.
+
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{images/ui_annotate.png}
+\label{fig:ui}
+\caption{The five elements that comprise the intRo application.}
+\end{figure}
+
+ - **Top Navigation** - The top navigation bar includes two sets of buttons. The left-aligned buttons are informational buttons. The first is a link to intRo. The second is a link to this documentation page. The third is a link to the GitHub repository where the code for \texttt{intRo} is housed. The final button is a link to our websites, which contain contact information if there are any questions or comments. The right-aligned buttons are \texttt{intRo} utilities. The first is a button to toggle the visibility of the code panel (5). The last is a button to print the active module results, and the associated code (if visible).
+ - **Side Navigation** - The side navigation panel includes the modules which are detailed later in the tutorial.
+ - **Options Panel** - The options panel includes module-specific options which the user can use to customize their results.
+ - **Results Panel** - The results pane displays the result of the selected module and options.
+ - **Code Panel** - The code panel displays the R code used to generate the results from the student's \texttt{intRo} session. The code panel is shown by default to facilitate an interest in coding, but can be hidden by clicking the code toggle button in the Top Navigation bar.
+
+There are multiple modules within \texttt{intRo}, which perform specific data analysis tasks that employ an easy to use point-and-click interface. Continue with the tutorial to read more about each one.
+
+## Extensible
+
+
+
+
+# In the classroom
+
+# Reactive programming
+
+# Conclusions and future work
+
+# References
+
