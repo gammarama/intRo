@@ -1,8 +1,8 @@
 numerical_ui <- tabPanel("Numerical",
                                                   column(4,
                                                          wellPanel(
-                                                             checkboxGroupInput("tblvars", "Select Variables", choices = names(mpg)),
-                                                             selectInput("grouping", "Select Grouping Variable", choices = names(mpg))
+                                                             selectizeInput("tblvars", label = "Select Variables", choices = names(mpg), multiple = TRUE),
+                                                             selectizeInput("grouping", label = "Select Grouping Variable", choices = names(mpg))
                                                          )
                                                   ),
                                                   

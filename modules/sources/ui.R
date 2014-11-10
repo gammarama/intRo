@@ -3,7 +3,7 @@ sources_ui <- tabPanel("Sources",
                                                          wellPanel(
                                                              conditionalPanel(
                                                                  condition = "input.own == false",
-                                                                 selectInput("data", "Choose Dataset", c("MPG" = "mpg", "Air Quality" = "airquality", "Diamonds" = "diamonds"))
+                                                                 selectizeInput("data", label = "Choose Dataset", choices = c("MPG" = "mpg", "Air Quality" = "airquality", "Diamonds" = "diamonds"))
                                                              ),
                                                              conditionalPanel(
                                                                  condition = "input.own == true",

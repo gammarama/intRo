@@ -1,5 +1,5 @@
 observe({
     input$plottype
-    updateSelectInput(session, "x", choices = x_choices(), selected = x_selected())
-    updateSelectInput(session, "y", choices = y_choices(), selected = y_selected())
+    updateSelectizeInput(session, "x", choices = x_choices(), selected = x_selected())
+    updateSelectizeInput(session, "y", choices = y_choices(), selected = y_selected())
 })

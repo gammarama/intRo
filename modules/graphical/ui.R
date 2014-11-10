@@ -1,18 +1,18 @@
 graphical_ui <- tabPanel("Graphical",
                                                   column(4,
                                                          wellPanel(
-                                                             selectInput("plottype", "Plot Type", choices = c("Histogram" = "histogram", "Normal Quantile Plot" = "quantileplot", "Scatterplot" = "scatterplot", "Line Chart" = "linechart", "Boxplot" = "boxplot", "Bar Chart" = "barchart", "Pareto Chart" = "paretochart", "Mosaic Plot" = "mosaicplot")),
+                                                             selectizeInput("plottype", label = "Plot Type", choices = c("Histogram" = "histogram", "Normal Quantile Plot" = "quantileplot", "Scatterplot" = "scatterplot", "Line Chart" = "linechart", "Boxplot" = "boxplot", "Bar Chart" = "barchart", "Pareto Chart" = "paretochart", "Mosaic Plot" = "mosaicplot")),
                                                              
                                                              hr(),
                                                              
-                                                             selectInput("x", "X Variable (x)", choices = numericNames(mpg), selected = numericNames(mpg)[1]),
+                                                             selectizeInput("x", label = "X Variable (x)", choices = numericNames(mpg), selected = numericNames(mpg)[1]),
                                                              #conditionalPanel(
                                                              #    condition = "input.plottype == 'barchart' || input.plottype == 'paretochart'",
                                                              #    checkboxInput("addy", "Y Variable")
                                                              #),
                                                              conditionalPanel(
                                                                  condition = "(input.plottype != 'histogram' && input.plottype != 'quantileplot' && input.plottype != 'barchart' && input.plottype != 'paretochart') || input.addy == true",
-                                                                 selectInput("y", "Y Variable (y)", choices = numericNames(mpg), selected = numericNames(mpg)[2])
+                                                                 selectizeInput("y", label = "Y Variable (y)", choices = numericNames(mpg), selected = numericNames(mpg)[2])
                                                              ),
                                                              
                                                              hr(),
@@ -70,10 +70,10 @@ graphical_ui <- tabPanel("Graphical",
                                                                           plotOutput("mosaicplot")
                                                          ),
                                                          conditionalPanel(condition = "input.plottype == 'barchart'",
-                                                                          plotOutput("barchart")
+                                                                          ggvisOutput("barchart")
                                                          ),
                                                          conditionalPanel(condition = "input.plottype == 'paretochart'",
-                                                                          plotOutput("paretochart")
+                                                                          ggvisOutput("paretochart")
                                                          )
                                                   )
                                          )
