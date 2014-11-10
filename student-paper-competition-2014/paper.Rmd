@@ -7,8 +7,6 @@ output:
     number_sections: yes
     includes:
       in_header: preamble.tex
-fontsize: 11pt
-geometry: margin=1in
 ---
 
 \begin{abstract}
@@ -30,7 +28,6 @@ In order for an application to be useful to students in their first statistics c
 
 Beyong being simple, \texttt{intRo} is also consistent. The tool is organized around specific tasks a student may perform in the process of a data analysis, called modules. Each module maintains a consistent layout, helping the user to become familiar with the location of the options, the results, and the code. In figure~\ref{fig:ui}, we highlight the five elements that comprise the intRo interface.
 
-
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{images/ui_annotate.png}
@@ -48,10 +45,19 @@ There are multiple modules within \texttt{intRo}, which perform specific data an
 
 ## Extensible
 
-
-
-
 # In the classroom
+\texttt{intRo}'s ease of use lends itself to a natural presentation in an introductory statistics course. Statistics software typically used in introductory courses, such as JMP and Excel, have restrictive software licensing and platform requirements that can limit the software's accessibility to students. Even if these limitations can be overcome, these software programs have non-ideal interfaces for an exploratory data analysis. JMP, for instance, hides several basic regression functions such as a line of best fit behind small red arrows. Using R itself in the classroom is an appealing alternative, but suffers from some other problems. Many students in introductory statistics courses have not been exposed to programming languages and concepts, which could require a substantial overhead in order to begin a basic statistical analysis. When results need to be submitted as homework, getting the output into a document can be a frustrating and tedious experience (This experience is made much easier with new tools like rmarkdown, but this again is a bit of a learning curve for the new statistics student.)
+
+We believe that \texttt{intRo} targets these key limitations. The interface is designed to be quick, seamless, and easy to understand. Because \texttt{intRo} is web-based, the statistical analysis can be performed from nearly any modern device. R underlies the analysis, but users need not be familiar with R or programming to perform it. The focal point of the interface is the output panel, allowing the student to remain focused on the results and limiting the need to fight with the interface itself to get work done. For those students who may have a natural inclination for programming, executable code is generated to allow a local reproduction of the analysis.
+
+The features of \texttt{intRo} were selected in order to apply to the most commonly used lesson plans in early statistics courses. The textbook "The Art and Science of Learning from Data" by Agresti and Franklin references many of the focal points of introductory statistics, and \texttt{intRo} supports performing a majority of them. Part one, titled "Gathering and Exploring Data", covers graphical summaries, measures of spread and center, and avoiding the misuse of graphics in situations they are not appropriate. \texttt{intRo} includes modules for both graphical and numerical summaries covering these topics. Furthermore, \texttt{intRo} limits the display of variables to ones that are appropriate for a chosen plot type, helping to reinforce the appropriateness of particular graphics.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{images/appropriate_graphics.png}
+\label{fig:ag}
+\caption{The plot and variable selection boxes in \texttt{intRo}'s graphical module. Because the selected plottype is histogram, the interface displays only a single variable selection box (x), and the variables selectable in this box are only numeric.}
+\end{figure}
 
 # Reactive programming
 
