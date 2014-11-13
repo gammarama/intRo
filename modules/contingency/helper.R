@@ -17,7 +17,10 @@ cont.table <- function(data, x, y, type, digits) {
             #my.tbl <- cbind(my.tbl, Total = rowSums(my.tbl, na.rm = TRUE))
         }
         
-        return(format(my.tbl, digits = digits))
+        new.digits <- if (type %in% c("totalpercs", "rowpercs", "columnpercs")) digits else 0
+        return.tbl <- round(my.tbl, digits = new.digits)
+        
+        return(format(return.tbl))
     } else {
         return(NULL)
     }

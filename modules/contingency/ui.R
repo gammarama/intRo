@@ -6,7 +6,10 @@ contingency_ui <- tabPanel("Contingency",
                                                              
                                                              hr(),
                                                              
-                                                             selectizeInput("conttype", label = "Type", choices = c("Counts" = "counts", "Row Percentages" = "rowpercs", "Column Percentages" = "columnpercs", "Total Percentages" = "totalpercs"))
+                                                             selectizeInput("conttype", label = "Type", choices = c("Counts" = "counts", "Row Proportions" = "rowpercs", "Column Proportions" = "columnpercs", "Total Proportions" = "totalpercs")),
+                                                             conditionalPanel(condition = "input.conttype != 'counts'",
+                                                                numericInput("contdigits", label = "Digits", value = 2, min = 1, step = 1)
+                                                             )
                                                          )
                                                   ),
                                                   
