@@ -20,12 +20,7 @@ transform_ui <- tabPanel("Transform",
                                                          
                                                          conditionalPanel(condition = "input.trans == 'power'",
                                                                           tags$b("Original Data"),
-                                                                          ggvisOutput("var_plot")
-                                                         ),
-                                                         
-                                                         hr(),
-                                                         
-                                                         conditionalPanel(condition = "input.trans == 'power'",
+                                                                          ggvisOutput("var_plot"),                                        
                                                                           tags$b("Transformed Data"),
                                                                           ggvisOutput("trans_plot")
                                                          )
