@@ -15,7 +15,11 @@ t_test_ui <- tabPanel("T test",
                                                              
                                                              selectizeInput("althyp", "Alternative Hypothesis", c("Two-Sided" = "two.sided", "Greater" = "greater", "Less" = "less")),
                                                              numericInput("hypval", "Hypothesized Value", value = 0),
-                                                             sliderInput("conflevel", "Confidence Level", min=0.01, max=0.99, step=0.01, value=0.95)
+                                                             sliderInput("conflevel", "Confidence Level", min=0.01, max=0.99, step=0.01, value=0.95),
+                                                             
+                                                             hr(),
+                                                             
+                                                             tags$button("", id = "store_t_test", type = "button", class = "btn action-button", list(icon("save"), "Store T test Result"), onclick = "$('#side-nav :contains(\"Sources\")').highlight();")
                                                          )
                                                   ),
                                                   

@@ -46,7 +46,11 @@ graphical_ui <- tabPanel("Graphical",
                                                              conditionalPanel(
                                                                  condition = "input.plottype == 'histogram'",
                                                                  numericInput("binwidth", "Bin Width", value = NA, min = 0.1, step = 0.1)
-                                                             )
+                                                             ),
+                                                             
+                                                             hr(),
+                                                             
+                                                             tags$button("", id = "store_Graphical", type = "button", class = "btn action-button", list(icon("save"), "Store Graphical Result"), onclick = "$('#side-nav :contains(\"Sources\")').highlight();")
                                                          )
                                                   ),
                                                   

@@ -7,6 +7,7 @@ library(dplyr)
 library(lubridate)
 library(gridExtra)
 library(R.utils)
+library(RCurl)
 
 #cat("```{r, echo=FALSE}\nopts_chunk$set(echo=FALSE)\n```\n\n```{r, child="test.Rmd", message=FALSE, warning=FALSE}\n```", file = "outfile.Rmd")
 
@@ -75,7 +76,7 @@ get_code <- function(helper_func, intro.inputs) {
     return(NULL)
 }
 
-cat_and_eval <- function(mystr, env = parent.frame()) {
+cat_and_eval <- function(mystr, env = parent.frame(), file = "code_All.R", append = FALSE, save_result = FALSE) {
     #dataargs <- list(...)
     #actualdataargs <- dataargs[-grep("_name", names(dataargs))]
     #for (i in 1:length(actualdataargs)) {
@@ -87,9 +88,10 @@ cat_and_eval <- function(mystr, env = parent.frame()) {
     #    mystr <- gsub(paste0("intro_replace", i), dataargs[[paste(names(actualdataargs)[i], "name", sep = "_")]], mystr)
     #}
     
-    cat(gsub("; ", "\n", mystr), file = "test.R", append = TRUE)
-    cat("\n\n", file = "test.R", append = TRUE)
+    cat(paste0(gsub("; ", "\n", mystr), "\n\n"), file = file, append = append)
     
+    if (save_result) cat(paste(readLines(file), collapse = "\n"), file = "code_All.R", append = TRUE)
+        
     eval(parse(text = mystr), envir = env)
 }
 

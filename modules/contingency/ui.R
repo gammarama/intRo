@@ -9,7 +9,11 @@ contingency_ui <- tabPanel("Contingency",
                                                              selectizeInput("conttype", label = "Type", choices = c("Counts" = "counts", "Row Proportions" = "rowpercs", "Column Proportions" = "columnpercs", "Total Proportions" = "totalpercs")),
                                                              conditionalPanel(condition = "input.conttype != 'counts'",
                                                                 numericInput("contdigits", label = "Digits", value = 2, min = 1, step = 1)
-                                                             )
+                                                             ),
+                                                             
+                                                             hr(),
+                                                             
+                                                             tags$button("", id = "store_Contingency", type = "button", class = "btn action-button", list(icon("save"), "Store Contingency Result"), onclick = "$('#side-nav :contains(\"Sources\")').highlight();")
                                                          )
                                                   ),
                                                   
