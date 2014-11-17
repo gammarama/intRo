@@ -24,4 +24,11 @@ shinyServer(function(input, output, session) {
     for (mod in modules_tosource) {
         source(mod, local = TRUE)
     }
+    
+    ## Printing
+    output$print_output <- reactive({ 
+      input[[paste0("store_", module_info$module)]]
+      loc <- render("code_All.R", output_dir = "www")
+      return(loc)      
+    })
 })

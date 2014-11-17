@@ -10,3 +10,8 @@ packrat/*
 
 student-paper-competition-2014/
 test.R
+
+
+code_*.R
+www/code_*.html
+
