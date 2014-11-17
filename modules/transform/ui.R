@@ -4,7 +4,7 @@ transform_ui <- tabPanel("Transform",
                                                              selectizeInput("trans", label = "Choose Transformation", choices = c("Power" = "power", "Categorical" = "categorical", "Numeric" = "numeric"), multiple = FALSE),
                                                              selectizeInput("var_trans", label = "Select Variable", choices = numericNames(mpg), multiple = FALSE),
                                                              conditionalPanel(condition = "input.trans == 'power'",
-                                                                              sliderInput("power", "Power", value = 1, min = -5, max = 5, step = 0.1)
+                                                                              numericInput("power", "Power", value = 1, min = -100, max = 100, step = 0.01)
                                                              ),
                                                              
                                                              hr(),

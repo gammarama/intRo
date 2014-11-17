@@ -21,7 +21,7 @@
         curtrans <- input$var_trans
                 
         if (input$trans == "power" & curtrans %in% intro.numericnames()) {
-            trans_x <- if (input$power == 0) log(curdata[,curtrans]) else (curdata[,curtrans])^(input$power)
+            trans_x <- if (!is.numeric(input$power) | is.null(input$power)) curdata[,curtrans] else if (input$power == 0) log(curdata[,curtrans]) else (curdata[,curtrans])^(input$power)
             if (all(!is.infinite(trans_x))) {
                 curdata[, intro.transform.colname()] <- trans_x
             }
