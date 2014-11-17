@@ -1,12 +1,13 @@
 ---
-title: 'Introducing statistics with \texttt{intRo}'
+title: "Introducing statistics with \\texttt{intRo}"
 author: "Andee Kaplan & Eric Hare"
 date: "December 14, 2014"
 output:
   pdf_document:
-    number_sections: yes
     includes:
       in_header: preamble.tex
+    number_sections: yes
+bibliography: refs.bib
 ---
 
 \begin{abstract}
@@ -24,69 +25,74 @@ Your abstract goes here...
 We have multiple philosophies that guided the creation of \texttt{intRo}, and this comes out in the design. Primarily, \texttt{intRo} is \emph{easy} to use and can be an \emph{exciting} part of learning statistics. Additionally, \texttt{intRo} is an \emph{extensible} tool, allowing for a user of \texttt{intRo} to tailor the tool for his or her own classroom needs.
 
 ## Easy
-In order for an application to be useful to students in their first statistics course, it can't hog the spotlight. Statistics as a subject should shine through as a fun and interesting topic to study, rather than being bogged down by difficult to use software. With this in mind, in the development of \texttt{intRo} we focused on aspects of the user interface (UI) and output that make it easy to pick up without extensive training. We used large, easy to click icons in the page header to help students find exactly what they need easily. With this easy to use framework, we also made the functionality available in \texttt{intRo} the minimal necessary for an introductory statistics course. Additional functionality is nice, but if it clutters the UI beyond the point of usability, it will frustrate an introductory student. 
+In order for an application to be useful to students in their first statistics course, it can't hog the spotlight. Statistics as a subject should shine through as a fun and interesting topic to study, rather than being bogged down by difficult to learn software. With this in mind, in the development of \texttt{intRo} we focused on aspects of the user interface (UI) and output that make it easy to pick up without extensive training. We used large, easy to click icons in the page header to help students find exactly what they need easily. With this easy to use framework, we also made the functionality available in \texttt{intRo} the minimal necessary for an introductory statistics course. Additional functionality is nice, but if it clutters the UI beyond the point of usability, it will frustrate an introductory student. 
 
-Beyong being simple, \texttt{intRo} is also consistent. The tool is organized around specific tasks a student may perform in the process of a data analysis, called modules. Each module maintains a consistent layout, helping the user to become familiar with the location of the options, the results, and the code. In figure \ref{fig:ui}, we highlight the five elements that comprise the intRo interface.
+Beyong being simple, \texttt{intRo} is also consistent. The tool is organized around specific tasks a student may perform in the process of a data analysis, called modules. Each module maintains a consistent layout, helping the user to become familiar with the location of the options, the results, and the code. In figure \ref{fig:ui}, we highlight the five elements that comprise the \texttt{intRo} interface.
 
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=0.8\textwidth]{images/ui_annotate.png}
+\caption{The five elements that comprise the \texttt{intRo} application: 1) top navigation, 2) side navigation, 3) options panel, 4) results panel, and 5) code panel.}
 \label{fig:ui}
-\caption{The five elements that comprise the intRo application.}
 \end{figure}
 
- - **Top Navigation** - The top navigation bar includes two sets of buttons. The left-aligned buttons are informational buttons. The first is a link to intRo. The second is a link to this documentation page. The third is a link to the GitHub repository where the code for \texttt{intRo} is housed. The final button is a link to our websites, which contain contact information if there are any questions or comments. The right-aligned buttons are \texttt{intRo} utilities. The first is a button to toggle the visibility of the code panel (5). The last is a button to print the active module results, and the associated code (if visible).
- - **Side Navigation** - The side navigation panel includes the modules that perform a specific data analysis task.
- - **Options Panel** - The options panel includes module-specific options which the user can use to customize their results.
- - **Results Panel** - The results pane displays the result of the selected module and options.
- - **Code Panel** - The code panel displays the \texttt{R} code used to generate the results from the student's \texttt{intRo} session. The code panel is shown by default to facilitate an interest in coding, but can be hidden by clicking the code toggle button in the Top Navigation bar.
+ 1. **Top Navigation** - The top navigation bar includes two sets of buttons. The left-aligned buttons are informational buttons. The first is a link to \texttt{intRo}. The second is a link to this documentation page. The third is a link to the GitHub repository where the code for \texttt{intRo} is housed. The final button is a link to our websites, which contain contact information if there are any questions or comments. The right-aligned buttons are \texttt{intRo} utilities. The first is a button to toggle the visibility of the code panel (5). The last is a button to print the active module results, and the associated code (if visible).
+ 2. **Side Navigation** - The side navigation panel includes the modules that perform a specific data analysis task.
+ 3. **Options Panel** - The options panel includes module-specific options which the user can use to customize their results.
+ 4. **Results Panel** - The results pane displays the result of the selected module and options.
+ 5. **Code Panel** - The code panel displays the \texttt{R} code used to generate the results from the student's \texttt{intRo} session. The code panel is shown by default to facilitate an interest in coding, but can be hidden by clicking the code toggle button in the Top Navigation bar.
 
 There are multiple modules within \texttt{intRo}, which perform specific data analysis tasks that employ an easy to use point-and-click interface. Each module is placed within a higher level category to further help students navigate the tool. The default modules included in \texttt{intRo} are found in table \ref{tab:modules}, and more modules can be easy added by an instructor, as detailed in section \ref{sec:extensible}.
 
 \begin{table}
 \centering
-\begin{tabular}[ht!]{c|c|p{.6\textwidth}}
+\begin{tabular}[ht!]{l|l|p{.65\textwidth}}
 Category & Module & Description \\
 \hline
-\multirow{2}{*}{Data} & Sources & \\
-& Transformation & \\
+\multirow{2}{*}{Data} & Sources & The data sources module allows the user to select or upload a dataset. Several datasets are pre-included, which can be selected via a drop-down menu. The user can check a box to upload a dataset, and then select the CSV file from his computer. Upon selection or successful upload of a dataset, a table view of the data will be visible on the right. From this module the user can select a subset of the data either by value or random selection. The dataset selected in the data module will be made available to all other modules of intRo.\\
+
+& Transformation & The data transformation modules allows transformation of numeric variables to categorical and categorical variable to numeric. Additionally, numeric variable can be transformed using a power transformation. The transformed variables can be saved to the dataset for use elsewhere in \texttt{intRo}.\\
 \hline
-\multirow{2}{*}{Summaries} & Graphical & \\
-& Numerical & \\
+\multirow{2}{*}{Summaries} & Graphical & The graphical summaries module provides several common graphical displays of variables in the dataset. First, the user selects the plot desired, and either a single variable or two variables from the dataset, depending on plot type. The variable available to choose will only be those compatible with plot type selected. The plot visible on the right will automatically update when these values are selected.\\
+
+& Numerical & The numeric summaries module is another method of computing summaries of the data. The user is presented with a list of each variable from their dataset. The user can select one or more different variables, and will be presented with a table of some summary statistics. The summary statistics displayed vary depending on the type of the variables. For instance, for a numeric variable, a five number summary will be displayed. Character or factor variables will display counts of each unique value of that particular variable. Additionally, the user has the ability to display summaries by a grouping variable.\\
 \hline
-\multirow{3}{*}{Statistics} & Contingency & \\
-& Regression & \\
-& T test & 
+\multirow{3}{*}{Statistics} & Contingency & The contingency table module allows the user to compute a contingency table for two categorical variables. The results can either be displayed as counts, row percentages, column percentages, or total percentages.\\
+
+& Regression & The simple linear regression module allows the user to compute a simple linear regression of a dependent variable (y) on an independent variable (x). The module will automatically filter any variables that are non-numeric so that the user may only select variables that are suitable for a simple linear regression. Results of the regression will be displayed on the right. A table of parameter estimates, a scatterplot of the data along with a line of best fit, The R-Squared value, and residual diagnostic plots will all be displayed. A user also has the ability to save residuals and predicted values to their dataset for further analysis.\\
+
+& T test & The T test module allows the user to perform either a one variable or two variable Student's T test. The user can select configuration options, including the direction of the test and the confidence level of the test. The results, including the t statistic, degrees of freedom, p-value, and a confidence interval, will be displayed in a text box in the results panel.
 \end{tabular}
-\label{tab:modules}
 \caption{A list of default modules that ship with \texttt{intRo} as well as brief descriptions of each.}
+\label{tab:modules}
 \end{table}
 
 ## Exciting
-In general, introduction to statistics is a class undergraduates dread. It's hard, the language is weird, and the software is hard to use. With \texttt{intRo}, we hope to flip this paradigm. \texttt{intRo} is a fun, easy to use tool that's available on the web, and is even usable on mobile devices. As a web-based application, this tool is immediately more familiar to students than a desktop application. With interactive plots from \texttt{ggvis}, \texttt{intRo} brings a `wow'-factor to learning introductory statistics.
+In general, introduction to statistics is a class undergraduates dread. It's hard, the language is weird, and the software is hard to use. With \texttt{intRo}, we hope to flip this paradigm. \texttt{intRo} is a fun, easy to use tool that's available on the web, and is even usable on mobile devices. As a web-based application, this tool is immediately more familiar to students than a desktop application. With interactive plots from \texttt{ggvis} [@ggvis], \texttt{intRo} brings a `wow'-factor to learning introductory statistics.
 
 Once students get pulled in by an easy to use interface and fun interaction with their data, \texttt{intRo} has an ulterior motive: to get students excited about programming. By navigating about the user interface of \texttt{intRo}, students are actually creating a fully-executable \texttt{R} script that they can download and run locally. This code creation element of \texttt{intRo} is meant to generate excitement about programming in \texttt{R} and empower students to feel that they can generate code as well.
 
 ## Extensible
 \label{sec:extensible}
+On the front end, user interaction with \texttt{intRo} is split into bitesize chunks that we call modules. This is true of the back end as well. Each module is a self contained set of \texttt{R} code that is dynamically added to the application at run time. What this means is that \texttt{intRo} is easily extended by the addition of modules within the framework underlying the application.
 
 # In the classroom
-\texttt{intRo}'s ease of use lends itself to a natural presentation in an introductory statistics course. Statistics software typically used in introductory courses, such as JMP and Excel, have restrictive software licensing and platform requirements that can limit the software's accessibility to students. Even if these limitations can be overcome, these software programs have non-ideal interfaces for an exploratory data analysis. JMP, for instance, hides several basic regression functions such as a line of best fit behind small red arrows. Using \texttt{R} itself in the classroom is an appealing alternative, but suffers from some other problems. Many students in introductory statistics courses have not been exposed to programming languages and concepts, which could require a substantial overhead in order to begin a basic statistical analysis. When results need to be submitted as homework, getting the output into a document can be a frustrating and tedious experience (This experience is made much easier with new tools like rmarkdown, but this again is a bit of a learning curve for the new statistics student.)
+\texttt{intRo}'s ease of use lends itself to a natural presentation in an introductory statistics course. Statistics software typically used in introductory courses, such as JMP and Excel, have restrictive software licensing and platform requirements that can limit the software's accessibility to students. Even if these limitations can be overcome, these software programs have non-ideal interfaces for an exploratory data analysis. JMP, for instance, hides several basic regression functions such as a line of best fit behind small red arrows. Using \texttt{R} itself in the classroom is an appealing alternative, but suffers from some other problems. Many students in introductory statistics courses have not been exposed to programming languages and concepts, which could require a substantial overhead in order to begin a basic statistical analysis. When results need to be submitted as homework, getting the output into a document can be a frustrating and tedious experience (this experience is made much easier with new tools like \texttt{rmarkdown} [@rmarkdown], but this again is a bit of a learning curve for the new statistics student).
 
 We believe that \texttt{intRo} targets these key limitations. The interface is designed to be quick, seamless, and easy to understand. Because \texttt{intRo} is web-based, the statistical analysis can be performed from nearly any modern device. \texttt{R} underlies the analysis, but users need not be familiar with \texttt{R} or programming to perform it. The focal point of the interface is the output panel, allowing the student to remain focused on the results and limiting the need to fight with the interface itself to get work done. For those students who may have a natural inclination for programming, executable code is generated to allow a local reproduction of the analysis.
 
-The features of \texttt{intRo} were selected in order to apply to the most commonly used lesson plans in early statistics courses. The textbook "The Art and Science of Learning from Data" by Agresti and Franklin references many of the focal points of introductory statistics, and \texttt{intRo} supports performing a majority of them. Part one, titled "Gathering and Exploring Data", covers graphical summaries, measures of spread and center, and avoiding the misuse of graphics in situations they are not appropriate. \texttt{intRo} includes modules for both graphical and numerical summaries covering these topics. Furthermore, \texttt{intRo} limits the display of variables to ones that are appropriate for a chosen plot type, helping to reinforce the appropriateness of particular graphics (Figure \ref{fig:ag}).
+The features of \texttt{intRo} were selected in order to apply to the most commonly used lesson plans in early statistics courses. The textbook "The Art and Science of Learning from Data" by Agresti and Franklin [-@agresti2012statistics] references many of the focal points of introductory statistics, and \texttt{intRo} supports performing a majority of them. Part one, titled "Gathering and Exploring Data", covers graphical summaries, measures of spread and center, and avoiding the misuse of graphics in situations they are not appropriate. \texttt{intRo} includes modules for both graphical and numerical summaries covering these topics. Furthermore, \texttt{intRo} limits the display of variables to ones that are appropriate for a chosen plot type, helping to reinforce the appropriateness of particular graphics (Figure \ref{fig:ag}).
 
 \begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth]{images/appropriate_graphics.png}
-\label{fig:ag}
 \caption{The plot and variable selection boxes in \texttt{intRo}'s graphical module. Because the selected plottype is histogram, the interface displays only a single variable selection box (x), and the variables selectable in this box are only numeric.}
+\label{fig:ag}
 \end{figure}
 
-Part two of this text discusses probability and sampling distributions, which is outside the current realm of \texttt{intRo}, but part three focuses on inferential statistics. The inferential statistics include confidence intervals, hypothesis testing, and comparing two variables, all supported natively in \texttt{intRo}. Finally, part four of the text discusses the association between variables, including regression, functions that intRo performs with ease. Some of the more advanced topics of this section are currently unsupported by \texttt{intRo}, including multiple regression and nonparametric statistics.
+Part two of this text discusses probability and sampling distributions, which is outside the current realm of \texttt{intRo}, but part three focuses on inferential statistics. The inferential statistics include confidence intervals, hypothesis testing, and comparing two variables, all supported natively in \texttt{intRo}. Finally, part four of the text discusses the association between variables, including regression, functions that \texttt{intRo} performs with ease. Some of the more advanced topics of this section are currently unsupported by \texttt{intRo}, including multiple regression and nonparametric statistics.
 
-Statistics courses with a lab component can most benefit from the use of \texttt{intRo}. As students learn the aforementioned concepts, they can practice using the tools to perform the statistical tests and summaries. They simply upload a dataset and click the module appropriate to the section of the class. Once they choose the options desired by the instructor (variables, confidence levels, etc.), they can view the results and ultimately print the output for turning in. Early labs can walk the user through the limited number of button presses and clicks necessary, while later labs can more vaguely describe the intended output in hopes that the user can easily navigate the \texttt{intRo} interface to obtain the results. For topics currently unsupported by \texttt{intRo}, the instructor can supplement the its use with other web-based modules that are publicly available.
+Statistics courses with a lab component can most benefit from the use of \texttt{intRo}. As students learn the aforementioned concepts, they can practice using the tools to perform the statistical tests and summaries. They simply upload a dataset and click the module appropriate to the section of the class. Once they choose the options desired by the instructor (variables, confidence levels, etc.), they can view the results and ultimately print the output for turning in. Early labs can walk the user through the limited number of button presses and clicks necessary, while later labs can more vaguely describe the intended output in hopes that the user can easily navigate the \texttt{intRo} interface to obtain the results. For topics currently unsupported by \texttt{intRo}, the instructor can supplement its use with other web-based modules that are publicly available.
 
 # Reactive programming
 

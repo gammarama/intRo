@@ -11,3 +11,5 @@ packrat/*
 *.pdf
 
 *.html
+
+test.R
