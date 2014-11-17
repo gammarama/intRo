@@ -27,33 +27,6 @@
    font-size: 12px;
  }
  
- div.codePrint, div.intRoPrint {
-   height: 0px;
-   overflow: hidden;
+ div.print-results {
+   display: none;
  }
- 
- @media print {
-  body * {
-   visibility: hidden;
-  }
-  
-  .navbar, .well *, .span4, #myEditor {
-    display: none;
-  }
-  
-  .span8 * {
-    visibility: visible;
-  }
-  
-  .intRoPrint * {
-    visibility: visible;
-  }
-  
-  div.codePrint, div.intRoPrint {
-    height: auto;  
-  }
-  
-  #codePrint {
-    visibility: visible;
-  }
-}

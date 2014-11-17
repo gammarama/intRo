@@ -20,7 +20,7 @@ $.extend(inputBinding, {
     $(el).on("click", function(e) {
       callback();
     });
-  },
+  }
 });
 Shiny.inputBindings.register(inputBinding);
 
@@ -28,14 +28,3 @@ render_print = function(el, data) {
   $(el).text(data);
 }
 
-print_intRo = function() {
-  $( ".print-results" ).dialog({
-    modal: true,
-    buttons: {
-      Print: function() {
-        //print stuff
-        $( this ).dialog( "close" );
-      }
-    }
-  });
-}
