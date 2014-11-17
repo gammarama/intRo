@@ -1,26 +1,28 @@
-cont.table <- function(data, x, y, type, digits) {  
-    if (x %in% names(data) & y %in% names(data)) {
-        my.tbl <- table(data[,y], data[,x])
+cont.table <- function(intro.data, x, y, type, digits) {  
+    if (x %in% names(intro.data) & y %in% names(intro.data)) {
+        cat_and_eval(paste0("
+            my.tbl <- table(intro.data[,'", y, "'], intro.data[,'", x, "'])
         
-        totalsum <- sum(my.tbl)
-        
-        my.tbl <- rbind(my.tbl, Total = colSums(my.tbl, na.rm = TRUE))
-        my.tbl <- cbind(my.tbl, Total = c(rowSums(my.tbl[-(nrow(my.tbl)), ], na.rm = TRUE), totalsum))
-        
-        if (type == "totalpercs") my.tbl <- my.tbl / totalsum
+            totalsum <- sum(my.tbl)
+            
+            my.tbl <- rbind(my.tbl, Total = colSums(my.tbl, na.rm = TRUE))
+            my.tbl <- cbind(my.tbl, Total = c(rowSums(my.tbl[-(nrow(my.tbl)), ], na.rm = TRUE), totalsum))
+        "), env = environment(), file = "code_Contingency.R")
+
+        if (type == "totalpercs") cat_and_eval("my.tbl <- my.tbl / totalsum", env = environment(), file = "code_Contingency.R", append = TRUE)
         if (type == "rowpercs") {
-            my.tbl <- t(apply(my.tbl[-nrow(my.tbl),], 1, function(row){row / row[ncol(my.tbl)]}))
-            #my.tbl <- rbind(my.tbl, Total = colSums(my.tbl, na.rm = TRUE))
+            cat_and_eval("my.tbl <- t(apply(my.tbl[-nrow(my.tbl),], 1, function(row){row / row[ncol(my.tbl)]}))", env = environment(), file = "code_Contingency.R", append = TRUE)
         }
         if (type == "columnpercs") {
-            my.tbl <- apply(my.tbl[,-ncol(my.tbl)], 2, function(col){col / col[nrow(my.tbl)]})
-            #my.tbl <- cbind(my.tbl, Total = rowSums(my.tbl, na.rm = TRUE))
+            cat_and_eval("my.tbl <- apply(my.tbl[,-ncol(my.tbl)], 2, function(col){col / col[nrow(my.tbl)]})", env = environment(), file = "code_Contingency.R", append = TRUE)
         }
         
-        new.digits <- if (type %in% c("totalpercs", "rowpercs", "columnpercs")) digits else 0
-        return.tbl <- round(my.tbl, digits = new.digits)
+        cat_and_eval(paste0("
+            new.digits <- if ('", type, "' %in% c('totalpercs', 'rowpercs', 'columnpercs')) digits else 0
+            return.tbl <- format(round(my.tbl, digits = new.digits))
         
-        return(format(return.tbl))
+            return.tbl
+        "),  env = environment(), file = "code_Contingency.R", append = TRUE)
     } else {
         return(NULL)
     }
