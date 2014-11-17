@@ -30,16 +30,16 @@ intro.quantdata <- function(intro.plot) {
     return(intro.quant)
 }
 
-intro.xdomaindata <- function(xmin, xmax) {
+input_xdomaindata <- function(xmin, xmax) {
     cat_and_eval(paste0("input_xdomain <- c(", xmin, ", ", xmax, ")"), env = environment(), file = "code_Graphical.R", save_result = TRUE)
     
-    return(intro.xdomain)
+    return(input_xdomain)
 }
 
-intro.ydomaindata <- function(ymin, ymax) {
+input_ydomaindata <- function(ymin, ymax) {
     cat_and_eval(paste0("input_ydomain <- c(", ymin, ", ", ymax, ")"), env = environment(), file = "code_Graphical.R", save_result = TRUE)
     
-    return(intro.ydomain)
+    return(input_ydomain)
 }
 
 input_binwidthdata <- function(binwidth) {

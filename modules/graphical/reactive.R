@@ -33,9 +33,9 @@ y_selected <- reactive({
     })
     
     input_xdomain <- reactive({
-        return(intro.xdomaindata(input$xmin, input$xmax))
+        return(input_xdomaindata(input$xmin, input$xmax))
     })
     
     input_ydomain <- reactive({
-        return(intro.ydomaindata(input$ymin, input$ymax))
+        return(input_ydomaindata(input$ymin, input$ymax))
     })
