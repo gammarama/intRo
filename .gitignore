@@ -13,3 +13,5 @@ packrat/*
 *.html
 
 test.R
+
+code_*
