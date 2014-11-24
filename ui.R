@@ -1,9 +1,9 @@
 addResourcePath(prefix="images", directoryPath="images/")
 
 ## For printing
-dynDiv <- function(outputId, title) 
+dynFrame <- function(outputId) 
 {
-  div(id = outputId, class = "print-results", title = title)
+  HTML(paste0("<iframe class = 'print_results', id = '", outputId, "'></iframe>"))
 }
 
 ## Source ui
@@ -25,7 +25,7 @@ shinyUI(
     navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                tabPanel(title="", icon=icon("home"),
                         fluidRow(
-                            dynDiv(outputId = 'print_output', title="Print Results"),
+                            dynFrame(outputId = 'print_output'),
                             do.call(navlistPanel, c(list(id = "side-nav", widths = c(2, 10)), mylist))
                         )     
                ),
@@ -35,7 +35,7 @@ shinyUI(
                           tabPanel("Eric Hare"),
                           tabPanel("Andee Kaplan")),
                tabPanel(title="hide_me"),
-               tabPanel(title="", icon=icon("print"), class="print-button", value="javascript:return null;"),
+               tabPanel(title="", icon=icon("print"), value="javascript: $(this).addClass('print_button'); print_clicked();"),
                footer=tagList(includeScript("scripts/top-nav-links.js"),
                               includeScript("scripts/print.js"),
                               includeScript("scripts/other-helpers.js")

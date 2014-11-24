@@ -1,30 +1,7 @@
-var outputBinding = new Shiny.OutputBinding();
-$.extend(outputBinding, {
-  find: function(scope) {
-    return $(scope).find('.print-results');
-  },
-  renderValue: function(el, data) {  
-    render_print(el, data);
-  }});
-Shiny.outputBindings.register(outputBinding);
-
-var inputBinding = new Shiny.InputBinding();
-$.extend(inputBinding, {
-  find: function(scope) {
-    return $(scope).find('.print-button');
-  },
-  getValue: function(el) {
-    return null;
-  },
-  subscribe: function(el, callback) {
-    $(el).on("click", function(e) {
-      callback();
-    });
-  }
-});
-Shiny.inputBindings.register(inputBinding);
-
-render_print = function(el, data) {
-  $(el).text(data);
+function print_clicked() {
+    console.log("clicked!")
+    Shiny.onInputChange("print_clicked", true);
+    $('.print_results').attr('src','code_All.html');
+    $('.print_results').get(0).contentWindow.print();
+     Shiny.onInputChange("print_clicked", false);
 }
-

@@ -3,6 +3,6 @@
         updateSelectizeInput(session, "tblvars", choices = names(intro.data()))
     })
     
-    observeEvent(input$store_Numerical, {
-        cat(paste(readLines("code_Numerical.R"), collapse = "\n"), file = "code_All.R", append = TRUE)
+    observeEvent(input$store_numerical, {
+        cat(paste(readLines("code_numerical.R"), collapse = "\n"), file = "code_All.R", append = TRUE)
     })

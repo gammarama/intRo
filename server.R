@@ -26,9 +26,11 @@ shinyServer(function(input, output, session) {
     }
     
     ## Printing
-    output$print_output <- reactive({ 
-      input[[paste0("store_", module_info$module)]]
-      loc <- render("code_All.R", output_dir = "www")
-      return(loc)      
+    observe({ 
+      if(is.null(input)) return
+      if(length(input$print_clicked) > 0) {
+        cat(input$print_clicked)
+        if(input$print_clicked) render("code_All.R", output_dir = "www")    
+      }
     })
 })

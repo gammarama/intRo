@@ -6,7 +6,7 @@ numerical_ui <- tabPanel("Numerical",
                                                              
                                                              hr(),
                                                              
-                                                             tags$button("", id = "store_Numerical", type = "button", class = "btn action-button", list(icon("save"), "Store Numerical Result"), onclick = "$('#side-nav :contains(\"Sources\")').highlight();")
+                                                             tags$button("", id = "store_numerical", type = "button", class = "btn action-button", list(icon("save"), "Store Numerical Result"), onclick = "$('#side-nav :contains(\"Sources\")').highlight();")
                                                          )
                                                   ),
                                                   

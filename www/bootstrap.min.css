@@ -27,6 +27,6 @@
    font-size: 12px;
  }
  
- div.print-results {
+ iframe.print_results {
    display: none;
  }

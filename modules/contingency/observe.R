@@ -3,6 +3,6 @@
         updateSelectizeInput(session, "ycont", choices = intro.categoricnames(), selected = ifelse(checkVariable(intro.data(), input$ycont), input$ycont, intro.categoricnames()[2]))
     })
     
-    observeEvent(input$store_Contingency, {
-        cat(paste(readLines("code_Contingency.R"), collapse = "\n"), file = "code_All.R", append = TRUE)
+    observeEvent(input$store_contingency, {
+        cat(paste(readLines("code_contingency.R"), collapse = "\n"), file = "code_All.R", append = TRUE)
     })
