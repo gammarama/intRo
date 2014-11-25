@@ -1,7 +1,23 @@
+var content;
+
 function print_clicked() {
-    console.log("clicked!")
     Shiny.onInputChange("print_clicked", true);
-    $('.print_results').attr('src','code_All.html');
+}
+
+Shiny.addCustomMessageHandler("renderFinished",
+  function(file) {
+    var frame = $('.print_results')
+    frame.attr('src','code_All.html');
+    
+    content = frame.contents().find("body").html();
+    check_print(frame)
+  })
+
+function check_print(frame) {
+  if (frame.contents().find("body").html() == content) {
+    setTimeout(check_print, 500, frame);
+  } else {
     $('.print_results').get(0).contentWindow.print();
-     Shiny.onInputChange("print_clicked", false);
+    Shiny.onInputChange("print_clicked", false);
+  }    
 }

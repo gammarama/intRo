@@ -29,8 +29,11 @@ shinyServer(function(input, output, session) {
     observe({ 
       if(is.null(input)) return
       if(length(input$print_clicked) > 0) {
-        cat(input$print_clicked)
-        if(input$print_clicked) render("code_All.R", output_dir = "www")    
+        file <- NULL
+        if(input$print_clicked) {
+          file <- render("code_All.R", output_dir = "www")    
+          session$sendCustomMessage(type = "renderFinished", file)
+        }
       }
     })
 })
