@@ -1,24 +1,24 @@
-r <- function (data, x, y, lm.fit) {
-    if (!(x %in% names(data)) | !(y %in% names(data))) return(NULL)
-    if (!is.numeric(data[,x]) | !is.numeric(data[,y])) return(NULL)
+r <- function (intro.data, x, y) {
+    if (!(x %in% names(intro.data)) | !(y %in% names(intro.data))) return(NULL)
+    if (!is.numeric(intro.data[,x]) | !is.numeric(intro.data[,y])) return(NULL)
     
-    return(paste("r =", round(cor(data[,y], data[,x], use = "complete.obs"), digits = 4)))
+    return(paste("r =", round(cor(intro.data[,y], intro.data[,x], use = "complete.obs"), digits = 4)))
 }
 
-r2 <- function (data, x, y, lm.fit) {
-    return(paste("R^2 =", round(summary(lm.fit)$r.squared, digits = 4)))
+r2 <- function (intro.regression) {
+    return(paste("R^2 =", round(summary(intro.regression)$r.squared, digits = 4)))
 }
 
-tablereg <- function (data, x, y, lm.fit) {
-    tbl.fit <- coef(summary(lm.fit))
+tablereg <- function (intro.regression, x) {
+    tbl.fit <- coef(summary(intro.regression))
     rownames(tbl.fit)[2] <- x
     
     return(tbl.fit)
 }
 
-savefit <- function (data, x, y, lm.fit) { 
-    data$fitted <- predict(lm.fit)
-    data$resid <- resid(lm.fit)
+savefit <- function (intro.data, intro.regression) { 
+    intro.data$fitted <- predict(intro.regression)
+    intro.data$resid <- resid(intro.regression)
     
-    return(data)
+    return(intro.data)
 }
