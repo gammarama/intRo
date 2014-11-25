@@ -6,7 +6,11 @@ regression_ui <- tabPanel("Regression",
                   
                   hr(),
                   
-                  tags$button("", id = "saveresid", type = "button", class = "btn action-button", list(icon("save"), "Save Residuals/Fitted"), onclick = "$('#side-nav :contains(\"Sources\")').highlight();")
+                  tags$button("", id = "saveresid", type = "button", class = "btn action-button", list(icon("save"), "Save Residuals/Fitted"), onclick = "$('#side-nav :contains(\"Sources\")').highlight();"),
+
+                  hr(),
+                  
+                  tags$button("", id = "store_regression", type = "button", class = "btn action-button", list(icon("save"), "Store Regression Result"), onclick = "$('#side-nav :contains(\"Sources\")').highlight();")
                 )
          ),
          
