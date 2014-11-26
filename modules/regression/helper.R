@@ -26,10 +26,16 @@ my_regresid2 <- function(intro.regression) {
     cat_and_eval("slope <- diff(yy) / diff(xx)", env = environment(), file = "code_regression.R", save_result = TRUE)
     cat_and_eval("int <- yy[1] - slope * xx[1]", env = environment(), file = "code_regression.R", save_result = TRUE)
     
-    cat_and_eval("reg.resid2 <- data.frame(yy = qnorm(seq(0, 1, by = (1/(length(na.omit(myresid)) + 1)))[-c(1, (length(na.omit(myresid)) + 2))]),
-                        residuals = sort(myresid))", env = environment(), file = "code_regression.R", save_result = TRUE)
+    cat_and_eval("reg.resid2 <- data.frame(yy = qnorm(seq(0, 1, by = (1/(length(na.omit(myresid)) + 1)))[-c(1, (length(na.omit(myresid)) + 2))]), residuals = sort(myresid))", env = environment(), file = "code_regression.R", save_result = TRUE)
     
     return(reg.resid2)
+}
+
+tablereg <- function (intro.regression, x) {
+    cat_and_eval("tbl.fit <- coef(summary(intro.regression))", env = environment(), file = "code_regression.R")
+    cat_and_eval(paste0("rownames(tbl.fit)[2] <- '", x, "'"), env = environment(), file = "code_regression.R", append = TRUE)
+    
+    cat_and_eval("tbl.fit", env = environment(), file = "code_regression.R", append = TRUE)
 }
 
 r <- function (intro.data, x, y) {
@@ -43,13 +49,6 @@ r <- function (intro.data, x, y) {
 r2 <- function (intro.regression) {
     cat_and_eval("r2_result <- paste('R^2 =', round(summary(intro.regression)$r.squared, digits = 4))", env = environment(), file = "code_regression.R", append = TRUE)
     cat_and_eval("r2_result", env = environment(), file = "code_regression.R", append = TRUE)
-}
-
-tablereg <- function (intro.regression, x) {
-    cat_and_eval("tbl.fit <- coef(summary(intro.regression))", env = environment(), file = "code_regression.R", append = TRUE)
-    cat_and_eval(paste0("rownames(tbl.fit)[2] <- '", x, "'"), env = environment(), file = "code_regression.R", append = TRUE)
-    
-    cat_and_eval("tbl.fit", env = environment(), file = "code_regression.R", append = TRUE)
 }
 
 savefit <- function (intro.data, intro.regression) { 

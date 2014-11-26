@@ -6,4 +6,5 @@ observe({
 
 observeEvent(input$store_regression, {
     cat(paste(readLines("code_regression.R"), collapse = "\n"), file = "code_All.R", append = TRUE)
+    cat(paste(readLines("code_regression_ggvis.R"), collapse = "\n"), file = "code_All.R", append = TRUE)
 })
