@@ -35,10 +35,11 @@ shinyServer(function(input, output, session) {
         file <- NULL
         if(input$print_clicked) {
             owd <- setwd(tempdir())
-            on.exit(setwd(owd))
             
           file <- render("code_All.R", output_dir = file.path(owd, "www"))
           session$sendCustomMessage(type = "renderFinished", file)
+          
+            setwd(owd)
         }
       }
     })
