@@ -9,3 +9,7 @@ observeEvent(input$store_regression, {
     cat(paste0("\n\n", paste(readLines(file.path(userdir, "code_regression.R")), collapse = "\n")), file = file.path(userdir, "code_All.R"), append = TRUE)
     cat(paste0("\n\n", paste(readLines(file.path(userdir, "code_regression_ggvis.R")), collapse = "\n")), file = file.path(userdir, "code_All.R"), append = TRUE)
 })
+
+observeEvent(input$saveresid, {
+    values$mydat <<- savefit(intro.data(), intro.regression())
+})
