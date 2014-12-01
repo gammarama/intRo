@@ -47,11 +47,16 @@ shinyServer(function(input, output, session) {
         if(input$print_clicked) {
           oldwd <- getwd()
           
-          inc <- ifelse(!input$code_clicked, includes(before_body="www/hide_code.html"), includes(before_body=NULL))
+          if(!input$code_clicked) {
+            file <- render(file.path(userdir, "code_All.R"), 
+                           html_document(css = file.path(oldwd, "www/hide_code.css")),
+                           output_dir = file.path(oldwd, "www"))            
+          } else {
+            file <- render(file.path(userdir, "code_All.R"), 
+                           output_dir = file.path(oldwd, "www"))
+          }
           
-          file <- render(file.path(userdir, "code_All.R"), 
-                         output_format = html_document(includes = inc),
-                         output_dir = file.path(oldwd, "www"))
+          
           session$sendCustomMessage(type = "renderFinished", paste(readLines(file), collapse="\n"))
         }
       }
