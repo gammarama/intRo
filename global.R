@@ -77,7 +77,7 @@ get_code <- function(helper_func, intro.inputs) {
 }
 
 clean_readlines <- function(file) {
-    return(invisible(tidy_source(file)$text.tidy))
+    return(tidy_source(file, output = FALSE)$text.tidy)
 }
 
 cat_and_eval <- function(mystr, env = parent.frame(), file = "code_All.R", append = FALSE, save_result = FALSE) {
