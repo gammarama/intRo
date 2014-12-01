@@ -52,8 +52,8 @@ r2 <- function (intro.regression) {
 }
 
 savefit <- function (intro.data, intro.regression) { 
-    intro.data$fitted <- predict(intro.regression)
-    intro.data$resid <- resid(intro.regression)
+    cat_and_eval("intro.data$fitted <- predict(intro.regression);
+                  intro.data$resid <- resid(intro.regression);", file = "code_regression.R", mydir = userdir, save_result = TRUE)
     
     return(intro.data)
 }
