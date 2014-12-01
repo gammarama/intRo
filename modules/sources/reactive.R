@@ -13,7 +13,7 @@ intro.data <- reactive({
     intro.data <- values$mydat
     intro.random <- values$mydat_rand
     
-    cat_and_eval(paste0("data.subset <- process_logical(intro.data, ", paste0("c(", paste(paste0("'", input$subs, "'"), collapse = ", "), ")"), ")"),  mydir = userdir, file = "code_sources.R")
+    cat_and_eval(paste0("\n\ndata.subset <- process_logical(intro.data, ", paste0("c(", paste(paste0("'", input$subs, "'"), collapse = ", "), ")"), ")"),  mydir = userdir, file = "code_sources.R")
     cat_and_eval(paste0("intro.random <- data.subset"),  mydir = userdir, file = "code_sources.R", append = TRUE)
         
     values$mydat <<- data.subset
