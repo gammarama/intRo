@@ -18,9 +18,8 @@ shinyServer(function(input, output, session) {
     values <- reactiveValues(mydat = NULL, mydat_rand = NULL)
     
     #cat(paste(readLines("global.R"), collapse = "\n"), file = "code_global.R")
-    cat("library(RCurl)\n\n", file = file.path(userdir, "code_All.R"))
+    cat("library(RCurl)\n", file = file.path(userdir, "code_All.R"))
     cat("eval(parse(text = getURL('https://raw.githubusercontent.com/gammarama/intRo/dev/global.R')))", file = file.path(userdir, "code_All.R"), append = TRUE)
-    cat("\n\n", file = file.path(userdir, "code_All.R"), append = TRUE)
     
     ## Modules
     types <- c("helper.R", "static.R", "observe.R", "reactive.R", "output.R")
