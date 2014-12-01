@@ -2,7 +2,7 @@
         ggvis(x = ~intro_x_num, y = ~intro_y_num) %>%
         layer_histograms(width = input_binwidth) %>% 
         scale_numeric('x', domain = input_xdomain, clamp = TRUE, nice = TRUE) %>%
-        scale_numeric('y', domain = input_ydomain, clamp = TRUE, nice = TRUE)", env = environment(), file = "code_histogram.R")
+        scale_numeric('y', domain = input_ydomain, clamp = TRUE, nice = TRUE)",  mydir = userdir, env = environment(), file = "code_histogram.R")
     
     p.histogram %>% bind_shiny("histogram")
 
@@ -10,7 +10,7 @@
         ggvis(x = ~intro_quant, y = ~intro_x_num) %>%
         layer_points() %>% 
         scale_numeric('x', domain = input_xdomain, clamp = TRUE, nice = TRUE) %>%
-        scale_numeric('y', domain = input_ydomain, clamp = TRUE, nice = TRUE)", env = environment(), file = "code_quantileplot.R")
+        scale_numeric('y', domain = input_ydomain, clamp = TRUE, nice = TRUE)",  mydir = userdir, env = environment(), file = "code_quantileplot.R")
     
     p.quantileplot %>% bind_shiny("quantileplot")
     
@@ -18,7 +18,7 @@
         ggvis(x = ~intro_x_num, y = ~intro_y_num) %>%
         layer_points() %>% 
         scale_numeric('x', domain = input_xdomain, clamp = TRUE, nice = TRUE) %>%
-        scale_numeric('y', domain = input_ydomain, clamp = TRUE, nice = TRUE)", env = environment(), file = "code_scatterplot.R")
+        scale_numeric('y', domain = input_ydomain, clamp = TRUE, nice = TRUE)",  mydir = userdir, env = environment(), file = "code_scatterplot.R")
     
     p.scatterplot %>% bind_shiny("scatterplot")
     
@@ -26,28 +26,28 @@
         ggvis(x = ~intro_x_num, y = ~intro_y_num) %>%
         layer_lines() %>% 
         scale_numeric('x', domain = input_xdomain, clamp = TRUE, nice = TRUE) %>%
-        scale_numeric('y', domain = input_ydomain, clamp = TRUE, nice = TRUE)", env = environment(), file = "code_lineplot.R")
+        scale_numeric('y', domain = input_ydomain, clamp = TRUE, nice = TRUE)",  mydir = userdir, env = environment(), file = "code_lineplot.R")
     
     p.lineplot %>% bind_shiny("lineplot")
     
     cat_and_eval("p.boxplot <- intro.plot %>%
         ggvis(x = ~intro_x_cat, y = ~intro_y_num) %>%
         layer_boxplots() %>% 
-        scale_numeric('y', domain = input_ydomain, clamp = TRUE, nice = TRUE)", env = environment(), file = "code_boxplot.R")
+        scale_numeric('y', domain = input_ydomain, clamp = TRUE, nice = TRUE)",  mydir = userdir, env = environment(), file = "code_boxplot.R")
     
     p.boxplot %>% bind_shiny("boxplot")
     
     cat_and_eval("p.barchart <- intro.plot %>%
         ggvis(x = ~intro_x_cat, y = ~intro_y_num) %>%
         layer_bars() %>%
-        scale_numeric('y', domain = input_ydomain, clamp = TRUE, nice = TRUE)", env = environment(), file = "code_barchart.R")
+        scale_numeric('y', domain = input_ydomain, clamp = TRUE, nice = TRUE)",  mydir = userdir, env = environment(), file = "code_barchart.R")
     
     p.barchart %>% bind_shiny("barchart")
     
     cat_and_eval("p.paretochart <- intro.plot %>%
         ggvis(x = ~intro_x_cat, y = ~intro_y_num) %>%
         layer_bars() %>%
-        scale_numeric('y', domain = input_ydomain, clamp = TRUE, nice = TRUE)", env = environment(), file = "code_paretochart.R")
+        scale_numeric('y', domain = input_ydomain, clamp = TRUE, nice = TRUE)",  mydir = userdir, env = environment(), file = "code_paretochart.R")
     
     p.paretochart %>% bind_shiny("paretochart")
 

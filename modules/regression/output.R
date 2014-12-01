@@ -1,34 +1,34 @@
 cat_and_eval("p.regplot <- reg.data %>%
   ggvis(x = ~xreg, y = ~yreg) %>%
   layer_points() %>%
-  layer_model_predictions(model = 'lm')", env = environment(), file = "code_regression_ggvis.R")
+  layer_model_predictions(model = 'lm')",  mydir = userdir, env = environment(), file = "code_regression_ggvis.R")
 
 p.regplot %>% bind_shiny("regplot")
-cat("p.regplot\n\n", file = file.path(tempdir(), "code_regression_ggvis.R"), append = TRUE)
+cat("p.regplot\n\n", file = file.path(userdir, "code_regression_ggvis.R"), append = TRUE)
 
 cat_and_eval("p.resplot1 <- reg.resid1 %>%
   ggvis(x = ~x, y = ~residuals) %>%
   layer_points() %>%
-  set_options(width = 200, height = 200)", env = environment(), file = "code_regression_ggvis.R", append = TRUE)
+  set_options(width = 200, height = 200)",  mydir = userdir, env = environment(), file = "code_regression_ggvis.R", append = TRUE)
 
 p.resplot1 %>% bind_shiny("resplot1")
-cat("p.resplot1\n\n", file = file.path(tempdir(), "code_regression_ggvis.R"), append = TRUE)
+cat("p.resplot1\n\n", file = file.path(userdir, "code_regression_ggvis.R"), append = TRUE)
 
 cat_and_eval("p.resplot2 <- reg.resid2 %>%
   ggvis(x = ~yy, y = ~residuals) %>%
   layer_points() %>%
-  set_options(width = 200, height = 200)", env = environment(), file = "code_regression_ggvis.R", append = TRUE)
+  set_options(width = 200, height = 200)",  mydir = userdir, env = environment(), file = "code_regression_ggvis.R", append = TRUE)
 
 p.resplot2 %>% bind_shiny("resplot2")
-cat("p.resplot2\n\n", file = file.path(tempdir(), "code_regression_ggvis.R"), append = TRUE)
+cat("p.resplot2\n\n", file = file.path(userdir, "code_regression_ggvis.R"), append = TRUE)
 
 cat_and_eval("p.resplot3 <- reg.resid1 %>%
   ggvis(x = ~residuals) %>%
   layer_histograms() %>%
-  set_options(width = 200, height = 200)", env = environment(), file = "code_regression_ggvis.R", append = TRUE)
+  set_options(width = 200, height = 200)",  mydir = userdir, env = environment(), file = "code_regression_ggvis.R", append = TRUE)
 
 p.resplot3 %>% bind_shiny("resplot3")
-cat("p.resplot3\n\n", file = file.path(tempdir(), "code_regression_ggvis.R"), append = TRUE)
+cat("p.resplot3\n\n", file = file.path(userdir, "code_regression_ggvis.R"), append = TRUE)
 
 output$regtable <- renderTable({
   if (!(input$xreg %in% intro.numericnames()) | !(input$yreg %in% intro.numericnames())) return(NULL)

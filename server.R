@@ -2,10 +2,12 @@
 ### Shiny Server definition
 ###
 shinyServer(function(input, output, session) {
+    
     ## Module info
     module_info <- read.table("modules/modules.txt", header = TRUE, sep=",")
     
     ## Get directory ready for code printing
+    userdir <- file.path(tempdir(), tempfile())
     dir.create(userdir, recursive = TRUE)
     sapply(file.path(userdir, dir(userdir)[grep("code_", dir(userdir))]), file.remove)
     
