@@ -46,7 +46,12 @@ shinyServer(function(input, output, session) {
         file <- NULL
         if(input$print_clicked) {
           oldwd <- getwd()
-          file <- render(file.path(tempdir(), "code_All.R"), output_dir = file.path(oldwd, "www"))
+          
+          inc <- ifelse(!input$code_clicked, includes(before_body="www/hide_code.html"), includes(before_body=NULL))
+          
+          file <- render(file.path(userdir, "code_All.R"), 
+                         output_format = html_document(includes = inc),
+                         output_dir = file.path(oldwd, "www"))
           session$sendCustomMessage(type = "renderFinished", paste(readLines(file), collapse="\n"))
         }
       }
