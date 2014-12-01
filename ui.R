@@ -3,7 +3,7 @@ addResourcePath(prefix="images", directoryPath="images/")
 ## For printing
 dynFrame <- function(outputId) 
 {
-  HTML(paste0("<iframe class = 'print_results', id = '", outputId, "'></iframe>"))
+  HTML(paste0("<iframe class = 'print_results' src='about:blank' id = '", outputId, "'></iframe>"))
 }
 
 ## Source ui
