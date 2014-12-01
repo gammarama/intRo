@@ -35,7 +35,7 @@
                 
         if (input$savetrans > oldsavetrans) {
             values$mydat <<- intro.data
-            cat(paste(readLines("code_transform.R"), collapse = "\n"), file = "code_All.R", append = TRUE)
+            cat(paste(readLines(file.path(tempdir(), "code_transform.R")), collapse = "\n"), file = file.path(tempdir(), "code_All.R"), append = TRUE)
             
             oldsavetrans <<- input$savetrans
         }

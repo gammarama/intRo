@@ -4,5 +4,5 @@
     })
     
     observeEvent(input$store_numerical, {
-        cat(paste(readLines("code_numerical.R"), collapse = "\n"), file = "code_All.R", append = TRUE)
+        cat(paste(readLines(file.path(tempdir(), "code_numerical.R")), collapse = "\n"), file = file.path(tempdir(), "code_All.R"), append = TRUE)
     })

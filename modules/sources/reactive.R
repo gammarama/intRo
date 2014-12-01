@@ -22,9 +22,7 @@ intro.data <- reactive({
     
     cat_and_eval(paste0("data.subset <- process_logical(intro.data, ", paste0("c(", paste(paste0("'", input$subs, "'"), collapse = ", "), ")"), ")"), file = "code_sources.R")
     cat_and_eval(paste0("intro.random <- data.subset"), file = "code_sources.R", append = TRUE)
-    
-    cat(nrow(intro.random))
-    
+        
     values$mydat <<- data.subset
     values$mydat_rand <<- values$mydat
     
@@ -34,7 +32,7 @@ intro.data <- reactive({
     
     if (input$savesubset > oldsavesub) {                
         cat_and_eval(paste0("intro.data <- intro.random"), file = "code_sources.R", append = TRUE)
-        cat(paste(readLines("code_sources.R"), collapse = "\n"), file = "code_All.R", append = TRUE)
+        cat(paste(readLines(file.path(tempdir(), "code_sources.R")), collapse = "\n"), file = file.path(tempdir(), "code_All.R"), append = TRUE)
         
         values$mydat <<- values$mydat_rand
         oldsavesub <<- input$savesubset

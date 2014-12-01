@@ -89,9 +89,9 @@ cat_and_eval <- function(mystr, env = parent.frame(), file = "code_All.R", appen
     #    mystr <- gsub(paste0("intro_replace", i), dataargs[[paste(names(actualdataargs)[i], "name", sep = "_")]], mystr)
     #}
     
-    cat(paste0(gsub("; ", "\n", mystr), "\n\n"), file = file, append = append)
+    cat(paste0(gsub("; ", "\n", mystr), "\n\n"), file = file.path(tempdir(), file), append = append)
     
-    if (save_result) cat(paste(readLines(file), collapse = "\n"), file = "code_All.R", append = TRUE)
+    if (save_result) cat(paste(readLines(file.path(tempdir(), file)), collapse = "\n"), file = file.path(tempdir(), "code_All.R"), append = TRUE)
         
     eval(parse(text = mystr), envir = env)
 }
