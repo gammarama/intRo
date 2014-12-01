@@ -12,7 +12,7 @@ shinyServer(function(input, output, session) {
     values <- reactiveValues(mydat = NULL, mydat_rand = NULL)    
     
     #cat(paste(readLines("global.R"), collapse = "\n"), file = "code_global.R")
-    cat("library(RCurl)\n\n", file = file.path(tempdir(), "code_All.R"), append = TRUE)
+    cat("library(RCurl)\n\n", file = file.path(tempdir(), "code_All.R"))
     cat("eval(parse(text = getURL('https://raw.githubusercontent.com/gammarama/intRo/dev/global.R')))", file = file.path(tempdir(), "code_All.R"), append = TRUE)
     cat("\n\n", file = file.path(tempdir(), "code_All.R"), append = TRUE)
     
@@ -31,7 +31,8 @@ shinyServer(function(input, output, session) {
       if(length(input$print_clicked) > 0) {
         file <- NULL
         if(input$print_clicked) {
-          file <- render(file.path(tempdir(), "code_All.R"))
+            file.copy(file.path(tempdir(), "code_All.R"), "code_All.R")
+          file <- render("code_All.R", output_dir = "www")
           session$sendCustomMessage(type = "renderFinished", file)
         }
       }

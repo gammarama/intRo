@@ -10,7 +10,7 @@ Shiny.addCustomMessageHandler("renderFinished",
     
     console.log(file);
     
-    frame.attr('src', file);
+    frame.attr('src', 'code_All.html');
     
     content = frame.contents().find("body").html();
     check_print(frame)
