@@ -5,7 +5,7 @@ observe({
 })
 
 observeEvent(input$store_regression, {
-    cat(paste(readLines(file.path(tempdir(), "code_regression_reactives.R")), collapse = "\n"), file = file.path(tempdir(), "code_All.R"), append = TRUE)
-    cat(paste(readLines(file.path(tempdir(), "code_regression.R")), collapse = "\n"), file = file.path(tempdir(), "code_All.R"), append = TRUE)
-    cat(paste(readLines(file.path(tempdir(), "code_regression_ggvis.R")), collapse = "\n"), file = file.path(tempdir(), "code_All.R"), append = TRUE)
+    cat(paste0("\n", paste(readLines(file.path(tempdir(), "code_regression_reactives.R")), collapse = "\n")), file = file.path(tempdir(), "code_All.R"), append = TRUE)
+    cat(paste0("\n", paste(readLines(file.path(tempdir(), "code_regression.R")), collapse = "\n")), file = file.path(tempdir(), "code_All.R"), append = TRUE)
+    cat(paste0("\n", paste(readLines(file.path(tempdir(), "code_regression_ggvis.R")), collapse = "\n")), file = file.path(tempdir(), "code_All.R"), append = TRUE)
 })

@@ -1,13 +1,13 @@
 intro.plotdata <- function(intro.data, x, y, plottype) {
-    cat_and_eval("intro.plot <- na.omit(intro.data)", env = environment(), file = "code_graphical_reactive.R")
+    cat_and_eval("intro.plot <- na.omit(intro.data);
     
-    cat_and_eval(paste0("xvar <- if (checkVariable(intro.data, '", x, "')) '", x, "' else 1"), env = environment(), file = "code_graphical_reactive.R", append = TRUE)
-    cat_and_eval(paste0("yvar <- if (checkVariable(intro.data, '", y, "')) '", y, "' else 2"), env = environment(), file = "code_graphical_reactive.R", append = TRUE)
+    xvar <- if (checkVariable(intro.data, '\", x, \"')) '\", x, \"' else 1;
+    yvar <- if (checkVariable(intro.data, '\", y, \"')) '\", y, \"' else 2;
     
-    cat_and_eval("intro.plot$intro_x_cat <- factor(intro.plot[,xvar])", env = environment(), file = "code_graphical_reactive.R", append = TRUE)
-    cat_and_eval("intro.plot$intro_x_num <- as.numeric(intro.plot[,xvar])", env = environment(), file = "code_graphical_reactive.R", append = TRUE)
-    cat_and_eval("intro.plot$intro_y_cat <- factor(intro.plot[,yvar])", env = environment(), file = "code_graphical_reactive.R", append = TRUE)
-    cat_and_eval("intro.plot$intro_y_num <- as.numeric(intro.plot[,yvar])", env = environment(), file = "code_graphical_reactive.R", append = TRUE)
+    intro.plot$intro_x_cat <- factor(intro.plot[,xvar]);
+    intro.plot$intro_x_num <- as.numeric(intro.plot[,xvar]);
+    intro.plot$intro_y_cat <- factor(intro.plot[,yvar]);
+    intro.plot$intro_y_num <- as.numeric(intro.plot[,yvar])", env = environment(), file = "code_graphical_reactive.R", append = TRUE)
     
     if (plottype == "paretochart") cat_and_eval("intro.plot$intro_x_cat <- factor(intro.plot$intro_x_cat, levels = names(sort(table(intro.plot$intro_x_cat), decreasing = TRUE)))", env = environment(), file = "code_graphical_reactive.R", append = TRUE)
     
