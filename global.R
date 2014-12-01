@@ -9,6 +9,7 @@ library(gridExtra)
 library(R.utils)
 library(RCurl)
 library(rmarkdown)
+library(formatR)
 
 #cat("```{r, echo=FALSE}\nopts_chunk$set(echo=FALSE)\n```\n\n```{r, child="test.Rmd", message=FALSE, warning=FALSE}\n```", file = "outfile.Rmd")
 
@@ -75,7 +76,11 @@ get_code <- function(helper_func, intro.inputs) {
     return(NULL)
 }
 
-cat_and_eval <- function(mystr, env = parent.frame(), file = "code_All.R", append = FALSE, save_result = FALSE) {
+clean_readlines <- function(file) {
+    return(tidy_source(file, output = FALSE)$text.tidy)
+}
+
+cat_and_eval <- function(mystr, mydir, env = parent.frame(), file = "code_All.R", append = FALSE, save_result = FALSE) {
     #dataargs <- list(...)
     #actualdataargs <- dataargs[-grep("_name", names(dataargs))]
     #for (i in 1:length(actualdataargs)) {
@@ -87,10 +92,9 @@ cat_and_eval <- function(mystr, env = parent.frame(), file = "code_All.R", appen
     #    mystr <- gsub(paste0("intro_replace", i), dataargs[[paste(names(actualdataargs)[i], "name", sep = "_")]], mystr)
     #}
     
-    cat(paste0(gsub("; ", "\n", mystr), "\n\n"), file = file.path(tempdir(), file), append = append)
+    cat(paste0(gsub("; ", "\n", mystr), "\n"), file = file.path(mydir, file), append = append)
     
-    if (save_result) cat(paste(readLines(file.path(tempdir(), file)), collapse = "\n"), file = file.path(tempdir(), "code_All.R"), append = TRUE)
-        
+    if (save_result) cat(paste0(paste(readLines(file.path(mydir, file)), collapse = "\n"), "\n"), file = file.path(mydir, "code_All.R"), append = TRUE)
+    
     eval(parse(text = mystr), envir = env)
 }
-

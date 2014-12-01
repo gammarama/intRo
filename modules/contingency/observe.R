@@ -4,5 +4,5 @@
     })
     
     observeEvent(input$store_contingency, {
-        cat(paste(readLines(file.path(tempdir(), "code_contingency.R")), collapse = "\n"), file = file.path(tempdir(), "code_all.R"), append = TRUE)
+        cat(paste0("\n\n", paste(readLines(file.path(userdir, "code_contingency.R")), collapse = "\n")), file = file.path(userdir, "code_All.R"), append = TRUE)
     })

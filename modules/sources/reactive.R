@@ -1,14 +1,7 @@
 intro.start <- reactive({
     input$clearsubset
     
-    intro.inputs <- list(input$data_own, input$data, input$own)
-    get_code(data.module, intro.inputs)
-    
-    #intro.inputs[[grep("intro.", intro.inputs)]] <- get(intro.inputs[[grep("intro.", intro.inputs)]])()
-    result <- do.call(data.module, intro.inputs)
-    
-    data.initial <- do.call(data.module, intro.inputs)
-            
+    data.initial <- data.module(input$data_own, input$data, input$own)
     values$mydat <<- data.initial
                 
     return(data.initial)
@@ -20,19 +13,19 @@ intro.data <- reactive({
     intro.data <- values$mydat
     intro.random <- values$mydat_rand
     
-    cat_and_eval(paste0("data.subset <- process_logical(intro.data, ", paste0("c(", paste(paste0("'", input$subs, "'"), collapse = ", "), ")"), ")"), file = "code_sources.R")
-    cat_and_eval(paste0("intro.random <- data.subset"), file = "code_sources.R", append = TRUE)
+    cat_and_eval(paste0("\n\ndata.subset <- process_logical(intro.data, ", paste0("c(", paste(paste0("'", input$subs, "'"), collapse = ", "), ")"), ")"),  mydir = userdir, file = "code_sources.R")
+    cat_and_eval(paste0("intro.random <- data.subset"),  mydir = userdir, file = "code_sources.R", append = TRUE)
         
     values$mydat <<- data.subset
     values$mydat_rand <<- values$mydat
     
     if (input$randomsub & is.numeric(input$randomsubrows) & input$randomsubrows >= 1 & input$randomsubrows <= nrow(values$mydat)) {
-        cat_and_eval(paste0("intro.random <- dplyr::sample_n(data.subset, ", input$randomsubrows, ")"), file = "code_sources.R", append = TRUE)
+        cat_and_eval(paste0("intro.random <- dplyr::sample_n(data.subset, ", input$randomsubrows, ")"),  mydir = userdir, file = "code_sources.R", append = TRUE)
     }
     
     if (input$savesubset > oldsavesub) {                
-        cat_and_eval(paste0("intro.data <- intro.random"), file = "code_sources.R", append = TRUE)
-        cat(paste(readLines(file.path(tempdir(), "code_sources.R")), collapse = "\n"), file = file.path(tempdir(), "code_All.R"), append = TRUE)
+        cat_and_eval(paste0("intro.data <- intro.random"),  mydir = userdir, file = "code_sources.R", append = TRUE)
+        cat(paste(readLines(file.path(userdir, "code_sources.R")), collapse = "\n"), file = file.path(userdir, "code_All.R"), append = TRUE)
         
         values$mydat <<- values$mydat_rand
         oldsavesub <<- input$savesubset

@@ -1,15 +1,15 @@
 intro.plotdata <- function(intro.data, x, y, plottype) {
-    cat_and_eval("intro.plot <- na.omit(intro.data)", env = environment(), file = "code_graphical.R", save_result = TRUE)
+    cat_and_eval(paste0("intro.plot <- na.omit(intro.data);
     
-    cat_and_eval(paste0("xvar <- if (checkVariable(intro.data, '", x, "')) '", x, "' else 1"), env = environment(), file = "code_graphical.R", save_result = TRUE)
-    cat_and_eval(paste0("yvar <- if (checkVariable(intro.data, '", y, "')) '", y, "' else 2"), env = environment(), file = "code_graphical.R", save_result = TRUE)
+    xvar <- if (checkVariable(intro.data, '", x, "')) '", x, "' else 1;
+    yvar <- if (checkVariable(intro.data, '", y, "')) '", y, "' else 2;
     
-    cat_and_eval("intro.plot$intro_x_cat <- factor(intro.plot[,xvar])", env = environment(), file = "code_graphical.R", save_result = TRUE)
-    cat_and_eval("intro.plot$intro_x_num <- as.numeric(intro.plot[,xvar])", env = environment(), file = "code_graphical.R", save_result = TRUE)
-    cat_and_eval("intro.plot$intro_y_cat <- factor(intro.plot[,yvar])", env = environment(), file = "code_graphical.R", save_result = TRUE)
-    cat_and_eval("intro.plot$intro_y_num <- as.numeric(intro.plot[,yvar])", env = environment(), file = "code_graphical.R", save_result = TRUE)
+    intro.plot$intro_x_cat <- factor(intro.plot[,xvar]);
+    intro.plot$intro_x_num <- as.numeric(intro.plot[,xvar]);
+    intro.plot$intro_y_cat <- factor(intro.plot[,yvar]);
+    intro.plot$intro_y_num <- as.numeric(intro.plot[,yvar])"),  mydir = userdir, env = environment(), file = "code_graphical_reactive.R")
     
-    if (plottype == "paretochart") cat_and_eval("intro.plot$intro_x_cat <- factor(intro.plot$intro_x_cat, levels = names(sort(table(intro.plot$intro_x_cat), decreasing = TRUE)))", env = environment(), file = "code_graphical.R", save_result = TRUE)
+    if (plottype == "paretochart") cat_and_eval("intro.plot$intro_x_cat <- factor(intro.plot$intro_x_cat, levels = names(sort(table(intro.plot$intro_x_cat), decreasing = TRUE)))",  mydir = userdir, env = environment(), file = "code_graphical_reactive.R", append = TRUE)
     
     return(intro.plot)
 }
@@ -25,26 +25,26 @@ intro.quantdata <- function(intro.plot) {
         
         intro.quant$intro_quant <- qnorm(seq(0, 1, by = (1/(length(intro.quant$intro_x_num) + 1)))[-c(1, (length(intro.quant$intro_x_num) + 2))]);
         intro.quant$intro_x_num <- sort(intro.quant$intro_x_num)
-    ", env = environment(), file = "code_graphical.R", save_result = TRUE)
+    ",  mydir = userdir, env = environment(), file = "code_graphical_reactive.R", append = TRUE)
     
     return(intro.quant)
 }
 
 input_xdomaindata <- function(xmin, xmax) {
-    cat_and_eval(paste0("input_xdomain <- c(", xmin, ", ", xmax, ")"), env = environment(), file = "code_graphical.R", save_result = TRUE)
+    cat_and_eval(paste0("input_xdomain <- c(", xmin, ", ", xmax, ")"),  mydir = userdir, env = environment(), file = "code_graphical_reactive.R", append = TRUE)
     
     return(input_xdomain)
 }
 
 input_ydomaindata <- function(ymin, ymax) {
-    cat_and_eval(paste0("input_ydomain <- c(", ymin, ", ", ymax, ")"), env = environment(), file = "code_graphical.R", save_result = TRUE)
+    cat_and_eval(paste0("input_ydomain <- c(", ymin, ", ", ymax, ")"),  mydir = userdir, env = environment(), file = "code_graphical_reactive.R", append = TRUE)
     
     return(input_ydomain)
 }
 
 input_binwidthdata <- function(binwidth) {
-    if (is.na(binwidth)) cat_and_eval("input_binwidth <- NULL", env = environment(), file = "code_graphical.R", save_result = TRUE)
-    else cat_and_eval(paste0("input_binwidth <- ", binwidth), env = environment(), file = "code_graphical.R", save_result = TRUE)
+    if (is.na(binwidth)) cat_and_eval("input_binwidth <- NULL",  mydir = userdir, env = environment(), file = "code_graphical_reactive.R", append = TRUE)
+    else cat_and_eval(paste0("input_binwidth <- ", binwidth),  mydir = userdir, env = environment(), file = "code_graphical_reactive.R", append = TRUE)
     
     return(input_binwidth)
 }
