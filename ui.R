@@ -42,7 +42,7 @@ shinyUI(
                           tabPanel("Eric Hare"),
                           tabPanel("Andee Kaplan")),
                tabPanel(title="hide_me"),
-               tabPanel(title="", icon=icon('code'), value = "javascript:$('#myEditor').slideToggle(); $('.fa-code').parent().parent().toggleClass('active');"),
+               tabPanel(title="", icon=icon('code'), value = "javascript:$('#myEditor').slideToggle(); $('.fa-code').parent().parent().toggleClass('active'); code_clicked();"),
                tabPanel(title="", icon=icon("print"), value="javascript: $(this).addClass('print_button'); print_clicked();"),
                footer=tagList(includeScript("scripts/top-nav-links.js"),
                               includeScript("scripts/print.js"),

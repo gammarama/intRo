@@ -1,6 +1,11 @@
 var content;
 
+function code_clicked() {
+    Shiny.onInputChange("code_clicked", $('a:has(> .fa-code)').parent().hasClass("active"));
+}
+
 function print_clicked() {
+    code_clicked();
     Shiny.onInputChange("print_clicked", true);
 }
 
