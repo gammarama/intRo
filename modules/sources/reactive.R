@@ -25,7 +25,7 @@ intro.data <- reactive({
     
     if (input$savesubset > oldsavesub) {                
         cat_and_eval(paste0("intro.data <- intro.random"), file = "code_sources.R", append = TRUE)
-        cat(paste(readLines(file.path(tempdir(), "code_sources.R")), collapse = "\n"), file = file.path(tempdir(), "code_All.R"), append = TRUE)
+        cat(paste(readLines(file.path(userdir, "code_sources.R")), collapse = "\n"), file = file.path(userdir, "code_All.R"), append = TRUE)
         
         values$mydat <<- values$mydat_rand
         oldsavesub <<- input$savesubset

@@ -13,6 +13,10 @@ library(formatR)
 
 #cat("```{r, echo=FALSE}\nopts_chunk$set(echo=FALSE)\n```\n\n```{r, child="test.Rmd", message=FALSE, warning=FALSE}\n```", file = "outfile.Rmd")
 
+## Remove all temporary code printing files
+## also generate per-user random directories
+userdir <- file.path(tempdir(), tempfile())
+
 ###
 ### Global Helper Functions
 ###
@@ -92,9 +96,11 @@ cat_and_eval <- function(mystr, env = parent.frame(), file = "code_All.R", appen
     #    mystr <- gsub(paste0("intro_replace", i), dataargs[[paste(names(actualdataargs)[i], "name", sep = "_")]], mystr)
     #}
     
-    cat(paste0(gsub("; ", "\n", mystr), "\n"), file = file.path(tempdir(), file), append = append)
+    cat(paste0(gsub("; ", "\n", mystr), "\n"), file = file.path(userdir, file), append = append)
     
-    if (save_result) cat(paste0(paste(readLines(file.path(tempdir(), file)), collapse = "\n"), "\n"), file = file.path(tempdir(), "code_All.R"), append = TRUE)
+    dir(userdir)
+    
+    if (save_result) cat(paste0(paste(readLines(file.path(userdir, file)), collapse = "\n"), "\n"), file = file.path(userdir, "code_All.R"), append = TRUE)
         
     eval(parse(text = mystr), envir = env)
 }

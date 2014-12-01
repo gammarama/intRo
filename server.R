@@ -5,8 +5,9 @@ shinyServer(function(input, output, session) {
     ## Module info
     module_info <- read.table("modules/modules.txt", header = TRUE, sep=",")
     
-    ## Remove all temporary code printing files
-    sapply(file.path(tempdir(), dir(tempdir())[grep("code_", dir(tempdir()))]), file.remove)
+    ## Get directory ready for code printing
+    dir.create(userdir, recursive = TRUE)
+    sapply(file.path(userdir, dir(userdir)[grep("code_", dir(userdir))]), file.remove)
     
     ## Maximum file upload size = 10MB
     options(shiny.maxRequestSize=10*1024^2)
@@ -15,9 +16,9 @@ shinyServer(function(input, output, session) {
     values <- reactiveValues(mydat = NULL, mydat_rand = NULL)
     
     #cat(paste(readLines("global.R"), collapse = "\n"), file = "code_global.R")
-    cat("library(RCurl)\n\n", file = file.path(tempdir(), "code_All.R"))
-    cat("eval(parse(text = getURL('https://raw.githubusercontent.com/gammarama/intRo/dev/global.R')))", file = file.path(tempdir(), "code_All.R"), append = TRUE)
-    cat("\n\n", file = file.path(tempdir(), "code_All.R"), append = TRUE)
+    cat("library(RCurl)\n\n", file = file.path(userdir, "code_All.R"))
+    cat("eval(parse(text = getURL('https://raw.githubusercontent.com/gammarama/intRo/dev/global.R')))", file = file.path(userdir, "code_All.R"), append = TRUE)
+    cat("\n\n", file = file.path(userdir, "code_All.R"), append = TRUE)
     
     ## Modules
     types <- c("helper.R", "static.R", "observe.R", "reactive.R", "output.R")
@@ -29,7 +30,7 @@ shinyServer(function(input, output, session) {
     }
     
     ## Check for file update every 5 seconds
-    code <- reactiveFileReader(500, session, file.path(tempdir(), "code_All.R"), clean_readlines)
+    code <- reactiveFileReader(500, session, file.path(userdir, "code_All.R"), clean_readlines)
     
     ## Code Viewing
     observe({    
@@ -44,7 +45,7 @@ shinyServer(function(input, output, session) {
         file <- NULL
         if(input$print_clicked) {
             oldwd <- getwd()
-          file <- render(file.path(tempdir(), "code_All.R"), output_dir = file.path(oldwd, "www"))
+          file <- render(file.path(userdir, "code_All.R"), output_dir = file.path(oldwd, "www"))
           session$sendCustomMessage(type = "renderFinished", file)
         }
       }

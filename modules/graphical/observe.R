@@ -5,8 +5,8 @@ observe({
 })
 
 observeEvent(input$store_graphical, {
-    cat(paste0("\n\n", paste(readLines(file.path(tempdir(), "code_graphical_reactive.R")), collapse = "\n")), file = file.path(tempdir(), "code_All.R"), append = TRUE)
-    cat(paste0("p.", input$plottype), file = file.path(tempdir(), paste0("code_", input$plottype, ".R")), append = TRUE)
-    cat("\n\n", file = file.path(tempdir(), paste0("code_", input$plottype, ".R")), append = TRUE)
-    cat(paste0("\n\n", paste(readLines(file.path(tempdir(), paste0("code_", input$plottype, ".R"))), collapse = "\n")), file = file.path(tempdir(), "code_All.R"), append = TRUE)
+    cat(paste0("\n\n", paste(readLines(file.path(userdir, "code_graphical_reactive.R")), collapse = "\n")), file = file.path(userdir, "code_All.R"), append = TRUE)
+    cat(paste0("p.", input$plottype), file = file.path(userdir, paste0("code_", input$plottype, ".R")), append = TRUE)
+    cat("\n\n", file = file.path(userdir, paste0("code_", input$plottype, ".R")), append = TRUE)
+    cat(paste0("\n\n", paste(readLines(file.path(userdir, paste0("code_", input$plottype, ".R"))), collapse = "\n")), file = file.path(userdir, "code_All.R"), append = TRUE)
 })
