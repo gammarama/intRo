@@ -32,7 +32,7 @@ shinyServer(function(input, output, session) {
         file <- NULL
         if(input$print_clicked) {
           file <- render(file.path(tempdir(), "code_All.R"))
-          session$sendCustomMessage(type = "renderFinished", file.path(tempdir(), "code_All.html"))
+          session$sendCustomMessage(type = "renderFinished", file)
         }
       }
     })
