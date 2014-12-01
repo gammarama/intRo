@@ -43,8 +43,7 @@ shinyServer(function(input, output, session) {
       if(length(input$print_clicked) > 0) {
         file <- NULL
         if(input$print_clicked) {
-          file.copy(file.path(tempdir(), "code_All.R"), "code_All.R", overwrite = TRUE)
-          file <- render("code_All.R", output_dir = "www")
+          file <- render(file.path(tempdir(), "code_All.R"), output_dir = file.path(owd, "www"))
           session$sendCustomMessage(type = "renderFinished", file)
         }
       }
