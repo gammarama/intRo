@@ -18,10 +18,8 @@ cont.table <- function(intro.data, x, y, type, digits) {
         }
         
         cat_and_eval(paste0("
-            new.digits <- if ('", type, "' %in% c('totalpercs', 'rowpercs', 'columnpercs')) digits else 0
-            return.tbl <- format(round(my.tbl, digits = new.digits))
-        
-            return.tbl
+            new.digits <- if ('", type, "' %in% c('totalpercs', 'rowpercs', 'columnpercs')) ", digits, " else 0
+            format(round(my.tbl, digits = new.digits))
         "),  mydir = userdir, env = environment(), file = "code_contingency.R", append = TRUE)
     } else {
         return(NULL)
