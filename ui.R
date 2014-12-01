@@ -28,7 +28,13 @@ shinyUI(
                         fluidRow(
                             dynFrame(outputId = 'print_output'),
                             do.call(navlistPanel, c(list(id = "side-nav", widths = c(2, 10)), mylist))
-                        )     
+                        ),
+                        hr(),                        
+                        fluidRow(
+                          column(12,
+                            aceEditor("myEditor", "", mode="r", readOnly=TRUE, theme="chrome")
+                          )
+                        )
                ),
                tabPanel(title="", value="http://gammarama.github.io/intRo", icon=icon('question-circle')),
                tabPanel(title="", value="http://github.com/gammarama/intRo", icon=icon("github")),
@@ -36,6 +42,7 @@ shinyUI(
                           tabPanel("Eric Hare"),
                           tabPanel("Andee Kaplan")),
                tabPanel(title="hide_me"),
+               tabPanel(title="", icon=icon('code'), value = "javascript:$('#myEditor').slideToggle(); $('.fa-code').parent().parent().toggleClass('active');"),
                tabPanel(title="", icon=icon("print"), value="javascript: $(this).addClass('print_button'); print_clicked();"),
                footer=tagList(includeScript("scripts/top-nav-links.js"),
                               includeScript("scripts/print.js"),

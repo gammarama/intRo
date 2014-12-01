@@ -27,14 +27,23 @@ shinyServer(function(input, output, session) {
     for (mod in modules_tosource) {
         source(mod, local = TRUE)
     }
-        
+    
+    ## Check for file update every 5 seconds
+    code <- reactiveFileReader(500, session, file.path(tempdir(), "code_All.R"), readLines)
+    
+    ## Code Viewing
+    observe({    
+      updateAceEditor(session, "myEditor", value=paste(code(), collapse="\n"))  
+    })
+    
+    
     ## Printing
     observe({ 
       if(is.null(input)) return
       if(length(input$print_clicked) > 0) {
         file <- NULL
         if(input$print_clicked) {
-            file.copy(file.path(tempdir(), "code_All.R"), "code_All.R", overwrite = TRUE)
+          file.copy(file.path(tempdir(), "code_All.R"), "code_All.R", overwrite = TRUE)
           file <- render("code_All.R", output_dir = "www")
           session$sendCustomMessage(type = "renderFinished", file)
         }
