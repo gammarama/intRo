@@ -7,7 +7,7 @@ intro.regression <- reactive({
     curxreg <- input$xreg
     curyreg <- input$yreg
     
-    values$mydat <<- savefit(intro.data(), input$xreg, input$yreg, lm.fit)
+    values$mydat <<- savefit(intro.data(), intro.regression())
     
     oldsaveresid <<- input$saveresid
   }
