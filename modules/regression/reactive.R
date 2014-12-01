@@ -3,15 +3,6 @@ intro.regression <- reactive({
   
   lm.fit <- my.lm(intro.data(), input$xreg, input$yreg)
   
-  if (input$saveresid > oldsaveresid) {
-    curxreg <- input$xreg
-    curyreg <- input$yreg
-    
-    values$mydat <<- savefit(intro.data(), input$xreg, input$yreg, lm.fit)
-    
-    oldsaveresid <<- input$saveresid
-  }
-  
   return(lm.fit)
 })
 
