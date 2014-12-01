@@ -12,7 +12,7 @@ shinyServer(function(input, output, session) {
     options(shiny.maxRequestSize=10*1024^2)
     
     ## Reactive values
-    values <- reactiveValues(mydat = NULL, mydat_rand = NULL)    
+    values <- reactiveValues(mydat = NULL, mydat_rand = NULL)
     
     #cat(paste(readLines("global.R"), collapse = "\n"), file = "code_global.R")
     cat("library(RCurl)\n\n", file = file.path(tempdir(), "code_All.R"))
@@ -29,7 +29,7 @@ shinyServer(function(input, output, session) {
     }
     
     ## Check for file update every 5 seconds
-    code <- reactiveFileReader(500, session, file.path(tempdir(), "code_All.R"), readLines)
+    code <- reactiveFileReader(500, session, file.path(tempdir(), "code_All.R"), clean_readlines)
     
     ## Code Viewing
     observe({    
