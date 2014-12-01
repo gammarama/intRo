@@ -7,6 +7,7 @@ dynFrame <- function(outputId)
 }
 
 ## Source ui
+module_info <- read.table("modules/modules.txt", header = TRUE, sep=",")
 sapply(file.path("modules", dir("modules")[dir("modules") != "modules.txt"], "ui.R"), source)
 
 ## Generates the UI tabs

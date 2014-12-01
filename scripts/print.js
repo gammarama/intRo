@@ -7,7 +7,7 @@ function print_clicked() {
 Shiny.addCustomMessageHandler("renderFinished",
   function(file) {
     var frame = $('.print_results')
-    frame.attr('src','code_All.html');
+    frame.attr('src', file);
     
     content = frame.contents().find("body").html();
     check_print(frame)

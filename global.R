@@ -42,8 +42,6 @@ checkVariable <- function(data, var) {
     return(nchar(var) > 0 & var %in% names(data))
 }
 
-module_info <- read.table("modules/modules.txt", header = TRUE, sep=",")
-
 process_input <- function(inp) {
     if (is.character(inp)) {
         if (length(inp) == 1)  {
