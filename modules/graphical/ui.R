@@ -50,7 +50,7 @@ graphical_ui <- tabPanel("Graphical",
                                                              
                                                              hr(),
                                                              
-                                                             tags$button("", id = "store_graphical", type = "button", class = "btn action-button", list(icon("save"), "Store Graphical Result"), onclick = "$('#side-nav :contains(\"Sources\")').highlight();")
+                                                             tags$button("", id = "store_graphical", type = "button", class = "btn action-button", list(icon("save"), "Store Graphical Result"), onclick = "$('a:has(> .fa-print, .fa-code)').highlight();")
                                                          )
                                                   ),
                                                   

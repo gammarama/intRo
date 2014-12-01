@@ -21,7 +21,7 @@ sources_ui <- tabPanel("Sources",
                                                                                   column(6, numericInput("randomsubrows", "Rows", value = 1, min = 1))
                                                                  )
                                                              ),
-                                                             tags$button("", id = "savesubset", type = "button", class = "btn action-button", onclick="var vals = []; var subsets = $('input[type = \"text\"][placeholder]'); for(i = 0; i < subsets.length; i++) {vals.push(subsets[i].value);}; Shiny.onInputChange(\"subs\", vals); $('#side-nav :contains(\"Sources\")').highlight();", list(icon("save"), "Save Subset")),
+                                                             tags$button("", id = "savesubset", type = "button", class = "btn action-button", onclick="var vals = []; var subsets = $('input[type = \"text\"][placeholder]'); for(i = 0; i < subsets.length; i++) {vals.push(subsets[i].value);}; Shiny.onInputChange(\"subs\", vals); $('#side-nav :contains(\"Sources\")').highlight(); $('a:has(> .fa-print, .fa-code)').hightlight();", list(icon("save"), "Save Subset")),
                                                              br(), br(),
                                                              tags$button("", id = "clearsubset", type = "button", class = "btn action-button", onclick="Shiny.onInputChange(\"subs\", null);", list(icon("eraser"), "Reset Data")),
                                                              br(), br(),

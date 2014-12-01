@@ -19,7 +19,7 @@ t_test_ui <- tabPanel("T test",
                                                              
                                                              hr(),
                                                              
-                                                             tags$button("", id = "store_t_test", type = "button", class = "btn action-button", list(icon("save"), "Store T test Result"), onclick = "$('#side-nav :contains(\"Sources\")').highlight();")
+                                                             tags$button("", id = "store_t_test", type = "button", class = "btn action-button", list(icon("save"), "Store T test Result"), onclick = "$('a:has(> .fa-print, .fa-code)').highlight();")
                                                          )
                                                   ),
                                                   
