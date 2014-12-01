@@ -1,5 +1,5 @@
 process_logical <- function(data, x) {
-    if (is.null(x)) {
+    if (is.null(x) || x == "c('')") {
         return(data)
     }
     
