@@ -22,13 +22,13 @@
     
     p.scatterplot %>% bind_shiny("scatterplot")
     
-    cat_and_eval("p.lineplot <- intro.plot %>%
+    cat_and_eval("p.linechart <- intro.plot %>%
         ggvis(x = ~intro_x_num, y = ~intro_y_num) %>%
         layer_lines() %>% 
         scale_numeric('x', domain = input_xdomain, clamp = TRUE, nice = TRUE) %>%
-        scale_numeric('y', domain = input_ydomain, clamp = TRUE, nice = TRUE)",  mydir = userdir, env = environment(), file = "code_lineplot.R")
+        scale_numeric('y', domain = input_ydomain, clamp = TRUE, nice = TRUE)",  mydir = userdir, env = environment(), file = "code_linechart.R")
     
-    p.lineplot %>% bind_shiny("lineplot")
+    p.linechart %>% bind_shiny("linechart")
     
     cat_and_eval("p.boxplot <- intro.plot %>%
         ggvis(x = ~intro_x_cat, y = ~intro_y_num) %>%
