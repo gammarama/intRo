@@ -37,11 +37,15 @@ process_logical <- function(data, x) {
     return(new_data)
 }
 
+file.choose <- function () {
+    return(input$data_own[,"datapath"])
+}
+
 data.module <- function (inFile, dataset, own) {        
     if (is.null(inFile) | !own) {
         cat_and_eval(paste0("\n\nintro.data <- get('", dataset, "')"), file = "code_sources.R", mydir = userdir, append = FALSE, save_result = TRUE)
     } else {
-        cat_and_eval(paste0("intro.data <- read.csv(", inFile[,"datapath"], ")"), file = "code_sources.R", append = FALSE, save_result = TRUE)
+        cat_and_eval(paste0("intro.data <- read.csv(file.choose())"), mydir = userdir, file = "code_sources.R", append = FALSE, save_result = TRUE)
     }
     return(intro.data)
 }

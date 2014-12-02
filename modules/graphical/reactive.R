@@ -28,14 +28,14 @@ y_selected <- reactive({
         return(intro.quantdata(intro.plot()))
     })
     
-    input_binwidth <- reactive({
+    input_binwidth <- reactive({        
         return(input_binwidthdata(input$binwidth))
     })
     
-    input_xdomain <- reactive({
+    input_xdomain <- reactive({        
         return(input_xdomaindata(input$xmin, input$xmax))
     })
     
-    input_ydomain <- reactive({
+    input_ydomain <- reactive({        
         return(input_ydomaindata(input$ymin, input$ymax))
     })
