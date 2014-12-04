@@ -1,9 +1,7 @@
-ttesttable <- function (data, x, y = NULL, twovar = FALSE, conflevel, althyp, hypval) {
+ttesttable <- function (intro.data, x, y = NULL, twovar = FALSE, conflevel, althyp, hypval) {
     if (is.null(y) | y == "" | !twovar) {
-        ttest <- t.test(data[,x], conf.level=conflevel, alternative=althyp, mu=hypval)
+        cat_and_eval(paste0("t.test(x=intro.data[,'", x, "'], conf.level=", conflevel, ", alternative='", althyp, "', mu=", hypval, ")"),  mydir = userdir, env = environment(), file = "code_t_test.R")
     } else {
-        ttest <- t.test(data[,x], data[,y], conf.level=conflevel, alternative=althyp, mu=hypval)
+        cat_and_eval(paste0("t.test(x=intro.data[,'", x, "'], y=intro.data[,'", y, "'], conf.level=", conflevel, ", alternative='", althyp, "', mu=", hypval, ")"),  mydir = userdir, env = environment(), file = "code_t_test.R")
     }
-    
-    return(paste(capture.output(ttest), collapse = "\n"))
 }

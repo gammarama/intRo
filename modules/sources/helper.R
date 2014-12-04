@@ -1,5 +1,5 @@
 process_logical <- function(data, x) {
-    if (is.null(x)) {
+    if (is.null(x) || x == "c('')") {
         return(data)
     }
     
@@ -37,13 +37,15 @@ process_logical <- function(data, x) {
     return(new_data)
 }
 
+file.choose <- function () {
+    return(input$data_own[,"datapath"])
+}
+
 data.module <- function (inFile, dataset, own) {        
-    intro.data <- NULL
     if (is.null(inFile) | !own) {
-        intro.data <- dataset
+        cat_and_eval(paste0("\n\nintro.data <- get('", dataset, "')"), file = "code_sources.R", mydir = userdir, append = FALSE, save_result = TRUE)
     } else {
-        intro.data <- read.csv(inFile$datapath)
+        cat_and_eval(paste0("intro.data <- read.csv(file.choose())"), mydir = userdir, file = "code_sources.R", append = FALSE, save_result = TRUE)
     }
-    
-    intro.data
+    return(intro.data)
 }

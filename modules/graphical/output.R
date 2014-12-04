@@ -1,48 +1,55 @@
-intro.plot %>%
+    cat_and_eval("p.histogram <- intro.plot %>%
         ggvis(x = ~intro_x_num, y = ~intro_y_num) %>%
         layer_histograms(width = input_binwidth) %>% 
-        scale_numeric("x", domain = input_xdomain, clamp = TRUE, nice = TRUE) %>%
-        scale_numeric("y", domain = input_ydomain, clamp = TRUE, nice = TRUE) %>%
-        bind_shiny("histogram")
+        scale_numeric('x', domain = input_xdomain, clamp = TRUE, nice = TRUE) %>%
+        scale_numeric('y', domain = input_ydomain, clamp = TRUE, nice = TRUE)",  mydir = userdir, env = environment(), file = "code_histogram.R")
+    
+    p.histogram %>% bind_shiny("histogram")
 
-    intro.quant %>%
+    cat_and_eval("p.quantileplot <- intro.quant %>%
         ggvis(x = ~intro_quant, y = ~intro_x_num) %>%
         layer_points() %>% 
-        scale_numeric("x", domain = input_xdomain, clamp = TRUE, nice = TRUE) %>%
-        scale_numeric("y", domain = input_ydomain, clamp = TRUE, nice = TRUE) %>%
-        bind_shiny("quantileplot")
+        scale_numeric('x', domain = input_xdomain, clamp = TRUE, nice = TRUE) %>%
+        scale_numeric('y', domain = input_ydomain, clamp = TRUE, nice = TRUE)",  mydir = userdir, env = environment(), file = "code_quantileplot.R")
     
-    intro.plot %>%
+    p.quantileplot %>% bind_shiny("quantileplot")
+    
+    cat_and_eval("p.scatterplot <- intro.plot %>%
         ggvis(x = ~intro_x_num, y = ~intro_y_num) %>%
         layer_points() %>% 
-        scale_numeric("x", domain = input_xdomain, clamp = TRUE, nice = TRUE) %>%
-        scale_numeric("y", domain = input_ydomain, clamp = TRUE, nice = TRUE) %>%
-        bind_shiny("scatterplot")
+        scale_numeric('x', domain = input_xdomain, clamp = TRUE, nice = TRUE) %>%
+        scale_numeric('y', domain = input_ydomain, clamp = TRUE, nice = TRUE)",  mydir = userdir, env = environment(), file = "code_scatterplot.R")
     
-    intro.plot %>%
+    p.scatterplot %>% bind_shiny("scatterplot")
+    
+    cat_and_eval("p.linechart <- intro.plot %>%
         ggvis(x = ~intro_x_num, y = ~intro_y_num) %>%
         layer_lines() %>% 
-        scale_numeric("x", domain = input_xdomain, clamp = TRUE, nice = TRUE) %>%
-        scale_numeric("y", domain = input_ydomain, clamp = TRUE, nice = TRUE) %>%
-        bind_shiny("linechart")
+        scale_numeric('x', domain = input_xdomain, clamp = TRUE, nice = TRUE) %>%
+        scale_numeric('y', domain = input_ydomain, clamp = TRUE, nice = TRUE)",  mydir = userdir, env = environment(), file = "code_linechart.R")
     
-    intro.plot %>%
+    p.linechart %>% bind_shiny("linechart")
+    
+    cat_and_eval("p.boxplot <- intro.plot %>%
         ggvis(x = ~intro_x_cat, y = ~intro_y_num) %>%
         layer_boxplots() %>% 
-        scale_numeric("y", domain = input_ydomain, clamp = TRUE, nice = TRUE) %>%
-        bind_shiny("boxplot")
+        scale_numeric('y', domain = input_ydomain, clamp = TRUE, nice = TRUE)",  mydir = userdir, env = environment(), file = "code_boxplot.R")
     
-    intro.plot %>%
+    p.boxplot %>% bind_shiny("boxplot")
+    
+    cat_and_eval("p.barchart <- intro.plot %>%
         ggvis(x = ~intro_x_cat, y = ~intro_y_num) %>%
         layer_bars() %>%
-        scale_numeric("y", domain = input_ydomain, clamp = TRUE, nice = TRUE) %>%
-        bind_shiny("barchart")
+        scale_numeric('y', domain = input_ydomain, clamp = TRUE, nice = TRUE)",  mydir = userdir, env = environment(), file = "code_barchart.R")
     
-    intro.plot %>%
+    p.barchart %>% bind_shiny("barchart")
+    
+    cat_and_eval("p.paretochart <- intro.plot %>%
         ggvis(x = ~intro_x_cat, y = ~intro_y_num) %>%
         layer_bars() %>%
-        scale_numeric("y", domain = input_ydomain, clamp = TRUE, nice = TRUE) %>%
-        bind_shiny("paretochart")
+        scale_numeric('y', domain = input_ydomain, clamp = TRUE, nice = TRUE)",  mydir = userdir, env = environment(), file = "code_paretochart.R")
+    
+    p.paretochart %>% bind_shiny("paretochart")
 
     output$mosaicplot <- renderPlot({
         return(print(mosaicplot(intro.data(), input$x, input$y, intro.numericnames(), intro.categoricnames())))

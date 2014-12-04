@@ -1,15 +1,15 @@
 transform_ui <- tabPanel("Transform",
                                                   column(4,
                                                          wellPanel(                                          
-                                                             selectInput("trans", "Choose Transformation", choices = c("Power" = "power", "Categorical" = "categorical", "Numeric" = "numeric")),
-                                                             selectInput("var_trans", "Select Variable", choices = numericNames(mpg)),
+                                                             selectizeInput("trans", label = "Choose Transformation", choices = c("Power" = "power", "Categorical" = "categorical", "Numeric" = "numeric"), multiple = FALSE),
+                                                             selectizeInput("var_trans", label = "Select Variable", choices = numericNames(mpg), multiple = FALSE),
                                                              conditionalPanel(condition = "input.trans == 'power'",
-                                                                              sliderInput("power", "Power", value = 1, min = -5, max = 5, step = 0.1)
+                                                                              numericInput("power", "Power", value = 1, min = -100, max = 100, step = 0.01)
                                                              ),
                                                              
                                                              hr(),
                                                              
-                                                             tags$button("", id = "savetrans", type = "button", class = "btn action-button", list(icon("save"), "Save Transformation"), onclick = "$('#side-nav :contains(\"Sources\")').highlight();")
+                                                             tags$button("", id = "savetrans", type = "button", class = "btn action-button", list(icon("save"), "Save Transformation"), onclick = "$('#side-nav :contains(\"Sources\")').highlight(); $('a:has(> .fa-print, .fa-code)').highlight();")
                                                          )
                                                   ),
                                                   
@@ -20,12 +20,7 @@ transform_ui <- tabPanel("Transform",
                                                          
                                                          conditionalPanel(condition = "input.trans == 'power'",
                                                                           tags$b("Original Data"),
-                                                                          ggvisOutput("var_plot")
-                                                         ),
-                                                         
-                                                         hr(),
-                                                         
-                                                         conditionalPanel(condition = "input.trans == 'power'",
+                                                                          ggvisOutput("var_plot"),                                        
                                                                           tags$b("Transformed Data"),
                                                                           ggvisOutput("trans_plot")
                                                          )

@@ -1,6 +1,13 @@
 addResourcePath(prefix="images", directoryPath="images/")
 
+## For printing
+dynFrame <- function(outputId) 
+{
+  HTML(paste0("<iframe class = 'print_results' src='about:blank' id = '", outputId, "'></iframe>"))
+}
+
 ## Source ui
+module_info <- read.table("modules/modules.txt", header = TRUE, sep=",")
 sapply(file.path("modules", dir("modules")[dir("modules") != "modules.txt"], "ui.R"), source)
 
 ## Generates the UI tabs
@@ -19,21 +26,29 @@ shinyUI(
     navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
                tabPanel(title="", icon=icon("home"),
                         fluidRow(
-                            div(class='intRoPrint', h3('Results from intRo session:')),
+                            dynFrame(outputId = 'print_output'),
                             do.call(navlistPanel, c(list(id = "side-nav", widths = c(2, 10)), mylist))
-                        )     
+                        ),
+                        hr(),                        
+                        fluidRow(
+                          column(12,
+                            aceEditor("myEditor", "", mode="r", readOnly=TRUE, theme="chrome")
+                          )
+                        )
                ),
                tabPanel(title="", value="http://gammarama.github.io/intRo", icon=icon('question-circle')),
                tabPanel(title="", value="http://github.com/gammarama/intRo", icon=icon("github")),
                navbarMenu("", icon=icon("envelope"),
                           tabPanel("Eric Hare"),
                           tabPanel("Andee Kaplan")),
-               #tabPanel(title="hide_me"),
-               #tabPanel(title="", icon=icon("print"), value = "javascript:print_intRo();"),
+               tabPanel(title="hide_me"),
+               tabPanel(title="", icon=icon('code'), value = "javascript:$('#myEditor').slideToggle(); $('.fa-code').parent().parent().toggleClass('active'); code_clicked();"),
+               tabPanel(title="", icon=icon("print"), value="javascript: $(this).addClass('print_button'); print_clicked();"),
                footer=tagList(includeScript("scripts/top-nav-links.js"),
                               includeScript("scripts/print.js"),
-                              includeScript("http://code.jquery.com/color/jquery.color-2.1.2.min.js"),
                               includeScript("scripts/other-helpers.js")
+                              
+                              
                ),
                tags$head(tags$link(rel="shortcut icon", href="images/icon.png"))
     ))

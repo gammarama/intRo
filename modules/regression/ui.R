@@ -1,12 +1,16 @@
 regression_ui <- tabPanel("Regression",
          column(4,
                 wellPanel(
-                  selectInput("xreg", "Independent Variable (x)", choices = numericNames(mpg), selected = numericNames(mpg)[4]),
-                  selectInput("yreg", "Dependent Variable (y)", choices = numericNames(mpg), selected = numericNames(mpg)[5]),
+                  selectizeInput("xreg", label = "Independent Variable (x)", choices = numericNames(mpg), selected = numericNames(mpg)[4]),
+                  selectizeInput("yreg", label = "Dependent Variable (y)", choices = numericNames(mpg), selected = numericNames(mpg)[5]),
                   
                   hr(),
-                  tags$button("", id = "saveresid", type = "button", class = "btn action-button", list(icon("save"), "Save Residuals/Fitted"), onclick = "$('#side-nav :contains(\"Sources\")').highlight();")
-                  #actionButton("saveresid", "Save Residuals/Fitted", icon = icon("save"))
+                  
+                  tags$button("", id = "saveresid", type = "button", class = "btn action-button", list(icon("save"), "Save Residuals/Fitted"), onclick = "$('#side-nav :contains(\"Sources\")').highlight();"),
+
+                  hr(),
+                  
+                  tags$button("", id = "store_regression", type = "button", class = "btn action-button", list(icon("save"), "Store Regression Result"), onclick = "$('a:has(> .fa-print, .fa-code)').highlight();")
                 )
          ),
          
