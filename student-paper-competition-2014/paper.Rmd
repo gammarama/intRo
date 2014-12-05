@@ -38,7 +38,7 @@ Beyond being simple, \texttt{intRo} is also consistent. The tool is organized ar
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=0.8\textwidth]{images/ui_annotate.png}
-\caption{The five elements that comprise the \texttt{intRo} application: 1) top navigation, 2) side navigation, 3) options panel, 4) results panel, and 5) code panel. \ak{[Don't forget to update this.]}}
+\caption{The five elements that comprise the \texttt{intRo} application: 1) top navigation, 2) side navigation, 3) options panel, 4) results panel, and 5) code panel.}
 \label{fig:ui}
 \end{figure}
 
@@ -68,6 +68,66 @@ Once students get pulled in by an easy to use interface and fun interaction with
 On the front end, user interaction with \texttt{intRo} is split into bitesize chunks that we call modules. This is true of the back end as well. Each module is a self contained set of \texttt{R} code that is dynamically added to the application at run time. What this means is that \texttt{intRo} is easily extended by the addition of modules within the framework underlying the application. This extensibility allows for \texttt{intRo} to be customized for an individual classroom setting, tailored to the needs of a particular course.
 
 As an example of possible customization, an instructor may wish to introduce hypothesis testing from a randomization framework rather than distributional. In this case, a non-parametric test could be added easily as a module to be used instead of the T test. This addition would be fairly simple to complete. The user would fork \texttt{intRo} from http://github.com/gammarama/intRo and begin by adding six types of files to a folder within a module folder: `helper.R`, `observe.R`, `output.R`, `reactive.R`, `static.R`, and `ui.R`. Each of these files is written to comply with the reactive nature available in a \texttt{Shiny} application. The `ui.R` file contains all the user interface elements within the new module's tab. This will include any options in the options panel as well as results. The `helper.R` and `static.R` files refer to static functions and global variable that may be used within the module. The file `output.R` contains the reactive elements that tie output to the user interface within \texttt{Shiny} and `observe.R` and `reactive.R` contain elements within an `observer` function or `reactive` function within the \texttt{Shiny} framework. By placing each of these files within the `modules/nonparametric_test` folder and adding a single line to a navigation file indicating under which module grouping the non-parametric test module should go, a new module is available within \texttt{intRo} upon running the application.
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=\textwidth]{images/app_creation_modules.png}
+\caption{This figure depicts how the \texttt{server.R} and \texttt{ui.R} files are populated using the modular structure within \texttt{intRo}.}
+\label{fig:app_creation_modules}
+\end{figure}
+
+The process by which \texttt{intRo} is dynamically created upon running the application through module sourcing is detailed in figure~\ref{fig:app_creation_modules}. The key driver to populating \texttt{server.R} and \texttt{ui.R} is the file \texttt{modules.txt}, which defines the placement of each module. The interface is then created with the following statement.
+
+\footnotesize
+```{r ui, eval=FALSE}
+## Source ui
+module_info <- read.table("modules/modules.txt", header = TRUE, sep=",")
+sapply(file.path("modules", dir("modules")[dir("modules") != "modules.txt"], "ui.R"), source)
+
+## Generates the UI tabs
+mylist <- list()
+old_heading <- ""
+for (i in 1:nrow(module_info)) {
+    if (module_info[i,1] != old_heading) {
+        if (i != 1) mylist[[length(mylist) + 1]] <- "-----"
+        mylist[[length(mylist) + 1]] <- as.character(module_info[i,1])
+        old_heading <- module_info[i,1]
+    }
+    mylist[[length(mylist) + 1]] <- get(paste(module_info[i,2], "ui", sep = "_"))
+}
+
+## Create the UI
+shinyUI(
+    navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
+               tabPanel(title="", icon=icon("home"),
+                        fluidRow(
+                            do.call(navlistPanel, c(list(id = "side-nav", widths = c(2, 10)), mylist))
+                        )
+               ), ...
+    ))
+```
+\normalsize
+
+The key piece of code being the `do.call` statement loading the list of ui elements from the module's \texttt{ui.R} file. The server functions are then dynamically generated using a similar method.
+
+\footnotesize
+```{r server, eval=FALSE}
+shinyServer(function(input, output, session) {
+  ## Module info
+  module_info <- read.table("modules/modules.txt", header = TRUE, sep=",")
+  
+  ## Modules
+  types <- c("helper.R", "static.R", "observe.R", "reactive.R", "output.R")
+  modules_tosource <- file.path("modules", apply(expand.grid(module_info$module, types), 1, paste, collapse = "/"))
+  
+  ## Source the modules
+  for (mod in modules_tosource) {
+      source(mod, local = TRUE)
+  }
+}
+```
+\normalsize
+In this way, we were able to have \texttt{intRo} be fully extensible, its structure and functionality dependent entirely on the modules present within the application.
 
 # In the classroom
 \texttt{intRo}'s ease of use lends itself to a natural presentation in an introductory statistics course. Statistics software typically used in introductory courses, such as \texttt{JMP} and \texttt{Excel}, have restrictive software licensing and platform requirements that can limit the software's accessibility to students. Even if these limitations can be overcome, these software programs have non-ideal interfaces for an exploratory data analysis. \texttt{JMP}, for instance, hides several basic regression functions such as a line of best fit behind small red arrows. Using \texttt{R} itself in the classroom is an appealing alternative, but suffers from some other problems. Many students in introductory statistics courses have not been exposed to programming languages and concepts, which could require a substantial overhead in order to begin a basic statistical analysis. When results need to be submitted as homework, getting the output into a document can be a frustrating and tedious experience (this experience is made much easier with new tools like \texttt{rmarkdown}, but this again is a bit of a learning curve for the new statistics student).
