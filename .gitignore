@@ -5,3 +5,5 @@ images/Thumbs.db
 _site
 shinyapps
 *.Rproj
+
+packrat/*
