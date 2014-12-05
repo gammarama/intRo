@@ -5,10 +5,10 @@ t_test_ui <- tabPanel("T test",
                                                              
                                                              hr(),
                                                              
-                                                             selectizeInput("group1", label = "Group 1 (x)", choices = numericNames(mpg)),
+                                                             selectizeInput("group1", label = "Group 1 (x)", choices = numericNames(mpg), selected = numericNames(mpg)[1]),
                                                              conditionalPanel(
                                                                  condition = "input.varts == 'twovart'",
-                                                                 selectizeInput("group2", "Group 2 (y)", choices = numericNames(mpg))
+                                                                 selectizeInput("group2", "Group 2 (y)", choices = numericNames(mpg), selected = numericNames(mpg)[2])
                                                              ),
                                                              
                                                              hr(),
