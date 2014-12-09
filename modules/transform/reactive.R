@@ -27,7 +27,7 @@
                 cat_and_eval(paste0("intro.data[, '", intro.transform.colname(), "'] <- trans_x"),  mydir = userdir, file = "code_transform.R", append = TRUE)
             }
         } else if (input$trans %in% c("categorical", "numeric")) {
-            if (input$trans == "numeric") cat_and_eval(paste0("trans_x <- as.numeric(intro.data[,'", curtrans, "'])"),  mydir = userdir, file = "code_transform.R", append = TRUE) else cat_and_eval(paste0("trans_x <- factor(intro.data[,'", curtrans, "'])"), file = "code_transform.R", append = TRUE)
+            if (input$trans == "numeric") cat_and_eval(paste0("trans_x <- as.numeric(intro.data[,'", curtrans, "'])"),  mydir = userdir, file = "code_transform.R", append = TRUE) else cat_and_eval(paste0("trans_x <- factor(intro.data[,'", curtrans, "'])"), mydir = userdir, file = "code_transform.R", append = TRUE)
             cat_and_eval(paste0("intro.data[, '", intro.transform.colname(), "'] <- trans_x"),  mydir = userdir, file = "code_transform.R", append = TRUE)
         } else {
             cat_and_eval(paste0("intro.data[, '", intro.transform.colname(), "'] <- curtrans"),  mydir = userdir, file = "code_transform.R", append = TRUE)
