@@ -10,11 +10,12 @@ output:
 bibliography: refs.bib
 ---
 \thispagestyle{empty}
+
 \begin{abstract}
 \texttt{intRo} is a modern web-based application for performing basic data analysis and statistical routines. Leveraging the power of \texttt{R} and \texttt{Shiny}, \texttt{intRo} implements common statistical functions in a powerful and extensible modular structure, while remaining simple enough for the novice statistician. This simplicity lends itself to a natural presentation in an introductory statistics course as a substitute for other commonly used statistical software packages, such as \texttt{Excel} and \texttt{JMP}. \texttt{intRo} is currently deployed at the URL \url{http://www.intro-stats.com}. Within this paper we introduce the application and explore the design decisions underlying \texttt{intRo} as well as highlight some challenges and advantages of reactive programming.
 \end{abstract}
 
-\newpage
+\twocolumn
 \setcounter{page}{1}
 
 # Introduction
@@ -36,12 +37,12 @@ In order for an application to be useful to students in their first statistics c
 
 Beyond being simple, \texttt{intRo} is also consistent. The tool is organized around specific tasks a student may perform in the process of a data analysis, called modules. Each module maintains a consistent layout, helping the user to become familiar with the location of the options, the results, and the code. In figure \ref{fig:ui}, we highlight the five elements that comprise the \texttt{intRo} interface.
 
-\begin{figure}[ht!]
+\begin{figure*}[ht!]
 \centering
-\includegraphics[width=0.8\textwidth]{images/ui_annotate.png}
+\includegraphics[width=\linewidth]{images/ui_annotate.png}
 \caption{The five elements that comprise the \texttt{intRo} application: 1) top navigation, 2) side navigation, 3) options panel, 4) results panel, and 5) code panel.}
 \label{fig:ui}
-\end{figure}
+\end{figure*}
 
  1. **Top Navigation** - The top navigation bar includes two sets of buttons. The left-aligned buttons are informational buttons. The first is a link to \texttt{intRo}. The second is a link to this documentation page. The third is a link to the GitHub repository where the code for \texttt{intRo} is housed. The final button is a link to our websites, which contain contact information if there are any questions or comments. The right-aligned buttons are \texttt{intRo} utilities. The first is a button to toggle the visibility of the code panel (5). The last is a button to print the active module results, and the associated code (if visible).
  2. **Side Navigation** - The side navigation panel includes the modules that perform a specific data analysis task.
@@ -70,17 +71,17 @@ On the front end, user interaction with \texttt{intRo} is split into bitesize ch
 
 As an example of possible customization, an instructor may wish to introduce hypothesis testing from a randomization framework rather than distributional. In this case, a non-parametric test could be added easily as a module to be used instead of the T test. This addition would be fairly simple to complete. The user would fork \texttt{intRo} from http://github.com/gammarama/intRo and begin by adding six types of files to a folder within a module folder: `helper.R`, `observe.R`, `output.R`, `reactive.R`, `static.R`, and `ui.R`. Each of these files is written to comply with the reactive nature available in a \texttt{Shiny} application. The `ui.R` file contains all the user interface elements within the new module's tab. This will include any options in the options panel as well as results. The `helper.R` and `static.R` files refer to static functions and global variable that may be used within the module. The file `output.R` contains the reactive elements that tie output to the user interface within \texttt{Shiny} and `observe.R` and `reactive.R` contain elements within an `observer` function or `reactive` function within the \texttt{Shiny} framework. By placing each of these files within the `modules/nonparametric_test` folder and adding a single line to a navigation file indicating under which module grouping the non-parametric test module should go, a new module is available within \texttt{intRo} upon running the application.
 
-\begin{figure}[ht!]
+\begin{figure*}[ht!]
 \centering
-\includegraphics[width=\textwidth]{images/app_creation_modules.png}
+\includegraphics[width=\linewidth]{images/app_creation_modules.png}
 \caption{This figure depicts how the \texttt{server.R} and \texttt{ui.R} files are populated using the modular structure within \texttt{intRo}.}
 \label{fig:app_creation_modules}
-\end{figure}
+\end{figure*}
 
 The process by which \texttt{intRo} is dynamically created upon running the application through module sourcing is detailed in figure \ref{fig:app_creation_modules}. The key driver to populating \texttt{server.R} and \texttt{ui.R} is the file \texttt{modules.txt}, which defines the placement of each module. The interface is then created with the following statement.
 
 \footnotesize
-```{r ui, eval=FALSE}
+```{r ui, eval=FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=25)}
 ## Source ui
 module_info <- read.table("modules/modules.txt", header = TRUE, sep=",")
 sapply(file.path("modules", dir("modules")[dir("modules") != "modules.txt"], "ui.R"), source)
@@ -112,20 +113,21 @@ shinyUI(
 The key piece of code being the `do.call` statement loading the list of ui elements from the module's \texttt{ui.R} file. The server functions are then dynamically generated using a similar method.
 
 \footnotesize
-```{r server, eval=FALSE}
+```{r server, eval=FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=25)}
 shinyServer(function(input, output, session) {
   ## Module info
   module_info <- read.table("modules/modules.txt", header = TRUE, sep=",")
   
   ## Modules
   types <- c("helper.R", "static.R", "observe.R", "reactive.R", "output.R")
-  modules_tosource <- file.path("modules", apply(expand.grid(module_info$module, types), 1, paste, collapse = "/"))
+  modules_tosource <- file.path("modules", 
+                                apply(expand.grid(module_info$module, types), 1, paste, collapse = "/"))
   
   ## Source the modules
   for (mod in modules_tosource) {
       source(mod, local = TRUE)
   }
-}
+})
 ```
 \normalsize
 In this way, we were able to have \texttt{intRo} be fully extensible, its structure and functionality dependent entirely on the modules present within the application.
