@@ -1,4 +1,8 @@
 observe({
+    updateSelectizeInput(session, "plottype", choices = if (intro.numericnames() == "") c("Mosaic Plot" = "mosaicplot") else if (intro.categoricnames() == "") c("Histogram" = "histogram", "Normal Quantile Plot" = "quantileplot", "Scatterplot" = "scatterplot", "Line Chart" = "linechart") else c("Histogram" = "histogram", "Normal Quantile Plot" = "quantileplot", "Scatterplot" = "scatterplot", "Line Chart" = "linechart", "Boxplot" = "boxplot", "Bar Chart" = "barchart", "Pareto Chart" = "paretochart", "Mosaic Plot" = "mosaicplot"))
+})
+
+observe({
     input$plottype
     updateSelectizeInput(session, "x", choices = x_choices(), selected = x_selected())
     updateSelectizeInput(session, "y", choices = y_choices(), selected = y_selected())
