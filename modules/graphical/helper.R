@@ -49,31 +49,23 @@ input_binwidthdata <- function(binwidth) {
     return(input_binwidth)
 }
 
-mosaicplot <- function (data, x, y, numnames, catnames, ...) {
-    if (!(x %in% catnames)) return(blank.ggvis)
-    if (!(y %in% catnames)) return(blank.ggvis)
-
-    data[,x] <- factor(data[,x])
-    data[,y] <- factor(data[,y])
-  #stopifnot(class(data[,x]) == "factor" & class(data[,y]) == "factor")
+mosaicplot <- function (intro.data, x, y, numnames, catnames, ...) {
+    if (!(x %in% catnames)) return(NULL)
+    if (!(y %in% catnames)) return(NULL)
   
-  lev_x <- length(levels(data[,x]))
-  lev_y <- length(levels(data[,y]))
+  cat_and_eval(paste0("plot_data <- as.data.frame(prop.table(table(intro.data[,c('", x, "','", y, "')])))"),  mydir = userdir, env = environment(), file = "code_mosaicplot.R")
+  cat_and_eval(paste0("plot_data$margin_x <- prop.table(table(intro.data[,'", x, "']))"),  mydir = userdir, append = TRUE, env = environment(), file = "code_mosaicplot.R")
+  cat_and_eval("plot_data$y_height <- plot_data$Freq / plot_data$margin_x",  mydir = userdir, append = TRUE, env = environment(), file = "code_mosaicplot.R")
+  cat_and_eval(paste0("plot_data$x_center <- c(0, cumsum(plot_data$margin_x)[1:length(levels(intro.data[,'", x, "'])) -1]) +
+    plot_data$margin_x / 2"),  mydir = userdir, append = TRUE, env = environment(), file = "code_mosaicplot.R")
   
-  joint_table <- prop.table(table(data[,c(x,y)]))
-  plot_data <- as.data.frame(joint_table)
-  plot_data$margin_x <- prop.table(table(data[,x]))
-  plot_data$y_height <- plot_data$Freq / plot_data$margin_x
-  plot_data$x_center <- c(0, cumsum(plot_data$margin_x)[1:lev_x -1]) +
-    plot_data$margin_x / 2
-  
-  ggplot(plot_data, aes(x_center, y_height)) +
-    geom_bar(stat = "identity", aes_string(width= "margin_x", fill = y), col = "Black") +
-    geom_text(aes_string(label = x, x = "x_center", y = "1.05"), angle = 45, hjust = 0) +
+  cat_and_eval(paste0("ggplot(plot_data, aes(x_center, y_height)) +
+    geom_bar(stat = 'identity', aes_string(width= 'margin_x', fill = '", y, "'), col = 'Black') +
+    geom_text(aes_string(label = '", x, "', x = 'x_center', y = '1.05'), angle = 45, hjust = 0) +
     xlim(c(0, 1.2)) +
     ylim(c(0, 1.2)) +
-    xlab(x) + ylab(y) +
+    xlab('", x, "') + ylab('", y, "') +
     theme_bw() +
-    coord_fixed()
+    coord_fixed()"),  mydir = userdir, env = environment(), append = TRUE, file = "code_mosaicplot.R")
   
 }
