@@ -39,7 +39,7 @@ Beyond being simple, \texttt{intRo} is also consistent. The tool is organized ar
 
 \begin{figure*}[ht!]
 \centering
-\includegraphics[width=\linewidth]{images/ui_annotate.png}
+\includegraphics[width=\linewidth]{images/ui_annotate.pdf}
 \caption{The five elements that comprise the \texttt{intRo} application: 1) top navigation, 2) side navigation, 3) options panel, 4) results panel, and 5) code panel.}
 \label{fig:ui}
 \end{figure*}
@@ -67,7 +67,7 @@ As an example of possible customization, an instructor may wish to introduce hyp
 
 \begin{figure*}[ht!]
 \centering
-\includegraphics[width=\linewidth]{images/app_creation_modules.png}
+\includegraphics[width=\linewidth]{images/app_creation_modules.pdf}
 \caption{This figure depicts how the \texttt{server.R} and \texttt{ui.R} files are populated using the modular structure within \texttt{intRo}.}
 \label{fig:app_creation_modules}
 \end{figure*}
@@ -80,18 +80,7 @@ The process by which \texttt{intRo} is dynamically created upon running the appl
 module_info <- read.table("modules/modules.txt", header = TRUE, sep=",")
 sapply(file.path("modules", dir("modules")[dir("modules") != "modules.txt"], "ui.R"), source)
 
-## Generates the UI tabs
-mylist <- list()
-old_heading <- ""
-for (i in 1:nrow(module_info)) {
-    if (module_info[i,1] != old_heading) {
-        if (i != 1) mylist[[length(mylist) + 1]] <- "-----"
-        mylist[[length(mylist) + 1]] <- as.character(module_info[i,1])
-        old_heading <- module_info[i,1]
-    }
-    mylist[[length(mylist) + 1]] <- get(paste(module_info[i,2], "ui", sep = "_"))
-}
-
+## mylist is a list containing the different ui module code
 ## Create the UI
 shinyUI(
     navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
@@ -133,7 +122,7 @@ We believe that \texttt{intRo} targets these key limitations. The interface is d
 
 The features of \texttt{intRo} were selected in order to apply to the most commonly used lesson plans in early statistics courses. The textbook "The Art and Science of Learning from Data" by Agresti and Franklin [-@agresti2012statistics] references many of the focal points of introductory statistics, and \texttt{intRo} supports performing a majority of them. Part one, titled "Gathering and Exploring Data", covers graphical summaries, measures of spread and center, and avoiding the misuse of graphics in situations they are not appropriate. \texttt{intRo} includes modules for both graphical and numerical summaries covering these topics. Furthermore, \texttt{intRo} limits the display of variables to ones that are appropriate for a chosen plot type, helping to reinforce the appropriateness of particular graphics (Table \ref{tab:plottypes}).
 
-\begin{table}[ht!]
+\begin{table*}[ht!]
 \centering
 \begin{tabular}{|c|c|c|}
 \hline
@@ -151,7 +140,7 @@ Mosaic Plot&Categorical&Categorical\\
 \end{tabular}
 \label{tab:plottypes}
 \caption{The plot and variable types allowed in \texttt{intRo}'s graphical module. For example, when the selected plottype is histogram, the interface displays only a single variable selection box (x), and the variables selectable in this box are only numeric. If a boxplot is selected, the x variable must be categorical and the y variable must be numeric, and the list of choices updates automatically to reflect this.}
-\end{table}
+\end{table*}
 Part two of this text discusses probability and sampling distributions, which is outside the current realm of \texttt{intRo}, but part three focuses on inferential statistics. The inferential statistics include confidence intervals, hypothesis testing, and comparing two variables, all supported natively in \texttt{intRo}. Finally, part four of the text discusses the association between variables, including regression, functions that \texttt{intRo} performs with ease. Some of the more advanced topics of this section are currently unsupported by \texttt{intRo}, including multiple regression and nonparametric statistics.
 
 Statistics courses with a lab component can most benefit from the use of \texttt{intRo}. As students learn the aforementioned concepts, they can practice using the tools to perform the statistical tests and summaries. They simply upload a dataset and click the module appropriate to the section of the class. Once they choose the options desired by the instructor (variables, confidence levels, etc.), they can view the results and ultimately print the output for turning in. Early labs can walk the user through the limited number of button presses and clicks necessary, while later labs can more vaguely describe the intended output in hopes that the user can easily navigate the \texttt{intRo} interface to obtain the results. For topics currently unsupported by \texttt{intRo}, the instructor can supplement its use with other web-based modules that are publicly available or create their own modules within \texttt{intRo} as detailed in section \ref{sec:extensible}.
