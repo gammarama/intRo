@@ -8,6 +8,7 @@ output:
       in_header: preamble.tex
     number_sections: yes
 bibliography: refs.bib
+geometry: margin=0.8in
 ---
 \thispagestyle{empty}
 
@@ -19,13 +20,14 @@ bibliography: refs.bib
 \setcounter{page}{1}
 
 # Introduction
+
 The widespread adoption of \texttt{R} as a tool for statistical analysis has undoubtedly been a great development for the scientific community. However, using \texttt{R} in most cases still requires a basic knowledge of programming concepts which may be unfamiliar to the introductory statistics student. This issue may explain why introductory courses often utilize software applications such as \texttt{JMP}, even though instructors would tend to use a tool like \texttt{R} in their own work. Still, signficant compromises must be made when using software like \texttt{JMP}, including dealing with software licenses, unsupported desktop platforms, and non-ideal user interface decisions. 
 
 In teaching STAT 226 at Iowa State University, we witnessed profound struggles by students attempting to practice the introductory concepts discussed in class. Scrimshaw notes in his manuscript that "open-ended packages, like any others, may create obstacles to learning simply through their lack of user-friendliness in the sheer mechanics of operating them, rather than any intrinsic difficulty in the content...." [@scrimshaw2001computers] In our own experience teaching, students' struggles were often directly related to the use of the software and not any sort of fundamental misunderstanding of the material, in agreement with Scrimshaw's finding.
 
 Other software has recently been written in an attempt to spur student interest in introductory statistics and R programming. DataCamp's [@datacamp] courses are user-friendly ways to learning basic \texttt{R} programming and data analysis techniques. \texttt{Swirl} [@swirl] is a similar interactive tool to make learning \texttt{R} more fun by learning \texttt{R} within \texttt{R} itself. Project MOSAIC [@mosaic] has created a suite of tools to simplify the teaching of statistics in the form of an R package. The primary goal of DataCamp and Swirl is to teach \texttt{R} programming, rather than facilitate the learning of introductory statistics. Project MOSAIC's goal is to faciliate this learning, but using the package requires a knowledge of R programming that the introductory student may not have.
 
-Upon the release of \texttt{RStudio}'s \texttt{Shiny} [@shiny] it became easy for an R-based analysis to be converted to an interactive web application. This in turn, led to the creation of an introductory statistics application which we call \texttt{intRo}. \texttt{intRo} offers a number of key advantages over traditional statistics software, which will be discussed at length in this text.
+Upon the release of \texttt{RStudio}'s \texttt{Shiny} [@shiny] it became easy for an R-based analysis to be converted to an interactive web application. This in turn, led to the creation of an introductory statistics application which we call \texttt{intRo}, available at http://www.intro-stats.com. \texttt{intRo} offers a number of key advantages over traditional statistics software, which will be discussed at length in this text.
 
 # What is \texttt{intRo}?
 \texttt{intRo} is a web-based tool to accompany an introductory statistics class. It is meant to assist in the learning of statistics rather than a stand-alone deliverer of statistics education, with the intention of being used in conjunction with a guided class. 
@@ -33,7 +35,15 @@ Upon the release of \texttt{RStudio}'s \texttt{Shiny} [@shiny] it became easy fo
 We have three fundamental philosophies that guided the creation of \texttt{intRo}, and this comes out in the design. Primarily, \texttt{intRo} is \emph{easy} to use and can be an \emph{exciting} part of learning statistics. Additionally, \texttt{intRo} is an \emph{extensible} tool, allowing for a user of \texttt{intRo} to tailor the tool for her own classroom needs.
 
 ## Easy
-In order for an application to be useful to students in their first statistics course, it can't hog the spotlight. Statistics as a subject should shine through as a fun and interesting topic to study, rather than being bogged down by difficult to learn software. With this in mind, in the development of \texttt{intRo} we focused on aspects of the user interface (UI) and output that make it easy to pick up without extensive training. We used large, easy to click icons in the page header to help students find exactly what they need easily. With this easy to use framework, we also made the functionality available in \texttt{intRo} the minimal necessary for an introductory statistics course. Additional functionality is nice, but if it clutters the UI beyond the point of usability, it will frustrate an introductory student. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{images/user_experience.pdf}
+\caption{Typical user experience of generating a result in \texttt{intRo}. In this instance, a mosaic plot (and its corresponding code) was created and saved to the final compendium.}
+\label{fig:user_experience}
+\end{figure}
+
+In order for an application to be useful to students in their first statistics course, it can't hog the spotlight. Statistics as a subject should shine through as a fun and interesting topic to study, rather than being bogged down by difficult to learn software. With this in mind, in the development of \texttt{intRo} we focused on aspects of the user interface (UI) and output that make it easy to pick up without extensive training. We used large, easy to click icons in the page header to help students find exactly what they need easily. With this easy to use framework, we also made the functionality available in \texttt{intRo} the minimal necessary for an introductory statistics course. Additional functionality is nice, but if it clutters the UI beyond the point of usability, it will frustrate an introductory student. Figure \ref{fig:user_experience} illustrates the simple steps a student takes to generate a result in \texttt{intRo}, and view the code producing the result.
 
 Beyond being simple, \texttt{intRo} is also consistent. The tool is organized around specific tasks a student may perform in the process of a data analysis, called modules. Each module maintains a consistent layout, helping the user to become familiar with the location of the options, the results, and the code. In figure \ref{fig:ui}, we highlight the five elements that comprise the \texttt{intRo} interface.
 
