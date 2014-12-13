@@ -4,6 +4,7 @@ intro.plotdata <- function(intro.data, x, y, plottype) {
     xvar <- if (checkVariable(intro.data, '", x, "')) '", x, "' else 1;
     yvar <- if (checkVariable(intro.data, '", y, "')) '", y, "' else 2;
     
+    intro.plot$id <- 1:nrow(intro.plot)
     intro.plot$intro_x_cat <- factor(intro.plot[,xvar]);
     intro.plot$intro_x_num <- as.numeric(intro.plot[,xvar]);
     intro.plot$intro_y_cat <- factor(intro.plot[,yvar]);

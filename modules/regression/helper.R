@@ -8,17 +8,18 @@ my_regdata <- function(intro.data, x, y) {
     cat_and_eval("reg.data <- intro.data",  mydir = userdir, env = environment(), file = "code_regression_reactives.R", append = TRUE)
     cat_and_eval(paste0("reg.data$xreg <- reg.data[,'", x, "']"),  mydir = userdir, env = environment(), file = "code_regression_reactives.R", append = TRUE)
     cat_and_eval(paste0("reg.data$yreg <- reg.data[,'", y, "']"),  mydir = userdir, env = environment(), file = "code_regression_reactives.R", append = TRUE)
+    cat_and_eval(paste0("reg.data$test <- 1:nrow(intro.data)"), mydir = userdir, env = environment(), file = "code_regression_reactives.R", append = TRUE)
     
     return(reg.data)
 }
 
 my_regresid1 <- function(intro.data, intro.regression, x) {
-    cat_and_eval(paste0("reg.resid1 <- data.frame(residuals = resid(intro.regression), x = intro.data[as.numeric(names(resid(intro.regression))),'", x, "'])"),  mydir = userdir, env = environment(), file = "code_regression_reactives.R", append = TRUE)
+    cat_and_eval(paste0("reg.resid1 <- data.frame(id = 1:nrow(intro.data), residuals = resid(intro.regression), x = intro.data[as.numeric(names(resid(intro.regression))),'", x, "'])"),  mydir = userdir, env = environment(), file = "code_regression_reactives.R", append = TRUE)
     
     return(reg.resid1)
 }
 
-my_regresid2 <- function(intro.regression) {
+my_regresid2 <- function(intro.data, intro.regression) {
     cat_and_eval("myresid <- resid(intro.regression)",  mydir = userdir, env = environment(), file = "code_regression_reactives.R", append = TRUE)
     
     cat_and_eval("yy <- quantile(myresid, na.rm = TRUE, c(0.25, 0.75))",  mydir = userdir, env = environment(), file = "code_regression_reactives.R", append = TRUE)
@@ -26,7 +27,7 @@ my_regresid2 <- function(intro.regression) {
     cat_and_eval("slope <- diff(yy) / diff(xx)",  mydir = userdir, env = environment(), file = "code_regression_reactives.R", append = TRUE)
     cat_and_eval("int <- yy[1] - slope * xx[1]",  mydir = userdir, env = environment(), file = "code_regression_reactives.R", append = TRUE)
     
-    cat_and_eval("reg.resid2 <- data.frame(yy = qnorm(seq(0, 1, by = (1/(length(na.omit(myresid)) + 1)))[-c(1, (length(na.omit(myresid)) + 2))]), residuals = sort(myresid))",  mydir = userdir, env = environment(), file = "code_regression_reactives.R", append = TRUE)
+    cat_and_eval("reg.resid2 <- data.frame(id = 1:nrow(intro.data), yy = qnorm(seq(0, 1, by = (1/(length(na.omit(myresid)) + 1)))[-c(1, (length(na.omit(myresid)) + 2))]), residuals = sort(myresid))",  mydir = userdir, env = environment(), file = "code_regression_reactives.R", append = TRUE)
     
     return(reg.resid2)
 }

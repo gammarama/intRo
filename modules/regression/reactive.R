@@ -21,5 +21,5 @@ reg.resid1 <- reactive({
 reg.resid2 <- reactive({
   if (is.null(intro.regression())) return(NULL)
   
-  return(my_regresid2(intro.regression()))
+  return(my_regresid2(intro.data(), intro.regression()))
 })

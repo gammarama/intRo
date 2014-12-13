@@ -1,1 +1,0 @@
-oldsaveresid <- 0
