@@ -1,7 +1,7 @@
 cat_and_eval("p.regplot <- reg.data %>%
   ggvis(x = ~xreg, y = ~yreg, key := ~test) %>%
   layer_points() %>%
-  add_tooltip(function(df) {df$test}, 'hover')",  mydir = userdir, env = environment(), file = "code_regression_ggvis.R")
+  add_tooltip(function(df) {paste0('row id: ', df$test)}, 'hover')",  mydir = userdir, env = environment(), file = "code_regression_ggvis.R")
 
 p.regplot %>% bind_shiny("regplot")
 cat("p.regplot\n\n", file = file.path(userdir, "code_regression_ggvis.R"), append = TRUE)
@@ -10,7 +10,7 @@ cat_and_eval("p.resplot1 <- reg.resid1 %>%
   ggvis(x = ~x, y = ~residuals, key := ~id) %>%
   layer_points() %>%
   set_options(width = 200, height = 200) %>%
-  add_tooltip(function(df) {df$id}, 'hover')",  mydir = userdir, env = environment(), file = "code_regression_ggvis.R", append = TRUE)
+  add_tooltip(function(df) {paste0('row id: ', df$id)}, 'hover')",  mydir = userdir, env = environment(), file = "code_regression_ggvis.R", append = TRUE)
 
 p.resplot1 %>% bind_shiny("resplot1")
 cat("p.resplot1\n\n", file = file.path(userdir, "code_regression_ggvis.R"), append = TRUE)
@@ -19,7 +19,7 @@ cat_and_eval("p.resplot2 <- reg.resid2 %>%
   ggvis(x = ~yy, y = ~residuals, key := ~id) %>%
   layer_points() %>%
   set_options(width = 200, height = 200) %>%
-  add_tooltip(function(df) {df$id}, 'hover')",  mydir = userdir, env = environment(), file = "code_regression_ggvis.R", append = TRUE)
+  add_tooltip(function(df) {paste0('row id: ', df$id)}, 'hover')",  mydir = userdir, env = environment(), file = "code_regression_ggvis.R", append = TRUE)
 
 p.resplot2 %>% bind_shiny("resplot2")
 cat("p.resplot2\n\n", file = file.path(userdir, "code_regression_ggvis.R"), append = TRUE)

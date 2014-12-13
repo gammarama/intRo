@@ -11,7 +11,7 @@
         layer_points() %>% 
         scale_numeric('x', domain = input_xdomain, clamp = TRUE, nice = TRUE) %>%
         scale_numeric('y', domain = input_ydomain, clamp = TRUE, nice = TRUE) %>%
-        add_tooltip(function(df) {df$id}, 'hover')",  mydir = userdir, env = environment(), file = "code_quantileplot.R")
+        add_tooltip(function(df) {paste0('row id: ', df$id)}, 'hover')",  mydir = userdir, env = environment(), file = "code_quantileplot.R")
     
     p.quantileplot %>% bind_shiny("quantileplot")
     
@@ -20,7 +20,7 @@
         layer_points() %>% 
         scale_numeric('x', domain = input_xdomain, clamp = TRUE, nice = TRUE) %>%
         scale_numeric('y', domain = input_ydomain, clamp = TRUE, nice = TRUE) %>%
-        add_tooltip(function(df) {df$id}, 'hover')",  mydir = userdir, env = environment(), file = "code_scatterplot.R")
+        add_tooltip(function(df) {paste0('row id: ', df$id)}, 'hover')",  mydir = userdir, env = environment(), file = "code_scatterplot.R")
     
     p.scatterplot %>% bind_shiny("scatterplot")
     

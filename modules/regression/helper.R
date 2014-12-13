@@ -14,7 +14,7 @@ my_regdata <- function(intro.data, x, y) {
 }
 
 my_regresid1 <- function(intro.data, intro.regression, x) {
-    cat_and_eval(paste0("reg.resid1 <- data.frame(id = 1:nrow(intro.data), residuals = resid(intro.regression), x = intro.data[as.numeric(names(resid(intro.regression))),'", x, "'])"),  mydir = userdir, env = environment(), file = "code_regression_reactives.R", append = TRUE)
+    cat_and_eval(paste0("reg.resid1 <- data.frame(id = 1:length(resid(intro.regression)), residuals = resid(intro.regression), x = intro.data[as.numeric(names(resid(intro.regression))),'", x, "'])"),  mydir = userdir, env = environment(), file = "code_regression_reactives.R", append = TRUE)
     
     return(reg.resid1)
 }
@@ -27,7 +27,7 @@ my_regresid2 <- function(intro.data, intro.regression) {
     cat_and_eval("slope <- diff(yy) / diff(xx)",  mydir = userdir, env = environment(), file = "code_regression_reactives.R", append = TRUE)
     cat_and_eval("int <- yy[1] - slope * xx[1]",  mydir = userdir, env = environment(), file = "code_regression_reactives.R", append = TRUE)
     
-    cat_and_eval("reg.resid2 <- data.frame(id = 1:nrow(intro.data), yy = qnorm(seq(0, 1, by = (1/(length(na.omit(myresid)) + 1)))[-c(1, (length(na.omit(myresid)) + 2))]), residuals = sort(myresid))",  mydir = userdir, env = environment(), file = "code_regression_reactives.R", append = TRUE)
+    cat_and_eval("reg.resid2 <- data.frame(id = as.numeric(names(na.omit(myresid))), yy = qnorm(seq(0, 1, by = (1/(length(na.omit(myresid)) + 1)))[-c(1, (length(na.omit(myresid)) + 2))]), residuals = sort(myresid))",  mydir = userdir, env = environment(), file = "code_regression_reactives.R", append = TRUE)
     
     return(reg.resid2)
 }
