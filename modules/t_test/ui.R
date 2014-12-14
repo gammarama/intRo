@@ -24,7 +24,8 @@ t_test_ui <- tabPanel("T test",
                                                   ),
                                                   
                                                   column(8,
-                                                         tags$b("T test Results"),
-                                                         verbatimTextOutput("ttesttable")
+                                                         conditionalPanel(condition = "input.group1 != ''", 
+                                                            verbatimTextOutput("ttesttable")
+                                                         )
                                                   )
                                          )
