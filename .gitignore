@@ -4,7 +4,6 @@
 *.Rproj
 images/Thumbs.db
 shinyapps/erichare/intRo.dcf
-packrat/lib*/
 shinyapps/erichare/intRo-dev.dcf
 
 student-paper-competition-2014/
@@ -13,4 +12,3 @@ code_*.R
 !code_All.R
 www/code_*.html
 code_All.R
-packrat/src/
