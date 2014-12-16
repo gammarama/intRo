@@ -10,6 +10,8 @@ library(R.utils)
 library(RCurl)
 library(rmarkdown)
 library(formatR)
+library(psych)
+library(Hmisc)
 
 #cat("```{r, echo=FALSE}\nopts_chunk$set(echo=FALSE)\n```\n\n```{r, child="test.Rmd", message=FALSE, warning=FALSE}\n```", file = "outfile.Rmd")
 
