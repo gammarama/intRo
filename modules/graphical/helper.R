@@ -44,7 +44,7 @@ input_ydomaindata <- function(ymin, ymax) {
 }
 
 input_binwidthdata <- function(binwidth) {
-    if (is.na(binwidth)) cat_and_eval("input_binwidth <- NULL",  mydir = userdir, env = environment(), file = "code_graphical_reactive.R", append = TRUE)
+    if (is.na(binwidth) || binwidth == 0) cat_and_eval("input_binwidth <- NULL",  mydir = userdir, env = environment(), file = "code_graphical_reactive.R", append = TRUE)
     else cat_and_eval(paste0("input_binwidth <- ", binwidth),  mydir = userdir, env = environment(), file = "code_graphical_reactive.R", append = TRUE)
     
     return(input_binwidth)
