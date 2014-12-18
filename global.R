@@ -10,6 +10,7 @@ library(R.utils)
 library(RCurl)
 library(rmarkdown)
 library(formatR)
+library(Hmisc)
 
 #cat("```{r, echo=FALSE}\nopts_chunk$set(echo=FALSE)\n```\n\n```{r, child="test.Rmd", message=FALSE, warning=FALSE}\n```", file = "outfile.Rmd")
 
@@ -65,6 +66,30 @@ sourceDir <- function(path, type, local = FALSE, ...) {
   for (nm in list.files(path, pattern = paste0("\\.", type, "$"))) { 
     source(file.path(path, nm), local=local) 
   } 
+}
+
+my.summary <- function(data) {
+    mean.val <-suppressWarnings(sapply(as.data.frame(data), mean, na.rm=TRUE))
+    sd.val <- sapply(as.data.frame(data), function(col) {
+        if (is.numeric(type.convert(as.character(col)))) as.numeric(sd(col, na.rm = TRUE)) else NA
+    })
+    min.val <- sapply(as.data.frame(data), function(col) {
+        if (is.numeric(type.convert(as.character(col)))) as.numeric(min(col)) else NA
+    })
+    q1.val <- sapply(as.data.frame(data), function(col) {
+        if (is.numeric(type.convert(as.character(col)))) as.numeric(q1(col)) else NA
+    })
+    median.val <- sapply(as.data.frame(data), function(col) {
+        if (is.numeric(type.convert(as.character(col)))) as.numeric(median(col, na.rm = TRUE)) else NA
+    })
+    q3.val <- sapply(as.data.frame(data), function(col) {
+        if (is.numeric(type.convert(as.character(col)))) as.numeric(q3(col)) else NA
+    })
+    max.val <- sapply(as.data.frame(data), function(col) {
+        if (is.numeric(type.convert(as.character(col)))) as.numeric(max(col, na.rm = TRUE)) else NA
+    })
+    
+    return(data.frame(mean = mean.val, sd = sd.val, min = min.val, q1 = q1.val, median = median.val, q3 = q3.val, max = max.val))
 }
 
 checkVariable <- function(data, var) {
