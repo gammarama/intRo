@@ -24,8 +24,8 @@ numericNames <- function(data) {
   return(vec)
 }
 
-q1 <- function(x) { return(quantile(x, .25)) }
-q3 <- function(x) { return(quantile(x, .75)) }
+q1 <- function(x) { return(quantile(x, .25, na.rm = TRUE)) }
+q3 <- function(x) { return(quantile(x, .75, na.rm = TRUE)) }
 
 categoricNames <- function(data) {
   vec <- as.character(subset(whatis(data), type != "numeric")$variable.name)
@@ -74,7 +74,7 @@ my.summary <- function(data) {
         if (is.numeric(type.convert(as.character(col)))) as.numeric(sd(col, na.rm = TRUE)) else NA
     })
     min.val <- sapply(as.data.frame(data), function(col) {
-        if (is.numeric(type.convert(as.character(col)))) as.numeric(min(col)) else NA
+        if (is.numeric(type.convert(as.character(col)))) as.numeric(min(col, na.rm = TRUE)) else NA
     })
     q1.val <- sapply(as.data.frame(data), function(col) {
         if (is.numeric(type.convert(as.character(col)))) as.numeric(q1(col)) else NA
