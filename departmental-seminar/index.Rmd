@@ -1,5 +1,5 @@
 ---
-title: "`intRo`"
+title: "intRo"
 subtitle: "Statistical Analysis Software for Teaching"
 author: "Andee Kaplan & Eric Hare"
 date: "January 12, 2015"
@@ -17,8 +17,8 @@ Short answer: **yes**
 
  - `R` is great, but requires students to have some knowledge/interest in programming
  - JMP is powerful, but confusing to students
-   - Licenses
-   - Inconsistent UI
+      - Licenses
+      - Inconsistent UI
  - Students fight with software rather than focusing on the goal: statistics
 
 ## What is `intRo`?
@@ -26,12 +26,12 @@ Short answer: **yes**
  - Built using `R` and `Shiny`
  - Powerful and extensible modular structure
  - Simple enough for the novice statistician
- - Meant to assist in the learning of statistics rather than a stand-alone deliverer of statistics education
+ - Assists in the learning of statistics rather than acting as a stand-alone deliverer of statistics education
 
 ## Easy
-- Focused on aspects of the user interface (UI) and output that make it easy to pick up without training
-- Minimal necessary functionality for an introductory statistics course
-- Organized around specific tasks a student may perform in the process of a data analysis
+ - Focused on aspects of the user interface (UI) and output that make it easy to pick up without training
+ - Minimal necessary functionality for an introductory statistics course
+ - Organized around specific tasks a student may perform in the process of a data analysis
 
 <img src=images/user_experience.png height="250"></img>
 
@@ -40,6 +40,7 @@ Short answer: **yes**
  - Interactive plots using `ggvis`
  
 **Ulterior motive**: get students excited about programming
+
  - By navigating about the user interface of `intRo`, students are creating a fully-executable `R` script that they can download and run locally
  - Viewing their script change real-time within the application
  
@@ -47,7 +48,7 @@ Short answer: **yes**
  - User interaction with `intRo` is split into bitesize chunks that we call *modules*
  - Each module is a self contained set of `R` code that is dynamically added to the application at run time
  - `intRo` can be easily extended by the addition of modules within the frame-work underlying the application
- - Allows `intRo` to be tailored to the needs of a particular course
+ - Allows instructors/collaborators to tailor `intRo` to the needs of a particular course
 
 # First look | http://intro-stats.com
 
@@ -57,17 +58,17 @@ Short answer: **yes**
 
 ## `intRo` in the wild
  - `intRo` is currently being used in STAT 201
-  - Homework assignments and labs will use `intRo` to emphasize class concepts
+      - Homework assignments and labs will use `intRo` to emphasize class concepts
  - `intRo` is a supplement, not the focus of the class 
 
 ## Homework 1
  - *Data*: OECD PISA Results in Focus report to assess the workforce readiness of 15-year old students
  - *Goal*: Explore graphically and numerically how the students perceive academics and math
  - `intRo` *Tasks*:
-  1. Make a summary of the Enjoy.Maths variable. What proportion of these students agree or strongly agree with the statement "I enjoy mathematics"?
-  1. Make a barchart of the variable Enjoy.Maths.
-  1. Give the conditional distribution of "Strongly agree'' given the Country.
-  2. Obtain a contingency table and mosaic plot of the relationship between Country and Enjoy.Maths
+      1. Make a summary of the Enjoy.Maths variable. What proportion of these students agree or strongly agree with the statement "I enjoy mathematics"?
+      1. Make a barchart of the variable Enjoy.Maths.
+      1. Give the conditional distribution of "Strongly agree'' given the Country.
+      2. Obtain a contingency table and mosaic plot of the relationship between Country and Enjoy.Maths
  
 # Our turn
 
@@ -144,7 +145,7 @@ shinyServer(function(input, output, session) {
 
 
 ## Tradeoffs
-There were a number of challenges we encountered in striving to strike the balance of functionality and ease-of-use:
+We encountered a number of challenges in striving to strike the balance of functionality and ease-of-use:
 
  - Storing the user's results
  - Presenting only relevant options to the user
@@ -173,7 +174,7 @@ There were a number of challenges we encountered in striving to strike the balan
 <img src="images/graphical.png" height="300">
 
 ## Presenting choices (Cont'd)
-<img src="images/graphical_table.png" height="275">
+<img src="images/graphical_table.png">
 
 ## Producing clean code
 Code generated must be:
@@ -207,6 +208,7 @@ intro.data <- read.csv(file.choose())
 
 ## Module creation package
 *Modularity* is a key feature of `intRo`, but module creation is currently:
+ 
  - Undocumented
  - Entirely manual
  - Unnecessarily lengthy
@@ -215,13 +217,14 @@ intro.data <- read.csv(file.choose())
 
 ## Server load
 Limited testing has been done to assess how `intRo` handles heavy user load
+ 
  - Dozens of students at accessing app at once
  - Simultaneous larger computations like printing results
 
 More server resources may need to be devoted to handle this, particularly if `intRo` is more widely adopted
 
 ## More classes
- - We would like to see `intRo` used in more classes
+ - We would like work with instructors to get `intRo` into more classes
  - Module creation package will allow it to suit more curricula
  - We welcome collaborators interested in extending `intRo` to submit pull requests on GitHub (http://www.github.com/gammarama/intRo)
      - Additional modules
