@@ -120,9 +120,10 @@ Exciting
 ========================================================
  - Fun, easy to use (available on the web)
  - Interactive plots using `ggvis`
- - ~~Ulterior motive~~: get students excited about programming
-  - By navigating about the user interface of intRo, students are creating a fully-executable `R` script that they can download and run locally
-  - Viewing their script change real-time within the application
+ 
+~~Ulterior motive~~: get students excited about programming
+ - By navigating about the user interface of intRo, students are creating a fully-executable `R` script that they can download and run locally
+ - Viewing their script change real-time within the application
  
 Extensible
 ========================================================
@@ -138,9 +139,20 @@ type: section
 http://intro-stats.com
 
 
-Lesson plans
+Classroom
 ========================================================
 type: section
+
+intRo in the wild
+========================================================
+ - `intRo` is currently being used in STAT 201
+  - Homework assignments and labs will use `intRo` to emphasize class concepts
+ - `intRo` is a supplement, not the focus of the class 
+
+Homework 1
+=======================================================
+ 
+ 
 
 Design decisions
 ========================================================
@@ -161,11 +173,6 @@ exactly what they need easily
  - Each module maintains a consistent layout, helping the user to become familiar with the location of the options, the results, and the code
  - Documentation website that is consistent with
 the interface of the application; covers all default modules and makes learning to use intRo even more painless
- 
-
-Code printing
-=======================================================
-
 
 Modularity
 =======================================================
@@ -229,7 +236,8 @@ Storing results
 ========================================================
 * Users must be able to print results, but only the results they want
 * Reactivity makes this somewhat challenging
-* ~~Solution~~: Store Buttons
+
+~~Solution~~: Store Buttons
 
 ![](images/store.png)
 
@@ -244,9 +252,10 @@ Presenting choices
 ========================================================
 * intRo is flexible, but must also be simple for the introductory student
 * Despite increasing the complexity of the code, we decided to only show options appropriate for the given selections.
-* ~~Example~~:
 
-<img src="images/graphical.png" height="350">
+~~Example~~:
+
+<img src="images/graphical.png" height="300">
 
 Presenting choices (Cont'd)
 ========================================================
