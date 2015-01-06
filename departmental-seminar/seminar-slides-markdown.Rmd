@@ -132,7 +132,11 @@ shinyServer(function(input, output, session) {
                                 module_info$module, types)
                                 , 1, paste, collapse = "/"))
   ## Source the modules
-  for (mod in modules_tosource) { source(mod, local = TRUE) }
+  for (mod in modules_tosource) {
+    ### <b>
+    source(mod, local = TRUE) 
+    ### </b>
+  }
 })
 ```
 
