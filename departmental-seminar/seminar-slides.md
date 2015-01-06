@@ -148,7 +148,7 @@ Modularity
 
 Modularity (Cont'd)
 =========================================================
-The interface is created with the following statement.
+The interface is created with the following statement
 
 ```r
 ## Source ui
@@ -169,7 +169,7 @@ shinyUI(
 
 Modularity (Cont'd)
 =======================================================
-The server functions are dynamically generated using a similar method.
+The server functions are dynamically generated using a similar method
 
 ```r
 shinyServer(function(input, output, session) {
@@ -192,7 +192,7 @@ Challenges
 ========================================================
 type: section
 
-Challenges
+Tradeoffs
 ========================================================
 There were a number of challenges we encountered in striving to strike the balance of functionality and ease-of-use:
 
@@ -200,7 +200,7 @@ There were a number of challenges we encountered in striving to strike the balan
 * Presenting only relevant options to the user
 * Producing clean and executable R code
 
-Storing Results
+Storing results
 ========================================================
 * Users must be able to print results, but only the results they want
 * Reactivity makes this somewhat challenging
@@ -208,14 +208,14 @@ Storing Results
 
 ![](images/store.png)
 
-Storing Results (Continued)
+Storing results (Cont'd)
 ========================================================
 * Each module contains, at the bottom, a Store button
 * When Store is pressed, code is stored in code panel
     * Additional challenge: All options selected must also be stored!
 * When user goes to print results, only this particular code is executed
 
-Presenting Choices
+Presenting choices
 ========================================================
 * intRo is flexible, but must also be simple for the introductory student
 * Despite increasing the complexity of the code, we decided to only show options appropriate for the given selections.
@@ -223,11 +223,11 @@ Presenting Choices
 
 <img src="images/graphical.png" height="350">
 
-Presenting Choices (Continued)
+Presenting choices (Cont'd)
 ========================================================
 <img src="images/graphical_table.png">
 
-Producing Clean Code
+Producing clean code
 ========================================================
 Code generated must be:
 
@@ -235,7 +235,7 @@ Code generated must be:
 * Executable on the user's machine
 * Clean
 
-Producing Clean Code (Continued)
+Producing clean code (Cont'd)
 ========================================================
 But how do we handle uploaded data?
 
@@ -246,45 +246,44 @@ file.choose <- function () {
 }
 ```
 
-Now we can provide to the user AND the server:
+Now we can provide to the user *and* the server:
 
 
 ```r
 intro.data <- read.csv(file.choose())
 ```
 
-
-Conclusions/Future Work
+Future work
 ========================================================
 type: section
 
 What's next?
 ========================================================
-* Module Creation Package
-* Server Load
+* Module creation package
+* Server load
 
-Module Creation Package
+Module creation package
 ========================================================
 *Modularity* is a key feature of intRo, but module creation is currently:
 * Undocumented
 * Entirely manual
 * Unnecessarily lengthy
 
-~~Idea~~: R package (with associated Shiny app?) to automate creation of intRo modules.
+~~Idea~~: R package (with associated Shiny app?) to automate creation of intRo modules
 
-Server Load
+Server load
 ========================================================
 Limited testing has been done to assess how intRo handles heavy user load
 * Dozens of students at accessing app at once
 * Simultaneous larger computations like printing results
 
-More server resources may need to be devoted to handle this, particularly if intRo is more widely adopted.
+More server resources may need to be devoted to handle this, particularly if intRo is more widely adopted
 
-Special Thanks
+Special thanks
 ========================================================
-Dr. Cook, for guiding many of the features and interface decisions, and helping test the functionality in preparation for STAT 201.
+Dr. Cook, for guiding many of the features and interface decisions, and helping test the functionality in preparation for STAT 201
 
-Any Questions?
+Any questions?
 ========================================================
 type: section
 
