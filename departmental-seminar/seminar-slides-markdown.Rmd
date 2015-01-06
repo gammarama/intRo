@@ -96,42 +96,43 @@ the interface of the application; covers all default modules and makes learning 
 ## Modularity (Cont'd)
 The interface is created with the following statement
 
-```r
+```{r, tidy=FALSE, eval=FALSE}
 ## Source ui
-module_info <- read.table("modules/modules.txt", header = TRUE, sep=",")
-sapply(file.path("modules", dir("modules")[dir("modules") != "modules.txt"], "ui.R"), source)
-
-## mylist is a list containing the different ui module code
+module_info <- read.table("modules/modules.txt", header = TRUE, 
+                          sep=",")
+sapply(file.path("modules", dir("modules")[dir("modules") 
+                      != "modules.txt"], "ui.R"), source)
 ## Create the UI
-shinyUI(
-    navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
+shinyUI(navbarPage("intRo", theme = "bootstrap.min.css",
                tabPanel(title="", icon=icon("home"),
                         fluidRow(
                         ### <b>
-                            do.call(navlistPanel, c(list(id = "side-nav", widths = c(2, 10)), mylist))
+                          do.call(navlistPanel, 
+                              c(list(id = "side-nav", 
+                              widths = c(2, 10)), mylist))
                         ### </b>
                         )
                ), ...
-    ))
+))
 ```
 
 ## Modularity (Cont'd)
 The server functions are dynamically generated using a similar method
 
-```r
+```{r, eval=FALSE, tidy=FALSE}
 shinyServer(function(input, output, session) {
   ## Module info
-  module_info <- read.table("modules/modules.txt", header = TRUE, sep=",")
-
+  module_info <- read.table("modules/modules.txt", 
+                            header = TRUE, sep=",")
   ## Modules
-  types <- c("helper.R", "static.R", "observe.R", "reactive.R", "output.R")
+  types <- c("helper.R", "static.R", "observe.R", 
+             "reactive.R", "output.R")
   modules_tosource <- file.path("modules", 
-                                apply(expand.grid(module_info$module, types), 1, paste, collapse = "/"))
-
+                                apply(expand.grid(
+                                module_info$module, types)
+                                , 1, paste, collapse = "/"))
   ## Source the modules
-  for (mod in modules_tosource) {
-      source(mod, local = TRUE)
-  }
+  for (mod in modules_tosource) { source(mod, local = TRUE) }
 })
 ```
 
