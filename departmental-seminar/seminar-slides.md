@@ -305,6 +305,7 @@ What's next?
 ========================================================
 * Module creation package
 * Server load
+* Use in other classes
 
 Module creation package
 ========================================================
@@ -322,6 +323,14 @@ Limited testing has been done to assess how intRo handles heavy user load
 * Simultaneous larger computations like printing results
 
 More server resources may need to be devoted to handle this, particularly if intRo is more widely adopted
+
+More Classes
+========================================================
+* We would like to see intRo used in more classes
+* Module creation package will allow it to suit more curricula
+* We welcome collaborators interested in extending intRo to submit pull requests on GitHub (http://www.github.com/gammarama/intRo)
+    * Additional modules
+    * Improvements and bug fixes
 
 Special thanks
 ========================================================
