@@ -132,7 +132,7 @@ Extensible
  - `intRo` can be easily extended by the addition of modules within the frame-work underlying the application
  - Allows `intRo` to be tailored to the needs of a particular course
 
-Live demo
+First look
 ========================================================
 type: section
 
@@ -151,8 +151,18 @@ intRo in the wild
 
 Homework 1
 =======================================================
+ - *Data*: OECD PISA Results in Focus report to assess the workforce readiness of 15-year old students
+ - *Goal*: Explore graphically and numerically how the students perceive academics and math
+ - `intRo` *Tasks*:
+   1. Make a summary of the Enjoy.Maths variable. What proportion of these students agree or strongly agree with the statement "I enjoy mathematics"?
+  1. Make a barchart of the variable Enjoy.Maths.
+  1. Give the conditional distribution of ``Strongly agree'' given the Country.
+  2. Obtain a contingency table and mosaic plot of the relationship between Country and Enjoy.Maths
  
- 
+Our turn
+=======================================================
+type: section
+
 
 Design decisions
 ========================================================
