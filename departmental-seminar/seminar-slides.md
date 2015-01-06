@@ -182,7 +182,7 @@ Consistent UI (Cont'd)
 exactly what they need easily
  - Each module maintains a consistent layout, helping the user to become familiar with the location of the options, the results, and the code
  - Documentation website that is consistent with
-the interface of the application; covers all default modules and makes learning to use intRo even more painless
+the interface of the application; covers all default modules and makes learning to use `intRo` even more painless
 
 Modularity
 =======================================================
@@ -260,7 +260,7 @@ Storing results (Cont'd)
 
 Presenting choices
 ========================================================
-* intRo is flexible, but must also be simple for the introductory student
+* `intRo` is flexible, but must also be simple for the introductory student
 * Despite increasing the complexity of the code, we decided to only show options appropriate for the given selections.
 
 ~~Example~~:
@@ -309,26 +309,26 @@ What's next?
 
 Module creation package
 ========================================================
-*Modularity* is a key feature of intRo, but module creation is currently:
+*Modularity* is a key feature of `intRo`, but module creation is currently:
 * Undocumented
 * Entirely manual
 * Unnecessarily lengthy
 
-~~Idea~~: R package (with associated Shiny app?) to automate creation of intRo modules
+~~Idea~~: R package (with associated Shiny app?) to automate creation of `intRo` modules
 
 Server load
 ========================================================
-Limited testing has been done to assess how intRo handles heavy user load
+Limited testing has been done to assess how `intRo` handles heavy user load
 * Dozens of students at accessing app at once
 * Simultaneous larger computations like printing results
 
-More server resources may need to be devoted to handle this, particularly if intRo is more widely adopted
+More server resources may need to be devoted to handle this, particularly if `intRo` is more widely adopted
 
 More Classes
 ========================================================
-* We would like to see intRo used in more classes
+* We would like to see `intRo` used in more classes
 * Module creation package will allow it to suit more curricula
-* We welcome collaborators interested in extending intRo to submit pull requests on GitHub (http://www.github.com/gammarama/intRo)
+* We welcome collaborators interested in extending `intRo` to submit pull requests on GitHub (http://www.github.com/gammarama/intRo)
     * Additional modules
     * Improvements and bug fixes
 
