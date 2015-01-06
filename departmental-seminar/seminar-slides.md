@@ -192,11 +192,99 @@ Challenges
 ========================================================
 type: section
 
-Future Work
+Challenges
+========================================================
+There were a number of challenges we encountered in striving to strike the balance of functionality and ease-of-use:
+
+* Storing the user's results
+* Presenting only relevant options to the user
+* Producing clean and executable R code
+
+Storing Results
+========================================================
+* Users must be able to print results, but only the results they want
+* Reactivity makes this somewhat challenging
+* ~~Solution~~: Store Buttons
+
+![](images/store.png)
+
+Storing Results (Continued)
+========================================================
+* Each module contains, at the bottom, a Store button
+* When Store is pressed, code is stored in code panel
+    * Additional challenge: All options selected must also be stored!
+* When user goes to print results, only this particular code is executed
+
+Presenting Choices
+========================================================
+* intRo is flexible, but must also be simple for the introductory student
+* Despite increasing the complexity of the code, we decided to only show options appropriate for the given selections.
+* ~~Example~~:
+
+<img src="images/graphical.png" height="350">
+
+Presenting Choices (Continued)
+========================================================
+<img src="images/graphical_table.png">
+
+Producing Clean Code
+========================================================
+Code generated must be:
+
+* Executable on the server
+* Executable on the user's machine
+* Clean
+
+Producing Clean Code (Continued)
+========================================================
+But how do we handle uploaded data?
+
+
+```r
+file.choose <- function () {
+    return(input$data_own[,"datapath"])
+}
+```
+
+Now we can provide to the user AND the server:
+
+
+```r
+intro.data <- read.csv(file.choose())
+```
+
+
+Conclusions/Future Work
 ========================================================
 type: section
 
-Questions?
+What's next?
+========================================================
+* Module Creation Package
+* Server Load
+
+Module Creation Package
+========================================================
+*Modularity* is a key feature of intRo, but module creation is currently:
+* Undocumented
+* Entirely manual
+* Unnecessarily lengthy
+
+~~Idea~~: R package (with associated Shiny app?) to automate creation of intRo modules.
+
+Server Load
+========================================================
+Limited testing has been done to assess how intRo handles heavy user load
+* Dozens of students at accessing app at once
+* Simultaneous larger computations like printing results
+
+More server resources may need to be devoted to handle this, particularly if intRo is more widely adopted.
+
+Special Thanks
+========================================================
+Dr. Cook, for guiding many of the features and interface decisions, and helping test the functionality in preparation for STAT 201.
+
+Any Questions?
 ========================================================
 type: section
 
