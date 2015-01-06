@@ -110,15 +110,26 @@ What is intRo?
 
 Easy
 ========================================================
+- Focused on aspects of the user interface (UI) and output that make it easy to pick up without training
+- Minimal necessary functionality for an introductory statistics course
+- Organized around specific tasks a student may perform in the process of a data analysis
 
-![user experience](images/user_experience.png)
+<img src=images/user_experience.png height="300"></img>
 
 Exciting
 ========================================================
-
+ - Fun, easy to use (available on the web)
+ - Interactive plots using `ggvis`
+ - ~~Ulterior motive~~: get students excited about programming
+  - By navigating about the user interface of intRo, students are creating a fully-executable `R` script that they can download and run locally
+  - Viewing their script change real-time within the application
+ 
 Extensible
 ========================================================
-
+ - User interaction with intRo is split into bitesize chunks that we call *modules*
+ - Each module is a self contained set of `R` code that is dynamically added to the application at run time
+ - `intRo` can be easily extended by the addition of modules within the frame-work underlying the application
+ - Allows `intRo` to be tailored to the needs of a particular course
 
 Live demo
 ========================================================
@@ -136,7 +147,21 @@ Design decisions
 type: section
 
 Consistent UI
+=======================================================
+Elements of `intRo`: 1) top navigation, 2) side navigation, 3) options
+panel, 4) results panel, and 5) code panel.
+
+<img src="images/ui_annotate.png" height="500"></img>
+
+
+Consistent UI (Cont'd)
 ========================================================
+ - Large, easy to click icons in the page header to help students find
+exactly what they need easily
+ - Each module maintains a consistent layout, helping the user to become familiar with the location of the options, the results, and the code
+ - Documentation website that is consistent with
+the interface of the application; covers all default modules and makes learning to use intRo even more painless
+ 
 
 Code printing
 =======================================================
