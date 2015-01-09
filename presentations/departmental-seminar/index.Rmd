@@ -16,16 +16,16 @@ ioslides_presentation:
 Short answer: **yes**
 
  - `R` is great, but requires students to have some knowledge/interest in programming
- - JMP is powerful, but confusing to students
+ - JMP is powerful, but too big
       - Licenses
       - Inconsistent UI
- - Students fight with software rather than focusing on the goal: statistics
+ - Want students to focus on data analysis rather than fight with software
 
 ## What is `intRo`?
- - A modern **web-based** application for performing basic data analysis and statistical routines
+ - A simple **web-based** application for performing basic data analysis and statistical routines
  - Built using `R` and `Shiny`
- - Powerful and extensible modular structure
- - Simple enough for the novice statistician
+ - Extensible modular structure
+ - Designed for a first statistics class student
  - Assists in the learning of statistics rather than acting as a stand-alone deliverer of statistics education
 
 ## Easy
@@ -57,7 +57,7 @@ Short answer: **yes**
 
 
 ## `intRo` in the wild
- - `intRo` is currently being used in STAT 201
+ - `intRo` will be used this semester in STAT 201
       - Homework assignments and labs will use `intRo` to emphasize class concepts
  - `intRo` is a supplement, not the focus of the class 
 
