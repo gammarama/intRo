@@ -16,9 +16,11 @@ ioslides_presentation:
 Short answer: **yes**
 
  - `R` is great, but requires students to have some knowledge/interest in programming
- - JMP is powerful, but too big
-      - Licenses
-      - Inconsistent UI
+ - `JMP` is powerful, but too big
+      - Licenses and inconsistent UI
+ - New tools recently released to spark an interest in `R`
+      - `Swirl` and DataCamp teach `R` programming
+      - Project MOSAIC facilitates learning, but assumes knowledge of `R`
  - Want students to focus on data analysis rather than fight with software
 
 ## What is `intRo`?
@@ -65,10 +67,9 @@ Short answer: **yes**
  - *Data*: OECD PISA Results in Focus report to assess the workforce readiness of 15-year old students
  - *Goal*: Explore graphically and numerically how the students perceive academics and math
  - `intRo` *Tasks*:
-      1. Make a summary of the Enjoy.Maths variable. What proportion of these students agree or strongly agree with the statement "I enjoy mathematics"?
       1. Make a barchart of the variable Enjoy.Maths.
-      1. Give the conditional distribution of "Strongly agree'' given the Country.
-      2. Obtain a contingency table and mosaic plot of the relationship between Country and Enjoy.Maths
+      1. Make a summary of the Enjoy.Maths variable. What proportion of these students agree or strongly agree with the statement "I enjoy mathematics"?
+      2. Obtain a contingency table and mosaic plot of the relationship between Country and Enjoy.Maths. Print contingency tables with the **Count** and **Column Proportion** values. 
  
 # Our turn
 
