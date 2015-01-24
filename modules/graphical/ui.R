@@ -55,6 +55,7 @@ graphical_ui <- tabPanel("Graphical",
                                                   ),
                                                   
                                                   column(8,
+                                                         textOutput("plotted_vars"),
                                                          conditionalPanel(condition = "input.plottype == 'histogram'",
                                                                           ggvisOutput("histogram")
                                                          ),
