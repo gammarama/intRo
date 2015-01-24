@@ -50,6 +50,13 @@ input_binwidthdata <- function(binwidth) {
     return(input_binwidth)
 }
 
+helper_text <- function(x, y, plottype) {
+    mystr <- paste0("X Variable: ", x, (if (plottype %in% c("histogram", "quantileplot")) "" else paste0("; Y Variable: ", y)))
+    cat_and_eval(paste0("cat('", mystr, "')"), eval = FALSE,  mydir = userdir, env = environment(), file = paste0("code_", plottype, ".R"), append = TRUE)
+    
+    return(mystr)
+}
+
 mosaicplot <- function (intro.data, x, y, numnames, catnames, ...) {
     if (!(x %in% catnames)) return(NULL)
     if (!(y %in% catnames)) return(NULL)

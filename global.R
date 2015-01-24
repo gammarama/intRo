@@ -114,10 +114,9 @@ clean_readlines <- function(file) {
     return(tidy_source(file, output = FALSE)$text.tidy)
 }
 
-cat_and_eval <- function(mystr, mydir, env = parent.frame(), file = "code_All.R", append = FALSE, save_result = FALSE) {
+cat_and_eval <- function(mystr, mydir, env = parent.frame(), file = "code_All.R", append = FALSE, save_result = FALSE, eval = TRUE) {
     cat(paste0(gsub("; ", "\n", mystr), "\n"), file = file.path(mydir, file), append = append)
     
     if (save_result) cat(paste0(paste(readLines(file.path(mydir, file)), collapse = "\n"), "\n"), file = file.path(mydir, "code_All.R"), append = TRUE)
-    
-    eval(parse(text = mystr), envir = env)
+    if (eval) eval(parse(text = mystr), envir = env)
 }

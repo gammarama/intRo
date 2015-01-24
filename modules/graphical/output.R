@@ -70,6 +70,6 @@
     })
     
     output$plotted_vars <- renderText({
-        return(paste("X Variable:", input$x, (if (input$plottype %in% c("histogram", "quantileplot")) "" else paste("Y Variable:", input$y))))
+        return(helper_text(input$x, input$y, input$plottype))
     })
     
