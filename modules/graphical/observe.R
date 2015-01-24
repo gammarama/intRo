@@ -17,9 +17,9 @@ observeEvent(input$store_graphical, {
     cat(paste0("input_binwidth <- ", ifelse(is.na(input$binwidth), "NULL", input$binwidth), "\n"), file = file.path(userdir, "code_All.R"), append = TRUE)
     
     mystr <- paste0("X Variable: ", input$x, (if (input$plottype %in% c("histogram", "quantileplot")) "" else paste0("; Y Variable: ", input$y)))
-    cat(paste0("cat('", mystr, "')"), file = file.path(userdir, "code_All.R"), append = TRUE)
     
     cat("\n\n", file = file.path(userdir, paste0("code_", input$plottype, ".R")), append = TRUE)
     cat(paste0("\n\n", paste(readLines(file.path(userdir, paste0("code_", input$plottype, ".R"))), collapse = "\n")), file = file.path(userdir, "code_All.R"), append = TRUE)
     if (input$plottype != "mosaicplot") cat(paste0("p.", input$plottype), file = file.path(userdir, "code_All.R"), append = TRUE)
+    cat(paste0("cat('", mystr, "')"), file = file.path(userdir, "code_All.R"), append = TRUE)
 })
