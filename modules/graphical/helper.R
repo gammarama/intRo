@@ -51,9 +51,7 @@ input_binwidthdata <- function(binwidth) {
 }
 
 helper_text <- function(x, y, plottype) {
-    mystr <- paste0("X Variable: ", x, (if (plottype %in% c("histogram", "quantileplot")) "" else paste0("; Y Variable: ", y)))
-    cat_and_eval(paste0("cat('", mystr, "')"), eval = FALSE,  mydir = userdir, env = environment(), file = "code_graphical_reactive.R", append = TRUE)
-    
+    mystr <- paste0("X Variable: ", x, (if (plottype %in% c("histogram", "quantileplot")) "" else paste0("; Y Variable: ", y)))    
     return(mystr)
 }
 
