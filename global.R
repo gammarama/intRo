@@ -1,5 +1,6 @@
 library(shiny)
 library(shinyAce)
+library(shinythemes)
 library(YaleToolkit)
 library(ggplot2)
 library(ggvis)

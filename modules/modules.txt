@@ -6,3 +6,4 @@ summaries,numerical
 statistics,contingency
 statistics,regression
 statistics,t_test
+statistics,nonparametric
