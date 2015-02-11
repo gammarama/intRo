@@ -8,7 +8,7 @@ my_regdata <- function(intro.data, x, y) {
     cat_and_eval("reg.data <- intro.data",  mydir = userdir, env = environment(), file = "code_regression_reactives.R", append = TRUE)
     cat_and_eval(paste0("reg.data$xreg <- reg.data[,'", x, "']"),  mydir = userdir, env = environment(), file = "code_regression_reactives.R", append = TRUE)
     cat_and_eval(paste0("reg.data$yreg <- reg.data[,'", y, "']"),  mydir = userdir, env = environment(), file = "code_regression_reactives.R", append = TRUE)
-    cat_and_eval(paste0("reg.data$test <- 1:nrow(intro.data)"), mydir = userdir, env = environment(), file = "code_regression_reactives.R", append = TRUE)
+    cat_and_eval(paste0("reg.data$id <- 1:nrow(intro.data)"), mydir = userdir, env = environment(), file = "code_regression_reactives.R", append = TRUE)
     
     return(reg.data)
 }

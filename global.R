@@ -35,34 +35,6 @@ categoricNames <- function(data) {
   return(vec)
 }
 
-isNullEvent <- function(value) {
-    is.null(value) || (inherits(value, 'shinyActionButtonValue') && value == 0)
-}
-
-observeEvent <- function(eventExpr, handlerExpr,
-                         event.env = parent.frame(), event.quoted = FALSE,
-                         handler.env = parent.frame(), handler.quoted = FALSE,
-                         label=NULL, suspended=FALSE, priority=0, domain=getDefaultReactiveDomain(),
-                         autoDestroy = TRUE, ignoreNULL = TRUE) {
-    
-    eventFunc <- shiny::exprToFunction(eventExpr, event.env, event.quoted)
-    if (is.null(label))
-        label <- sprintf('observeEvent(%s)', paste(deparse(body(eventFunc)), collapse='\n'))
-    
-    handlerFunc <- shiny::exprToFunction(handlerExpr, handler.env, handler.quoted)
-    
-    invisible(shiny::observe({
-        e <- eventFunc()
-        
-        if (ignoreNULL && isNullEvent(e)) {
-            return()
-        }
-        
-        shiny::isolate(handlerFunc())
-    }, label = label, suspended = suspended, priority = priority, domain = domain,
-    autoDestroy = TRUE))
-}
-
 sourceDir <- function(path, type, local = FALSE, ...) { 
   for (nm in list.files(path, pattern = paste0("\\.", type, "$"))) { 
     source(file.path(path, nm), local=local) 
