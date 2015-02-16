@@ -1,0 +1,66 @@
+\documentclass{article}
+\oddsidemargin 0in \evensidemargin 0in \topmargin 0in
+\columnsep 10pt \columnseprule 0pt 
+\marginparwidth 90pt \marginparsep 11pt \marginparpush 5pt 
+\parindent 0pt
+\headheight 0pt \headsep 0pt 
+%\footheight 0pt \footskip 0pt 
+\textheight 9in \textwidth 6.5in
+
+\usepackage{graphicx}
+
+\begin{document}
+\begin{center}
+{\Large STATISTICS 201 - Written Homework Chapter 2 Solutions}\\[3mm]
+\end{center}
+
+\noindent
+This assignment is worth a total of 25 points.\\
+
+\noindent
+A study investigated the relationship between different treatments (Tree Treatment) on the lifespan of 24 trees infected with a particular disease.  The lifespan of a tree (Tree Lifespan) was categorized as follows: Trees that died in under one year, Trees that lived for between one and four years and Trees that lived longer than four years.  The data are located in the file {\bf InfectedTrees.JMP} in the Chapter 2 Learning Module in the Unit 1 content area in Blackboard.
+
+\begin{enumerate}
+\item (2 pts) Identify the Who for this data set.
+
+The Who in this study was the 24 infected trees.
+
+\item (2 pts) Identify the What for this data set.
+
+The What in this study was the two variables collected for each tree: Tree Treatment and Tree Lifespan.
+
+\item (5 pts) Use JMP to obtain the distribution of the variable Tree Lifespan.  Print out the output and turn it in with this assignment.
+
+\centerline{\includegraphics[width=4.8in]{hmwkch2jmpoutput.pdf}}
+
+\item (1 pt) What proportion of these trees died in under one year?
+
+The proportion is $10/24 = 0.417$
+
+\item (5 pts) Use JMP to obtain a contingency table and mosaic plot of the relationship between Tree Treatment (X, Factor) and Tree Lifespan (Y, Response).  
+Change the contingency table so that it includes only the {\bf Count} and {\bf Row \%} values.  Print out the output and turn it in with this assignment. 
+
+See the attached JMP output.
+
+\item (2 pts) Explain the meaning of the number {\bf 4} from the contingency table.
+
+4 is the number of trees that received Treatment C and lived between 1 and 4 years. 
+
+%\newpage
+
+\item (3 pts) Give the conditional distribution of Tree Lifespan given the tree received treatment B.
+
+Of the trees that received Treatment B: 37.5\% lived for less than one year, 37.5\% lived between one and four years and 25\% lived for longer than four years.
+
+\item (2 pts) Compare this conditional distribution to the overall marginal distribution of Tree Lifespan.
+
+The proportion of trees that lived less than one year was slightly lower among trees that received treatment B than the overall proportion.  Also, the proportion of trees that lived longer than four years was slightly higher among the trees that received treatment B than the overall proportion.
+
+\item (3 pts) Based on the contingency table and mosaic plot, does it appear there is an association between Tree Treatment and Tree Lifespan?  Circle the appropriate answer below.  Then given an explanation for your answer.
+
+Yes, there is an association
+
+Explain your answer:  The conditional distributions of Tree Lifespan given the different treatments are noticeably different, both in the contingency table and in the mosaic plot.  Since the conditional distributions are different, there is an association between the two variables.
+\end{enumerate}
+
+\end{document}
