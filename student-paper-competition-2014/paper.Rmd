@@ -1,5 +1,5 @@
 ---
-title: "Introducing statistics with \\texttt{intRo}"
+title: "Introducing statistics with \texttt{intRo}"
 author: "Eric Hare & Andee Kaplan"
 date: "December 14, 2014"
 output:
@@ -7,6 +7,7 @@ output:
     includes:
       in_header: preamble.tex
     number_sections: yes
+  html_document: default
 bibliography: refs.bib
 ---
 \thispagestyle{empty}
