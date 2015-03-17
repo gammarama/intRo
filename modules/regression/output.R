@@ -1,7 +1,8 @@
 cat_and_eval("p.regplot <- reg.data %>%
-  ggvis(x = ~xreg, y = ~yreg, key := ~test) %>%
-  layer_points() %>%
-  add_tooltip(function(df) {paste0('row id: ', df$test)}, 'hover')",  mydir = userdir, env = environment(), file = "code_regression_ggvis.R")
+  ggvis(x = ~xreg, y = ~yreg) %>%
+  layer_points(key := ~id) %>%
+  layer_model_predictions(model = 'lm') %>%
+  add_tooltip(function(df) {paste0('row id: ', df$id)}, 'hover')",  mydir = userdir, env = environment(), file = "code_regression_ggvis.R")
 
 p.regplot %>% bind_shiny("regplot")
 cat("p.regplot\n\n", file = file.path(userdir, "code_regression_ggvis.R"), append = TRUE)
