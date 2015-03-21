@@ -1,6 +1,6 @@
 function manageNextPrev() {
-   $('a#next').parent().toggleClass('disabled', $('.nav-list li.active').nextAll('li:not(.nav-header, .divider)').size() == 0);
-   $('a#previous').parent().toggleClass('disabled', $('.nav-list li.active').prevAll('li:not(.nav-header, .divider)').size() == 0);  
+   $('a#next').parent().toggleClass('disabled', $('.nav-pills li.active').nextAll('li:not(.navbar-brand, .divider)').size() == 0);
+   $('a#previous').parent().toggleClass('disabled', $('.nav-pills li.active').prevAll('li:not(.navbar-brand, .divider)').size() == 0);  
 
 	//get active link
 	var act = $('#sidebar .active a').attr("href");
@@ -13,12 +13,12 @@ function manageNextPrev() {
 
 $('li:not(.disabled) a#next').click(function(e) {
    e.preventDefault();
-   var active_nav = $('.nav-list li.active');
-   if(active_nav.nextAll('li:not(.nav-header, .divider)').first().find('a').attr('href')) { 	location.href = active_nav.nextAll('li:not(.nav-header, .divider)').first().find('a').attr('href');
+   var active_nav = $('.nav-pills li.active');
+   if(active_nav.nextAll('li:not(.navbar-brand, .divider)').first().find('a').attr('href')) { 	location.href = active_nav.nextAll('li:not(.navbar-brand, .divider)').first().find('a').attr('href');
    
    //set nav active
    active_nav.toggleClass("active");
-   active_nav.nextAll('li:not(.nav-header, .divider)').first().toggleClass("active");
+   active_nav.nextAll('li:not(.navbar-brand, .divider)').first().toggleClass("active");
    
    manageNextPrev();
    } else {
@@ -28,12 +28,12 @@ $('li:not(.disabled) a#next').click(function(e) {
 
 $('li:not(.disabled) a#previous').click(function(e) {
    e.preventDefault();
-   var active_nav = $('.nav-list li.active');
-   if(active_nav.prevAll('li:not(.nav-header, .divider)').first().find('a').attr('href')) { location.href = active_nav.prevAll('li:not(.nav-header, .divider)').first().find('a').attr('href');
+   var active_nav = $('.nav-pills li.active');
+   if(active_nav.prevAll('li:not(.navbar-brand, .divider)').first().find('a').attr('href')) { location.href = active_nav.prevAll('li:not(.navbar-brand, .divider)').first().find('a').attr('href');
    
    //set nav active
    active_nav.toggleClass("active");
-   active_nav.prevAll('li:not(.nav-header, .divider)').first().toggleClass("active");
+   active_nav.prevAll('li:not(.navbar-brand, .divider)').first().toggleClass("active");
    
    manageNextPrev();
    } else {

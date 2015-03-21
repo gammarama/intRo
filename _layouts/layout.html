@@ -16,7 +16,6 @@
         <!-- Custom CSS -->
         <!--<link rel="stylesheet" type="text/css" href="assets/stylesheets/style.css">-->
         <link rel="stylesheet" type="text/css" href="assets/stylesheets/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="assets/stylesheets/bootstrap-responsive.min.css">
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">        
 
     </head>
@@ -24,16 +23,17 @@
     <!-- HTML code from Bootply.com editor -->
     
     <body>
-		<div class="navbar navbar-static-top">
-		  <div class="navbar-inner">
-			  <div class="container">
-				<span class="brand pull-left">{{ site.name }}</span>
-				<ul class="nav" id="top-nav">
+		<div class="navbar navbar-default navbar-static-top">
+			  <div class="container" style = "width: 97%;">
+                <div class = "navbar-header">
+                    <span class="navbar-brand">{{ site.name }}</span>    
+                </div>
+				<ul class="nav navbar-nav" id="top-nav">
 						{% for item in site.links %}
 						{% if item.level == 1 %}
 							<li class="{% if forloop.index == 2 %}active{% endif %} {% if item.type == 'dropdown' %}dropdown{% endif %} ">
 								<a href="{{ item.href }}" class="{% if item.type == 'dropdown' %}dropdown-toggle{% endif %}" data-toggle="{% if item.type == 'dropdown' %}dropdown{% endif %}"target="{{ item.target }}">
-									<i class="fa {{ item.class }} fa-fw"></i>
+									<i class="fa {{ item.class }} fa-2x fa-fw"></i>
 									{% if item.type == 'dropdown' %}<b class="caret"></b>{% endif%}
 								</a>
 								{% if item.type == 'dropdown' %}<ul class="dropdown-menu">
@@ -50,20 +50,19 @@
 						{% endfor %}
 				<ul>
 			  </div>
-		  </div>
 		</div>
 		
 
 		
 		<!-- Begin Body -->
 			<div class="container-fluid">
-				<div class="row-fluid">
-					<div class="row-fluid">
-						<div class="span3 well"> 
-						<ul class="nav nav-list" id="sidebar">
+				<div class="row">
+					<div class="row">
+						<div class="col-sm-2 well"> 
+						<ul class="nav nav-pills nav-stacked" id="sidebar">
 							{% for nav in site.data.nav.structure %}
 								{% assign first = forloop.first %}
-								<li class='nav-header'>{{ nav.section }}</li>
+								<li class='navbar-brand'>{{ nav.section }}</li>
 								{% for sub in nav.subsection %}
 									<li class='{% if forloop.first and first %}active{% endif %}'><a class='{% if forloop.first and first %}active{% endif %}' href='#{{ sub }}'>{{ sub | replace: '-', ' ' | capitalize }}</a></li>
 								{% endfor %}
@@ -71,7 +70,7 @@
 							{% endfor %}
 						</ul>
 						</div>
-						<div class="span9" id="main">
+						<div class="col-sm-10" id="main">
 						
 							{{ content }}
 							

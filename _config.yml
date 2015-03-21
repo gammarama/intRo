@@ -1,6 +1,6 @@
 name: intRo
 pygments: true
-markdown: rdiscount
+markdown: redcarpet
 baseurl: /intRo
 permalink: :categories/:title
 rdiscount extensions: [smart]
