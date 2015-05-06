@@ -1,5 +1,5 @@
 ---
-title: "Introducing statistics with \texttt{intRo}"
+title: "Introducing statistics with \\texttt{intRo}"
 author: "Eric Hare & Andee Kaplan"
 date: "December 14, 2014"
 output:
