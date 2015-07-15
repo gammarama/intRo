@@ -99,7 +99,7 @@ panel, 4) results panel, and 5) code panel.
 ## Server load
 Limited testing has been done to assess how `intRo` handles heavy user load
  
- - Dozens of students at accessing app at once
+ - Dozens of students accessing app at once
  - Simultaneous larger computations like printing results
 
 More server resources may need to be devoted to handle this, particularly if `intRo` is more widely adopted
