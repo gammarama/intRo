@@ -2,7 +2,7 @@
 title: "intRo"
 subtitle: "Statistical Analysis Software for Teaching"
 author: "Andee Kaplan & Eric Hare"
-date: "January 12, 2015"
+date: "August 11, 2015"
 output: ioslides_presentation
 font-family: Helvetica
 ioslides_presentation:
@@ -54,36 +54,13 @@ Short answer: **yes**
 
 # First look | http://intro-stats.com
 
-
-# Classroom
-
-
-## `intRo` in the wild
- - `intRo` will be used this semester in STAT 201
-      - Homework assignments and labs will use `intRo` to emphasize class concepts
- - `intRo` is a supplement, not the focus of the class 
-
-## Homework 1
- - *Data*: OECD PISA Results in Focus report to assess the workforce readiness of 15-year old students
- - *Goal*: Explore graphically and numerically how the students perceive academics and math
- - `intRo` *Tasks*:
-      1. Make a barchart of the variable Enjoy.Maths.
-      1. Make a summary of the Enjoy.Maths variable. What proportion of these students agree or strongly agree with the statement "I enjoy mathematics"?
-      2. Obtain a contingency table and mosaic plot of the relationship between Country and Enjoy.Maths. Print contingency tables with the **Count** and **Column Proportion** values. 
- 
-# Our turn
-
-
-
 # Design decisions
-
 
 ## Consistent UI
 Elements of `intRo`: 1) top navigation, 2) side navigation, 3) options
 panel, 4) results panel, and 5) code panel.
 
 <img src="images/ui_annotate.png" height="400"></img>
-
 
 ## Consistent UI (Cont'd)
  - Large, easy to click icons in the page header to help students find
@@ -201,7 +178,6 @@ intro.data <- read.csv(file.choose())
 
 # Future work
 
-
 ## What's next?
  - Module creation package
  - Server load
@@ -219,7 +195,7 @@ intro.data <- read.csv(file.choose())
 ## Server load
 Limited testing has been done to assess how `intRo` handles heavy user load
  
- - Dozens of students at accessing app at once
+ - Dozens of students accessing app at once
  - Simultaneous larger computations like printing results
 
 More server resources may need to be devoted to handle this, particularly if `intRo` is more widely adopted
