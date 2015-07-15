@@ -2,7 +2,7 @@
 title: "intRo"
 subtitle: "Statistical Analysis Software for Teaching"
 author: "Andee Kaplan & Eric Hare"
-date: "January 12, 2015"
+date: "August 12, 2015"
 output: ioslides_presentation
 font-family: Helvetica
 ioslides_presentation:
