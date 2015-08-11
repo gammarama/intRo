@@ -1,8 +1,8 @@
 ---
 title: "intRo"
 subtitle: "Statistical Analysis Software for Teaching"
-author: "Andee Kaplan & Eric Hare"
-date: "August 11, 2015"
+author: "Andee Kaplan & Eric Hare <br/> Iowa State University"
+date: "August 11, 2015 <br> http://j.mp/intRo-JSM2015"
 output: ioslides_presentation
 font-family: Helvetica
 ioslides_presentation:
@@ -206,9 +206,6 @@ More server resources may need to be devoted to handle this, particularly if `in
  - We welcome collaborators interested in extending `intRo` to submit pull requests on GitHub (http://www.github.com/gammarama/intRo)
      - Additional modules
      - Improvements and bug fixes
-
-## Special thanks
-Dr. Cook, for guiding many of the features and interface decisions, and helping test the functionality in preparation for STAT 201
 
 # Any questions? | Thank you!
 
