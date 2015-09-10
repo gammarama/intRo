@@ -13,8 +13,6 @@ library(rmarkdown)
 library(formatR)
 library(Hmisc)
 
-#cat("```{r, echo=FALSE}\nopts_chunk$set(echo=FALSE)\n```\n\n```{r, child="test.Rmd", message=FALSE, warning=FALSE}\n```", file = "outfile.Rmd")
-
 ###
 ### Global Helper Functions
 ###
@@ -92,4 +90,17 @@ cat_and_eval <- function(mystr, mydir, env = parent.frame(), file = "code_All.R"
     
     if (save_result) cat(paste0(paste(readLines(file.path(mydir, file)), collapse = "\n"), "\n"), file = file.path(mydir, "code_All.R"), append = TRUE)
     if (eval) eval(parse(text = mystr), envir = env)
+}
+
+interpolate <- function(code, ..., mydir, `_env` = parent.frame(), file = "code_All.R", append = FALSE, save_result = FALSE, eval = TRUE) {
+    stopifnot(inherits(code, "formula"), length(code) == 2)
+    
+    expr <- methods::substituteDirect(code[[2]], list(...))
+    
+    sink(file = file.path(mydir, file), append = append)
+    print(expr)
+    sink()
+    
+    if (save_result) cat(paste0(paste(readLines(file.path(mydir, file)), collapse = "\n"), "\n"), file = file.path(mydir, "code_All.R"), append = TRUE)
+    if (eval) eval(expr, `_env`)
 }

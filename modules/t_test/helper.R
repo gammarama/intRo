@@ -1,7 +1,28 @@
 ttesttable <- function (intro.data, x, y = NULL, twovar = FALSE, conflevel, althyp, hypval) {
     if (is.null(y) | y == "" | !twovar) {
-        cat_and_eval(paste0("t.test(x=intro.data[,'", x, "'], conf.level=", conflevel, ", alternative='", althyp, "', mu=", hypval, ")"),  mydir = userdir, env = environment(), file = "code_t_test.R")
+        interpolate(
+            ~ t.test(df$x, conf.level = conf, alternative = althyp, mu = hypval),
+            df = quote(intro.data),
+            x = x,
+            conf = conflevel,
+            althyp = althyp,
+            hypval = hypval,
+            mydir = userdir,
+            `_env` = environment(),
+            file = "code_t_test.R"
+        )
     } else {
-        cat_and_eval(paste0("t.test(x=intro.data[,'", x, "'], y=intro.data[,'", y, "'], conf.level=", conflevel, ", alternative='", althyp, "', mu=", hypval, ")"),  mydir = userdir, env = environment(), file = "code_t_test.R")
+        interpolate(
+            ~ t.test(x = df$x, y = df$y, conf.level = conf, alternative = althyp, mu = hypval),
+            df = quote(intro.data),
+            x = x,
+            y = y,
+            conf = conflevel,
+            althyp = althyp,
+            hypval = hypval,
+            mydir = userdir,
+            `_env` = environment(),
+            file = "code_t_test.R"
+        )
     }
 }
