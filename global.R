@@ -101,6 +101,6 @@ interpolate <- function(code, ..., mydir, `_env` = parent.frame(), file = "code_
     print(expr)
     sink()
     
-    if (save_result) cat(paste0(paste(readLines(file.path(mydir, file)), collapse = "\n"), "\n"), file = file.path(mydir, "code_All.R"), append = TRUE)
+    if (save_result) cat(paste0(paste(readLines(file.path(mydir, file)), collapse = "\n"), "\n\n"), file = file.path(mydir, "code_All.R"), append = TRUE)
     if (eval) eval(expr, `_env`)
 }
