@@ -1,13 +1,16 @@
 cont.table <- function(intro.data, x, y, type, digits) {  
     if (x %in% names(intro.data) & y %in% names(intro.data)) {
-        cat_and_eval(paste0("
-            my.tbl <- table(intro.data[,'", y, "'], intro.data[,'", x, "'])
-        
-            totalsum <- sum(my.tbl)
-            
-            my.tbl <- rbind(my.tbl, Total = colSums(my.tbl, na.rm = TRUE))
-            my.tbl <- cbind(my.tbl, Total = c(rowSums(my.tbl[-(nrow(my.tbl)), ], na.rm = TRUE), totalsum))
-        "),  mydir = userdir, env = environment(), file = "code_contingency.R")
+        interpolate(
+            ~ assign("my.tbl", cbind(rbind(table(df$y, df$x), 
+                          Total = colSums(table(df$y, df$x))), 
+                    Total = c(rowSums(table(df$y, df$x))[-(length(df$x))], sum(table(df$y, df$x))))),
+            df = quote(intro.data),
+            x = x,
+            y = y,
+            mydir = userdir,
+            `_env` = environment(),
+            file = "code_contingency.R"
+        )
 
         if (type == "totalpercs") cat_and_eval("my.tbl <- my.tbl / totalsum",  mydir = userdir, env = environment(), file = "code_contingency.R", append = TRUE)
         if (type == "rowpercs") {
