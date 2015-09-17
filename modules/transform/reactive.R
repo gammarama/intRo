@@ -16,21 +16,20 @@
 
     intro.transform <- reactive({
         if (is.null(intro.data())) return(NULL)
-                        
-        intro.data <- intro.data()
         
-        cat_and_eval(paste0("curtrans <- '", input$var_trans, "'"),  mydir = userdir, env = environment(), file = "code_transform.R")
-                
-        if (input$trans == "power" & curtrans %in% intro.numericnames()) {
-            if (!is.numeric(input$power) | is.null(input$power)) cat_and_eval(paste0("trans_x <- intro.data[,'", curtrans, "']"),  mydir = userdir, file = "code_transform.R", append = TRUE) else if (input$power == 0) cat_and_eval(paste0("trans_x <- log(intro.data[,'", curtrans, "'])"),  mydir = userdir, file = "code_transform.R", append = TRUE) else cat_and_eval(paste0("trans_x <- (intro.data[,'", curtrans, "'])^", input$power),  mydir = userdir, file = "code_transform.R", append = TRUE)
-            if (all(!is.infinite(trans_x))) {
-                cat_and_eval(paste0("intro.data[, '", intro.transform.colname(), "'] <- trans_x"),  mydir = userdir, file = "code_transform.R", append = TRUE)
-            }
+        intro.data <- intro.data()
+                        
+        if (input$trans == "power" && input$var_trans %in% intro.numericnames()) {
+            mypower <- input$power
+            if (!is.numeric(mypower) || is.null(mypower)) mypower <- 1
+            if (mypower == 0) interpolate(~(trans_x <- log(df$var)), df = quote(intro.data), var = input$var_trans, mydir = userdir, file = "code_transform.R") else interpolate(~(trans_x <- df$var^power), df = quote(intro.data), var = input$var_trans, power = mypower, mydir = userdir, file = "code_transform.R") 
+            
+            if (all(!is.infinite(trans_x))) interpolate(~(df$col <- trans_x), df = quote(intro.data), col = intro.transform.colname(), mydir = userdir, file = "code_transform.R", append = TRUE)
         } else if (input$trans %in% c("categorical", "numeric")) {
-            if (input$trans == "numeric") cat_and_eval(paste0("trans_x <- as.numeric(intro.data[,'", curtrans, "'])"),  mydir = userdir, file = "code_transform.R", append = TRUE) else cat_and_eval(paste0("trans_x <- factor(intro.data[,'", curtrans, "'])"), mydir = userdir, file = "code_transform.R", append = TRUE)
-            cat_and_eval(paste0("intro.data[, '", intro.transform.colname(), "'] <- trans_x"),  mydir = userdir, file = "code_transform.R", append = TRUE)
+            if (input$trans == "numeric") interpolate(~(trans_x <- as.numeric(df$var)), df = quote(intro.data), var = input$var_trans, mydir = userdir, file = "code_transform.R") else interpolate(~(trans_x <- factor(df$var)), df = quote(intro.data), var = input$var_trans, mydir = userdir, file = "code_transform.R")
+            interpolate(~(df$col <- trans_x), df = quote(intro.data), col = intro.transform.colname(), mydir = userdir, file = "code_transform.R", append = TRUE)
         } else {
-            cat_and_eval(paste0("intro.data[, '", intro.transform.colname(), "'] <- curtrans"),  mydir = userdir, file = "code_transform.R", append = TRUE)
+            interpolate(~(df$col <- df$var), df = quote(intro.data), col = intro.transform.colname(), var = input$var_trans, mydir = userdir, file = "code_transform.R", append = TRUE)        
         }
                 
         if (input$savetrans > oldsavetrans) {
@@ -40,7 +39,7 @@
             oldsavetrans <<- input$savetrans
         }
         
-        if (is.numeric(intro.data[,curtrans])) intro.data$var <- intro.data[,curtrans] else intro.data$var <- 0
+        if (is.numeric(intro.data[,input$var_trans])) intro.data$var <- intro.data[,input$var_trans] else intro.data$var <- 0
         if (is.numeric(intro.data[,intro.transform.colname()])) intro.data$trans_var <- intro.data[,intro.transform.colname()] else intro.data$trans_var <- 0
         
         return(intro.data)
