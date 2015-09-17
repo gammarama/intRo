@@ -51,8 +51,8 @@ my_regresid2 <- function(intro.data, intro.regression) {
 
 tablereg <- function (intro.regression, x) {
     interpolate(
-        ~((tbl.fit <- structure(coef(summary(myreg)), dimnames = list(c("Intercept", x), 
-                                                        c("Estimate", "Std. Error", "T-Value", "P-Value"))))),
+        ~(structure(coef(summary(myreg)), dimnames = list(c("Intercept", x), 
+                                                        c("Estimate", "Std. Error", "T-Value", "P-Value")))),
         myreg = quote(intro.regression),
         x = x,
         mydir = userdir,
@@ -63,7 +63,7 @@ tablereg <- function (intro.regression, x) {
 
 r <- function (intro.data, x, y) {
     interpolate(
-        ~((r_result <- paste('r =', round(cor(df$y, df$x, use = 'complete.obs'), digits = 4)))),
+        ~(paste('r =', round(cor(df$y, df$x, use = 'complete.obs'), digits = 4))),
         df = quote(intro.data),
         x = x,
         y = y,
@@ -76,7 +76,7 @@ r <- function (intro.data, x, y) {
 
 r2 <- function (intro.regression) {
     interpolate(
-        ~((r2_result <- paste('R^2 =', round(summary(myreg)$r.squared, digits = 4)))),
+        ~(paste('R^2 =', round(summary(myreg)$r.squared, digits = 4))),
         myreg = quote(intro.regression),
         mydir = userdir,
         `_env` = environment(),
