@@ -13,19 +13,20 @@ intro.data <- reactive({
     intro.data <- values$mydat
     intro.random <- values$mydat_rand
     
-    cat_and_eval(paste0("\n\ndata.subset <- process_logical(intro.data, ", paste0("c(", paste(paste0("'", input$subs, "'"), collapse = ", "), ")"), ")"),  mydir = userdir, file = "code_sources.R")
-    cat_and_eval(paste0("intro.random <- data.subset"),  mydir = userdir, file = "code_sources.R", append = TRUE)
+    data.subset <- process_logical(intro.data, input$subs)
+    intro.random <- data.subset
         
     values$mydat <<- data.subset
     values$mydat_rand <<- values$mydat
     
     if (input$randomsub & is.numeric(input$randomsubrows) & input$randomsubrows >= 1 & input$randomsubrows <= nrow(values$mydat)) {
-        cat_and_eval(paste0("intro.random <- dplyr::sample_n(data.subset, ", input$randomsubrows, ")"),  mydir = userdir, file = "code_sources.R", append = TRUE)
+        interpolate(~(intro.data <- sample_n(df, rows)), df = quote(intro.data), rows = input$randomsubrows, mydir = userdir, file = "code_sources.R")
+        cat(paste(c("\n", readLines(file.path(userdir, "code_sources.R"))), collapse = "\n"), file = file.path(userdir, "code_All.R"), append = TRUE)
     }
     
     if (input$savesubset > oldsavesub) {                
-        cat_and_eval(paste0("intro.data <- intro.random"),  mydir = userdir, file = "code_sources.R", append = TRUE)
-        cat(paste(readLines(file.path(userdir, "code_sources.R")), collapse = "\n"), file = file.path(userdir, "code_All.R"), append = TRUE)
+        cat(paste(c("\n", readLines(file.path(userdir, "code_sources.R"))), collapse = "\n"), file = file.path(userdir, "code_All.R"), append = TRUE)
+        cat("", file = file.path(userdir, "code_sources.R"))
         
         values$mydat <<- values$mydat_rand
         oldsavesub <<- input$savesubset

@@ -67,29 +67,8 @@ checkVariable <- function(data, var) {
     return(nchar(var) > 0 & var %in% names(data))
 }
 
-process_input <- function(inp) {
-    if (is.character(inp)) {
-        if (length(inp) == 1)  {
-            if (length(grep("intro.", inp)) > 0) return(inp)
-            else if (inp == "NULL") return(inp)
-            else return(paste0("\"", inp, "\""))
-        } else {
-            return(paste0("c(", paste(paste0("\"", inp, "\""), collapse = ", "), ")"))
-        }
-    } else {
-        return(inp)
-    }
-}
-
 clean_readlines <- function(file) {
     return(tidy_source(file, output = FALSE)$text.tidy)
-}
-
-cat_and_eval <- function(mystr, mydir, env = parent.frame(), file = "code_All.R", append = FALSE, save_result = FALSE, eval = TRUE) {
-    cat(paste0(gsub("; ", "\n", mystr), "\n"), file = file.path(mydir, file), append = append)
-    
-    if (save_result) cat(paste0(paste(readLines(file.path(mydir, file)), collapse = "\n"), "\n"), file = file.path(mydir, "code_All.R"), append = TRUE)
-    if (eval) eval(parse(text = mystr), envir = env)
 }
 
 as_call <- function(x) {

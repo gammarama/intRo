@@ -1,7 +1,5 @@
 process_logical <- function(data, x) {
-    if (is.null(x) || x == "c('')") {
-        return(data)
-    }
+    if (is.null(x) || all(lapply(x, nchar) == 0)) return(data)
     
     relevant_cols <- names(data)[nchar(x) > 0]
     if (length(relevant_cols) == 0) return(data)
@@ -15,22 +13,12 @@ process_logical <- function(data, x) {
             test <- new_strs[[i]]
             col <- relevant_cols[i]
             
-            subset_str <- ""
-            if (length(test) == 1) {
-                if (is.na(as.numeric(test[1]))) {
-                    subset_str <- paste0("'", test[1], "' == ", col)
-                } else {
-                    subset_str <- paste(test[1], "==", col)
-                }
-            } else {
-                test[1] <- ifelse(test[1] == " ", -Inf, test[1])
-                test[2] <- ifelse(test[2] == " ", Inf, test[2])
-                if (is.na(test[2])) test[2] <- Inf
-                
-                subset_str <- paste(test[1], "<=", col, "&", col, "<=", test[2])
-            }          
+            subset_str <- paste0("subset(new_data, ", paste(col, ifelse(length(grep("[<>]", test)) > 0, "", "=="), test), ")")
             
-            new_data <- eval(parse(text = paste0("subset(new_data, ", subset_str, ")")))
+            result <- try(eval(parse(text = subset_str)), silent = TRUE)
+            if (inherits(result, "try-error")) result <- eval(parse(text = gsub(test, paste0("'", test, "'"), subset_str)))
+            
+            new_data <- result
         }
     }
     
@@ -41,11 +29,12 @@ file.choose <- function () {
     return(input$data_own[,"datapath"])
 }
 
-data.module <- function (inFile, dataset, own) {        
+data.module <- function (inFile, dataset, own) {   
+    cat("\n\n", file = file.path(userdir, "code_All.R"), append = TRUE)
     if (is.null(inFile) | !own) {
-        cat_and_eval(paste0("\n\nintro.data <- get('", dataset, "')"), file = "code_sources.R", mydir = userdir, append = FALSE, save_result = TRUE)
+        interpolate(~(intro.data <- get(dat)), dat = dataset, file = "code_sources.R", mydir = userdir, append = FALSE, save_result = TRUE)
     } else {
-        cat_and_eval(paste0("intro.data <- read.csv(file.choose())"), mydir = userdir, file = "code_sources.R", append = FALSE, save_result = TRUE)
+        interpolate(~(intro.data <- read.csv(file.choose())), file = "code_sources.R", mydir = userdir, append = FALSE, save_result = TRUE)
     }
     return(intro.data)
 }

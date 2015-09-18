@@ -35,7 +35,7 @@ shinyServer(function(input, output, session) {
     
     ## Code Viewing
     observe({    
-      updateAceEditor(session, "myEditor", value=paste(tidy_source(text = paste(code(), collapse="\n"), output = FALSE)$text.tidy, collapse = "\n"))
+      updateAceEditor(session, "myEditor", value=paste(code(), collapse = "\n"))
     })
     
     
