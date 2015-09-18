@@ -23,14 +23,11 @@ numericNames <- function(data) {
   return(vec)
 }
 
-q1 <- function(x) { return(quantile(x, .25, na.rm = TRUE)) }
-q3 <- function(x) { return(quantile(x, .75, na.rm = TRUE)) }
-
 categoricNames <- function(data) {
-  vec <- as.character(subset(whatis(data), type != "numeric")$variable.name)
-  if (length(vec) == 0) vec <- ""
-  
-  return(vec)
+    vec <- as.character(subset(whatis(data), type != "numeric")$variable.name)
+    if (length(vec) == 0) vec <- ""
+    
+    return(vec)
 }
 
 sourceDir <- function(path, type, local = FALSE, ...) { 
@@ -38,6 +35,9 @@ sourceDir <- function(path, type, local = FALSE, ...) {
     source(file.path(path, nm), local=local) 
   } 
 }
+
+q1 <- function(x) { return(quantile(x, .25, na.rm = TRUE)) }
+q3 <- function(x) { return(quantile(x, .75, na.rm = TRUE)) }
 
 my.summary <- function(data) {
     mean.val <-suppressWarnings(sapply(as.data.frame(data), mean, na.rm=TRUE))

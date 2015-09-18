@@ -2,7 +2,7 @@ intro.start <- reactive({
     input$clearsubset
     
     data.initial <- data.module(input$data_own, input$data, input$own)
-    values$mydat <<- data.initial
+    values$data <- data.initial
                 
     return(data.initial)
 })
@@ -10,26 +10,16 @@ intro.start <- reactive({
 intro.data <- reactive({
     if (is.null(intro.start())) return(NULL)
         
-    intro.data <- values$mydat
-    intro.random <- values$mydat_rand
-    
+    intro.data <- values$data
     data.subset <- process_logical(intro.data, input$subs)
     intro.random <- data.subset
         
-    values$mydat <<- data.subset
-    values$mydat_rand <<- values$mydat
+    values$data <- data.subset
+    values$data_rand <- values$data
     
-    if (input$randomsub & is.numeric(input$randomsubrows) & input$randomsubrows >= 1 & input$randomsubrows <= nrow(values$mydat)) {
+    if (input$randomsub & is.numeric(input$randomsubrows) & input$randomsubrows >= 1 & input$randomsubrows <= nrow(values$data)) {
         interpolate(~(intro.data <- sample_n(df, rows)), df = quote(intro.data), rows = input$randomsubrows, mydir = userdir, file = "code_sources.R")
         cat(paste(c("\n", readLines(file.path(userdir, "code_sources.R"))), collapse = "\n"), file = file.path(userdir, "code_All.R"), append = TRUE)
-    }
-    
-    if (input$savesubset > oldsavesub) {                
-        cat(paste(c("\n", readLines(file.path(userdir, "code_sources.R"))), collapse = "\n"), file = file.path(userdir, "code_All.R"), append = TRUE)
-        cat("", file = file.path(userdir, "code_sources.R"))
-        
-        values$mydat <<- values$mydat_rand
-        oldsavesub <<- input$savesubset
     }
     
     return(intro.data)

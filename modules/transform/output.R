@@ -5,13 +5,13 @@
     })
 
     intro.transform %>%
-        ggvis(x = ~var) %>%
+        ggvis(x = ~intro_var) %>%
         layer_histograms() %>%
         set_options(width = 600, height = 250) %>%
         bind_shiny("var_plot")
 
     intro.transform %>%
-        ggvis(x = ~trans_var) %>%
+        ggvis(x = ~intro_trans_var) %>%
         layer_histograms() %>%
         set_options(width = 600, height = 250) %>%
         bind_shiny("trans_plot")

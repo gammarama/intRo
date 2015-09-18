@@ -15,14 +15,14 @@ shinyServer(function(input, output, session) {
     options(shiny.maxRequestSize=10*1024^2)
     
     ## Reactive values
-    values <- reactiveValues(mydat = NULL, mydat_rand = NULL)
+    values <- reactiveValues(data = NULL, data_rand = NULL)
     
     #cat(paste(readLines("global.R"), collapse = "\n"), file = "code_global.R")
     cat("library(RCurl)\n", file = file.path(userdir, "code_All.R"))
     cat("eval(parse(text = getURL('https://raw.githubusercontent.com/gammarama/intRo/master/global.R')))", file = file.path(userdir, "code_All.R"), append = TRUE)
     
     ## Modules
-    types <- c("helper.R", "static.R", "observe.R", "reactive.R", "output.R")
+    types <- c("helper.R", "observe.R", "reactive.R", "output.R")
     modules_tosource <- file.path("modules", apply(expand.grid(module_info$module, types), 1, paste, collapse = "/"))
 
     ## Source the modules

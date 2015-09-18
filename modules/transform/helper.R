@@ -1,4 +1,4 @@
-plot_var_trans <- function (data, x) {
+plot_var_trans <- function(data, x) {
     if (is.null(data)) return(NULL)
     if (!(x %in% names(data))) return(NULL)
     
@@ -11,4 +11,24 @@ plot_var_trans <- function (data, x) {
             ggvis(x = as.name(x)) %>%
             layer_bars()
     }
+}
+
+transform_data <- function(intro.data, trans, var_trans, power = 1) {
+    colname <- ifelse(trans == "power", 
+           paste(var_trans, sub("\\.", "", power), sep = "_"), 
+           paste(var_trans, "trans", sep = "_"))
+    
+    if (trans == "power" && var_trans %in% numericNames(intro.data)) {
+        if (!is.numeric(power) || is.null(power)) power <- 1
+        if (power == 0) interpolate(~(trans_x <- log(df$var)), df = quote(intro.data), var = var_trans, mydir = userdir, file = "code_transform.R") else interpolate(~(trans_x <- df$var^power), df = quote(intro.data), var = var_trans, power = power, mydir = userdir, file = "code_transform.R") 
+        
+        if (all(!is.infinite(trans_x))) interpolate(~(df$col <- trans_x), df = quote(intro.data), col = colname, mydir = userdir, file = "code_transform.R", append = TRUE)
+    } else if (trans %in% c("categorical", "numeric")) {
+        if (trans == "numeric") interpolate(~(trans_x <- as.numeric(df$var)), df = quote(intro.data), var = var_trans, mydir = userdir, file = "code_transform.R") else interpolate(~(trans_x <- factor(df$var)), df = quote(intro.data), var = var_trans, mydir = userdir, file = "code_transform.R")
+        interpolate(~(df$col <- trans_x), df = quote(intro.data), col = colname, mydir = userdir, file = "code_transform.R", append = TRUE)
+    } else {
+        interpolate(~(df$col <- df$var), df = quote(intro.data), col = colname, var = var_trans, mydir = userdir, file = "code_transform.R", append = TRUE)        
+    }
+    
+    return(intro.data)
 }

@@ -1,3 +1,6 @@
+diamonds <- read.csv("data/diamonds_sub.csv")
+super_bowl_salaries <- read.csv("data/superbowl-salaries.csv")
+
 process_logical <- function(data, x) {
     if (is.null(x) || all(lapply(x, nchar) == 0)) return(data)
     
