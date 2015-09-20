@@ -13,6 +13,11 @@ plot_var_trans <- function(data, x) {
     }
 }
 
+input_trans_binwidthdata <- function(binwidth) {
+    if (is.na(binwidth) || binwidth == 0) return(NULL)
+    else return(binwidth)
+}
+
 transform_data <- function(intro.data, trans, var_trans, power = 1) {
     colname <- ifelse(trans == "power", 
            paste(var_trans, sub("\\.", "", power), sep = "_"), 

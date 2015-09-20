@@ -1,6 +1,14 @@
 original_x <- reactive({input$var_trans})
 new_x <- reactive({colname})
 
+input_original_binwidth <- reactive({        
+    return(input_trans_binwidthdata(input$original_binwidth))
+})
+
+input_trans_binwidth <- reactive({        
+    return(input_trans_binwidthdata(input$trans_binwidth))
+})
+
 intro.transform <- reactive({
     if (is.null(intro.data())) return(NULL)
     

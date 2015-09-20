@@ -4,7 +4,10 @@ transform_ui <- tabPanel("Transform",
                                                              selectizeInput("trans", label = "Choose Transformation", choices = c("Power" = "power", "Categorical" = "categorical", "Numeric" = "numeric"), multiple = FALSE),
                                                              selectizeInput("var_trans", label = "Select Variable", choices = numericNames(mpg), multiple = FALSE),
                                                              conditionalPanel(condition = "input.trans == 'power'",
-                                                                              numericInput("power", "Power", value = 1, min = -100, max = 100, step = 0.01)
+                                                                              hr(),
+                                                                              numericInput("power", "Power", value = 1, min = -100, max = 100, step = 0.01),
+                                                                              numericInput("original_binwidth", "Original Bin Width", value = NA, min = 0.1, step = 0.1),
+                                                                              numericInput("trans_binwidth", "Transformed Bin Width", value = NA, min = 0.1, step = 0.1)
                                                              ),
                                                              
                                                              hr(),
