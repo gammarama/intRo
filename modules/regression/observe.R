@@ -1,7 +1,10 @@
 ## Regression Observers
 observe({
-  updateSelectizeInput(session, "xreg", choices = intro.numericnames(),  selected = ifelse(checkVariable(intro.data(), input$xreg), input$xreg, intro.numericnames()[1]))
-  updateSelectizeInput(session, "yreg", choices = intro.numericnames(),  selected = ifelse(checkVariable(intro.data(), input$yreg), input$yreg, intro.numericnames()[2]))
+    xselect <- ifelse(checkVariable(intro.data(), input$xreg), input$xreg, intro.numericnames()[1])
+    yselect <- ifelse(checkVariable(intro.data(), input$yreg), input$yreg, intro.numericnames()[2])
+    
+    updateSelectizeInput(session, "xreg", choices = setdiff(intro.numericnames(), yselect), selected = xselect)
+    updateSelectizeInput(session, "yreg", choices = setdiff(intro.numericnames(), xselect), selected = yselect)
 })
 
 observeEvent(input$store_regression, {
@@ -11,5 +14,5 @@ observeEvent(input$store_regression, {
 })
 
 observeEvent(input$saveresid, {
-    values$mydat <<- savefit(intro.data(), intro.regression())
+    values$data <- savefit(intro.data(), intro.regression())
 })

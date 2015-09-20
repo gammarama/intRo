@@ -1,4 +1,7 @@
 intro.plotdata <- function(intro.data, x, y, plottype) {
+    xvar <- if (checkVariable(intro.data, x)) x else names(intro.data)[1];
+    yvar <- if (checkVariable(intro.data, y)) y else names(intro.data)[2];
+    
     interpolate(
         ~(intro.plot <- df %>%
             na.omit %>%
@@ -8,8 +11,8 @@ intro.plotdata <- function(intro.data, x, y, plottype) {
                    intro_y_cat = factor(y),
                    intro_y_num = as.numeric(y))),
         df = quote(intro.data),
-        x = as.name(x),
-        y = as.name(y),
+        x = as.name(xvar),
+        y = as.name(yvar),
         mydir = userdir, `_env` = environment(), file = "code_graphical_reactive.R"
     )
 

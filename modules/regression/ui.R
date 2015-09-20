@@ -15,7 +15,7 @@ regression_ui <- tabPanel("Regression",
          ),
          
          column(8,
-                conditionalPanel(condition = "input.xreg != ''", 
+                conditionalPanel(condition = "input.yreg != ''", 
                                  tags$b("Parameter Estimates"),
                                  tableOutput("regtable"),
                                  

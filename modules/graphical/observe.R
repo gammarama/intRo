@@ -1,5 +1,15 @@
 observe({
-    updateSelectizeInput(session, "plottype", choices = if (intro.numericnames()[1] == "") c("Mosaic Plot" = "mosaicplot") else if (intro.categoricnames()[1] == "") c("Histogram" = "histogram", "Normal Quantile Plot" = "quantileplot", "Scatterplot" = "scatterplot", "Line Chart" = "linechart") else c("Histogram" = "histogram", "Normal Quantile Plot" = "quantileplot", "Scatterplot" = "scatterplot", "Line Chart" = "linechart", "Boxplot" = "boxplot", "Bar Chart" = "barchart", "Pareto Chart" = "paretochart", "Mosaic Plot" = "mosaicplot"))
+    plottypes <- NULL
+    if (numericNames(intro.data())[1] != "") plottypes <- c(plottypes, "Histogram" = "histogram", "Normal Quantile Plot" = "quantileplot")
+    if (length(numericNames(intro.data())) > 1) plottypes <- c(plottypes, "Scatterplot" = "scatterplot", "Line Chart" = "linechart")
+    
+    if (categoricNames(intro.data())[1] != "") {
+        plottypes <- c(plottypes, "Bar Chart" = "barchart", "Pareto Chart" = "paretochart")
+        if ("histogram" %in% plottypes) plottypes <- c(plottypes, "Boxplot" = "boxplot")
+        if (length(categoricNames(intro.data())) > 1) plottypes <- c(plottypes, "Mosaic Plot" = "mosaicplot")
+    }
+
+    updateSelectizeInput(session, "plottype", choices = plottypes)
 })
 
 observe({
@@ -10,12 +20,7 @@ observe({
 
 observeEvent(input$store_graphical, {
     cat(paste0("\n\n", paste(readLines(file.path(userdir, "code_graphical_reactive.R")), collapse = "\n")), file = file.path(userdir, "code_All.R"), append = TRUE)
-    
-    ## Fix this
-    #cat(paste0("\n\ninput_xdomain <- c(", input$xmin, ", ", input$xmax, ")\n"), file = file.path(userdir, "code_All.R"), append = TRUE)
-    #cat(paste0("input_ydomain <- c(", input$ymin, ", ", input$ymax, ")\n"), file = file.path(userdir, "code_All.R"), append = TRUE)
-    #cat(paste0("input_binwidth <- ", ifelse(is.na(input$binwidth), "NULL", input$binwidth), "\n"), file = file.path(userdir, "code_All.R"), append = TRUE)
-    
+
     mystr <- paste0("X Variable: ", input$x, (if (input$plottype %in% c("histogram", "quantileplot")) "" else paste0("; Y Variable: ", input$y)))
     
     cat("\n\n", file = file.path(userdir, paste0("code_", input$plottype, ".R")), append = TRUE)

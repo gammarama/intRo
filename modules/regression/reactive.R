@@ -1,6 +1,7 @@
 intro.regression <- reactive({
   if (is.null(intro.data())) return(NULL)
-  
+  if (input$xreg == input$yreg || length(numericNames(intro.data())) < 2) return(NULL)
+
   lm.fit <- my.lm(intro.data(), input$xreg, input$yreg)
   
   return(lm.fit)

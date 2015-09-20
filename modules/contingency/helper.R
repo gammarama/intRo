@@ -1,6 +1,4 @@
 cont.table <- function(intro.data, x, y, type, digits) {  
-    if (!(x %in% names(intro.data) & y %in% names(intro.data))) return(NULL)
-    
     interpolate(
         ~ (my.tbl <- cbind(rbind(table(df$y, df$x), 
                       Total = colSums(table(df$y, df$x))), 

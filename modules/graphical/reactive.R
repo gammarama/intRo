@@ -13,7 +13,10 @@ x_selected <- reactive({
 })
 
 y_selected <- reactive({
-    y_choices()[2]
+    select = y_choices()[1]
+    if (select == x_selected() && length(y_choices()) > 1) select = y_choices()[2]
+    
+    return(select)
 })
 
     intro.plot <- reactive({
