@@ -1,5 +1,5 @@
     output$summary_warning <- renderText({
-        return("Note: Categorical variables are not included grouped results")
+        return("Note: Categorical variables are not included in results when numeric variables are selected")
     })
 
     output$summary <- renderPrint({

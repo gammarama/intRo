@@ -1,3 +1,12 @@
 nonparametrictable <- function (intro.data, x, y, conflevel, althyp, hypval) {
-    cat_and_eval(paste0("wilcox.test(x=intro.data[,'", x, "'], y=intro.data[,'", y, "'], conf.level=", conflevel, ", alternative='", althyp, "', mu=", hypval, ")"),  mydir = userdir, env = environment(), file = "code_nonparametric.R")
+    interpolate(~(wilcox.test(x = df$x, y = df$y, conf.level = conf, alternative = althyp, mu = hypval)),
+                  df = quote(intro.data),
+                  x = x,
+                  y = y,
+                  conf = conflevel,
+                  althyp = althyp,
+                  hypval = hypval,
+                  mydir = userdir, 
+                  `_env` = environment(), 
+                  file = "code_nonparametric.R")
 }

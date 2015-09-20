@@ -11,10 +11,8 @@ numerical_ui <- tabPanel("Numerical",
                                                   ),
                                                   
                                                   column(8,
-                                                         conditionalPanel(condition = "input.grouping != 'none'",
-                                                             textOutput("summary_warning"),
-                                                             hr()
-                                                         ),
+                                                         textOutput("summary_warning"),
+                                                         hr(),
                                                          verbatimTextOutput("summary")
                                                   )
                                          )
