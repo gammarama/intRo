@@ -24,7 +24,7 @@ shinyServer(function(input, output, session) {
     ## Modules
     types <- c("helper.R", "observe.R", "reactive.R", "output.R")
     modules_tosource <- file.path("modules", apply(expand.grid(module_info$module, types), 1, paste, collapse = "/"))
-
+    
     ## Source the modules
     for (mod in modules_tosource) {
         source(mod, local = TRUE)
@@ -35,30 +35,17 @@ shinyServer(function(input, output, session) {
     
     ## Code Viewing
     observe({    
-      updateAceEditor(session, "myEditor", value=paste(code(), collapse = "\n"))
+        updateAceEditor(session, "myEditor", value=paste(code(), collapse = "\n"))
     })
     
-    
     ## Printing
-    observe({ 
-      if(is.null(input)) return
-      if(length(input$print_clicked) > 0) {
-        file <- NULL
-        if(input$print_clicked) {
-          oldwd <- getwd()
-          
-          if(!input$code_clicked) {
-            file <- render(file.path(userdir, "code_All.R"), 
-                           html_document(css = file.path(oldwd, "www/hide_code.css")),
-                           output_dir = file.path(oldwd, "www"))            
-          } else {
-            file <- render(file.path(userdir, "code_All.R"), 
-                           output_dir = file.path(oldwd, "www"))
-          }
-          
-          
-          session$sendCustomMessage(type = "renderFinished", paste(readLines(file), collapse="\n"))
-        }
-      }
+    observeEvent(input$print_clicked, {
+        oldwd <- getwd()
+        
+        file <- render(file.path(userdir, "code_All.R"), 
+                       output_format = if (input$code_clicked) NULL else html_document(css = file.path(oldwd, "www/hide_code.css")),
+                       output_dir = file.path(oldwd, "www"))
+        
+        session$sendCustomMessage(type = "renderFinished", paste(readLines(file), collapse="\n"))
     })
 })

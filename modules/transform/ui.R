@@ -6,6 +6,9 @@ transform_ui <- tabPanel("Transform",
                                                              conditionalPanel(condition = "input.trans == 'power'",
                                                                               hr(),
                                                                               numericInput("power", "Power", value = 1, min = -100, max = 100, step = 0.01),
+                                                                              conditionalPanel(condition = "input.power == 0",
+                                                                                  selectizeInput("log_base", "Log Base", choices = c("e" = exp(1), "2" = 2, "10" = 10))
+                                                                              ),
                                                                               numericInput("original_binwidth", "Original Bin Width", value = NA, min = 0.1, step = 0.1),
                                                                               numericInput("trans_binwidth", "Transformed Bin Width", value = NA, min = 0.1, step = 0.1)
                                                              ),
