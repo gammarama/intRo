@@ -22,6 +22,6 @@
                               gather(key = variable, value = value, -group) %>% 
                               separate(variable, c("var", "stat"), sep = "\\_") %>%
                               spread(var, value) %>%
-                              as.data.frame), grpname = grouping, group = as.name(grouping), mydir = userdir, `_env` = environment(), file = "code_numerical.R")
+                              as.data.frame), df = quote(intro.data), grpname = grouping, group = as.name(grouping), vars = tblvars, numvars = numericNames(intro.data), mydir = userdir, `_env` = environment(), file = "code_numerical.R")
         }
     }
