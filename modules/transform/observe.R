@@ -3,7 +3,7 @@
     })
     
     observe({
-        updateSelectizeInput(session, "trans", choices = (if (numericNames(intro.data())[1] == "") c("Numeric" = "numeric") else if (categoricNames(intro.data())[1] == "") c("Power" = "power", "Categorical" = "categorical") else c("Power" = "power", "Categorical" = "categorical", "Numeric" = "numeric")))
+        updateSelectizeInput(session, "trans", choices = (if (numericNames(intro.data())[1] == "") c("To Numeric" = "numeric") else if (categoricNames(intro.data())[1] == "") c("Power" = "power", "To Categorical" = "categorical") else c("Power" = "power", "To Categorical" = "categorical", "To Numeric" = "numeric")))
     })
     
     observeEvent(input$savetrans, {

@@ -1,7 +1,7 @@
 transform_ui <- tabPanel("Transform",
                                                   column(4,
                                                          wellPanel(                                          
-                                                             selectizeInput("trans", label = "Choose Transformation", choices = c("Power" = "power", "Categorical" = "categorical", "Numeric" = "numeric"), multiple = FALSE),
+                                                             selectizeInput("trans", label = "Choose Transformation", choices = c("Power" = "power", "To Categorical" = "categorical", "To Numeric" = "numeric"), multiple = FALSE),
                                                              selectizeInput("var_trans", label = "Select Variable", choices = numericNames(mpg), multiple = FALSE),
                                                              conditionalPanel(condition = "input.trans == 'power'",
                                                                               hr(),
@@ -11,6 +11,13 @@ transform_ui <- tabPanel("Transform",
                                                                               ),
                                                                               numericInput("original_binwidth", "Original Bin Width", value = NA, min = 0.1, step = 0.1),
                                                                               numericInput("trans_binwidth", "Transformed Bin Width", value = NA, min = 0.1, step = 0.1)
+                                                             ),
+                                                             conditionalPanel(condition = "input.trans == 'categorical'",
+                                                                  hr(),
+                                                                  selectizeInput("categorical_method", "Method", choices = c("Direct" = "direct", "Binning" = "binning")),
+                                                                  conditionalPanel(condition = "input.categorical_method == 'binning'",
+                                                                      numericInput("categorical_intervals", "Number of Intervals", value = 4, min = 2)                 
+                                                                  )
                                                              ),
                                                              
                                                              hr(),
