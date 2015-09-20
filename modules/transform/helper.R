@@ -27,7 +27,7 @@ transform_data <- function(intro.data, trans, var_trans, colname, method = "dire
         if (!is.numeric(power) || is.null(power)) power <- 1
         if (power == 0) interpolate(~(trans_x <- log(df$var, base = bs)), df = quote(intro.data), var = var_trans, bs = as.numeric(logbase), mydir = userdir, file = "code_transform.R") else interpolate(~(trans_x <- df$var^power), df = quote(intro.data), var = var_trans, power = power, mydir = userdir, file = "code_transform.R") 
         
-        if (all(is.finite(trans_x))) interpolate(~(df$col <- trans_x), df = quote(intro.data), col = colname, mydir = userdir, file = "code_transform.R", append = TRUE)
+        if (all(!is.infinite(trans_x))) interpolate(~(df$col <- trans_x), df = quote(intro.data), col = colname, mydir = userdir, file = "code_transform.R", append = TRUE)
     } else if (trans %in% c("categorical", "numeric")) {
         if (trans == "numeric") {
             interpolate(~(trans_x <- as.numeric(type.convert(as.character(df$var)))), df = quote(intro.data), var = var_trans, mydir = userdir, file = "code_transform.R")

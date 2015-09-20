@@ -13,23 +13,6 @@ library(formatR)
 ###
 ### Helper Functions
 ###
-checkVariable <- function(data, var) {
-    return(nchar(var) > 0 & var %in% names(data))
-}
-
-numericNames <- function(data) {
-    vec <- as.character(subset(whatis(data), type == "numeric")$variable.name)
-    if (length(vec) == 0) vec <- ""
-    
-    return(vec)
-}
-
-categoricNames <- function(data) {
-    vec <- as.character(subset(whatis(data), type != "numeric")$variable.name)
-    if (length(vec) == 0) vec <- ""
-    
-    return(vec)
-}
 
 ## For code printing
 clean_readlines <- function(file) {
@@ -84,8 +67,6 @@ shinyServer(function(input, output, session) {
     ## Modules
     types <- c("helper.R", "observe.R", "reactive.R", "output.R")
     modules_tosource <- file.path("modules", apply(expand.grid(module_info$module, types), 1, paste, collapse = "/"))
-    
-    ## Source the modules
     for (mod in modules_tosource) {
         source(mod, local = TRUE)
     }
