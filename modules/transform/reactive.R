@@ -14,8 +14,8 @@ intro.transform <- reactive({
                       paste(input$var_trans, "trans", sep = "_"))
     
     intro_trans <- transform_data(intro.data(), input$trans, input$var_trans, colname = colname, method = input$categorical_method, intervals = input$categorical_intervals, power = input$power, logbase = input$log_base)
-    intro_trans$intro_var <- if (input$trans == "power") intro_trans[,input$var_trans] else 0
-    intro_trans$intro_trans_var <- if (input$trans == "power") intro_trans[,colname] else 0
+    intro_trans$intro_var <- if (input$trans == "power" && input$var_trans %in% numericNames(intro.data())) intro_trans[,input$var_trans] else 0
+    intro_trans$intro_trans_var <- if (input$trans == "power" && input$var_trans %in% numericNames(intro.data())) intro_trans[,colname] else 0
     
     return(intro_trans)
 })
