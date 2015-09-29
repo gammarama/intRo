@@ -12,3 +12,5 @@ code_*.R
 !code_All.R
 www/code_*.html
 code_All.R
+
+rsconnect/shinyapps.io/bill/intRo.dcf
