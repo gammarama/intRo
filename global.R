@@ -11,7 +11,7 @@ library(Hmisc)
 ###
 ### Configuration
 ###
-if (!exists("intro_enabled_modules") || is.null(intRo_enabled_modules)) intRo_enabled_modules <- c("data/transform", 
+if (!exists("intRo_enabled_modules") || is.null(intRo_enabled_modules)) intRo_enabled_modules <- c("data/transform", 
                                                      "summaries/graphical", "summaries/numerical",
                                                      "statistics/contingency", "statistics/regression", "statistics/t_test")
 if (!exists("intRo_theme") || is.null(intRo_theme)) intRo_theme <- "united"
