@@ -33,7 +33,7 @@ file.choose <- function () {
 }
 
 data.module <- function (inFile, dataset, own) {   
-    cat("\n\n", file = file.path(userdir, "code_All.R"), append = TRUE)
+    cat("\n", file = file.path(userdir, "code_All.R"), append = TRUE)
     if (is.null(inFile) | !own) {
         interpolate(~(intro.data <- get(dat)), dat = dataset, file = "code_sources.R", mydir = userdir, append = FALSE, save_result = TRUE)
     } else {

@@ -38,7 +38,7 @@ interpolate <- function(code, ..., mydir, `_env` = parent.frame(), file = "code_
     
     cat(paste0(as.character(expr)[2], "\n"), file = file.path(mydir, file), append = append)
     
-    if (save_result) cat(paste0(paste(readLines(file.path(mydir, file)), collapse = "\n"), "\n\n"), file = file.path(mydir, "code_All.R"), append = TRUE)
+    if (save_result) cat(paste0(paste(readLines(file.path(mydir, file)), collapse = "\n"), "\n"), file = file.path(mydir, "code_All.R"), append = TRUE)
     if (eval) eval(expr, `_env`)
 }
 
@@ -62,7 +62,7 @@ shinyServer(function(input, output, session) {
     values <- reactiveValues(data = NULL, data_rand = NULL)
     
     ## User Libraries
-    cat(paste(readLines("code/libraries.R"), collapse = "\n"), file = file.path(userdir, "code_All.R"))
+    cat(paste(readLines("code/libraries.R"), collapse = "\n"), "\n", file = file.path(userdir, "code_All.R"))
 
     ## Modules
     types <- c("helper.R", "observe.R", "reactive.R", "output.R")
@@ -80,11 +80,13 @@ shinyServer(function(input, output, session) {
     })
     
     ## Printing
-    observeEvent(input$print_clicked, {
-        file <- render(file.path(userdir, "code_All.R"), 
-                       output_format = if (input$code_clicked) NULL else html_document(css = file.path(getwd(), "www/hide_code.css")),
-                       output_dir = file.path(getwd(), "www"))
-        
-        session$sendCustomMessage(type = "renderFinished", paste(readLines(file), collapse = "\n"))
+    observe({
+        if (length(input$print_clicked) > 0 && input$print_clicked) {
+            file <- render(file.path(userdir, "code_All.R"), 
+                           output_format = if (input$code_clicked) NULL else html_document(css = file.path(getwd(), "www/hide_code.css")),
+                           output_dir = file.path(getwd(), "www"))
+            
+            session$sendCustomMessage(type = "renderFinished", paste(readLines(file), collapse = "\n"))
+        }
     })
 })

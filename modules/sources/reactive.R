@@ -1,14 +1,5 @@
-intro.start <- reactive({
-    input$clearsubset
-    
-    data.initial <- data.module(input$data_own, input$data, input$own)
-    values$data <- data.initial
-                
-    return(data.initial)
-})
-
 intro.data <- reactive({
-    if (is.null(intro.start())) return(NULL)
+    if (is.null(values$data)) values$data <- get("mpg")
         
     intro.data <- values$data
     data.subset <- process_logical(intro.data, input$subs)
@@ -18,8 +9,8 @@ intro.data <- reactive({
     values$data_rand <- values$data
     
     if (input$randomsub & is.numeric(input$randomsubrows) & input$randomsubrows >= 1 & input$randomsubrows <= nrow(values$data)) {
-        interpolate(~(intro.data <- sample_n(df, rows)), df = quote(intro.data), rows = input$randomsubrows, mydir = userdir, file = "code_sources.R")
-        cat(paste(c("\n", readLines(file.path(userdir, "code_sources.R"))), collapse = "\n"), file = file.path(userdir, "code_All.R"), append = TRUE)
+        interpolate(~(intro.data <- sample_n(df, rows)), df = quote(intro.data), rows = input$randomsubrows, mydir = userdir, file = "code_sources.R", eval = FALSE)
+        values$data_rand <- sample_n(intro.data, input$randomsubrows)
     }
     
     return(intro.data)
