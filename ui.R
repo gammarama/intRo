@@ -15,18 +15,18 @@ dynFrame <- function(outputId)
 }
 
 ## Source ui
-module_info <- read.table("modules/modules.txt", header = TRUE, sep = ",")
-sapply(file.path("modules", dir("modules")[dir("modules") != "modules.txt"], "ui.R"), source)
+sapply(file.path("modules", modules, "ui.R"), source)
 
 ## Generates the UI tabs
 mylist <- list()
 old_heading <- ""
-for (i in 1:nrow(module_info)) {
-    if (module_info[i,1] != old_heading) {
-        mylist[[length(mylist) + 1]] <- capitalize(as.character(module_info[i,1]))
-        old_heading <- module_info[i,1]
+for (i in seq_along(modules)) {
+    my.module <- strsplit(modules[i], "/")[[1]]
+    if (my.module[1] != old_heading) {
+        mylist[[length(mylist) + 1]] <- capitalize(my.module[1])
+        old_heading <- my.module[1]
     }
-    mylist[[length(mylist) + 1]] <- get(paste(module_info[i,2], "ui", sep = "_"))
+    mylist[[length(mylist) + 1]] <- get(paste(my.module[2], "ui", sep = "_"))
 }
 
 shinyUI(

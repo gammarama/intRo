@@ -46,10 +46,7 @@ interpolate <- function(code, ..., mydir, `_env` = parent.frame(), file = "code_
 ### Shiny Server definition
 ###
 shinyServer(function(input, output, session) {
-    
-    ## Module info
-    module_info <- read.table("modules/modules.txt", header = TRUE, sep = ",")
-    
+
     ## Get directory ready for code printing
     userdir <- file.path(tempdir(), tempfile())
     dir.create(userdir, recursive = TRUE)
@@ -66,7 +63,7 @@ shinyServer(function(input, output, session) {
 
     ## Modules
     types <- c("helper.R", "observe.R", "reactive.R", "output.R")
-    modules_tosource <- file.path("modules", apply(expand.grid(module_info$module, types), 1, paste, collapse = "/"))
+    modules_tosource <- file.path("modules", apply(expand.grid(modules, types), 1, paste, collapse = "/"))
     for (mod in modules_tosource) {
         source(mod, local = TRUE)
     }
