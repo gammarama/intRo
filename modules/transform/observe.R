@@ -8,5 +8,5 @@
     
     observeEvent(input$savetrans, {
         values$data <- intro.transform() %>% select(-intro_var, -intro_trans_var)
-        cat(paste0("\n\n", paste(readLines(file.path(userdir, "code_transform.R")), collapse = "\n")), file = file.path(userdir, "code_All.R"), append = TRUE)
+        cat(paste0("\n", paste(c(readLines(file.path(userdir, "code_transform.R")), "\n"), collapse = "\n")), file = file.path(userdir, "code_All.R"), append = TRUE)
     })
