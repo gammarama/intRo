@@ -30,7 +30,7 @@ for (i in seq_along(modules)) {
 }
 
 shinyUI(
-    navbarPage("intRo", id = "top-nav", theme = shinytheme("united"),
+    navbarPage("intRo", id = "top-nav", theme = shinytheme(intRo_theme),
                tabPanel(title = "", icon = icon("home", "fa-2x"),
                         fluidRow(
                             dynFrame(outputId = 'print_output'),
