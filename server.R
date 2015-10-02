@@ -57,12 +57,9 @@ shinyServer(function(input, output, session) {
     
     ## Reactive values
     values <- reactiveValues(data = NULL, data_rand = NULL)
-    
-    ## User Libraries
-    cat(paste(readLines("code/libraries.R"), collapse = "\n"), "\n", file = file.path(userdir, "code_All.R"))
 
     ## Modules
-    types <- c("helper.R", "observe.R", "reactive.R", "output.R")
+    types <- c("libraries.R", "helper.R", "observe.R", "reactive.R", "output.R")
     modules_tosource <- file.path("modules", apply(expand.grid(modules, types), 1, paste, collapse = "/"))
     for (mod in modules_tosource) {
         source(mod, local = TRUE)
