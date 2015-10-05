@@ -3,10 +3,6 @@
 ###
 library(shiny)
 library(shinyAce)
-library(YaleToolkit)
-library(ggplot2)
-library(ggvis)
-library(Hmisc)
 
 ###
 ### Configuration
@@ -15,28 +11,63 @@ load("data/configuration.rda")
 if (!exists("intRo_enabled_modules") || is.null(intRo_enabled_modules)) intRo_enabled_modules <- intRo_configuration[["intRo_enabled_modules"]]
 if (!exists("intRo_theme") || is.null(intRo_theme)) intRo_theme <- intRo_configuration[["intRo_theme"]]
 
+## Get directory ready for code printing
+userdir <- file.path(tempdir(), tempfile())
+dir.create(userdir, recursive = TRUE)
+sapply(file.path(userdir, dir(userdir)[grep("code_", dir(userdir))]), file.remove)
+
+as_call <- function(x) {
+    if (inherits(x, "formula")) {
+        stopifnot(length(x) == 2)
+        x[[2]]
+    } else if (is.atomic(x) || is.name(x) || is.call(x)) {
+        x
+    } else {
+        stop("Unknown input")
+    }
+}
+
+interpolate <- function(code, ..., mydir, `_env` = parent.frame(), file = "code_All.R", append = FALSE, save_result = FALSE, eval = TRUE) {
+    stopifnot(inherits(code, "formula"), length(code) == 2)
+    
+    args <- lapply(list(...), as_call)
+    expr <- methods::substituteDirect(as_call(code), args)
+    
+    cat(paste0(as.character(expr)[2], "\n"), file = file.path(mydir, file), append = append)
+    
+    if (save_result) cat(paste0(paste(readLines(file.path(mydir, file)), collapse = "\n"), "\n"), file = file.path(mydir, "code_All.R"), append = TRUE)
+    if (eval) eval(expr, `_env`)
+}
+
 ###
 ### Modules
 ###
+pkgs <- c(".GlobalEnv", "tools:rstudio", "package:stats", "package:graphics", "package:grDevices", "package:utils", 
+          "package:datasets", "package:methods", "Autoloads", "package:base", "package:shiny", "package:shinyAce")
+otherpkgs <- search()[!(search() %in% pkgs)]
+lapply(otherpkgs, detach, character.only = TRUE, unload = TRUE)
+
 categories <- unique(c("data", sapply(intRo_enabled_modules, function(x){strsplit(x, "/")[[1]][1]})))
 modules <- unique(c("data/sources", intRo_enabled_modules))
+sapply(file.path("modules", modules, "libraries.R"), source)
 
 ###
 ### Helper Functions
 ###
+
 checkVariable <- function(data, var) {
     return(nchar(var) > 0 & var %in% names(data))
 }
 
 numericNames <- function(data) {
-    vec <- as.character(subset(whatis(data), type == "numeric")$variable.name)
+    vec <- as.character(subset(YaleToolkit::whatis(data), type == "numeric")$variable.name)
     if (length(vec) == 0) vec <- ""
     
     return(vec)
 }
 
 categoricNames <- function(data) {
-    vec <- as.character(subset(whatis(data), type != "numeric")$variable.name)
+    vec <- as.character(subset(YaleToolkit::whatis(data), type != "numeric")$variable.name)
     if (length(vec) == 0) vec <- ""
     
     return(vec)
