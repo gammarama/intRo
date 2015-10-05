@@ -6,7 +6,7 @@ download_intRo <- function(path = NULL) {
     git2r::clone("https://github.com/gammarama/intRo", local_path = path)
 }
 
-run_intRo <- function(path = NULL, enabled_modules = NULL, theme = "united") {
+run_intRo <- function(path = NULL, enabled_modules = NULL, theme = NULL) {
     if (is.null(path)) path <- file.path(getwd(), "intRo")
     
     assign("intRo_enabled_modules", enabled_modules, envir = globalenv())
