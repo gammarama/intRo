@@ -19,6 +19,13 @@ clean_readlines <- function(file) {
 ###
 shinyServer(function(input, output, session) {
     
+    ## Update directory
+    newuserdir <- file.path(tempdir(), tempfile())
+    dir.create(newuserdir, recursive = TRUE)
+    sapply(file.path(newuserdir, dir(newuserdir)[grep("code_", dir(newuserdir))]), file.remove)
+    file.copy(file.path(userdir, "code_All.R"), newuserdir)
+    userdir <- newuserdir
+    
     ## Maximum file upload size = 10MB
     options(shiny.maxRequestSize = 10 * 1024 ^ 2)
     
