@@ -23,7 +23,7 @@ old_heading <- ""
 for (i in seq_along(modules)) {
     my.module <- strsplit(modules[i], "/")[[1]]
     if (my.module[1] != old_heading) {
-        mylist[[length(mylist) + 1]] <- capitalize(my.module[1])
+        mylist[[length(mylist) + 1]] <- Hmisc::capitalize(my.module[1])
         old_heading <- my.module[1]
     }
     mylist[[length(mylist) + 1]] <- get(paste(my.module[2], "ui", sep = "_"))
