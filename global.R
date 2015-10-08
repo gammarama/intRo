@@ -43,7 +43,8 @@ interpolate <- function(code, ..., mydir, `_env` = parent.frame(), file = "code_
 ### Modules
 ###
 pkgs <- c(".GlobalEnv", "tools:rstudio", "package:stats", "package:graphics", "package:grDevices", "package:utils", 
-          "package:datasets", "package:methods", "Autoloads", "package:base", "package:shiny", "package:shinyAce")
+          "package:datasets", "package:methods", "Autoloads", "package:base", "package:shiny", "package:shinyAce",
+          "package:git2r", "package:intRo")
 otherpkgs <- search()[!(search() %in% pkgs)]
 lapply(otherpkgs, detach, character.only = TRUE, unload = TRUE)
 
