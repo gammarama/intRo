@@ -8,8 +8,8 @@ library(shinyAce)
 ### Configuration
 ###
 load("data/configuration.rda")
-if (!exists("intRo_enabled_modules") || is.null(intRo_enabled_modules)) intRo_enabled_modules <- intRo_configuration[["intRo_enabled_modules"]]
-if (!exists("intRo_theme") || is.null(intRo_theme)) intRo_theme <- intRo_configuration[["intRo_theme"]]
+intRo_enabled_modules <- intRo_configuration[["intRo_enabled_modules"]]
+intRo_theme <- intRo_configuration[["intRo_theme"]]
 
 ## Get directory ready for code printing
 userdir <- file.path(tempdir(), tempfile())
