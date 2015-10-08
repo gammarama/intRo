@@ -4,7 +4,7 @@
 \alias{run_intRo}
 \title{Run a local instance of intRo}
 \usage{
-run_intRo(path = getwd(), enabled_modules = NULL, theme = NULL)
+run_intRo(path = getwd(), enabled_modules = NULL, theme = NULL, ...)
 }
 \arguments{
 \item{path}{The directory containing the intRo folder}
@@ -12,6 +12,8 @@ run_intRo(path = getwd(), enabled_modules = NULL, theme = NULL)
 \item{enabled_modules}{The modules to enable}
 
 \item{theme}{The shinythemes theme to use}
+
+\item{...}{Additional arguments passed to the Shiny runApp function}
 }
 \description{
 Run a local instance of intRo

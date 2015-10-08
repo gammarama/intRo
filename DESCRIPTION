@@ -15,7 +15,8 @@ BugReports: https://github.com/erichare/gammarama/issues
 Depends: R (>= 3.0.2)
 Imports: 
     git2r,
-    shiny
+    shiny,
+    shinyapps
 Suggests: 
     roxygen2,
     knitr

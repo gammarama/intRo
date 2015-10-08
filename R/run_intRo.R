@@ -3,6 +3,7 @@
 #' @param path The directory containing the intRo folder
 #' @param enabled_modules The modules to enable
 #' @param theme The shinythemes theme to use
+#' @param ... Additional arguments passed to the Shiny runApp function
 #' 
 #' @export
 #' 
@@ -14,7 +15,7 @@
 #'     run_intRo(enabled_modules = c("data/transform", "summaries/graphical"),
 #'               theme = "cerulean")
 #' }
-run_intRo <- function(path = getwd(), enabled_modules = NULL, theme = NULL) {
+run_intRo <- function(path = getwd(), enabled_modules = NULL, theme = NULL, ...) {
     path <- file.path(path, "intRo")
     
     if (is.null(enabled_modules)) enabled_modules <- c("data/transform", 
@@ -29,5 +30,5 @@ run_intRo <- function(path = getwd(), enabled_modules = NULL, theme = NULL) {
                                 intRo_theme = theme)
     save(intRo_configuration, file = file.path(path, "data", "configuration.rda"))
     
-    runApp(path)
+    runApp(path, ...)
 }
