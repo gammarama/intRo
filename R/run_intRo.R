@@ -18,17 +18,7 @@
 run_intRo <- function(path = getwd(), enabled_modules = NULL, theme = NULL, ...) {
     path <- file.path(path, "intRo")
     
-    if (is.null(enabled_modules)) enabled_modules <- c("data/transform", 
-                                                       "summaries/graphical",
-                                                       "summaries/numerical",
-                                                       "statistics/contingency",
-                                                       "statistics/regression",
-                                                       "statistics/t_test")
-    if (is.null(theme)) theme <- "united"
-    
-    intRo_configuration <- list(intRo_enabled_modules = enabled_modules,
-                                intRo_theme = theme)
-    save(intRo_configuration, file = file.path(path, "data", "configuration.rda"))
+    set_options(path, enabled_modules, theme)
     
     runApp(path, ...)
 }

@@ -4,10 +4,14 @@
 \alias{deploy_intRo}
 \title{Deploy an instance of intRo to ShinyApps.io}
 \usage{
-deploy_intRo(path = getwd(), ...)
+deploy_intRo(path = getwd(), enabled_modules = NULL, theme = NULL, ...)
 }
 \arguments{
 \item{path}{The directory containing the intRo folder}
+
+\item{enabled_modules}{The modules to enable}
+
+\item{theme}{The shinythemes theme to use}
 
 \item{...}{Additional arguments passed to the shinyapps deployApp function}
 }
@@ -17,6 +21,7 @@ Deploy an instance of intRo to ShinyApps.io
 \examples{
 \dontrun{
     deploy_intRo()
+                 theme = "cerulean")
 }
 }
 
