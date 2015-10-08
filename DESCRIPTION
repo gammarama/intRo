@@ -1,0 +1,24 @@
+Package: intRo
+Title: Download and Run the intRo Statistical Software
+Version: 0.0.9000
+Authors@R: c(
+    person("Eric", "Hare", email = "erichare@iastate.edu", role = c("aut", "cre")),
+    person("Andee", "Kaplan", email = "ajkaplan@iastate.edu", role = "aut"))
+Description: Download, run, customize, and deploy your own instance of intRo.
+    The intRo package provides a small set of functions designed for the easy
+    customization of the default set of intRo options. For instance, the set of
+    modules, the order that the modules appear, and the theme of the application
+    can be specified. Users can then deploy an instance of intRo onto the
+    ShinyApps.io web service.
+URL: https://github.com/gammarama/intRo
+BugReports: https://github.com/erichare/gammarama/issues
+Depends: R (>= 3.0.2)
+Imports: 
+    git2r,
+    shiny
+Suggests: 
+    roxygen2,
+    knitr
+License: GPL-3
+LazyData: true
+VignetteBuilder: knitr

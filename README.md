@@ -1,28 +1,24 @@
-intRo
-=====
+## discreteRV
+# R Package for easy generation of Discrete Random Variables
 
-Shiny-based statistics learning application available at http://www.intro-stats.com . 
+# INSTALLATION
 
-Detailed documentation and tutorial for use available at http://gammarama.github.io/intRo .
+The latest stable release is available on CRAN, and can be loaded by calling install.packages("discreteRV").  If you would like to install the current revision on GitHub, please follow these instructions:
 
-Motivation
------------
-The goal of intRo is to foster a student interest in coding while learning basic statistics, or at a minimum, help students to learn a bit more about working with data. This project serves as a prototype of this application, with functionality that exhibits the basic user experience.
+1. Install the R package "devtools" with the following command:
 
-As a web-based application, this tool is immediately more familiar to students than a desktop application. The need for dealing with software licenses, installation configuration, and supported platforms has been eliminated. This allows students to spend more time working with the data and learning statistics than having to struggle to get the software running.
+        install.packages("devtools")
 
-Running Locally
-----------
-To run the application locally, clone the repository and checkout branch `master`. Navigate to the directory and execute the following in `R`:
-```
-library(shiny)
-runApp()
-``` 
+2. Load the devtools package with the following command:
 
+        library(devtools)
 
-To run the documentation locally on a machine with Jekyll installed and configured for GitHub Pages, checkout the `gh-pages` branch and execute the following command in the terminal: 
-```
-bundle exec jekyll serve --baseurl ''
-``` 
+3. Using the install_github function, install discreteRV with the following command:
 
-For more information on installing Jekyll and configuring for GitHub Pages, please see https://help.github.com/articles/using-jekyll-with-pages .
+        install_github("erichare/discreteRV")
+
+4. Load the library with the following command:
+
+        library(discreteRV)
+
+5. You're done!
