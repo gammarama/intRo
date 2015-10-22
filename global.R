@@ -12,7 +12,7 @@ intRo_enabled_modules <- intRo_configuration[["intRo_enabled_modules"]]
 intRo_theme <- intRo_configuration[["intRo_theme"]]
 
 ## Get directory ready for code printing
-userdir <- file.path(tempdir(), tempfile())
+userdir <- tempfile()
 dir.create(userdir, recursive = TRUE)
 sapply(file.path(userdir, dir(userdir)[grep("code_", dir(userdir))]), file.remove)
 
