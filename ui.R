@@ -56,5 +56,5 @@ shinyUI(
                               includeScript("scripts/other-helpers.js"),
                               includeCSS("www/additional.css")         
                ),
-               tags$head(tags$link(rel = "shortcut icon", href = "images/icon.png"))
+               tags$head(includeScript("scripts/google-analytics.js"), tags$link(rel = "shortcut icon", href = "images/icon.png"))
     ))
