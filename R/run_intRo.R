@@ -15,7 +15,7 @@
 run_intRo <- function(path = getwd(), enabled_modules = NULL, theme = NULL, ...) {
     path <- file.path(path, "intRo")
     
-    set_options(path, enabled_modules, theme)
+    set_options(path, enabled_modules, theme, google_analytics = NULL)
     
     runApp(path, ...)
 }
