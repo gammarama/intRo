@@ -1,11 +1,8 @@
 #' Download an instance of intRo to your machine
 #' 
 #' @param path The directory to download intRo to
-#' 
 #' @export
-#' 
 #' @importFrom git2r clone
-#' 
 #' @examples
 #' \dontrun{
 #'     download_intRo()

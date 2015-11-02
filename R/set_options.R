@@ -3,12 +3,12 @@
 #' @param path The directory containing the intRo folder
 #' @param enabled_modules The modules to enable
 #' @param theme The shinythemes theme to use
-#' 
+#' @param google_analytics The google analytics tracking ID to use
 #' @examples
 #' \dontrun{
 #'     deploy_intRo()
 #' }
-set_options <- function(path, enabled_modules, theme) {
+set_options <- function(path, enabled_modules, theme, google_analytics) {
     if (!file.exists(file.path(path, "data", "configuration.rda"))) stop("Could not find intRo.")
     if (is.null(enabled_modules)) enabled_modules <- c("data/transform", 
                                                        "summaries/graphical",
@@ -17,6 +17,13 @@ set_options <- function(path, enabled_modules, theme) {
                                                        "statistics/regression",
                                                        "statistics/t_test")
     if (is.null(theme)) theme <- "united"
+    if (is.null(google_analytics)) google_analytics <- "intRo_tracking_code"
+    
+    ## Routine to set google analytics
+    script.path <- file.path(path, "scripts", "google-analytics.js")
+    js.lines <- readLines(script.path)
+    js.lines <- gsub("intRo_tracking_code", google_analytics, js.lines)
+    writeLines(js.lines, script.path)
     
     ## Routine to check packages
     pkgs.required <- unique(unlist(lapply(enabled_modules, function(mod) {

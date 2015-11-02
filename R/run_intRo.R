@@ -4,11 +4,8 @@
 #' @param enabled_modules The modules to enable
 #' @param theme The shinythemes theme to use
 #' @param ... Additional arguments passed to the Shiny runApp function
-#' 
 #' @export
-#' 
 #' @importFrom shiny runApp
-#' 
 #' @examples
 #' \dontrun{
 #'     run_intRo()
