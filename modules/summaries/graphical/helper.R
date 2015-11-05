@@ -4,7 +4,6 @@ intro.plotdata <- function(intro.data, x, y, plottype) {
     
     interpolate(
         ~(intro.plot <- df %>%
-            na.omit %>%
             mutate(id = 1:n(),
                    intro_x_cat = factor(x),
                    intro_x_num = as.numeric(x),
@@ -24,7 +23,8 @@ intro.plotdata <- function(intro.data, x, y, plottype) {
 intro.quantdata <- function(intro.plot) {
     interpolate(
         ~(intro.quant <- df %>%
-              mutate(intro_quant = qnorm(seq(0, 1, by = (1/(length(intro_x_num) + 1)))[-c(1, (length(intro_x_num) + 2))]),
+              filter(!is.na(intro_x_num)) %>%
+              mutate(intro_quant = qnorm(tail(head(seq(0, 1, by = (1/(length(intro_x_num) + 1))), -1), -1)),
                      intro_x_num = sort(intro_x_num))),
         df = quote(intro.plot),
         mydir = userdir, `_env` = environment(), file = "code_graphical_reactive.R", append = TRUE

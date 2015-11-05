@@ -62,14 +62,18 @@ checkVariable <- function(data, var) {
 
 numericNames <- function(data) {
     vec <- as.character(subset(YaleToolkit::whatis(data), type == "numeric")$variable.name)
-    if (length(vec) == 0) vec <- ""
+
+    real_columns <- unlist(lapply(data[,vec], function(col) { sum(!is.na(col)) > 0 }))
+    if (is.null(real_columns)) return("")
     
-    return(vec)
+    return(names(real_columns)[real_columns])
 }
 
 categoricNames <- function(data) {
     vec <- as.character(subset(YaleToolkit::whatis(data), type != "numeric")$variable.name)
-    if (length(vec) == 0) vec <- ""
+
+    real_columns <- unlist(lapply(data[,vec], function(col) { sum(!is.na(col)) > 0 }))
+    if (is.null(real_columns)) return("")
     
-    return(vec)
+    return(names(real_columns)[real_columns])
 }
