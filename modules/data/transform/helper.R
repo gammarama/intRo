@@ -3,7 +3,8 @@ plot_var_trans <- function(data, x) {
     if (!(x %in% names(data))) return(NULL)
     
     if (is.numeric(data[,x])) {
-        na.omit(data) %>%
+        data %>%
+            filter_(paste0("!is.na(", x, ")")) %>%
             ggvis(x = as.name(x)) %>%
             layer_histograms()
     } else {
