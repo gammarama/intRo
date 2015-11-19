@@ -28,8 +28,8 @@ process_logical <- function(data, x) {
     return(new_data)
 }
 
-file.choose <- function () {
-    return(input$data_own[,"datapath"])
+read.csv <- function (path) {
+    return(utils::read.csv(input$data_own[,"datapath"]))
 }
 
 data.module <- function (inFile, dataset, own) {   
@@ -37,7 +37,7 @@ data.module <- function (inFile, dataset, own) {
     if (is.null(inFile) | !own) {
         interpolate(~(intro.data <- get(dat)), dat = dataset, file = "code_sources.R", mydir = userdir, append = FALSE, save_result = TRUE)
     } else {
-        interpolate(~(intro.data <- read.csv(file.choose())), file = "code_sources.R", mydir = userdir, append = FALSE, save_result = TRUE)
+        interpolate(~(intro.data <- read.csv(data)), data = input$data_own[,"name"], file = "code_sources.R", mydir = userdir, append = FALSE, save_result = TRUE)
     }
     return(intro.data)
 }
