@@ -47,6 +47,12 @@ shinyServer(function(input, output, session) {
         updateAceEditor(session, "myEditor", value = paste(code(), collapse = "\n"))
     })
     
+    ##
+    ## For RMarkdown Downloading:
+    ## spin(file.path(userdir, "code_All.R"), format = "Rmd", knit = FALSE)
+    ## rmd.path <- file.path(userdir, "code_All.Rmd")
+    ##
+    
     ## Printing
     observe({
         if (length(input$print_clicked) > 0 && input$print_clicked) {
