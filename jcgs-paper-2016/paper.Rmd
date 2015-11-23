@@ -152,6 +152,36 @@ Part two of this text discusses probability and sampling distributions, which is
 Statistics courses with a lab component can most benefit from the use of \texttt{intRo}. As students learn the aforementioned concepts, they can practice using the tools to perform the statistical tests and summaries. They simply upload a dataset and click the module appropriate to the section of the class. Once they choose the options desired by the instructor (variables, confidence levels, etc.), they can view the results and ultimately print the output for turning in. Early labs can walk the user through the limited number of button presses and clicks necessary, while later labs can more vaguely describe the intended output in hopes that the user can easily navigate the \texttt{intRo} interface to obtain the results. For topics currently unsupported by \texttt{intRo}, the instructor can supplement its use with other web-based modules that are publicly available or create their own modules within \texttt{intRo} as detailed in section \ref{sec:extensible}.
 
 # Using intRo
+\texttt{intRo} can be downloaded, ran, and deployed on ShinyApps.io through the use of the R package \texttt{intRo}. Currently, the package is only available and GitHub, and can be installed using the \texttt{devtools} package as follows:
+
+```{r, eval=FALSE}
+devtools::install_github("gammarama/intRo")
+```
+
+After installing the \texttt{intRo} package, the first function one should call is `download_intRo`. `download_intRo` takes as an argument a directory in which to store the application. By default, it selects the working directory of the R session. This function clones the application branch of the \texttt{intRo} repository on GitHub, and hence will pull the latest version of the code whenever it is ran.
+
+Running `download_intRo` will produce an \texttt{intRo} folder in the specified folder. It can then be ran as any \texttt{Shiny} application, using \texttt{Shiny}'s `runApp` command. However, we have provided a wrapper function `run_intRo` which adds some additional customization options to the execution process. `run_intRo` takes as argument the path to the folder containing the \texttt{intRo} application. It also takes several more optional arguments:
+
+* `enabled_modules`: A character vector containing the modules to enable
+* `theme`: A string representing a \texttt{shinythemes} theme to use
+* `...`: Additional arguments passed to \texttt{Shiny}'s `runApp` function
+
+The package provides help documentation which explains in further detail the format that these arguments would take, but as an example, suppose I wanted to download \texttt{intRo} to my working directory, execute an \texttt{intRo} session with only the data sources, data transform, and numerical summaries modules enabled, and apply the cerulean theme. The series of calls to do so would be as follows:
+
+```{r, eval=FALSE}
+download_intRo()
+run_intRo(enabled_modules = c("data/transform", "summaries/numerical"), theme = "cerulean")
+```
+
+Note that the data sources module is required, and hence must be included in all intRo sessions and need not be specified in the enabled_modules argument.
+
+If the intent is to use a specific instance of \texttt{intRo} where many users will access it at the same time, such as in an introductory statistics class, it may be preferable to deploy a custom instance of \texttt{intRo} to a publicly accessible URL. The package provides a function `deploy_intRo` which is a wrapper for the `deployApp` function contained in the \texttt{shinyapps} package. Once the shinyapps package is installed and configured, `deploy_intRo` will upload \texttt{intRo} as an application on the user's account. The function takes the same arguments as `run_intRo`, so it can be deployed with a custom selection of modules, and a customized theme. It also takes an additional argument `google_analytics`, which allows the specification of a Google Analytics tracking ID. It also takes `...` as additional arguments to be passed into the `deployApp` routine. For example, if we wished to deploy the instance of \texttt{intRo} we ran previously, we would call it like so:
+
+```{r, eval=FALSE}
+deploy_intRo(enabled_modules = c("data/transform", "summaries/numerical"), theme = "cerulean")
+```
+
+Once the process finished, the app will become available at \url{http://<user>.shinyapps.io/intRo}, where `<user>` is the username of the ShinyApps.io account configured.
 
 # Details
 
