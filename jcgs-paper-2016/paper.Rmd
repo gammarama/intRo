@@ -196,6 +196,36 @@ Once the process finished, the app will become available at \url{http://<user>.s
 ## Modules
 TODO: Rewrite this as the details behind the modularity. Add information on writing your own modules
 
+## Reproducibility
+Though they can make common actions quicker and interacting with software much simplier, many Graphical User Interfaces for scientific software packages come with a major drawback. That is, the actions taken by the user are typically not reproducible. Code scripting, on the other hand, allows us to share a file containing code, and another user can execute the code to reproduce the same results. In terms of the scientific process, where results can and should be scrutinized by other parties, the utility of GUIs are greatly limited.
+
+We have designed \texttt{intRo} modules to reproduce actions taken by the user so that they can obtain \texttt{R} code associated with each module interacted with. When a user chooses to store the results associated with a particular module, R code yielding the visible results is automatically added to the code window at the bottom. This framework yields several advantages:
+
+1. This eases a user who may be intimidated by programming into the idea that interacting with a user interface is really just a frontend for code. Seeing the correspondence between graphical clicks and printed code will hopefully also lessen the fear of coding that many inexperienced users may have.
+
+2. An analysis created by \texttt{intRo} can be reproduced in an R session to easily assess and extend the results.
+
+3. "Printing" the results of an \texttt{intRo} analysis amounts to nothing more than executing the R code on the server, adding another layer of reproducibility.
+
+We designed the modules in such a way that the code printed to the console is the same as the code executed by the server, which makes the process of writing an \texttt{intRo} module significantly more seamless. The workhorse function for this reproducibility framework is called `interpolate`, which is based on a function proposed by Hadley Wickham[ref]. The idea of interpolation is that the call can be captured, printed, and evaluated, with all the appropriate arguments substituted into the call automatically. This means that depending on the options selected in \texttt{intRo}, the corresponding arguments to functions are appropriately set for reproduction in a standard R session.
+
+```{r, eval=FALSE}
+interpolate <- function(code, ..., mydir, `_env` = parent.frame(), file = "code_All.R", 
+                        append = FALSE, save_result = FALSE, eval = TRUE) {
+    stopifnot(inherits(code, "formula"), length(code) == 2)
+    
+    args <- lapply(list(...), as_call)
+    expr <- methods::substituteDirect(as_call(code), args)
+    
+    cat(paste0(as.character(expr)[2], "\n"), file = file.path(mydir, file), append = append)
+    
+    if (save_result) cat(paste0(paste(readLines(file.path(mydir, file)), collapse = "\n"),
+                                "\n"), file = file.path(mydir, "code_All.R"), append = TRUE)
+    if (eval) eval(expr, `_env`)
+}
+```
+
+
 ## Reactive design choices
 
 Reactive programming is a programming paradigm that ``tackles issues posed by event-driven applications by providing abstractions to express programs as reactions to external events and having the language automatically manage the flow of time (by conceptually supporting simultaneity), and data and computation dependencies.'' [@bainomugisha2012survey] As implemented by \texttt{Shiny}, results automatically update when users interact with the interface. 
@@ -203,8 +233,6 @@ Reactive programming is a programming paradigm that ``tackles issues posed by ev
 \texttt{intRo} leverages the reactive programming nature of \texttt{Shiny}, and as such is designed around the idea of user input cascading through the entire application. In a typical \texttt{Shiny} application, users interact with inputs that act as parameters to function, which in turn yield different results. Within \texttt{intRo}, the users are able to interact with and manipulate the data underlying the entire application. This posed many challenges in the creation of \texttt{intRo} and drove design decisions, namely timely save points according to the user's workflow, and reactive updating of variable lists tied to inputs across the entire application. Because the user may experiment with different configurations or select different variables, we did not want to store all actions taken in the intRo session. Rather, each module includes a button allowing the user to explicitly store the output visible in the results panel into the R script. This way, output is only stored when the user is satisfied, and the resulting output is not cluttered with unnecessary information.
 
 In the creation of \texttt{intRo} we walked a fine line between giving the user flexibility and having realistic usability. At the same time, \texttt{intRo} was created as a consumer of another package, \texttt{Shiny}, in which we as developers were the beneficiaries of another team of developers' decision to balance flexibility and usability. For a tangible example, consider the graphical summaries module. We only allow variables of a type consistent with the selected plot to be displayed. This is a conscious decision that limits an \texttt{intRo} user's flexibility, while maximizing the usability (by minimizing crashes) of the application. On the flip side of this, \texttt{Shiny} allows much higher flexibility. For instance, the entire application (including user interface) is created dynamically upon load, based on the modules currently housed within \texttt{intRo}, as detailed in section \ref{sec:extensible}. However, \texttt{Shiny} does have limits on its flexibility based on the designers decisions for usability. One current example is the slider element. This element allows for fixed width steps from its minimum to its maximum. The JavaScript library being utilized in \texttt{Shiny} allows for arbitrary function calls to to generate these steps, however they must be written in plain JavaScript. This is an example of a decision made by the developers of \texttt{Shiny} to limit functionality in favor of usability of their package.
-
-## Reproducibility
 
 # Conclusions and future work
 
