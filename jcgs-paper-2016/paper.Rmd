@@ -24,9 +24,7 @@ blind: false
 
 # Introduction
 
-TODO: Settle on licensing for intRo
-
-The widespread adoption of \texttt{R} as a tool for statistical analysis has undoubtedly beenan important development for the scientific community. However, using \texttt{R} in most cases still requires a basic knowledge of programming concepts which may be unfamiliar to the introductory statistics student. This issue may explain why introductory courses often utilize software applications such as \texttt{JMP}, even though instructors would tend to use a tool like \texttt{R} in their own work. Still, signficant compromises must be made when using software like \texttt{JMP}, including dealing with software licenses, unsupported desktop platforms, and non-ideal user interface decisions. 
+The widespread adoption of \texttt{R} as a tool for statistical analysis has undoubtedly been an important development for the scientific community. However, using \texttt{R} in most cases still requires a basic knowledge of programming concepts which may be unfamiliar to the introductory statistics student. This issue may explain why introductory courses often utilize software applications such as \texttt{JMP}, even though instructors would tend to use a tool like \texttt{R} in their own work. Still, signficant compromises must be made when using software like \texttt{JMP}, including dealing with software licenses, unsupported desktop platforms, and non-ideal user interface decisions. 
 
 In teaching Introduction to Business Statistics at Iowa State University, we witnessed profound struggles by students attempting to practice the introductory concepts discussed in class using current software. Scrimshaw notes in his manuscript that "open-ended packages, like any others, may create obstacles to learning simply through their lack of user-friendliness in the sheer mechanics of operating them, rather than any intrinsic difficulty in the content...." [-@scrimshaw2001computers] In our own experience teaching, students' struggles were often directly related to the use of the software and not any sort of fundamental misunderstanding of the material, in agreement with Scrimshaw's finding.
 
@@ -36,9 +34,7 @@ Upon the release of \texttt{RStudio}'s \texttt{Shiny} [@shiny] it became easier 
 
 # What is \texttt{intRo}?
 
-TODO: Talk about the package (briefly)
-
-\texttt{intRo} is a web-based tool to accompany an introductory statistics class. It is meant to assist in the learning of statistics rather than a stand-alone deliverer of statistics education, with the intention of being used in conjunction with a guided class. 
+\texttt{intRo} is a web-based tool to accompany an introductory statistics class. It is meant to assist in the learning of statistics rather than a stand-alone deliverer of statistics education, with the intention of being used in conjunction with a guided class. An accompanying R package, titled \texttt{intRo} and available on GitHub, assists in the downloading, running, and deploying of \texttt{intRo} instances. 
 
 We have three fundamental philosophies that guided the creation of \texttt{intRo}, and this comes out in the design. Primarily, \texttt{intRo} is \emph{easy} to use and can be an \emph{exciting} part of learning statistics. Additionally, \texttt{intRo} is an \emph{extensible} tool, allowing for a user of \texttt{intRo} to tailor the tool for her own classroom needs.
 
@@ -78,7 +74,15 @@ Once students get pulled in by an easy to use interface and fun interaction with
 
 ## Extensible
 \label{sec:extensible}
-On the front end, user interaction with \texttt{intRo} is split into bitesize chunks that we call modules. This is true of the back end as well. Each module is a self contained set of \texttt{R} code that is dynamically added to the application at run time. What this means is that \texttt{intRo} can be easily extended by the addition of modules within the framework underlying the application. This extensibility allows for \texttt{intRo} to be customized for an individual classroom setting, tailored to the needs of a particular course.
+On the front end, user interaction with \texttt{intRo} is split into bitesize chunks that we call modules. Modules are self-contained pieces of functionality which implement common statistical procedures that are often used in introductory statistics classes.
+
+Within the data category there are two modules, sources and transformation. The data sources module allows the user to select or upload a dataset. Several datasets are pre-included, which can be selected via a drop-down menu. The user can check a box to upload a dataset, and then select the CSV file from her computer. Upon selection or successful upload of a dataset, a table view of the data will be visible on the right. From this module the user can select a subset of the data either by value or random selection. The dataset selected in the data module will be made available to all other modules of \texttt{intRo}. The data transformation module allows transformation of numeric variables to categorical and categorical variable to numeric. Additionally, numeric variable can be transformed using a power transformation. The transformed variables can be saved to the dataset for use elsewhere in \texttt{intRo}.
+
+The graphical summaries module provides several common graphical displays of variables in the dataset. First, the user selects the plot desired, and either a single variable or two variables from the dataset, depending on plot type. The variable available to choose will only be those compatible with plot type selected. The plot visible on the right will automatically update when these values are selected. The numeric summaries module is another method of computing summaries of the data. The user is presented with a list of each variable from their dataset. The user can select one or more different variables, and will be presented with a table of some summary statistics. The summary statistics displayed vary depending on the type of the variables. For instance, for a numeric variable, a five number summary will be displayed. Character or factor variables will display counts of each unique value of that particular variable. Additionally, the user has the ability to display summaries by a grouping variable.
+
+Within the set of statistics modules, there are three simple statistics tasks that an introductory statistics student will learn in her first semester. The contingency table module allows the user to compute a contingency table for two categorical variables. The results can either be displayed as counts, row percentages, column percentages, or total percentages. The simple linear regression module allows the user to compute a simple linear regression of a dependent variable (y) on an independent variable (x). The module will automatically filter any variables that are non-numeric so that the user may only select variables that are suitable for a simple linear regression. Results of the regression will be displayed on the right. A table of parameter estimates, a scatterplot of the data along with a line of best fit, The R-Squared value, and residual diagnostic plots will all be displayed. A user also has the ability to save residuals and predicted values to their dataset for further analysis. The T test module allows the user to perform either a one variable or two variable Student's T test. The user can select configuration options, including the direction of the test and the confidence level of the test. The results, including the t statistic, degrees of freedom, p-value, and a confidence interval, will be displayed in a text box in the results panel.
+
+Each module is a self contained set of \texttt{R} code that is dynamically added to the application at run time. What this means is that \texttt{intRo} can be easily extended by the addition of modules within the framework underlying the application. This extensibility allows for \texttt{intRo} to be customized for an individual classroom setting, tailored to the needs of a particular course.
 
 As an example of possible customization, an instructor may wish to introduce hypothesis testing from a nonparametric framework rather than distributional. In this case, a wilcoxon rank sum test could be added easily as a module to be used instead of the T test. This addition would be fairly simple to complete. The user would fork \texttt{intRo} from http://github.com/gammarama/intRo and begin by adding six types of files to a folder within a module folder: `helper.R`, `observe.R`, `output.R`, `reactive.R`, `static.R`, and `ui.R`. Each of these files is written to comply with the reactive nature available in a \texttt{Shiny} application. The `ui.R` file contains all the user interface elements within the new module's tab. This will include any options in the options panel as well as results. The `helper.R` and `static.R` files refer to static functions and global variable that may be used within the module. The file `output.R` contains the reactive elements that tie output to the user interface within \texttt{Shiny} and `observe.R` and `reactive.R` contain elements within an `observer` function or `reactive` function within the \texttt{Shiny} framework. By placing each of these files within the `modules/nonparametric_test` folder and adding a single line to a navigation file indicating under which module grouping the non-parametric test module should go, a new module is available within \texttt{intRo} upon running the application.
 
@@ -164,18 +168,71 @@ Part two of this text discusses probability and sampling distributions, which is
 Statistics courses with a lab component can most benefit from the use of \texttt{intRo}. As students learn the aforementioned concepts, they can practice using the tools to perform the statistical tests and summaries. They simply upload a dataset and click the module appropriate to the section of the class. Once they choose the options desired by the instructor (variables, confidence levels, etc.), they can view the results and ultimately print the output for turning in. Early labs can walk the user through the limited number of button presses and clicks necessary, while later labs can more vaguely describe the intended output in hopes that the user can easily navigate the \texttt{intRo} interface to obtain the results. For topics currently unsupported by \texttt{intRo}, the instructor can supplement its use with other web-based modules that are publicly available or create their own modules within \texttt{intRo} as detailed in section \ref{sec:extensible}.
 
 # Using intRo
+\texttt{intRo} can be downloaded, ran, and deployed on ShinyApps.io through the use of the R package \texttt{intRo}. Currently, the package is only available and GitHub, and can be installed using the \texttt{devtools} package as follows:
+
+```{r, eval=FALSE}
+devtools::install_github("gammarama/intRo")
+```
+
+After installing the \texttt{intRo} package, the first function one should call is `download_intRo`. `download_intRo` takes as an argument a directory in which to store the application. By default, it selects the working directory of the R session. This function clones the application branch of the \texttt{intRo} repository on GitHub, and hence will pull the latest version of the code whenever it is ran.
+
+Running `download_intRo` will produce an \texttt{intRo} folder in the specified folder. It can then be ran as any \texttt{Shiny} application, using \texttt{Shiny}'s `runApp` command. However, we have provided a wrapper function `run_intRo` which adds some additional customization options to the execution process. `run_intRo` takes as argument the path to the folder containing the \texttt{intRo} application. It also takes several more optional arguments:
+
+* `enabled_modules`: A character vector containing the modules to enable
+* `theme`: A string representing a \texttt{shinythemes} theme to use
+* `...`: Additional arguments passed to \texttt{Shiny}'s `runApp` function
+
+The package provides help documentation which explains in further detail the format that these arguments would take, but as an example, suppose I wanted to download \texttt{intRo} to my working directory, execute an \texttt{intRo} session with only the data sources, data transform, and numerical summaries modules enabled, and apply the cerulean theme. The series of calls to do so would be as follows:
+
+```{r, eval=FALSE}
+download_intRo()
+run_intRo(enabled_modules = c("data/transform", "summaries/numerical"), theme = "cerulean")
+```
+
+Note that the data sources module is required, and hence must be included in all intRo sessions and need not be specified in the enabled_modules argument.
+
+If the intent is to use a specific instance of \texttt{intRo} where many users will access it at the same time, such as in an introductory statistics class, it may be preferable to deploy a custom instance of \texttt{intRo} to a publicly accessible URL. The package provides a function `deploy_intRo` which is a wrapper for the `deployApp` function contained in the \texttt{shinyapps} package. Once the shinyapps package is installed and configured, `deploy_intRo` will upload \texttt{intRo} as an application on the user's account. The function takes the same arguments as `run_intRo`, so it can be deployed with a custom selection of modules, and a customized theme. It also takes an additional argument `google_analytics`, which allows the specification of a Google Analytics tracking ID. It also takes `...` as additional arguments to be passed into the `deployApp` routine. For example, if we wished to deploy the instance of \texttt{intRo} we ran previously, we would call it like so:
+
+```{r, eval=FALSE}
+deploy_intRo(enabled_modules = c("data/transform", "summaries/numerical"), theme = "cerulean")
+```
+
+Once the process finished, the app will become available at \url{http://<user>.shinyapps.io/intRo}, where `<user>` is the username of the ShinyApps.io account configured.
 
 # Details
 
 ## Modules
-TODO: Condense this into either a single paragraph, list, and/or table - Move to Extensible section
 TODO: Rewrite this as the details behind the modularity. Add information on writing your own modules
 
-Within the data category there are two modules, sources and transformation. The data sources module allows the user to select or upload a dataset. Several datasets are pre-included, which can be selected via a drop-down menu. The user can check a box to upload a dataset, and then select the CSV file from her computer. Upon selection or successful upload of a dataset, a table view of the data will be visible on the right. From this module the user can select a subset of the data either by value or random selection. The dataset selected in the data module will be made available to all other modules of \texttt{intRo}. The data transformation module allows transformation of numeric variables to categorical and categorical variable to numeric. Additionally, numeric variable can be transformed using a power transformation. The transformed variables can be saved to the dataset for use elsewhere in \texttt{intRo}.
+## Reproducibility
+Though they can make common actions quicker and interacting with software much simplier, many Graphical User Interfaces for scientific software packages come with a major drawback. That is, the actions taken by the user are typically not reproducible. Code scripting, on the other hand, allows us to share a file containing code, and another user can execute the code to reproduce the same results. In terms of the scientific process, where results can and should be scrutinized by other parties, the utility of GUIs are greatly limited.
 
-The graphical summaries module provides several common graphical displays of variables in the dataset. First, the user selects the plot desired, and either a single variable or two variables from the dataset, depending on plot type. The variable available to choose will only be those compatible with plot type selected. The plot visible on the right will automatically update when these values are selected. The numeric summaries module is another method of computing summaries of the data. The user is presented with a list of each variable from their dataset. The user can select one or more different variables, and will be presented with a table of some summary statistics. The summary statistics displayed vary depending on the type of the variables. For instance, for a numeric variable, a five number summary will be displayed. Character or factor variables will display counts of each unique value of that particular variable. Additionally, the user has the ability to display summaries by a grouping variable.
+We have designed \texttt{intRo} modules to reproduce actions taken by the user so that they can obtain \texttt{R} code associated with each module interacted with. When a user chooses to store the results associated with a particular module, R code yielding the visible results is automatically added to the code window at the bottom. This framework yields several advantages:
 
-Within the set statistics modules, there are three simple statistics tasks that an introductory statistics student will learn in her first semester. The contingency table module allows the user to compute a contingency table for two categorical variables. The results can either be displayed as counts, row percentages, column percentages, or total percentages. The simple linear regression module allows the user to compute a simple linear regression of a dependent variable (y) on an independent variable (x). The module will automatically filter any variables that are non-numeric so that the user may only select variables that are suitable for a simple linear regression. Results of the regression will be displayed on the right. A table of parameter estimates, a scatterplot of the data along with a line of best fit, The R-Squared value, and residual diagnostic plots will all be displayed. A user also has the ability to save residuals and predicted values to their dataset for further analysis. The T test module allows the user to perform either a one variable or two variable Student's T test. The user can select configuration options, including the direction of the test and the confidence level of the test. The results, including the t statistic, degrees of freedom, p-value, and a confidence interval, will be displayed in a text box in the results panel.
+1. This eases a user who may be intimidated by programming into the idea that interacting with a user interface is really just a frontend for code. Seeing the correspondence between graphical clicks and printed code will hopefully also lessen the fear of coding that many inexperienced users may have.
+
+2. An analysis created by \texttt{intRo} can be reproduced in an R session to easily assess and extend the results.
+
+3. "Printing" the results of an \texttt{intRo} analysis amounts to nothing more than executing the R code on the server, adding another layer of reproducibility.
+
+We designed the modules in such a way that the code printed to the console is the same as the code executed by the server, which makes the process of writing an \texttt{intRo} module significantly more seamless. The workhorse function for this reproducibility framework is called `interpolate`, which is based on a function proposed by Hadley Wickham[ref]. The idea of interpolation is that the call can be captured, printed, and evaluated, with all the appropriate arguments substituted into the call automatically. This means that depending on the options selected in \texttt{intRo}, the corresponding arguments to functions are appropriately set for reproduction in a standard R session.
+
+```{r, eval=FALSE}
+interpolate <- function(code, ..., mydir, `_env` = parent.frame(), file = "code_All.R", 
+                        append = FALSE, save_result = FALSE, eval = TRUE) {
+    stopifnot(inherits(code, "formula"), length(code) == 2)
+    
+    args <- lapply(list(...), as_call)
+    expr <- methods::substituteDirect(as_call(code), args)
+    
+    cat(paste0(as.character(expr)[2], "\n"), file = file.path(mydir, file), append = append)
+    
+    if (save_result) cat(paste0(paste(readLines(file.path(mydir, file)), collapse = "\n"),
+                                "\n"), file = file.path(mydir, "code_All.R"), append = TRUE)
+    if (eval) eval(expr, `_env`)
+}
+```
+
 
 ## Reactive design choices
 
@@ -184,8 +241,6 @@ Reactive programming is a programming paradigm that ``tackles issues posed by ev
 \texttt{intRo} leverages the reactive programming nature of \texttt{Shiny}, and as such is designed around the idea of user input cascading through the entire application. In a typical \texttt{Shiny} application, users interact with inputs that act as parameters to function, which in turn yield different results. Within \texttt{intRo}, the users are able to interact with and manipulate the data underlying the entire application. This posed many challenges in the creation of \texttt{intRo} and drove design decisions, namely timely save points according to the user's workflow, and reactive updating of variable lists tied to inputs across the entire application. Because the user may experiment with different configurations or select different variables, we did not want to store all actions taken in the intRo session. Rather, each module includes a button allowing the user to explicitly store the output visible in the results panel into the R script. This way, output is only stored when the user is satisfied, and the resulting output is not cluttered with unnecessary information.
 
 In the creation of \texttt{intRo} we walked a fine line between giving the user flexibility and having realistic usability. At the same time, \texttt{intRo} was created as a consumer of another package, \texttt{Shiny}, in which we as developers were the beneficiaries of another team of developers' decision to balance flexibility and usability. For a tangible example, consider the graphical summaries module. We only allow variables of a type consistent with the selected plot to be displayed. This is a conscious decision that limits an \texttt{intRo} user's flexibility, while maximizing the usability (by minimizing crashes) of the application. On the flip side of this, \texttt{Shiny} allows much higher flexibility. For instance, the entire application (including user interface) is created dynamically upon load, based on the modules currently housed within \texttt{intRo}, as detailed in section \ref{sec:extensible}. However, \texttt{Shiny} does have limits on its flexibility based on the designers decisions for usability. One current example is the slider element. This element allows for fixed width steps from its minimum to its maximum. The JavaScript library being utilized in \texttt{Shiny} allows for arbitrary function calls to to generate these steps, however they must be written in plain JavaScript. This is an example of a decision made by the developers of \texttt{Shiny} to limit functionality in favor of usability of their package.
-
-## Reproducibility
 
 # Conclusions and future work
 
