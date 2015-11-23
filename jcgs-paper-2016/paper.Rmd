@@ -1,18 +1,26 @@
 ---
-title: Introducing statistics with \texttt{intRo}
-author: Eric Hare & Andee Kaplan
+title: "Introducing statistics with `intRo`"
+date: "November 23, 2015"
+author:
+  - name: Eric Hare
+    affiliation: Iowa State University
+    department: Department of Statistics
+  - name: Andee Kaplan
+    affiliation: Iowa State University
+    department: Department of Statistics
 output:
   pdf_document:
+    fig_caption: yes
     includes:
       in_header: preamble.tex
     number_sections: yes
-  html_document: default
+    template: jcgs_article.tex
+abstract: |
+  `intRo` is a modern web-based application for performing basic data analysis and statistical routines. Leveraging the power of `R` and `Shiny`, `intRo` implements common statistical functions in a powerful and extensible modular structure, while remaining simple enough for the novice statistician. This simplicity lends itself to a natural presentation in an introductory statistics course as a substitute for other commonly used statistical software packages, such as `Excel` and `JMP`. `intRo` is currently deployed at the URL \url{http://www.intro-stats.com}. Within this paper, we introduce the application and explore the design decisions underlying `intRo`, as well as highlight some challenges and advantages of reactive programming.
+keywords: blah, blah blah
 bibliography: refs.bib
+blind: false
 ---
-
-\begin{abstract}
-\texttt{intRo} is a modern web-based application for performing basic data analysis and statistical routines. Leveraging the power of \texttt{R} and \texttt{Shiny}, \texttt{intRo} implements common statistical functions in a powerful and extensible modular structure, while remaining simple enough for the novice statistician. This simplicity lends itself to a natural presentation in an introductory statistics course as a substitute for other commonly used statistical software packages, such as \texttt{Excel} and \texttt{JMP}. \texttt{intRo} is currently deployed at the URL \url{http://www.intro-stats.com}. Within this paper, we introduce the application and explore the design decisions underlying \texttt{intRo}, as well as highlight some challenges and advantages of reactive programming.
-\end{abstract}
 
 # Introduction
 
