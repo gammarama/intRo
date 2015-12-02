@@ -5,7 +5,7 @@ $("#top-nav a[data-value]").each(function() {
 	if(this.getAttribute('data-value').substring(0,4) == 'java') {
 		this.setAttribute('onClick', this.getAttribute('data-value'))
 		this.setAttribute('data-toggle', null);
-	} else {
+	} else if(this.getAttribute('data-value').substring(0,4) == 'http'){
 		this.setAttribute('href', this.getAttribute('data-value'));
 		this.setAttribute('target', '_blank');
 		this.setAttribute('data-toggle', null);

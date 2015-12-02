@@ -4,6 +4,7 @@
 library(R.utils)
 library(rmarkdown)
 library(formatR)
+library(knitr)
 
 ###
 ### Helper Functions
@@ -53,6 +54,14 @@ shinyServer(function(input, output, session) {
     ## rmd.path <- file.path(userdir, "code_All.Rmd")
     ##
     
+    output$mydownload <- downloadHandler(
+        filename = function() { "code_All.Rmd" },
+        content = function(file) { 
+            spin(file.path(userdir, "code_All.R"), format = "Rmd", knit = FALSE)
+            writeLines(readLines(file.path(userdir, "code_All.Rmd")), con = file) 
+        }
+    )
+
     ## Printing
     observe({
         if (length(input$print_clicked) > 0 && input$print_clicked) {
