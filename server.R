@@ -26,6 +26,7 @@ shinyServer(function(input, output, session) {
     sapply(file.path(newuserdir, dir(newuserdir)[grep("code_", dir(newuserdir))]), file.remove)
     file.copy(file.path(userdir, "code_All.R"), newuserdir)
     userdir <- newuserdir
+    dir.create(file.path(userdir, "data"))
     
     ## Maximum file upload size = 10MB
     options(shiny.maxRequestSize = 10 * 1024 ^ 2)
@@ -48,17 +49,23 @@ shinyServer(function(input, output, session) {
         updateAceEditor(session, "myEditor", value = paste(code(), collapse = "\n"))
     })
     
-    ##
-    ## For RMarkdown Downloading:
-    ## spin(file.path(userdir, "code_All.R"), format = "Rmd", knit = FALSE)
-    ## rmd.path <- file.path(userdir, "code_All.Rmd")
-    ##
+    observe({
+        file.copy(input$data_own$datapath, file.path(userdir, "data", input$data_own$name), overwrite = TRUE)
+    })
     
     output$mydownload <- downloadHandler(
-        filename = function() { "code_All.Rmd" },
+        filename = function() { "intRo-report.zip" },
         content = function(file) { 
             spin(file.path(userdir, "code_All.R"), format = "Rmd", knit = FALSE)
-            writeLines(readLines(file.path(userdir, "code_All.Rmd")), con = file) 
+            
+            file.copy(file.path(userdir, "code_All.Rmd"), file.path(userdir, "intRo-report.Rmd"), overwrite = TRUE)
+            if (!is.null(input$data_own$datapath)) file.copy(input$data_own$datapath, file.path(userdir, input$data_own$name), overwrite = TRUE)
+            
+            filelist <- file.path(userdir, "intRo-report.Rmd")
+            if (!is.null(input$data_own$datapath)) filelist <- c(filelist, file.path(userdir, "data", dir(file.path(userdir, "data"))))
+            
+            #if (file.exists(file)) file.remove(file)
+            zip(file, files = filelist, flags = "-r9Xj")
         }
     )
 
