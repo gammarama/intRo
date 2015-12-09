@@ -6,7 +6,7 @@ numerical_ui <- tabPanel("Numerical",
                                                              
                                                              hr(),
                                                              
-                                                             tags$button("", id = "store_numerical", type = "button", class = "btn action-button", list(icon("save"), "Store Numerical Result"), onclick = "$('a:has(> .fa-print, .fa-code, .fa-download)').highlight();")
+                                                             tags$button("", id = "store_numerical", type = "button", class = "btn action-button", list(icon("save"), "Store Numerical Result"), onclick = "$('#top-nav a:has(> .fa-print, .fa-code, .fa-download)').highlight();")
                                                          )
                                                   ),
                                                   

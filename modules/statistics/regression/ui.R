@@ -10,7 +10,7 @@ regression_ui <- tabPanel("Regression",
 
                   hr(),
                   
-                  tags$button("", id = "store_regression", type = "button", class = "btn action-button", list(icon("save"), "Store Regression Result"), onclick = "$('a:has(> .fa-print, .fa-code, .fa-download)').highlight();")
+                  tags$button("", id = "store_regression", type = "button", class = "btn action-button", list(icon("save"), "Store Regression Result"), onclick = "$('#top-nav a:has(> .fa-print, .fa-code, .fa-download)').highlight();")
                 )
          ),
          

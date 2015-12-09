@@ -13,7 +13,7 @@ contingency_ui <- tabPanel("Contingency",
                                                              
                                                              hr(),
                                                              
-                                                             tags$button("", id = "store_contingency", type = "button", class = "btn action-button", list(icon("save"), "Store Contingency Result"), onclick = "$('a:has(> .fa-print, .fa-code, .fa-download)').highlight();")
+                                                             tags$button("", id = "store_contingency", type = "button", class = "btn action-button", list(icon("save"), "Store Contingency Result"), onclick = "$('#top-nav a:has(> .fa-print, .fa-code, .fa-download)').highlight();")
                                                          )
                                                   ),
                                                   
