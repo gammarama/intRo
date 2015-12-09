@@ -12,7 +12,7 @@ nonparametric_ui <- tabPanel("Nonparametric",
                                                              
                                                              hr(),
                                                              
-                                                             tags$button("", id = "store_nonparametric", type = "button", class = "btn action-button", list(icon("save"), "Store Nonparametric Result"), onclick = "$('a:has(> .fa-print, .fa-code)').highlight();")
+                                                             tags$button("", id = "store_nonparametric", type = "button", class = "btn action-button", list(icon("save"), "Store Nonparametric Result"), onclick = "$('a:has(> .fa-print, .fa-code, .fa-download)').highlight();")
                                                          )
                                                   ),
                                                   

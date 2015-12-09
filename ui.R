@@ -2,6 +2,7 @@
 ### Libraries
 ###
 library(shinythemes)
+library(shinyjs)
 
 ###
 ### UI Definition
@@ -31,18 +32,23 @@ for (i in seq_along(modules)) {
 
 shinyUI(
     navbarPage("intRo", id = "top-nav", theme = shinytheme(intRo_theme),
+               
                tabPanel(title = "", icon = icon("home", "fa-2x"),
+                        
+                        ## Shiny JS
+                        useShinyjs(),
+                        
                         fluidRow(
                             dynFrame(outputId = 'print_output'),
-                            do.call(navlistPanel, c(list(id = "side-nav", widths = c(2, 10)), mylist)),
-                            downloadButton("mydownload")
+                            do.call(navlistPanel, c(list(id = "side-nav", widths = c(2, 10)), mylist))
                         ),
                         hr(),                        
                         fluidRow(
                             column(12,
                                    aceEditor("myEditor", "", mode = "r", readOnly = TRUE, theme = "chrome")
                             )
-                        )
+                        ),
+                        downloadButton("mydownload")
                ),
                tabPanel(title = "", value = "http://gammarama.github.io/intRo", icon = icon('question-circle', "fa-2x")),
                tabPanel(title = "", value = "http://github.com/gammarama/intRo", icon = icon("github", "fa-2x")),

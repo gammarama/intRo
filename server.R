@@ -5,6 +5,7 @@ library(R.utils)
 library(rmarkdown)
 library(formatR)
 library(knitr)
+library(shinyjs)
 
 ###
 ### Helper Functions
@@ -19,6 +20,9 @@ clean_readlines <- function(file) {
 ### Shiny Server definition
 ###
 shinyServer(function(input, output, session) {
+    
+    ## Hide Download Button
+    hide("mydownload")
     
     ## Update directory
     newuserdir <- tempfile()

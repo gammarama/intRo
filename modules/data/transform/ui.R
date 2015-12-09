@@ -22,7 +22,7 @@ transform_ui <- tabPanel("Transform",
                                                              
                                                              hr(),
                                                              
-                                                             tags$button("", id = "savetrans", type = "button", class = "btn action-button", list(icon("save"), "Save Transformation"), onclick = "$('#side-nav :contains(\"Sources\")').highlight(); $('a:has(> .fa-print, .fa-code)').highlight();")
+                                                             tags$button("", id = "savetrans", type = "button", class = "btn action-button", list(icon("save"), "Save Transformation"), onclick = "$('#side-nav :contains(\"Sources\")').highlight(); $('a:has(> .fa-print, .fa-code, .fa-download)').highlight();")
                                                          )
                                                   ),
                                                   
