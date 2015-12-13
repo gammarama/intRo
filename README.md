@@ -11,14 +11,13 @@ The goal of intRo is to foster a student interest in coding while learning basic
 
 As a web-based application, this tool is immediately more familiar to students than a desktop application. The need for dealing with software licenses, installation configuration, and supported platforms has been eliminated. This allows students to spend more time working with the data and learning statistics than having to struggle to get the software running.
 
-Running Locally
+Running intRo
 ----------
-To run the application locally, clone the repository and checkout branch `master`. Navigate to the directory and execute the following in `R`:
+The preferred method for running intRo is through the use of our R package. See the README in the Master branch for more information. You may also clone this branch and run the application locally, by cloning the repository and checking out the branch `application`. Navigate to the directory and execute the following in `R`:
 ```
 library(shiny)
 runApp()
 ``` 
-
 
 To run the documentation locally on a machine with Jekyll installed and configured for GitHub Pages, checkout the `gh-pages` branch and execute the following command in the terminal: 
 ```
