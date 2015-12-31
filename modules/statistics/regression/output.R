@@ -11,9 +11,10 @@ interpolate(
 
 interpolate(
     ~(reg.resid1 %>%
-        ggvis(x = ~x, y = ~residuals, key := ~id) %>%
+        ggvis(x = ~myx, y = ~residuals, key := ~id) %>%
         layer_points() %>%
         set_options(width = 200, height = 200) %>%
+        add_axis('x', title = 'x') %>%
         add_tooltip(function(df) {paste0('row id: ', df$id)}, 'hover')),
     mydir = userdir,
     `_env` = environment(),

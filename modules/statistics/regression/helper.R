@@ -23,12 +23,12 @@ my_regdata <- function(intro.data, x, y) {
     )
 }
 
-my_regresid1 <- function(intro.data, intro.regression, x) {
+my_regresid1 <- function(intro.data, intro.regression, xvar) {
     interpolate(
-        ~(reg.resid1 <- data.frame(id = 1:length(resid(myreg)), residuals = resid(myreg), x = df[as.numeric(names(resid(myreg))), x])),
+        ~(reg.resid1 <- data.frame(id = 1:length(resid(myreg)), residuals = resid(myreg), myx = df[as.numeric(names(resid(myreg))),]$xvar)),
         df = quote(intro.data),
         myreg = quote(intro.regression),
-        x = x,
+        xvar = xvar,
         mydir = userdir,
         `_env` = environment(),
         file = "code_regression_reactives.R",
