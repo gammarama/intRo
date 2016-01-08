@@ -224,7 +224,8 @@ cont.table <- function(intro.data, x, y, type, digits) {
     interpolate(
         ~ (my.tbl <- cbind(rbind(table(df$y, df$x), 
                       Total = colSums(table(df$y, df$x))), 
-                Total = c(rowSums(table(df$y, df$x))[-(length(df$x))], sum(table(df$y, df$x))))),
+                Total = c(rowSums(table(df$y, df$x))[-(length(df$x))], 
+                          sum(table(df$y, df$x))))),
         df = quote(intro.data),
         x = x,
         y = y,
@@ -233,31 +234,146 @@ cont.table <- function(intro.data, x, y, type, digits) {
         file = "code_contingency.R"
     )
 
-    if (type == "totalpercs") interpolate(~(my.tbl <- my.tbl / sum(table(df$y, df$x))), 
+    if (type == "totalpercs") interpolate(~(my.tbl <- my.tbl / 
+                                          sum(table(df$y, df$x))), 
                                           df = quote(intro.data), x = x, y = y,  
-                                          mydir = userdir, `_env` = environment(), 
-                                          file = "code_contingency.R", append = TRUE)
-    if (type == "rowpercs") interpolate(~(my.tbl <- t(apply(my.tbl[-nrow(my.tbl),], 1, 
-                                                            function(row){row / row[ncol(my.tbl)]}))),  
-                                        mydir = userdir,`_env` = environment(), 
-                                        file = "code_contingency.R", append = TRUE)
-    if (type == "columnpercs") interpolate(~(my.tbl <- apply(my.tbl[,-ncol(my.tbl)], 2, 
-                                                             function(col){col / col[nrow(my.tbl)]})),  
-                                           mydir = userdir, `_env` = environment(), 
-                                           file = "code_contingency.R", append = TRUE)
+                                          mydir = userdir, 
+                                          `_env` = environment(), 
+                                          file = "code_contingency.R", 
+                                          append = TRUE)
+    if (type == "rowpercs") interpolate(~(my.tbl <- t(apply(
+        my.tbl[-nrow(my.tbl),], 1, function(row){row / row[ncol(my.tbl)]}))),  
+                                        mydir = userdir,
+                                        `_env` = environment(), 
+                                        file = "code_contingency.R", 
+                                        append = TRUE)
+    if (type == "columnpercs") interpolate(~(my.tbl <- apply(
+        my.tbl[,-ncol(my.tbl)], 2, function(col){col / col[nrow(my.tbl)]})),  
+                                           mydir = userdir, 
+                                           `_env` = environment(), 
+                                           file = "code_contingency.R", 
+                                           append = TRUE)
     
-    if (type %in% c("totalpercs", "rowpercs", "columnpercs")) interpolate(~(new.digits <- digits), 
-                                                                          digits = digits, mydir = userdir,
-                                                                          `_env` = environment(), 
-                                                                          file = "code_contingency.R", 
-                                                                          append = TRUE)
+    if (type %in% c("totalpercs", "rowpercs", "columnpercs")) 
+        interpolate(~(new.digits <- digits), 
+                    digits = digits, 
+                    mydir = userdir,
+                    `_env` = environment(), 
+                    file = "code_contingency.R", 
+                    append = TRUE)
     else interpolate(~(new.digits <- 0),  mydir = userdir, `_env` = environment(), 
                      file = "code_contingency.R", append = TRUE)
     
-    interpolate(~(format(round(my.tbl, digits = new.digits))), mydir = userdir, `_env` = environment(), 
-                file = "code_contingency.R", append = TRUE)
+    interpolate(~(format(round(my.tbl, digits = new.digits))), 
+                mydir = userdir, 
+                `_env` = environment(), 
+                file = "code_contingency.R",
+                append = TRUE)
 }
 ```
+
+This script is most immediately similar to standard R code. In this case, a function `cont.table` is created which, depending on the values of the parameters, ultimately returns a contingency table. One important difference from a typical R script is that each call in the script is wrapped in a function called `interpolate`. `interpolate` both executes the given R code on the server, and also writes the code executed to the script window at the bottom of \texttt{intRo}. More details on the reasons and choices behind `interpolate` can be found in the next section.
+
+Because all the code needed to implement a contingency table is found in the `base` and `stats` package, the `libraries.R` file is empty for the `contingency` module. `observe.R`, which defines the Shiny observers needed, is reproduced below:
+
+```{r, eval=FALSE}
+observe({
+    xselect <- ifelse(checkVariable(intro.data(), input$xcont),
+                      input$xcont, 
+                      intro.categoricnames()[1])
+    yselect <- ifelse(checkVariable(intro.data(), input$ycont), 
+                      input$ycont, 
+                      intro.categoricnames()[2])
+    
+    updateSelectizeInput(session, 
+                         "xcont", 
+                         choices = setdiff(intro.categoricnames(), yselect), 
+                         selected = xselect)
+    updateSelectizeInput(session, 
+                         "ycont", 
+                         choices = setdiff(intro.categoricnames(), xselect), 
+                         selected = yselect)
+})
+
+observeEvent(input$store_contingency, {
+    cat(paste0("\n\n", paste(readLines(
+        file.path(userdir, "code_contingency.R")), 
+        collapse = "\n")), 
+        file = file.path(userdir, "code_All.R"), 
+        append = TRUE)
+})
+```
+
+Shiny observers are created to ensure that the choices of variable for the `contingency` module are only categorical variables. This is accomplished by utilizing the global reactive `intro.categoricnames()`, which returns a character vector containing the variables in the current dataset that are categorical. Finally, there is an event observer to store code generated from the module into the overall code script upon clicking the store button. The presence of this observer code and the definition of the button in the user interface are enforced, and must be present in any \texttt{intRo} module.
+
+The `output.R` and `reactive.R` code is very simple:
+
+```{r, eval=FALSE}
+output$conttable <- renderTable({
+    return(intro.contingency())
+})
+```
+
+```{r, eval=FALSE}
+intro.contingency <- reactive({
+    if (is.null(intro.data())) return(NULL)
+    if (input$xcont == input$ycont || 
+        length(categoricNames(intro.data())) < 2) return(NULL)
+    
+    my.conttable <- cont.table(intro.data(), 
+                               input$xcont, input$ycont, 
+                               input$conttype, input$contdigits)
+    
+    return(my.conttable)
+})
+```
+
+`intro.contingency` is defined as a reactive object. Some small error checks are performed at the beginning to ensure that the data is present and available, and that two different categorical variables are selected. Assuming those conditions hold, a call to the previously defined `helper.R` function is made with the appropriate parameters, and the results are returned. The `output.R` script then simply uses Shiny's `renderTable` function to display the resulting table.
+
+Finally, the `ui.R` code is shown below:
+
+```{r, eval=FALSE}
+contingency_ui <- tabPanel("Contingency",
+    column(4,
+         wellPanel(
+             selectizeInput("xcont", label = "X Variable (x)", 
+                            choices = categoricNames(mpg), 
+                            selected = categoricNames(mpg)[5]),
+             selectizeInput("ycont", label = "Y Variable (y)", 
+                            choices = categoricNames(mpg), 
+                            selected = categoricNames(mpg)[6]),
+             
+             hr(),
+             
+             selectizeInput("conttype", label = "Type", 
+                            choices = c("Counts" = "counts", 
+                                        "Row Proportions" = "rowpercs", 
+                                        "Column Proportions" = "columnpercs", 
+                                        "Total Proportions" = "totalpercs")),
+             conditionalPanel(condition = "input.conttype != 'counts'",
+                numericInput("contdigits", label = "Digits", 
+                             value = 2, min = 1, step = 1)
+             ),
+             
+             hr(),
+             
+             tags$button("", id = "store_contingency", type = "button", 
+                         class = "btn action-button", 
+                         list(icon("save"), "Store Contingency Result"), 
+                         onclick = "$('#top-nav a:has(> .fa-print, 
+                         .fa-code, .fa-download)').highlight();")
+         )
+    ),
+    
+    column(8,
+         tableOutput("conttable")
+    )
+)
+```
+
+This script defines all the inputs and outputs that the user will see. The only requirements from \texttt{intRo}'s perspective are (1) that there exist a store button at the bottom of the middle panel for storing the results of the analysis in the code script, and (2) that configuration options appear in the width 4 column in the middle, and output appears in the width 8 column on the right. The remaining input and output definitions depend on the statistical analysis or transformation being performed.
+
+Although the structure of an \texttt{intRo} module is relatively straightforward, producing the code needed in a more seamless fashion would certainly help open up the creation of such modules to a wider audience. As we discuss in the conclusions and future work section, providing an \texttt{intRo} module creation tool to abstract away some of the less common coding paradigms, like the use of `interpolate`, is an important effort that will continue to be pursued.
 
 ## Reproducibility
 Though they can make common actions quicker and interacting with software much simplier, many Graphical User Interfaces for scientific software packages come with a major drawback. That is, the actions taken by the user are typically not reproducible. Code scripting, on the other hand, allows us to share a file containing code, and another user can execute the code to reproduce the same results. In terms of the scientific process, where results can and should be scrutinized by other parties, the utility of GUIs are greatly limited.
@@ -273,17 +389,20 @@ We have designed \texttt{intRo} modules to reproduce actions taken by the user s
 We designed the modules in such a way that the code printed to the console is the same as the code executed by the server, which makes the process of writing an \texttt{intRo} module significantly more seamless. The workhorse function for this reproducibility framework is called `interpolate`, which is based on a function proposed by Hadley Wickham[ref]. The idea of interpolation is that the call can be captured, printed, and evaluated, with all the appropriate arguments substituted into the call automatically. This means that depending on the options selected in \texttt{intRo}, the corresponding arguments to functions are appropriately set for reproduction in a standard R session.
 
 ```{r, eval=FALSE}
-interpolate <- function(code, ..., mydir, `_env` = parent.frame(), file = "code_All.R", 
-                        append = FALSE, save_result = FALSE, eval = TRUE) {
+interpolate <- function(code, ..., mydir, `_env` = parent.frame(), 
+                        file = "code_All.R", append = FALSE, 
+                        save_result = FALSE, eval = TRUE) {
     stopifnot(inherits(code, "formula"), length(code) == 2)
     
     args <- lapply(list(...), as_call)
     expr <- methods::substituteDirect(as_call(code), args)
     
-    cat(paste0(as.character(expr)[2], "\n"), file = file.path(mydir, file), append = append)
+    cat(paste0(as.character(expr)[2], "\n"), 
+        file = file.path(mydir, file), append = append)
     
-    if (save_result) cat(paste0(paste(readLines(file.path(mydir, file)), collapse = "\n"),
-                                "\n"), file = file.path(mydir, "code_All.R"), append = TRUE)
+    if (save_result) cat(paste0(paste(readLines(
+        file.path(mydir, file)), collapse = "\n"), "\n"), 
+        file = file.path(mydir, "code_All.R"), append = TRUE)
     if (eval) eval(expr, `_env`)
 }
 ```
