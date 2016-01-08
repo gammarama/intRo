@@ -186,7 +186,8 @@ The package provides help documentation which explains in further detail the for
 
 ```{r, eval=FALSE}
 download_intRo()
-run_intRo(enabled_modules = c("data/transform", "summaries/numerical"), theme = "cerulean")
+run_intRo(enabled_modules = c("data/transform", "summaries/numerical"), 
+          theme = "cerulean")
 ```
 
 Note that the data sources module is required, and hence must be included in all intRo sessions and need not be specified in the enabled_modules argument.
@@ -194,7 +195,8 @@ Note that the data sources module is required, and hence must be included in all
 If the intent is to use a specific instance of \texttt{intRo} where many users will access it at the same time, such as in an introductory statistics class, it may be preferable to deploy a custom instance of \texttt{intRo} to a publicly accessible URL. The package provides a function `deploy_intRo` which is a wrapper for the `deployApp` function contained in the \texttt{shinyapps} package. Once the shinyapps package is installed and configured, `deploy_intRo` will upload \texttt{intRo} as an application on the user's account. The function takes the same arguments as `run_intRo`, so it can be deployed with a custom selection of modules, and a customized theme. It also takes an additional argument `google_analytics`, which allows the specification of a Google Analytics tracking ID. It also takes `...` as additional arguments to be passed into the `deployApp` routine. For example, if we wished to deploy the instance of \texttt{intRo} we ran previously, we would call it like so:
 
 ```{r, eval=FALSE}
-deploy_intRo(enabled_modules = c("data/transform", "summaries/numerical"), theme = "cerulean")
+deploy_intRo(enabled_modules = c("data/transform", "summaries/numerical"), 
+             theme = "cerulean")
 ```
 
 Once the process finished, the app will become available at \url{http://<user>.shinyapps.io/intRo}, where `<user>` is the username of the ShinyApps.io account configured.
@@ -202,7 +204,60 @@ Once the process finished, the app will become available at \url{http://<user>.s
 # Details
 
 ## Modules
-TODO: Rewrite this as the details behind the modularity. Add information on writing your own modules
+An \texttt{intRo} module is a set of self-contained executible R scripts that together produce a set of introductory statistics functionality. \texttt{intRo} modules were designed in this way to allow for simple dynamic creation of the user interface at run-time, as well as ease the process of converting existing analysis code to the \texttt{intRo} framework. In this section, we detail the structure of these modules, and the process of creating and deploying new modules.
+
+A module consists of the following scripts:
+
+* *helper.R* - R code that performs some statistical analysis or transformation. This would typically be in the form of a function, and similar to any standard R script.
+* *libraries.R* - Code to load any libraries which are not part of core R.
+* *observe.R* - Shiny observer code typically used to update choices of an input box.
+* *output.R* - Shiny output code defining the results of the analysis that should be displayed to the user.
+* *reactive.R* - Shiny reactives, typically containing data that depend on inputs.
+* *ui.R* - Shiny user interface definition, including the placement of the inputs and outputs.
+
+The modules provided with \texttt{intRo} are contained in the modules folder. The top level directory in the modules folder defines the category of the module (currently `data`, `summaries`, or `statistics`). Within each of these categories is a folder named according to the name of the module. This folder houses the previously defined scripts. As an example, we will walk through the contents of the `contingency` module.
+
+Since the `contingency` module performs a statistical analysis, it is part of the statistics category, and hence can be found in the \texttt{intRo} repository at **modules/statistics/contingency**. Let's first examine *helper.R*:
+
+```{r, eval=FALSE}
+cont.table <- function(intro.data, x, y, type, digits) {  
+    interpolate(
+        ~ (my.tbl <- cbind(rbind(table(df$y, df$x), 
+                      Total = colSums(table(df$y, df$x))), 
+                Total = c(rowSums(table(df$y, df$x))[-(length(df$x))], sum(table(df$y, df$x))))),
+        df = quote(intro.data),
+        x = x,
+        y = y,
+        mydir = userdir,
+        `_env` = environment(),
+        file = "code_contingency.R"
+    )
+
+    if (type == "totalpercs") interpolate(~(my.tbl <- my.tbl / sum(table(df$y, df$x))), 
+                                          df = quote(intro.data), x = x, y = y,  
+                                          mydir = userdir, `_env` = environment(), 
+                                          file = "code_contingency.R", append = TRUE)
+    if (type == "rowpercs") interpolate(~(my.tbl <- t(apply(my.tbl[-nrow(my.tbl),], 1, 
+                                                            function(row){row / row[ncol(my.tbl)]}))),  
+                                        mydir = userdir,`_env` = environment(), 
+                                        file = "code_contingency.R", append = TRUE)
+    if (type == "columnpercs") interpolate(~(my.tbl <- apply(my.tbl[,-ncol(my.tbl)], 2, 
+                                                             function(col){col / col[nrow(my.tbl)]})),  
+                                           mydir = userdir, `_env` = environment(), 
+                                           file = "code_contingency.R", append = TRUE)
+    
+    if (type %in% c("totalpercs", "rowpercs", "columnpercs")) interpolate(~(new.digits <- digits), 
+                                                                          digits = digits, mydir = userdir,
+                                                                          `_env` = environment(), 
+                                                                          file = "code_contingency.R", 
+                                                                          append = TRUE)
+    else interpolate(~(new.digits <- 0),  mydir = userdir, `_env` = environment(), 
+                     file = "code_contingency.R", append = TRUE)
+    
+    interpolate(~(format(round(my.tbl, digits = new.digits))), mydir = userdir, `_env` = environment(), 
+                file = "code_contingency.R", append = TRUE)
+}
+```
 
 ## Reproducibility
 Though they can make common actions quicker and interacting with software much simplier, many Graphical User Interfaces for scientific software packages come with a major drawback. That is, the actions taken by the user are typically not reproducible. Code scripting, on the other hand, allows us to share a file containing code, and another user can execute the code to reproduce the same results. In terms of the scientific process, where results can and should be scrutinized by other parties, the utility of GUIs are greatly limited.
