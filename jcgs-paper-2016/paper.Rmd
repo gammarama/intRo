@@ -16,7 +16,7 @@ output:
     template: jcgs_article.tex
 abstract: |
   `intRo` is a modern web-based application for performing basic data analysis and statistical routines. Leveraging the power of `R` and `Shiny`, `intRo` implements common statistical functions in a powerful and extensible modular structure, while remaining simple enough for the novice statistician. This simplicity lends itself to a natural presentation in an introductory statistics course as a substitute for other commonly used statistical software packages, such as `Excel` and `JMP`. `intRo` is currently deployed at the URL \url{http://www.intro-stats.com}. Within this paper, we introduce the application and explore the design decisions underlying `intRo`, as well as highlight some challenges and advantages of reactive programming.
-keywords: blah, blah blah
+keywords: R, Shiny, Statistics, Teaching, Interactive
 bibliography: refs.bib
 blind: false
 ---
@@ -83,7 +83,7 @@ Within the set of statistics modules, there are three simple statistics tasks th
 
 Each module is a self contained set of \texttt{R} code that is dynamically added to the application at run time. What this means is that \texttt{intRo} can be easily extended by the addition of modules within the framework underlying the application. This extensibility allows for \texttt{intRo} to be customized for an individual classroom setting, tailored to the needs of a particular course.
 
-As an example of possible customization, an instructor may wish to introduce hypothesis testing from a nonparametric framework rather than distributional. In this case, a wilcoxon rank sum test could be added easily as a module to be used instead of the T test. This addition would be fairly simple to complete. The user would fork \texttt{intRo} from http://github.com/gammarama/intRo and begin by adding six types of files to a folder within a module folder: `helper.R`, `observe.R`, `output.R`, `reactive.R`, `static.R`, and `ui.R`. Each of these files is written to comply with the reactive nature available in a \texttt{Shiny} application. The `ui.R` file contains all the user interface elements within the new module's tab. This will include any options in the options panel as well as results. The `helper.R` and `static.R` files refer to static functions and global variable that may be used within the module. The file `output.R` contains the reactive elements that tie output to the user interface within \texttt{Shiny} and `observe.R` and `reactive.R` contain elements within an `observer` function or `reactive` function within the \texttt{Shiny} framework. By placing each of these files within the `modules/nonparametric_test` folder and adding a single line to a navigation file indicating under which module grouping the non-parametric test module should go, a new module is available within \texttt{intRo} upon running the application.
+As an example of possible customization, an instructor may wish to introduce hypothesis testing from a nonparametric framework rather than distributional. In this case, a wilcoxon rank sum test could be added easily as a module to be used instead of the T test. This addition would be fairly simple to complete. The user would fork \texttt{intRo} from http://github.com/gammarama/intRo and begin by adding six types of files to a folder within a module folder: `helper.R`, `libraries.R`, `observe.R`, `output.R`, `reactive.R`, and `ui.R`. Each of these files is written to comply with the reactive nature available in a \texttt{Shiny} application. The `ui.R` file contains all the user interface elements within the new module's tab. This will include any options in the options panel as well as results. The `helper.R` and `static.R` files refer to static functions and global variable that may be used within the module. The file `output.R` contains the reactive elements that tie output to the user interface within \texttt{Shiny} and `observe.R` and `reactive.R` contain elements within an `observer` function or `reactive` function within the \texttt{Shiny} framework. By placing each of these files within the `modules/nonparametric_test` folder and adding a single line to a navigation file indicating under which module grouping the non-parametric test module should go, a new module is available within \texttt{intRo} upon running the application. Further details on the creation of new modules can be found in section \ref{modules}.
 
 \begin{figure*}[ht!]
 \centering
@@ -346,27 +346,7 @@ We have designed \texttt{intRo} modules to reproduce actions taken by the user s
 
 3. "Printing" the results of an \texttt{intRo} analysis amounts to nothing more than executing the R code on the server, adding another layer of reproducibility.
 
-We designed the modules in such a way that the code printed to the console is the same as the code executed by the server, which makes the process of writing an \texttt{intRo} module significantly more seamless. The workhorse function for this reproducibility framework is called `interpolate`, which is based on a function proposed by Hadley Wickham[ref]. The idea of interpolation is that the call can be captured, printed, and evaluated, with all the appropriate arguments substituted into the call automatically. This means that depending on the options selected in \texttt{intRo}, the corresponding arguments to functions are appropriately set for reproduction in a standard R session.
-
-```{r, eval=FALSE}
-interpolate <- function(code, ..., mydir, `_env` = parent.frame(), 
-                        file = "code_All.R", append = FALSE, 
-                        save_result = FALSE, eval = TRUE) {
-    stopifnot(inherits(code, "formula"), length(code) == 2)
-    
-    args <- lapply(list(...), as_call)
-    expr <- methods::substituteDirect(as_call(code), args)
-    
-    cat(paste0(as.character(expr)[2], "\n"), 
-        file = file.path(mydir, file), append = append)
-    
-    if (save_result) cat(paste0(paste(readLines(
-        file.path(mydir, file)), collapse = "\n"), "\n"), 
-        file = file.path(mydir, "code_All.R"), append = TRUE)
-    if (eval) eval(expr, `_env`)
-}
-```
-
+We designed the modules in such a way that the code printed to the console is the same as the code executed by the server, which makes the process of writing an \texttt{intRo} module significantly more seamless. The workhorse function for this reproducibility framework is called `interpolate`, which is based on a function proposed by Hadley Wickham [-@interpolate]. The idea of interpolation is that by using non-standard evaluation, the call can be captured, printed, and evaluated, with all the appropriate arguments substituted into the call automatically. This means that depending on the options selected in \texttt{intRo}, the corresponding arguments to functions are appropriately set for reproduction in a standard R session.
 
 ## Reactive design choices
 
@@ -382,7 +362,7 @@ We believe \texttt{intRo} can be a powerful and effective tool for introductory 
 
 In addition to the current functionality, there are some practical improvements in the works that will make \texttt{intRo} more useful to both students and instructors. In particular, we have begun development on an \texttt{R} package which will allow \texttt{intRo} modules to be created automatically from user written \texttt{R} code. This package will generate the necessary file structure to allow the module's incorporation into \texttt{intRo} as well as translate user code to \texttt{intRo} compatible code and populate the necessary files. This will vastly improve \texttt{intRo}'s flexibility and allow it to be used in a wider range of curricula, including more advanced statistics courses. Additionally, we would like to utilize the expanded interactive capabilities of \texttt{ggvis} in order to make \texttt{intRo's} plots more engaging to students. One way to do this would be implementing linked plots, in which interactions with one plot are reflected in other plots that illustrate the same data. This would be particularly useful in the regression module so that students could explore observations with high influence and leverage.
 
-\texttt{intRo} will be trialed in an introductory statistics course at Iowa State University in Spring 2015. This will allow us to assess its usefulness relative to software used in the past, as well as guage areas for improvement. Furthermore, we can determine the effectiveness of code printing on generating excitement from the students about programming in \texttt{R}. 
+We hope to use \texttt{intRo} in courses to collect feedback regarding the ease of use and functionality. This will allow us to assess its usefulness relative to software used in the past, as well as gauge areas for improvement. Furthermore, we can determine the effectiveness of code printing on generating excitement from the students about programming in \texttt{R}. 
 
 Challenges do exist with regards to the wider adoption of \texttt{intRo}. For instance, we will need to monitor how well the server hosting \texttt{intRo} handles the load of dozens of students performing data analyses at once. If performance issues are encountered, the infrastructure used may need to be expanded to handle current and future load. An unknown quantity will be how feasible it is to increase adoption of \texttt{intRo} across the department, as well as to other universities. One limitation of \texttt{intRo} is that uploading a dataset beyond about 30,000 rows tends to be slow. Even once the data is successfully uploaded, the default modules produce results more slowly than with smaller datasets. This is a limitation that should be further investigated if and when \texttt{intRo} sees wider adoption.
 
