@@ -1,6 +1,5 @@
 ---
 title: "Introducing statistics with `intRo`"
-date: "November 23, 2015"
 author:
   - name: Eric Hare
     affiliation: Iowa State University
