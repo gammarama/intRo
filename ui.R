@@ -57,7 +57,7 @@ shinyUI(
                           tabPanel("Andee Kaplan")),
                tabPanel(title = "hide_me"),
                tabPanel(title = "", icon = icon('code', "fa-2x"), value = "javascript:$('#myEditor').slideToggle(); $('.fa-code').parent().parent().toggleClass('active'); code_clicked();"),
-               tabPanel(title = "", icon = icon('download', "fa-2x"), value = "javascript:$('#top-nav i.fa-download').parent().attr('href', $('#mydownload').attr('href'));"),
+               tabPanel(title = "", icon = icon('download', "fa-2x"), value = "javascript:document.getElementById('mydownload').click();"),
                tabPanel(title = "", icon = icon("print", "fa-2x"), value = "javascript: $(this).addClass('print_button'); print_clicked();"),
                footer = tagList(includeScript("scripts/top-nav-links.js"),
                               includeScript("scripts/print.js"),
