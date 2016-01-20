@@ -276,7 +276,7 @@ observeEvent(input$store_contingency, {
 })
 ```
 
-Shiny observers are created to ensure that the choices of variable for the `contingency` module are only categorical variables. This is accomplished by utilizing the global reactive `intro.categoricnames()`, which returns a character vector containing the variables in the current dataset that are categorical. Finally, there is an event observer to store code generated from the module into the overall code script upon clicking the store button. The presence of this observer code and the definition of the button in the user interface are enforced, and must be present in any \texttt{intRo} module.
+Shiny observers are a class of reactive objects within the Shiny paradigm which do not return a value [@shiny]. For further discussion of reactivity, see section \ref{reactive-design-choices}. In this example, observers are created to ensure that the choices of variable for the `contingency` module are only categorical variables. This is accomplished by utilizing the global reactive `intro.categoricnames()`, which returns a character vector containing the variables in the current dataset that are categorical. Finally, there is an event observer to store code generated from the module into the overall code script upon clicking the store button. The presence of this observer code and the definition of the button in the user interface are enforced, and must be present in any \texttt{intRo} module.
 
 The `output.R` and `reactive.R` code is very simple:
 
@@ -311,21 +311,9 @@ contingency_ui <- tabPanel("Contingency",
              selectizeInput("xcont", label = "X Variable (x)", 
                             choices = categoricNames(mpg), 
                             selected = categoricNames(mpg)[5]),
-             selectizeInput("ycont", label = "Y Variable (y)", 
-                            choices = categoricNames(mpg), 
-                            selected = categoricNames(mpg)[6]),
              
-             hr(),
-             
-             selectizeInput("conttype", label = "Type", 
-                            choices = c("Counts" = "counts", 
-                                        "Row Proportions" = "rowpercs", 
-                                        "Column Proportions" = "columnpercs", 
-                                        "Total Proportions" = "totalpercs")),
-             conditionalPanel(condition = "input.conttype != 'counts'",
-                numericInput("contdigits", label = "Digits", 
-                             value = 2, min = 1, step = 1)
-             ),
+             # Additional inputs suppressed for readability
+             ...
              
              hr(),
              
