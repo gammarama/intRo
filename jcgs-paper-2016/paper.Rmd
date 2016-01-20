@@ -232,37 +232,10 @@ cont.table <- function(intro.data, x, y, type, digits) {
         `_env` = environment(),
         file = "code_contingency.R"
     )
+    
+    # Additional formatting code suppressed for readability
+    ...
 
-    if (type == "totalpercs") interpolate(~(my.tbl <- my.tbl / 
-                                          sum(table(df$y, df$x))), 
-                                          df = quote(intro.data), x = x, y = y,  
-                                          mydir = userdir, 
-                                          `_env` = environment(), 
-                                          file = "code_contingency.R", 
-                                          append = TRUE)
-    if (type == "rowpercs") interpolate(~(my.tbl <- t(apply(
-        my.tbl[-nrow(my.tbl),], 1, function(row){row / row[ncol(my.tbl)]}))),  
-                                        mydir = userdir,
-                                        `_env` = environment(), 
-                                        file = "code_contingency.R", 
-                                        append = TRUE)
-    if (type == "columnpercs") interpolate(~(my.tbl <- apply(
-        my.tbl[,-ncol(my.tbl)], 2, function(col){col / col[nrow(my.tbl)]})),  
-                                           mydir = userdir, 
-                                           `_env` = environment(), 
-                                           file = "code_contingency.R", 
-                                           append = TRUE)
-    
-    if (type %in% c("totalpercs", "rowpercs", "columnpercs")) 
-        interpolate(~(new.digits <- digits), 
-                    digits = digits, 
-                    mydir = userdir,
-                    `_env` = environment(), 
-                    file = "code_contingency.R", 
-                    append = TRUE)
-    else interpolate(~(new.digits <- 0),  mydir = userdir, `_env` = environment(), 
-                     file = "code_contingency.R", append = TRUE)
-    
     interpolate(~(format(round(my.tbl, digits = new.digits))), 
                 mydir = userdir, 
                 `_env` = environment(), 
@@ -271,7 +244,7 @@ cont.table <- function(intro.data, x, y, type, digits) {
 }
 ```
 
-This script is most immediately similar to standard R code. In this case, a function `cont.table` is created which, depending on the values of the parameters, ultimately returns a contingency table. One important difference from a typical R script is that each call in the script is wrapped in a function called `interpolate`. `interpolate` both executes the given R code on the server, and also writes the code executed to the script window at the bottom of \texttt{intRo}. More details on the reasons and choices behind `interpolate` can be found in the next section.
+This script is most immediately similar to standard R code. In this case, a function `cont.table` is created which, depending on the values of the parameters, ultimately returns a contingency table. One important difference from a typical R script is that each call in the script is wrapped in a function called `interpolate`. `interpolate` both executes the given R code on the server, and also writes the code executed to the script window at the bottom of \texttt{intRo}. More details on the reasons and choices behind `interpolate` can be found in section \ref{reproducibility}.
 
 Because all the code needed to implement a contingency table is found in the `base` and `stats` package, the `libraries.R` file is empty for the `contingency` module. `observe.R`, which defines the Shiny observers needed, is reproduced below:
 
