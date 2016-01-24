@@ -29,20 +29,20 @@ In teaching Introduction to Business Statistics at Iowa State University, we wit
 
 Multiple software packages have recently been written in an attempt to spur student interest in introductory statistics and R programming. DataCamp's [@datacamp] courses are user-friendly ways to learning basic \texttt{R} programming and data analysis techniques. \texttt{Swirl} [@swirl] is a similar interactive tool to make learning \texttt{R} more fun by learning it within \texttt{R} itself. Project MOSAIC [@mosaic] has created a suite of tools to simplify the teaching of statistics in the form of an R package. The primary goal of DataCamp and Swirl is to teach \texttt{R} programming, rather than facilitate the learning of introductory statistics. Project MOSAIC's goal is to faciliate this learning, but using the package requires a knowledge of R programming that the introductory student may not have.
 
-Upon the release of \texttt{RStudio}'s \texttt{Shiny} [@shiny] it became easier for an R-based analysis to be converted to an interactive web application. This in turn led us to create an introductory statistics application which we call \texttt{intRo}, available at http://www.intro-stats.com. \texttt{intRo} offers a number of key advantages over traditional statistics software, including ease of use and an aim to foster student interest. Additionally, \texttt{intRo} stands apart from new tols in that it is a supplement to an existing class, fully usable by a beginning statistics student. These advantages will be discussed at length in this text.
+Upon the release of \texttt{RStudio}'s \texttt{Shiny} [@shiny] it became easier for an R-based analysis to be converted to an interactive web application. This in turn led us to create an introductory statistics application which we call \texttt{intRo}, available at http://www.intro-stats.com. \texttt{intRo} offers a number of key advantages over traditional statistics software, including ease of use and an aim to foster student interest. Additionally, \texttt{intRo} stands apart from new tools in that it is a supplement to an existing class, fully usable by a beginning statistics student. These advantages will be discussed at length in this text.
 
 # What is \texttt{intRo}?
 
-\texttt{intRo} is a web-based tool to accompany an introductory statistics class. It is meant to assist in the learning of statistics rather than a stand-alone deliverer of statistics education, with the intention of being used in conjunction with a guided class. An accompanying R package, titled \texttt{intRo} and available on GitHub, assists in the downloading, running, and deploying of \texttt{intRo} instances. 
+\texttt{intRo} is a web-based tool to accompany an introductory statistics class. It is meant to assist in the learning of statistics rather than act as a stand-alone deliverer of statistics education, with the intention of being used in conjunction with a guided class. An accompanying R package, titled \texttt{intRo} and available on GitHub, assists in the downloading, running, and deploying of \texttt{intRo} instances. 
 
-We have three fundamental philosophies that guided the creation of \texttt{intRo}, and this comes out in the design. Primarily, \texttt{intRo} is \emph{easy} to use and can be an \emph{exciting} part of learning statistics. Additionally, \texttt{intRo} is an \emph{extensible} tool, allowing for a user of \texttt{intRo} to tailor the tool for her own classroom needs.
+We have three fundamental philosophies that guided the creation of \texttt{intRo}. In particular, \texttt{intRo} is \emph{easy} to use and can be an \emph{exciting} part of learning statistics. Additionally, \texttt{intRo} is an \emph{extensible} tool, allowing for a user of \texttt{intRo} to tailor the tool for his or her own classroom needs.
 
 ## Easy
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{images/user_experience.pdf}
-\caption{Typical user experience of generating a result in \texttt{intRo}. In this instance, a mosaic plot (and its corresponding code) was created and saved to the final compendium.}
+\caption{A typical user experience of generating a result in \texttt{intRo}. In this instance, a mosaic plot (and its corresponding code) was created and saved to the final compendium.}
 \label{fig:user_experience}
 \end{figure}
 
@@ -62,7 +62,7 @@ Beyond being simple, \texttt{intRo} is also consistent. The tool is organized ar
  4. **Results Panel** - The results pane displays the result of the selected module and options.
  5. **Code Panel** - The code panel displays the \texttt{R} code used to generate the results from the student's \texttt{intRo} session. The code panel is shown by default to facilitate an interest in coding, but can be hidden by clicking the code toggle button in the Top Navigation bar.
 
-There are seven default modules within \texttt{intRo}, which perform specific data analysis tasks that employ an easy to use point-and-click interface. Each module is placed within a higher level category to further help students navigate the tool. The default modules included in \texttt{intRo} are split into three higher level categories - data, summaries, and statistics - and more modules can easily be added by an instructor, as detailed in section \ref{sec:extensible}. The default modules support uploading and downloading a dataset, transforming variables, graphical and numerical summaries, simple linear regression, contingency tables, and T-tests. 
+There are seven default modules within \texttt{intRo}, which perform specific data analysis tasks that employ an easy to use point-and-click interface. Each module is placed within a higher level category to further help students navigate the tool. The default modules included in \texttt{intRo} are split into three higher level categories - data, summaries, and statistics - and more modules can easily be added by an instructor, as detailed in section \ref{sec:extensible} and section \ref{sec:modules}. The default modules support uploading and downloading a dataset, transforming variables, graphical and numerical summaries, simple linear regression, contingency tables, and T-tests. 
 
 In addition to making \texttt{intRo} intuitive to use, we've also created a documentation website that is consistent with the interface of the application. The documentation is available at http://gammarama.github.io/intRo and hyperlinked within the application itself. This documentation covers all default modules and makes learning to use \texttt{intRo} even more painless.
 
