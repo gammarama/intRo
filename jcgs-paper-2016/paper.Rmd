@@ -16,8 +16,8 @@ output:
     template: jcgs_article.tex
 fontsize: 12pt
 abstract: |
-  `intRo` is a web-based application for performing basic data analysis and statistical routines. Leveraging the power of `R` and `Shiny`, `intRo` implements common statistical functions in an extensible modular structure, while including a point-and-click interface for the novice statistician. This simplicity lends itself to a natural presentation in an introductory statistics course as a substitute for other commonly used statistical software packages, such as `Excel` and `JMP`. `intRo` is currently deployed at the URL \url{http://www.intro-stats.com}. Within this paper, we introduce the application and explore the design decisions underlying `intRo`, as well as highlight some challenges and advantages of reactive programming.
-keywords: Graphical User Interface, Interactivity, Reproducibility, Reactive Programming, Statistical Software, Programming Paradigms
+  `intRo` is a web-based application for performing basic data analysis and statistical routines. Leveraging the power of R and Shiny, `intRo` implements common statistical functions in an extensible modular structure, while including a point-and-click interface for the novice statistician. This simplicity lends itself to a natural presentation in an introductory statistics course as a substitute for other commonly used statistical software packages, such as Excel and JMP. `intRo` is currently deployed at the URL \url{http://www.intro-stats.com}. Within this paper, we introduce the application and explore the design decisions underlying `intRo`, as well as highlight some challenges and advantages of reactive programming.
+keywords: Graphical User Interface, Interactivity, Programming Paradigms, Reactive Programming, Reproducibility, Statistical Software
 bibliography: refs.bib
 blind: false
 ---
@@ -133,7 +133,7 @@ In this way, we were able to have `intRo` be fully extensible, its structure and
 
 Although users can access intRo from \url{http://www.intro-stats.com}, course instructors may wish to customize their own instance.
 
-## `intRo` Package
+## `intRo` package
 
 `intRo` can be downloaded, ran, and deployed on ShinyApps.io through the use of the R package `intRo`. Currently, the package is only available on GitHub, and can be installed using the devtools package as follows:
 
@@ -372,5 +372,8 @@ We hope to use `intRo` in courses to collect feedback regarding the ease of use 
 Challenges do exist with regards to the wider adoption of `intRo`. For instance, we will need to monitor how well the server hosting `intRo` handles the load of dozens of students performing data analyses at once. If performance issues are encountered, the infrastructure used may need to be expanded to handle current and future load. An unknown quantity will be how feasible it is to increase adoption of `intRo` across the department, as well as to other universities. One limitation of `intRo` is that uploading a dataset beyond about 30,000 rows tends to be slow. Even once the data is successfully uploaded, the default modules produce results more slowly than with smaller datasets. This is a limitation that should be further investigated if and when `intRo` sees wider adoption.
 
 Regardless, tools that focus on usability and extensibility in statistics education, such as `intRo`, are sure to encourage the next round of innovators to be interested and excited about statistical computing.
+
+# Supplementary material
+All code and documents related to this manuscript are available at \url{https://github.com/gammarama/intRo}.
 
 # References
