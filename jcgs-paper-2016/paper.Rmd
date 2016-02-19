@@ -30,7 +30,7 @@ In teaching Introduction to Business Statistics at Iowa State University, we wit
 
 Multiple software packages have recently been written in an attempt to spur student interest in introductory statistics and R programming. DataCamp's [@datacamp] courses are user-friendly ways to learning basic R programming and data analysis techniques. Swirl [@swirl] is a similar interactive tool to make learning R more fun by learning it within R itself. Project MOSAIC [@mosaic] has created a suite of tools to simplify the teaching of statistics in the form of an R package. The primary goal of DataCamp and Swirl is to teach R programming, rather than facilitate the learning of introductory statistics. Project MOSAIC's goal is to faciliate this learning, but using the package requires a knowledge of R programming that the introductory student may not have.
 
-Upon the release of RStudio's Shiny [@shiny] it became easier for an R-based analysis to be converted to an interactive web application. This in turn led us to create an introductory statistics application which we call `intRo`, available at http://www.intro-stats.com. `intRo` offers a number of key advantages over traditional statistics software, including ease of use and an aim to foster student interest in coding. Additionally, `intRo` stands apart from new tools in that it is a supplement to an existing class, fully usable by a beginning statistics student. These advantages will be discussed at length in this text. The paper is structured as follows: Section 2 introduces the application, its features and its usability. Section 3 describes the process of creating a classroom instance of `intRo` tailored to the individual instructor. Section 4 provides technical details on the implementation of `intRo`. Finally, Section 5 discusses some future possibilities and limitations of the software.  
+Upon the release of RStudio's Shiny [@shiny] it became easier for an R-based analysis to be converted to an interactive web application. This in turn led us to create an introductory statistics application which we call `intRo`, available at http://www.intro-stats.com. `intRo` offers a number of key advantages over traditional statistics software, including ease of use and an aim to foster student interest in coding. Additionally, `intRo` stands apart from new tools in that it is a supplement to an existing class, fully usable by a beginning statistics student. These advantages will be discussed at length in this text. The paper is structured as follows: section \ref{what-is-intro} introduces the application, its features and its usability. Section \ref{using-intro} describes the process of creating a classroom instance of `intRo` tailored to the individual instructor. Section \ref{understanding-intro} provides technical details on the implementation of `intRo`. Finally, Section \ref{conclusions-and-future-work} discusses some future possibilities and limitations of the software.  
 
 # What is `intRo`?
 
@@ -129,9 +129,9 @@ shinyServer(function(input, output, session) {
 \normalsize
 In this way, we were able to have `intRo` be fully extensible, its structure and functionality dependent entirely on the modules present within the application.
 
-# Using intRo
+# Using `intRo`
 
-## intRo Package
+## `intRo` Package
 
 `intRo` can be downloaded, ran, and deployed on ShinyApps.io through the use of the R package `intRo`. Currently, the package is only available and GitHub, and can be installed using the devtools package as follows:
 
@@ -198,7 +198,7 @@ Part two of this text discusses probability and sampling distributions, which is
 
 Statistics courses with a lab component can most benefit from the use of `intRo`. As students learn the aforementioned concepts, they can practice using the tools to perform the statistical tests and summaries. They simply upload a dataset and click the module appropriate to the section of the class. Once they choose the options desired by the instructor (variables, confidence levels, etc.), they can view the results and ultimately print the output for turning in. Early labs can walk the user through the limited number of button presses and clicks necessary, while later labs can more vaguely describe the intended output in hopes that the user can easily navigate the `intRo` interface to obtain the results. For topics currently unsupported by `intRo`, the instructor can supplement its use with other web-based modules that are publicly available or create their own modules within `intRo` as detailed in section \ref{modules}.
 
-# Understanding intRo
+# Understanding `intRo`
 
 ## Modules
 An `intRo` module is a set of self-contained executible R scripts that together produce a set of introductory statistics functionality. `intRo` modules were designed in this way to allow for simple dynamic creation of the user interface at run-time, as well as ease the process of converting existing analysis code to the `intRo` framework. In this section, we detail the structure of these modules, and the process of creating and deploying new modules.
