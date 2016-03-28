@@ -7,6 +7,7 @@ This repository contains our R Package for Downloading, Running, and Installing 
 Currently, intRo is not available on CRAN, but can be installed directly from github using the **devtools** package. First install RStudio's **shinyapps** package, followed by intRo:
 
 `devtools::install_github("rstudio/shinyapps")`
+
 `devtools::install_github("gammarama/intRo")`
 
 ## Usage
