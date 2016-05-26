@@ -1,0 +1,56 @@
+---
+title: "Response to reviewers"
+author: "Eric Hare, Andee Kaplan"
+date: "May 26, 2016"
+output: html_document
+---
+
+# Reviewer 1
+
+This is an intelligent paper describing interesting software, but it (and the associated software) suffer from three problems:
+
+(1) The paper seems to me inappropriate for the JCGS. Because it focuses purely on software, I think that (once the other issues are addressed) it would be more appropriate for the Journal of Statistical Software or the R Journal.
+
+(2) Although the software looks promising, unless I've missed something, it currently has very limited functionality -- indeed, not enough to sustain most introductory statistics courses. This isn't a permanent limitation, however, since the authors have created interesting infrastructure for extending the software. In its current state, the software doesn't quite look ready for prime time.
+
+(3) The authors ignore other (and at present, much more capable) GUIs for R -- the R Commander and Deducer. Since these are the most direct competitors to intRo -- more so than, e.g., Excel and JMP -- it seems obvious that the authors should address similarities, differences, advantages, and disadvantages. One obvious difference is that these other GUIs run on individual computers rather than being web-based, and it would also make sense to address more generally the advantages and disadvantages of the two approaches. (For example, in my tests of intRo, I noticed slow response, even with very small data sets. Of course, it's hard to know to what to attribute that -- it could as easily have been a network issue as slowness at the server end.)
+
+# Reviewer 2
+
+The “Article Assessment” questions on the report form don’t work for a paper like this.
+The authors report on some very impressive work. The simplicity of conception and execution is one of its biggest strengths. Their motivations are compelling, as is their system design and execution but I think the story-telling can be improved considerably.
+
+I think the authors need to decide, “What sort of paper am I writing?” Included in the manuscript are elements of “a paper about teaching introductory statistics using a software system”, elements of “a paper about designing and building a simple extensible system”, and “a paper about how to use and extend a particular system”.
+
+I think the most compelling story for the Journal of Computational and Graphical Statistics is the designing and building of a simple online system for intro stat that is easy to learn, use and extend – and teaches R as a side effect. This would leave room for a sister publication in something like the Journal of Statistics Education which actually focusses on teaching aspects.
+
+If you buy this conception, the teaching-related aspects should be shortened, shaved of much detail and form the basis of an introductory motivational section that leads into a design brief and a plan of attack (using shiny etc). There needs to be high-level discussion of how the system is conceived and put together accompanied by high-level diagrams before descending into code fragments (much detailed code-fragment discussion could go to appendices). The paper just needs to convey the sense of how things are done. Actual details of how to customise and extend the system are provided in the system’s documentation.
+
+Detailed comments follow. (Perhaps unfortunately, many draw on what I have said above.):
+Everywhere – distinguish between user=student (who uses what is served up) and user=teacher (who customises what is served up)
+
+p. 2: Another online analysis system implemented in shiny is iNZight Lite at http://lite.docker.stat.auckland.ac.nz/. It is more ambitious and therefore more complex. Also it does not have the “exposing the R code” capability.
+
+p 3 bottom: Remove parentheses around “(and its corresponding code)” because this is actually one of the key features. R Commander should enter the discussion around here (even though it isn’t online)
+
+P 5: Fig 2 shows a simple design that should be easy for casual users (as intro students really are) to get their heads around. Not all that keen on the use of “statistics” as a category heading in Panel 2 because it reinforces the ghettoizing of the word conflicting with a message that says everything you are doing here is statistics.
+
+P 6 top: When you look at the actual R code generated it can be quite complex with its pipe structures etc which I would have thought does rather limit its introductory value.
+ 
+P 6-7: discussion of particular modules should be in a “for example” vein. There is no need to justify what particular features are and are not included. (That would be in a teaching paper.)
+
+P 7 top: Being able to choose only plot types that are “compatible” with the variables used does, however, preclude learning experiences of the form “this thing you want to do is not appropriate for this type of data.”
+
+P 8: I think this descends to details too quickly. The big features are designing for extensibility, with conceptions about switching modules on and off and adding modules, and the interface as presented being assembled on the fly when the system starts up.
+
+P 9-10 looks like appendix stuff to me.
+
+Section 3 discusses downloading onto a local machine before customising the hosted online system which should be the focus (again conception and issues involved before any details).
+
+P 11 near bottom: “as an application on the user’s account” puzzled me -- needs to say shinyapps.io account
+Section 3.2 mainly belongs in up-front motivation. Table 1 is an implementation mechanism.
+P 14 top: “currently unsupported” justifications are more relevant to a teaching paper than a software design paper.
+P 14 Last para Section 3: could go into motivational discussion.
+Section 4.1 is a big part of what I see as the real story but descends to details too quickly.
+Most of Section 4.2 looks to me like more motivation, except the interpolate stuff which is an implementation mechanism
+Section 4.3: more “main story”.
