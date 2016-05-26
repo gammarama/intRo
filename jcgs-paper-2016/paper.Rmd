@@ -277,7 +277,7 @@ In the creation of `intRo` we walked a fine line between giving the user flexibi
 
 # Deploying `intRo` Instances
 
-Although users can access intRo from \url{http://www.intro-stats.com}, course instructors may wish to download, customize, and their own instance, perhaps with new modules or modified theming or functionality. `intRo` can be downloaded, ran, and deployed on ShinyApps.io through the use of the R package `intRo`. Currently, the package is only available on GitHub, and can be installed using the devtools package as follows:
+Although users can access intRo from \url{http://www.intro-stats.com}, course instructors may wish to download, customize, and deploy their own instance, perhaps with new modules or modified theming or functionality. `intRo` can be downloaded, ran, and deployed on ShinyApps.io through the use of the R package `intRo`. Currently, the package is only available on GitHub, and can be installed using the devtools package as follows:
 
 ```{r, eval=FALSE}
 devtools::install_github("gammarama/intRo")
