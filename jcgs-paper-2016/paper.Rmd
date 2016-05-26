@@ -65,7 +65,13 @@ The modules included in `intRo` are split into three higher level categories - d
 
 We've also created a documentation website that is consistent with the interface of the application. The documentation is available at http://gammarama.github.io/intRo and hyperlinked within the application itself.
 
-`intRo` has an ulterior motive as well: to get students excited about programming. By navigating about the user interface of `intRo`, students are actually creating a fully-executable R script that they can download and run locally as well as viewing the script change real-time within the application. This code creation element of `intRo` is meant to generate excitement about programming in R and empower students to feel that they can generate code as well. `intRo` uses rmarkdown's render function in order to print the results, by dymanically executing the user's R script. By default, the output will include the R code, but if the user elects to hide the source code by clicking the code toggle button at the top, the code will not appear in the printed results.
+`intRo` has an ulterior motive as well: to get students excited about programming. By navigating about the user interface of `intRo`, students are actually creating a fully-executable R script that they can download and run locally as well as viewing the script change real-time within the application. This code creation element of `intRo` is meant to generate excitement about programming in R and empower students to feel that they can generate code as well. `intRo` uses rmarkdown's render function in order to print the results, by dymanically executing the user's R script. By default, the output will include the R code, but if the user elects to hide the source code by clicking the code toggle button at the top, the code will not appear in the printed results. This reproducibility framework has a number of key advantages:
+
+1. This eases a user who may be intimidated by programming into the idea that interacting with a user interface is really just a frontend for code. Seeing the correspondence between graphical clicks and printed code will hopefully also lessen the fear of coding that many inexperienced users may have.
+
+2. An analysis created by `intRo` can be reproduced in an R session to easily assess and extend the results.
+
+3. "Printing" the results of an `intRo` analysis amounts to nothing more than executing the R code on the server, adding another layer of reproducibility.
 
 On the front end, user interaction with `intRo` is split into bitesize chunks that we call modules. Modules are self-contained pieces of functionality which implement common statistical procedures that are often used in introductory statistics classes.
 
@@ -75,9 +81,13 @@ The graphical summaries module provides several common graphical displays of var
 
 Within the set of statistics modules, there are three simple statistics tasks that an introductory statistics student will learn in her first semester. The contingency table module allows the user to compute a contingency table for two categorical variables. The results can either be displayed as counts, row percentages, column percentages, or total percentages. The simple linear regression module allows the user to compute a simple linear regression of a dependent variable (y) on an independent variable (x). The module will automatically filter any variables that are non-numeric so that the user may only select variables that are suitable for a simple linear regression. Results of the regression will be displayed on the right. A table of parameter estimates, a scatterplot of the data along with a line of best fit, The R-Squared value, and residual diagnostic plots will all be displayed. A user also has the ability to save residuals and predicted values to their dataset for further analysis. The T test module allows the user to perform either a one variable or two variable Student's T test. The user can select configuration options, including the direction of the test and the confidence level of the test. The results, including the t statistic, degrees of freedom, p-value, and a confidence interval, will be displayed in a text box in the results panel.
 
-Each module is a self contained set of R code that is dynamically added to the application at run time. What this means is that `intRo` can be easily extended by the addition of modules within the framework underlying the application. This extensibility allows for `intRo` to be customized for an individual classroom setting, tailored to the needs of a particular course.
+# Understanding `intRo`
 
-As an example of possible customization, an instructor may wish to introduce hypothesis testing from a nonparametric framework rather than distributional. In this case, a wilcoxon rank sum test could be added easily as a module to be used instead of the T test. This addition would be fairly simple to complete. The user would fork `intRo` from http://github.com/gammarama/intRo and begin by adding six types of files to a folder within a module folder: `helper.R`, `libraries.R`, `observe.R`, `output.R`, `reactive.R`, and `ui.R`. Each of these files is written to comply with the reactive nature available in a Shiny application. Further details on the creation of new modules can be found in section \ref{modules}.
+To fully understand `intRo`, it is important to expand upon two underlying concepts. The first is the idea of modularity in the context of a Shiny application. The second is the idea of reactive programming in the context of a web application.
+
+## Modules
+
+An `intRo` module is a set of self-contained executible R scripts that together produce a set of introductory statistics functionality. `intRo` modules were designed in this way to allow for simple dynamic creation of the user interface at run-time, as well as ease the process of converting existing analysis code to the `intRo` framework. In this section, we detail the structure of these modules, and the process of creating and deploying new modules.
 
 \begin{figure*}[ht!]
 \centering
@@ -86,7 +96,7 @@ As an example of possible customization, an instructor may wish to introduce hyp
 \label{fig:app_creation_modules}
 \end{figure*}
 
-The process by which `intRo` is dynamically created upon running the application through module sourcing is detailed in figure \ref{fig:app_creation_modules}. The key driver to populating \texttt{server.R} and \texttt{ui.R} is the navigation file \texttt{modules.txt}, which defines the placement of each module. The interface is then created with the following statement.
+`intRo`'s user interface and functionality is dynamically generated depending on the set of modules enabled. This process is detailed in figure \ref{fig:app_creation_modules}. The key driver to populating \texttt{server.R} and \texttt{ui.R} is the navigation file \texttt{modules.txt}, which defines the placement of each module. The interface is then created with the following statement.
 
 \footnotesize
 ```{r ui, eval=FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=25)}
@@ -129,85 +139,6 @@ shinyServer(function(input, output, session) {
 \normalsize
 In this way, we were able to have `intRo` be fully extensible, its structure and functionality dependent entirely on the modules present within the application.
 
-# Using `intRo`
-
-Although users can access intRo from \url{http://www.intro-stats.com}, course instructors may wish to customize their own instance.
-
-## `intRo` package
-
-`intRo` can be downloaded, ran, and deployed on ShinyApps.io through the use of the R package `intRo`. Currently, the package is only available on GitHub, and can be installed using the devtools package as follows:
-
-```{r, eval=FALSE}
-devtools::install_github("gammarama/intRo")
-```
-
-After installing the `intRo` package, the first function one should call is `download_intRo`. `download_intRo` takes as an argument a directory in which to store the application. By default, it selects the working directory of the R session. This function clones the application branch of the `intRo` repository on GitHub, and hence will pull the latest version of the code whenever it is ran.
-
-Running `download_intRo` will produce an `intRo` folder in the specified folder. It can then be ran as any Shiny application, using Shiny's `runApp` command. However, we have provided a wrapper function `run_intRo` which adds some additional customization options to the execution process. `run_intRo` takes as argument the path to the folder containing the `intRo` application. It also takes several more optional arguments:
-
-* `enabled_modules`: A character vector containing the modules to enable
-* `theme`: A string representing a shinythemes theme to use
-* `...`: Additional arguments passed to Shiny's `runApp` function
-
-The package provides help documentation which explains in further detail the format that these arguments would take, but as an example, suppose I wanted to download `intRo` to my working directory, execute an `intRo` session with only the data sources, data transform, and numerical summaries modules enabled, and apply the cerulean theme. The series of calls to do so would be as follows:
-
-```{r, eval=FALSE}
-download_intRo()
-run_intRo(enabled_modules = c("data/transform", "summaries/numerical"), 
-          theme = "cerulean")
-```
-
-Note that the data sources module is required, and hence must be included in all intRo sessions and need not be specified in the enabled_modules argument.
-
-If the intent is to use a specific instance of `intRo` where many users will access it at the same time, such as in an introductory statistics class, it may be preferable to deploy a custom instance of `intRo` to a publicly accessible URL. The package provides a function `deploy_intRo` which is a wrapper for the `deployApp` function contained in the shinyapps package. Once the shinyapps package is installed and configured, `deploy_intRo` will upload `intRo` as an application on the user's account. The function takes the same arguments as `run_intRo`, so it can be deployed with a custom selection of modules, and a customized theme. It also takes an additional argument `google_analytics`, which allows the specification of a Google Analytics tracking ID. It also takes `...` as additional arguments to be passed into the `deployApp` routine. For example, if we wished to deploy the instance of `intRo` we ran previously, we would call it like so:
-
-```{r, eval=FALSE}
-deploy_intRo(enabled_modules = c("data/transform", "summaries/numerical"), 
-             theme = "cerulean")
-```
-
-Once the process finished, the app will become available at \url{http://<user>.shinyapps.io/intRo}, where `<user>` is the username of the ShinyApps.io account configured.
-
-## In the classroom
-
-`intRo`'s ease of use lends itself to a natural presentation in an introductory statistics course. Statistics software typically used in introductory courses, such as JMP and Excel, have restrictive software licensing and platform requirements that can limit the software's accessibility to students. Even if these limitations can be overcome, these software programs have non-ideal interfaces for an exploratory data analysis. JMP, for instance, hides several basic regression functions such as a line of best fit behind small red arrows. Using R itself in the classroom is an appealing alternative, but suffers from some other problems. Many students in introductory statistics courses have not been exposed to programming languages and concepts, which could require a substantial overhead in order to begin a basic statistical analysis. When results need to be submitted as homework, getting the output into a document can be a frustrating and tedious experience (this experience is made much easier with new tools like rmarkdown, but this again is a bit of a learning curve for the new statistics student).
-
-We believe that `intRo` targets these key limitations. The interface is designed to be quick, seamless, and easy to understand. Because `intRo` is web-based, the statistical analysis can be performed from nearly any modern device. R underlies the analysis, but users need not be familiar with R or programming to perform it. The focal point of the interface is the output panel, allowing the student to remain focused on the results and limiting the need to fight with the interface itself to get work done. For those students who may have a natural inclination for programming, executable code is generated to allow a local reproduction of the analysis.
-
-The features of `intRo` were selected in order to apply to the most commonly used lesson plans in early statistics courses. The textbook "The Art and Science of Learning from Data" by Agresti and Franklin [-@agresti2012statistics] references many of the focal points of introductory statistics, and `intRo` supports performing a majority of them. Part one, titled "Gathering and Exploring Data", covers graphical summaries, measures of spread and center, and avoiding the misuse of graphics in situations they are not appropriate. `intRo` includes modules for both graphical and numerical summaries covering these topics. Furthermore, `intRo` limits the display of variables to ones that are appropriate for a chosen plot type, helping to reinforce the appropriateness of particular graphics (Table \ref{tab:plottypes}).
-
-\begin{table*}[ht!]
-\centering
-\begin{tabular}{|c|c|c|}
-\hline
-Plot Type&X Variable Type Allowed&Y Variable Type Allowed\\
-\hline
-Histogram&Numeric&N/A\\
-Normal Quantile Plot&Numeric&N/A\\
-Scatterplot&Numeric&Numeric\\
-Line Chart&Numeric&Numeric\\
-Boxplot&Categorical&Numeric\\
-Bar Chart&Categorical&Numeric\\
-Pareto Chart&Categorical&Numeric\\
-Mosaic Plot&Categorical&Categorical\\
-\hline
-\end{tabular}
-\caption{The plot and variable types allowed in `intRo`'s graphical module. For example, when the selected plottype is histogram, the interface displays only a single variable selection box (x), and the variables selectable in this box are only numeric. If a boxplot is selected, the x variable must be categorical and the y variable must be numeric, and the list of choices updates automatically to reflect this.}
-\label{tab:plottypes}
-\end{table*}
-
-Part two of this text discusses probability and sampling distributions, which is outside the current realm of `intRo`, but part three focuses on inferential statistics. The inferential statistics include confidence intervals, hypothesis testing, and comparing two variables, all supported natively in `intRo`. Finally, part four of the text discusses the association between variables, including regression, functions that `intRo` performs with ease. Some of the more advanced topics of this section are currently unsupported by `intRo`, including multiple regression.
-
-Statistics courses with a lab component can most benefit from the use of `intRo`. As students learn the aforementioned concepts, they can practice using the tools to perform the statistical tests and summaries. They simply upload a dataset and click the module appropriate to the section of the class. Once they choose the options desired by the instructor (variables, confidence levels, etc.), they can view the results and ultimately print the output for turning in. Early labs can walk the user through the limited number of button presses and clicks necessary, while later labs can more vaguely describe the intended output in hopes that the user can easily navigate the `intRo` interface to obtain the results. For topics currently unsupported by `intRo`, the instructor can supplement its use with other web-based modules that are publicly available or create their own modules within `intRo` as detailed in section \ref{modules}.
-
-# Understanding `intRo`
-
-To fully understand `intRo`, it is important to expand upon three underlying concepts. The first is the idea of modularity in the context of a Shiny application. The second is the idea of reproducibility in the context of a graphical user interface. Finally, the third is the idea of reactive programming in the context of a web application.
-
-## Modules
-
-An `intRo` module is a set of self-contained executible R scripts that together produce a set of introductory statistics functionality. `intRo` modules were designed in this way to allow for simple dynamic creation of the user interface at run-time, as well as ease the process of converting existing analysis code to the `intRo` framework. In this section, we detail the structure of these modules, and the process of creating and deploying new modules.
-
 A module consists of the following scripts:
 
 * *helper.R* - R code that performs some statistical analysis or transformation. This would typically be in the form of a function, and similar to any standard R script.
@@ -247,7 +178,7 @@ cont.table <- function(intro.data, x, y, type, digits) {
 }
 ```
 
-This script is most immediately similar to standard R code. In this case, a function `cont.table` is created which, depending on the values of the parameters, ultimately returns a contingency table. One important difference from a typical R script is that each call in the script is wrapped in a function called `interpolate`. `interpolate` both executes the given R code on the server, and also writes the code executed to the script window at the bottom of `intRo`. More details on the reasons and choices behind `interpolate` can be found in section \ref{reproducibility}.
+This script is most immediately similar to standard R code. In this case, a function `cont.table` is created which, depending on the values of the parameters, ultimately returns a contingency table. One important difference from a typical R script is that each call in the script is wrapped in a function called `interpolate` [@interpolate]. `interpolate` both executes the given R code on the server, and also writes the code executed to the script window at the bottom of `intRo`.
 
 Because all the code needed to implement a contingency table is found in the `base` and `stats` package, the `libraries.R` file is empty for the `contingency` module. `observe.R`, which defines the Shiny observers needed, is reproduced below:
 
@@ -340,19 +271,6 @@ This script defines all the inputs and outputs that the user will see. The only 
 
 Although the structure of an `intRo` module is relatively straightforward, producing the code needed in a more seamless fashion would certainly help open up the creation of such modules to a wider audience. As we discuss in the conclusions and future work section, providing an `intRo` module creation tool to abstract away some of the less common coding paradigms, like the use of `interpolate`, is an important effort that will continue to be pursued.
 
-## Reproducibility
-Though they can make common actions quicker and interacting with software much simplier, many Graphical User Interfaces for scientific software packages come with a major drawback. That is, the actions taken by the user are typically not reproducible. Code scripting, on the other hand, allows us to share a file containing code, and another user can execute the code to reproduce the same results. In terms of the scientific process, where results can and should be scrutinized by other parties, the utility of GUIs are greatly limited.
-
-We have designed `intRo` modules to reproduce actions taken by the user so that they can obtain R code associated with each module interacted with. When a user chooses to store the results associated with a particular module, R code yielding the visible results is automatically added to the code window at the bottom. This framework yields several advantages:
-
-1. This eases a user who may be intimidated by programming into the idea that interacting with a user interface is really just a frontend for code. Seeing the correspondence between graphical clicks and printed code will hopefully also lessen the fear of coding that many inexperienced users may have.
-
-2. An analysis created by `intRo` can be reproduced in an R session to easily assess and extend the results.
-
-3. "Printing" the results of an `intRo` analysis amounts to nothing more than executing the R code on the server, adding another layer of reproducibility.
-
-We designed the modules in such a way that the code printed to the console is the same as the code executed by the server, which makes the process of writing an `intRo` module significantly more seamless. The workhorse function for this reproducibility framework is called `interpolate`, which is based on a function proposed by Hadley Wickham [-@interpolate]. The idea of interpolation is that by using non-standard evaluation, the call can be captured, printed, and evaluated, with all the appropriate arguments substituted into the call automatically. This means that depending on the options selected in `intRo`, the corresponding arguments to functions are appropriately set for reproduction in a standard R session.
-
 ## Reactive design choices
 
 Reactive programming is a programming paradigm that ``tackles issues posed by event-driven applications by providing abstractions to express programs as reactions to external events and having the language automatically manage the flow of time (by conceptually supporting simultaneity), and data and computation dependencies.'' [@bainomugisha2012survey] As implemented by Shiny, results automatically update when users interact with the interface. 
@@ -360,6 +278,41 @@ Reactive programming is a programming paradigm that ``tackles issues posed by ev
 intRo leverages the reactive programming nature of Shiny, and as such is designed around the idea of user input cascading through the entire application. In a typical Shiny application, users interact with inputs that act as parameters to function, which in turn yield different results. Within `intRo`, the users are able to interact with and manipulate the data underlying the entire application. This posed many challenges in the creation of `intRo` and drove design decisions, namely timely save points according to the user's workflow, and reactive updating of variable lists tied to inputs across the entire application. Because the user may experiment with different configurations or select different variables, we did not want to store all actions taken in the intRo session. Rather, each module includes a button allowing the user to explicitly store the output visible in the results panel into the R script. This way, output is only stored when the user is satisfied, and the resulting output is not cluttered with unnecessary information.
 
 In the creation of `intRo` we walked a fine line between giving the user flexibility and having realistic usability. At the same time, `intRo` was created as a consumer of another package, Shiny, in which we as developers were the beneficiaries of another team of developers' decision to balance flexibility and usability. For a tangible example, consider the graphical summaries module. We only allow variables of a type consistent with the selected plot to be displayed. This is a conscious decision that limits an `intRo` user's flexibility, while maximizing the usability (by minimizing crashes) of the application. On the flip side of this, Shiny allows much higher flexibility. For instance, the entire application (including user interface) is created dynamically upon load, based on the modules currently housed within `intRo`. However, Shiny does have limits on its flexibility based on the designers decisions for usability. One current example is the slider element. This element allows for fixed width steps from its minimum to its maximum. The JavaScript library being utilized in Shiny allows for arbitrary function calls to to generate these steps, however they must be written in plain JavaScript. This is an example of a decision made by the developers of Shiny to limit functionality in favor of usability of their package.
+
+# Using and Deploying `intRo`
+
+Although users can access intRo from \url{http://www.intro-stats.com}, course instructors may wish to download, customize, and their own instance, perhaps with new modules or modified theming or functionality. `intRo` can be downloaded, ran, and deployed on ShinyApps.io through the use of the R package `intRo`. Currently, the package is only available on GitHub, and can be installed using the devtools package as follows:
+
+```{r, eval=FALSE}
+devtools::install_github("gammarama/intRo")
+```
+
+After installing the `intRo` package, the first function one should call is `download_intRo`. `download_intRo` takes as an argument a directory in which to store the application. By default, it selects the working directory of the R session. This function clones the application branch of the `intRo` repository on GitHub, and hence will pull the latest version of the code whenever it is ran.
+
+Running `download_intRo` will produce an `intRo` folder in the specified folder. It can then be ran as any Shiny application, using Shiny's `runApp` command. However, we have provided a wrapper function `run_intRo` which adds some additional customization options to the execution process. `run_intRo` takes as argument the path to the folder containing the `intRo` application. It also takes several more optional arguments:
+
+* `enabled_modules`: A character vector containing the modules to enable
+* `theme`: A string representing a shinythemes theme to use
+* `...`: Additional arguments passed to Shiny's `runApp` function
+
+The package provides help documentation which explains in further detail the format that these arguments would take, but as an example, suppose I wanted to download `intRo` to my working directory, execute an `intRo` session with only the data sources, data transform, and numerical summaries modules enabled, and apply the cerulean theme. The series of calls to do so would be as follows:
+
+```{r, eval=FALSE}
+download_intRo()
+run_intRo(enabled_modules = c("data/transform", "summaries/numerical"), 
+          theme = "cerulean")
+```
+
+Note that the data sources module is required, and hence must be included in all intRo sessions and need not be specified in the enabled_modules argument.
+
+If the intent is to use a specific instance of `intRo` where many users will access it at the same time, such as in an introductory statistics class, it may be preferable to deploy a custom instance of `intRo` to a publicly accessible URL. The package provides a function `deploy_intRo` which is a wrapper for the `deployApp` function contained in the shinyapps package. Once the shinyapps package is installed and configured, `deploy_intRo` will upload `intRo` as an application on the user's ShinyApps.io account. The function takes the same arguments as `run_intRo`, so it can be deployed with a custom selection of modules, and a customized theme. It also takes an additional argument `google_analytics`, which allows the specification of a Google Analytics tracking ID. It also takes `...` as additional arguments to be passed into the `deployApp` routine. For example, if we wished to deploy the instance of `intRo` we ran previously, we would call it like so:
+
+```{r, eval=FALSE}
+deploy_intRo(enabled_modules = c("data/transform", "summaries/numerical"), 
+             theme = "cerulean")
+```
+
+Once the process finished, the app will become available at \url{http://<user>.shinyapps.io/intRo}, where `<user>` is the username of the ShinyApps.io account configured.
 
 # Conclusions and future work
 
@@ -374,6 +327,7 @@ Challenges do exist with regards to the wider adoption of `intRo`. For instance,
 Regardless, tools that focus on usability and extensibility in statistics education, such as `intRo`, are sure to encourage the next round of innovators to be interested and excited about statistical computing.
 
 # Supplementary material
+
 All code and documents related to this manuscript are available at \url{https://github.com/gammarama/intRo}.
 
 # References
