@@ -20,37 +20,70 @@ This is an intelligent paper describing interesting software, but it (and the as
 The “Article Assessment” questions on the report form don’t work for a paper like this.
 The authors report on some very impressive work. The simplicity of conception and execution is one of its biggest strengths. Their motivations are compelling, as is their system design and execution but I think the story-telling can be improved considerably.
 
-I think the authors need to decide, “What sort of paper am I writing?” Included in the manuscript are elements of “a paper about teaching introductory statistics using a software system”, elements of “a paper about designing and building a simple extensible system”, and “a paper about how to use and extend a particular system”.
+**We appreciate the very kind comments and hope that this revision has improved the story being told.**
 
-I think the most compelling story for the Journal of Computational and Graphical Statistics is the designing and building of a simple online system for intro stat that is easy to learn, use and extend – and teaches R as a side effect. This would leave room for a sister publication in something like the Journal of Statistics Education which actually focusses on teaching aspects.
+I think the authors need to decide, “What sort of paper am I writing?” Included in the manuscript are elements of “a paper about teaching introductory statistics using a software system”, elements of “a paper about designing and building a simple extensible system”, and “a paper about how to use and extend a particular system”. I think the most compelling story for the Journal of Computational and Graphical Statistics is the designing and building of a simple online system for intro stat that is easy to learn, use and extend – and teaches R as a side effect. This would leave room for a sister publication in something like the Journal of Statistics Education which actually focusses on teaching aspects.
+
+**We have taken care to significantly shift the focus away from the teaching aspects, and towards the extensible software system aspects. In particular, we have removed the lengthy teaching discussion and moved elements of it to the motivational section. We have also trimmed much of the content involving supported and unsupported functionality. Specific changes are noted in the responses to the further points raised below.**
 
 If you buy this conception, the teaching-related aspects should be shortened, shaved of much detail and form the basis of an introductory motivational section that leads into a design brief and a plan of attack (using shiny etc). There needs to be high-level discussion of how the system is conceived and put together accompanied by high-level diagrams before descending into code fragments (much detailed code-fragment discussion could go to appendices). The paper just needs to convey the sense of how things are done. Actual details of how to customise and extend the system are provided in the system’s documentation.
 
-Detailed comments follow. (Perhaps unfortunately, many draw on what I have said above.):
 Everywhere – distinguish between user=student (who uses what is served up) and user=teacher (who customises what is served up)
 
 p. 2: Another online analysis system implemented in shiny is iNZight Lite at http://lite.docker.stat.auckland.ac.nz/. It is more ambitious and therefore more complex. Also it does not have the “exposing the R code” capability.
 
-p 3 bottom: Remove parentheses around “(and its corresponding code)” because this is actually one of the key features. R Commander should enter the discussion around here (even though it isn’t online)
+p 3 bottom: Remove parentheses around “(and its corresponding code)” because this is actually one of the key features. 
+
+**Done**
+
+R Commander should enter the discussion around here (even though it isn’t online)
 
 P 5: Fig 2 shows a simple design that should be easy for casual users (as intro students really are) to get their heads around. Not all that keen on the use of “statistics” as a category heading in Panel 2 because it reinforces the ghettoizing of the word conflicting with a message that says everything you are doing here is statistics.
 
 P 6 top: When you look at the actual R code generated it can be quite complex with its pipe structures etc which I would have thought does rather limit its introductory value.
+
+**We appreciate the comment. In teaching R Workshops at Iowa State, we observed that among the majority of the introductory R students we encountered, the pipe structure was often preferred to using traditional nested function calls. The pipe structure is also the standard by which `ggvis` plots are created, which we are using as the backend to our graphical module. It would also be a relatively simple task for an instructor to modify or remove the piping structure in a modified version of `intRo` for use in a particular class.**
  
 P 6-7: discussion of particular modules should be in a “for example” vein. There is no need to justify what particular features are and are not included. (That would be in a teaching paper.)
 
+**We have removed the in-depth discussion about the particular modules, and instead more vaguely described the functionality. We have also made sure to indicate that the full documentation is available online, which covers the supported functionality of every provided module.**
+
 P 7 top: Being able to choose only plot types that are “compatible” with the variables used does, however, preclude learning experiences of the form “this thing you want to do is not appropriate for this type of data.”
 
+**We have also gone back and forth on this issue. The reasoning behind choosing only plot types compatible is that the user will see the different plot types available as they select different variables. So while the teaching moment could take place post-selection (by, for instance, producing an error if a plot type is used with incompatible variable types), we chose to have the teaching moment be a step earlier, where the student may see the list and wonder why the plot type they thought they wanted is not actually an option. Further, by doing a transformation of a variable, the plot types will automatically appear if they are compatible.**
+
 P 8: I think this descends to details too quickly. The big features are designing for extensibility, with conceptions about switching modules on and off and adding modules, and the interface as presented being assembled on the fly when the system starts up.
+
+**We agree. We have restructured this portion of the paper to merely discuss the motivation behind an extensible system, with mentions of disabling and enabling modules. We have moved the details to the Understanding intRo section with the details on modules.**
 
 P 9-10 looks like appendix stuff to me.
 
 Section 3 discusses downloading onto a local machine before customising the hosted online system which should be the focus (again conception and issues involved before any details).
 
+**We have moved this section to after the discussion on customizing intRo. It now comes just before the conclusion.**
+
 P 11 near bottom: “as an application on the user’s account” puzzled me -- needs to say shinyapps.io account
+
+**Done**
+
 Section 3.2 mainly belongs in up-front motivation. Table 1 is an implementation mechanism.
+
+**We have merged remnants of Section 3.2 into Section 2 / motivation. We have also drastically cut down the content to focus this paper more on the extensible systems side, rather than the teaching side. As such, we have also removed Table 1.**
+
 P 14 top: “currently unsupported” justifications are more relevant to a teaching paper than a software design paper.
+
+**We have removed this comment.**
+
 P 14 Last para Section 3: could go into motivational discussion.
+
+**We have moved this paragraph to the motivational discussion.**
+
 Section 4.1 is a big part of what I see as the real story but descends to details too quickly.
+
 Most of Section 4.2 looks to me like more motivation, except the interpolate stuff which is an implementation mechanism
+
+**We have merged most of the content from the former Section 4.2 (on reproducibility) with Section 2, and removed a discussion on interpolation.**
+
 Section 4.3: more “main story”.
+
+**We agree and have emphasized this section as one of the two primary pieces to the main story, the other being modularity.**
