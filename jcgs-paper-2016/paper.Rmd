@@ -36,28 +36,28 @@ Upon the release of RStudio's Shiny [@shiny] it became easier for an R-based ana
 
 `intRo` is a web-based tool to accompany an introductory statistics class. It is meant to assist in the learning of statistics rather than as a stand-alone delivery of statistics education, with the intention of being used in conjunction with a guided class. An accompanying R package, titled `intRo` and available on GitHub, assists in the downloading, running, and deploying of `intRo` instances. 
 
-Three fundamental philosophies that guided the creation of `intRo`. In particular, `intRo` is \emph{easy} to use and can be an \emph{exciting} part of learning statistics. Additionally, `intRo` is an \emph{extensible} tool, allowing for a user of `intRo` to tailor the tool for his or her own classroom needs.
+Three fundamental philosophies that guided the creation of `intRo`. In particular, `intRo` is \emph{easy} to use and can be an \emph{exciting} part of learning statistics. Additionally, `intRo` is an \emph{extensible} tool, allowing for a course instructor using `intRo` to tailor the tool for his or her own classroom needs.
 
-In the development of `intRo`, we focused on aspects of the user interface (UI) and output that make it easy to pick up without extensive training. We used large, easy to click icons in the page header to help students find what they need more easily. We also made the functionality available the minimal necessary for an introductory statistics course. Figure \ref{fig:user_experience} illustrates the simple steps a student takes to generate a result in `intRo`. In this instance, a user clicks on the Graphical tab to create a mosaic plot. The user sees the plot, and elects to click the save button to store the plot and its corresponding code to the final compendium.
+In the development of `intRo`, we focused on aspects of the user interface (UI) and output that make it easy to pick up without extensive training. We used large, easy to click icons in the page header to help students find what they need more easily. We also made the functionality available the minimal necessary for an introductory statistics course. Figure \ref{fig:user_experience} illustrates the simple steps a student takes to generate a result in `intRo`. In this instance, a student clicks on the Graphical tab to create a mosaic plot. The student sees the plot, and elects to click the save button to store the plot and its corresponding code to the final compendium.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{images/user_experience.pdf}
-\caption{A typical user experience of generating a result in `intRo`. In this instance, a user clicks on the Graphical tab to create a mosaic plot. The user sees the plot, and elects to click the save button to store the plot (and its corresponding code) to the final compendium.}
+\caption{A typical student experience of generating a result in \texttt{intRo}. In this instance, a student clicks on the Graphical tab to create a mosaic plot. The student sees the plot, and elects to click the save button to store the plot (and its corresponding code) to the final compendium.}
 \label{fig:user_experience}
 \end{figure}
 
-Beyond being simple, `intRo` is also consistent. The tool is organized around specific tasks a student may perform in the process of a data analysis, called modules. To the user, a module is simply a page of statistics functionality that maintains a consistent layout, helping the user to become familiar with the location of the options, the results, and the code. Figure \ref{fig:ui} highlights the five elements that comprise the `intRo` interface.
+Beyond being simple, `intRo` is also consistent. The tool is organized around specific tasks a student may perform in the process of a data analysis, called modules. To the student, a module is simply a page of statistics functionality that maintains a consistent layout, helping the student to become familiar with the location of the options, the results, and the code. Figure \ref{fig:ui} highlights the five elements that comprise the `intRo` interface.
 
 \begin{figure*}[ht!]
 \centering
 \includegraphics[width=\linewidth]{images/ui_annotate.pdf}
-\caption{The five elements that comprise the `intRo` application: 1) top navigation, 2) side navigation, 3) options panel, 4) results panel, and 5) code panel.}
+\caption{The five elements that comprise the \texttt{intRo} application: 1) top navigation, 2) side navigation, 3) options panel, 4) results panel, and 5) code panel.}
 \label{fig:ui}
 \end{figure*}
  1. **Top Navigation** - The top navigation bar includes two sets of clickable icons. The left-aligned buttons are informational buttons. The first is a link to `intRo`. The second is a link to the documentation page. The third is a link to the GitHub repository where the code for `intRo` is housed. The final button is a link to our websites, which contain contact information if there are any questions or comments. The right-aligned buttons are `intRo` utilities. The first is a link to toggle the visibility of the code panel (5). The middle icon downloads an rmarkdown [@rmarkdown] document of the analysis performed. The last is a link to print the stored module results, and the associated code (if visible).
  2. **Side Navigation** - The side navigation panel includes a list of data analysis tasks.
- 3. **Options Panel** - The options panel includes task-specific options which the user can use to customize their results.
+ 3. **Options Panel** - The options panel includes task-specific options which the student can use to customize their results.
  4. **Results Panel** - The results pane displays the result of the selected module and options.
  5. **Code Panel** - The code panel displays the R code used to generate the results from the student's `intRo` session. The code panel is shown by default to facilitate a transition to coding, but can be hidden by clicking the code toggle button in the Top Navigation bar.
 
@@ -65,11 +65,11 @@ The modules included in `intRo` are split into three higher level categories - d
 
 We've also created a documentation website that is consistent with the interface of the application. The documentation is available at http://gammarama.github.io/intRo and hyperlinked within the application itself. The documentation describes the specific functionality provided by the default `intRo` modules.
 
-Statistics courses with a lab component can most benefit from the use of `intRo`. As students learn the aforementioned concepts, they can practice using the tools to perform the statistical tests and summaries. They simply upload a dataset and click the module appropriate to the section of the class. Once they choose the options desired by the instructor (variables, confidence levels, etc.), they can view the results and ultimately print the output for turning in. Early labs can walk the user through the limited number of button presses and clicks necessary, while later labs can more vaguely describe the intended output in hopes that the user can easily navigate the `intRo` interface to obtain the results.
+Statistics courses with a lab component can most benefit from the use of `intRo`. As students learn the aforementioned concepts, they can practice using the tools to perform the statistical tests and summaries. They simply upload a dataset and click the module appropriate to the section of the class. Once they choose the options desired by the instructor (variables, confidence levels, etc.), they can view the results and ultimately print the output for turning in. Early labs can walk the student through the limited number of button presses and clicks necessary, while later labs can more vaguely describe the intended output in hopes that the student can easily navigate the `intRo` interface to obtain the results.
 
-`intRo` has an ulterior motive as well: to get students excited about programming. By navigating about the user interface of `intRo`, students are actually creating a fully-executable R script that they can download and run locally as well as viewing the script change real-time within the application. This code creation element of `intRo` is meant to generate excitement about programming in R and empower students to feel that they can generate code as well. `intRo` uses rmarkdown's render function in order to print the results, by dymanically executing the user's R script. By default, the output will include the R code, but if the user elects to hide the source code by clicking the code toggle button at the top, the code will not appear in the printed results. This reproducibility framework has a number of key advantages:
+`intRo` has an ulterior motive as well: to get students excited about programming. By navigating about the user interface of `intRo`, students are actually creating a fully-executable R script that they can download and run locally as well as viewing the script change real-time within the application. This code creation element of `intRo` is meant to generate excitement about programming in R and empower students to feel that they can generate code as well. `intRo` uses rmarkdown's render function in order to print the results, by dymanically executing the student's R script. By default, the output will include the R code, but if the student elects to hide the source code by clicking the code toggle button at the top, the code will not appear in the printed results. This reproducibility framework has a number of key advantages:
 
-1. This eases a user who may be intimidated by programming into the idea that interacting with a user interface is really just a frontend for code. Seeing the correspondence between graphical clicks and printed code will hopefully also lessen the fear of coding that many inexperienced users may have.
+1. This eases a student who may be intimidated by programming into the idea that interacting with a user interface is really just a frontend for code. Seeing the correspondence between graphical clicks and printed code will hopefully also lessen the fear of coding that many students may have.
 
 2. An analysis created by `intRo` can be reproduced in an R session to easily assess and extend the results.
 
@@ -83,64 +83,31 @@ To fully understand `intRo`, it is important to expand upon two underlying conce
 
 ## Modules
 
-An `intRo` module is a set of self-contained executible R scripts that together produce a set of introductory statistics functionality. `intRo` modules were designed in this way to allow for simple dynamic creation of the user interface at run-time, as well as ease the process of converting existing analysis code to the `intRo` framework. In this section, we detail the structure of these modules, and the process of creating and deploying new modules.
+An `intRo` module is a set of self-contained executible R scripts that together produce a set of introductory statistics functionality. `intRo` modules were designed in this way to allow for simple dynamic creation of the user interface at run-time, as well as ease the process of converting existing analysis code to the `intRo` framework. A high-level diagram of this process is given in figure \ref{fig:app_creation_modules}. Based on the modules contained within the `modules` folder, the interface and functionality of the app is dynamically generated at runtime.
 
 \begin{figure*}[ht!]
 \centering
 \includegraphics[width=\linewidth]{images/app_creation_modules.pdf}
-\caption{This figure depicts how the \texttt{server.R} and \texttt{ui.R} files are populated using the modular structure within `intRo`.}
+\caption{This figure depicts how the \texttt{server.R} and \texttt{ui.R} files are populated using the modular structure within \texttt{intRo}.}
 \label{fig:app_creation_modules}
 \end{figure*}
 
-`intRo`'s user interface and functionality is dynamically generated depending on the set of modules enabled. This process is detailed in figure \ref{fig:app_creation_modules}. The key driver to populating \texttt{server.R} and \texttt{ui.R} is the navigation file \texttt{modules.txt}, which defines the placement of each module. The interface is then created with the following statement.
+Section \ref{dynamic-ui-generation} provides some technical details on how we implemented this. For the rest of this section, we focus on the structure and development of the modules themselves, to aid in the process of creating and deploying new modules.
 
-\footnotesize
-```{r ui, eval=FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=25)}
-## Source ui
-module_info <- read.table("modules/modules.txt", header = TRUE, sep=",")
-sapply(file.path("modules", dir("modules")[dir("modules") != "modules.txt"], "ui.R"), source)
+Modularity was a design decision we focused on from the start of `intRo's` development. There are some practical benefits to thinking of related statistics and data science functionality in terms of modules:
 
-## mylist is a list containing the different ui module code
-## Create the UI
-shinyUI(
-    navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
-               tabPanel(title="", icon=icon("home"),
-                        fluidRow(
-                            do.call(navlistPanel, c(list(id = "side-nav", widths = c(2, 10)), mylist))
-                        )
-               ), ...
-    ))
-```
-\normalsize
+1. Course instructors can easily enable or disable functionality depending on the exact needs of the particular class being taught. Because this is done at run-time, including new modules is as simple as downloading and placing it within 'intRo's` modules folder, or removing existing modules from that folder.
+2. Errors can be more easily isolated to specific components. For instance, if an error is encountered, simply disabling the module can provide a temporary workaround while the issue is identified.
+3. Modularity helps to organize the different pieces of code into functionality chunks that make it easier for developers to maintain.
 
-The key piece of code being the `do.call` statement loading the list of ui elements from the module's \texttt{ui.R} file. The server functions are then dynamically generated using a similar method.
+`intRo` modules are not to be confused with Shiny modules [@shinymodules]. Shiny modules are a recent feature added to Shiny which allows the bundling of inputs and outputs into a single set of functionality. They are more general and suitable for any application. `intRo` modules are specifically for statistics functionality and work within the `intRo` application only.
 
-\footnotesize
-```{r server, eval=FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=25)}
-shinyServer(function(input, output, session) {
-  ## Module info
-  module_info <- read.table("modules/modules.txt", header = TRUE, sep=",")
-  
-  ## Modules
-  types <- c("helper.R", "static.R", "observe.R", "reactive.R", "output.R")
-  modules_tosource <- file.path("modules", 
-                                apply(expand.grid(module_info$module, types), 1, paste, collapse = "/"))
-  
-  ## Source the modules
-  for (mod in modules_tosource) {
-      source(mod, local = TRUE)
-  }
-})
-```
-\normalsize
-In this way, we were able to have `intRo` be fully extensible, its structure and functionality dependent entirely on the modules present within the application.
-
-A module consists of the following scripts:
+An `intRo` module consists of the following scripts:
 
 * *helper.R* - R code that performs some statistical analysis or transformation. This would typically be in the form of a function, and similar to any standard R script.
 * *libraries.R* - Code to load any libraries which are not part of core R.
 * *observe.R* - Shiny observer code typically used to update choices of an input box.
-* *output.R* - Shiny output code defining the results of the analysis that should be displayed to the user.
+* *output.R* - Shiny output code defining the results of the analysis that should be displayed to the student.
 * *reactive.R* - Shiny reactives, typically containing data that depend on inputs.
 * *ui.R* - Shiny user interface definition, including the placement of the inputs and outputs.
 
@@ -263,7 +230,7 @@ contingency_ui <- tabPanel("Contingency",
 )
 ```
 
-This script defines all the inputs and outputs that the user will see. The only requirements from `intRo`'s perspective are (1) that there exist a store button at the bottom of the middle panel for storing the results of the analysis in the code script, and (2) that configuration options appear in the width 4 column in the middle, and output appears in the width 8 column on the right. The remaining input and output definitions depend on the statistical analysis or transformation being performed.
+This script defines all the inputs and outputs that the student will see. The only requirements from `intRo's` perspective are (1) that there exist a store button at the bottom of the middle panel for storing the results of the analysis in the code script, and (2) that configuration options appear in the width 4 column in the middle, and output appears in the width 8 column on the right. The remaining input and output definitions depend on the statistical analysis or transformation being performed.
 
 Although the structure of an `intRo` module is relatively straightforward, producing the code needed in a more seamless fashion would certainly help open up the creation of such modules to a wider audience. As we discuss in the conclusions and future work section, providing an `intRo` module creation tool to abstract away some of the less common coding paradigms, like the use of `interpolate`, is an important effort that will continue to be pursued.
 
@@ -271,13 +238,13 @@ Although the structure of an `intRo` module is relatively straightforward, produ
 
 Reactive programming is a programming paradigm that ``tackles issues posed by event-driven applications by providing abstractions to express programs as reactions to external events and having the language automatically manage the flow of time (by conceptually supporting simultaneity), and data and computation dependencies.'' [@bainomugisha2012survey] As implemented by Shiny, results automatically update when users interact with the interface. 
 
-intRo leverages the reactive programming nature of Shiny, and as such is designed around the idea of user input cascading through the entire application. In a typical Shiny application, users interact with inputs that act as parameters to function, which in turn yield different results. Within `intRo`, the users are able to interact with and manipulate the data underlying the entire application. This posed many challenges in the creation of `intRo` and drove design decisions, namely timely save points according to the user's workflow, and reactive updating of variable lists tied to inputs across the entire application. Because the user may experiment with different configurations or select different variables, we did not want to store all actions taken in the intRo session. Rather, each module includes a button allowing the user to explicitly store the output visible in the results panel into the R script. This way, output is only stored when the user is satisfied, and the resulting output is not cluttered with unnecessary information.
+intRo leverages the reactive programming nature of Shiny, and as such is designed around the idea of user input cascading through the entire application. In a typical Shiny application, users interact with inputs that act as parameters to function, which in turn yield different results. Within `intRo`, the students are able to interact with and manipulate the data underlying the entire application. This posed many challenges in the creation of `intRo` and drove design decisions, namely timely save points according to the student's workflow, and reactive updating of variable lists tied to inputs across the entire application. Because the student may experiment with different configurations or select different variables, we did not want to store all actions taken in the intRo session. Rather, each module includes a button allowing the student to explicitly store the output visible in the results panel into the R script. This way, output is only stored when the student is satisfied, and the resulting output is not cluttered with unnecessary information.
 
-In the creation of `intRo` we walked a fine line between giving the user flexibility and having realistic usability. At the same time, `intRo` was created as a consumer of another package, Shiny, in which we as developers were the beneficiaries of another team of developers' decision to balance flexibility and usability. For a tangible example, consider the graphical summaries module. We only allow variables of a type consistent with the selected plot to be displayed. This is a conscious decision that limits an `intRo` user's flexibility, while maximizing the usability (by minimizing crashes) of the application. On the flip side of this, Shiny allows much higher flexibility. For instance, the entire application (including user interface) is created dynamically upon load, based on the modules currently housed within `intRo`. However, Shiny does have limits on its flexibility based on the designers decisions for usability. One current example is the slider element. This element allows for fixed width steps from its minimum to its maximum. The JavaScript library being utilized in Shiny allows for arbitrary function calls to to generate these steps, however they must be written in plain JavaScript. This is an example of a decision made by the developers of Shiny to limit functionality in favor of usability of their package.
+In the creation of `intRo` we walked a fine line between giving the student flexibility and having realistic usability. At the same time, `intRo` was created as a consumer of another package, Shiny, in which we as developers were the beneficiaries of another team of developers' decision to balance flexibility and usability. For a tangible example, consider the graphical summaries module. We only allow variables of a type consistent with the selected plot to be displayed. This is a conscious decision that limits an `intRo` user's flexibility, while maximizing the usability (by minimizing crashes) of the application. On the flip side of this, Shiny allows much higher flexibility. For instance, the entire application (including user interface) is created dynamically upon load, based on the modules currently housed within `intRo`. However, Shiny does have limits on its flexibility based on the designers decisions for usability. One current example is the slider element. This element allows for fixed width steps from its minimum to its maximum. The JavaScript library being utilized in Shiny allows for arbitrary function calls to to generate these steps, however they must be written in plain JavaScript. This is an example of a decision made by the developers of Shiny to limit functionality in favor of usability of their package.
 
 # Deploying `intRo` Instances
 
-Although users can access intRo from \url{http://www.intro-stats.com}, course instructors may wish to download, customize, and deploy their own instance, perhaps with new modules or modified theming or functionality. `intRo` can be downloaded, ran, and deployed on ShinyApps.io through the use of the R package `intRo`. Currently, the package is only available on GitHub, and can be installed using the devtools package as follows:
+Although students can access intRo from \url{http://www.intro-stats.com}, course instructors may wish to download, customize, and deploy their own instance, perhaps with new modules or modified theming or functionality. `intRo` can be downloaded, ran, and deployed on ShinyApps.io through the use of the R package `intRo`. Currently, the package is only available on GitHub, and can be installed using the devtools package as follows:
 
 ```{r, eval=FALSE}
 devtools::install_github("gammarama/intRo")
@@ -301,7 +268,7 @@ run_intRo(enabled_modules = c("data/transform", "summaries/numerical"),
 
 Note that the data sources module is required, and hence must be included in all intRo sessions and need not be specified in the enabled_modules argument.
 
-If the intent is to use a specific instance of `intRo` where many users will access it at the same time, such as in an introductory statistics class, it may be preferable to deploy a custom instance of `intRo` to a publicly accessible URL. The package provides a function `deploy_intRo` which is a wrapper for the `deployApp` function contained in the shinyapps package. Once the shinyapps package is installed and configured, `deploy_intRo` will upload `intRo` as an application on the user's ShinyApps.io account. The function takes the same arguments as `run_intRo`, so it can be deployed with a custom selection of modules, and a customized theme. It also takes an additional argument `google_analytics`, which allows the specification of a Google Analytics tracking ID. It also takes `...` as additional arguments to be passed into the `deployApp` routine. For example, if we wished to deploy the instance of `intRo` we ran previously, we would call it like so:
+If the intent is to use a specific instance of `intRo` where many students will access it at the same time, such as in an introductory statistics class, it may be preferable to deploy a custom instance of `intRo` to a publicly accessible URL. The package provides a function `deploy_intRo` which is a wrapper for the `deployApp` function contained in the shinyapps package. Once the shinyapps package is installed and configured, `deploy_intRo` will upload `intRo` as an application on the instructor's ShinyApps.io account. The function takes the same arguments as `run_intRo`, so it can be deployed with a custom selection of modules, and a customized theme. It also takes an additional argument `google_analytics`, which allows the specification of a Google Analytics tracking ID. It also takes `...` as additional arguments to be passed into the `deployApp` routine. For example, if we wished to deploy the instance of `intRo` we ran previously, we would call it like so:
 
 ```{r, eval=FALSE}
 deploy_intRo(enabled_modules = c("data/transform", "summaries/numerical"), 
@@ -314,7 +281,7 @@ Once the process finished, the app will become available at \url{http://<user>.s
 
 We believe `intRo` can be a powerful and effective tool for introductory statistics education. Its modular structure allows it to be flexible enough for many different applications and curriculums. Its ease-of-use allows the student to focus her attention on the statistics task at hand, rather than struggling with software licenses and confusing interface navigation. Reproducible code generated from each analysis can be used to spark an interest in R programming in those who might otherwise not be exposed to it.
 
-In addition to the current functionality, there are some practical improvements in the works that will make `intRo` more useful to both students and instructors. In particular, we have begun development on an R package which will allow `intRo` modules to be created automatically from user written R code. This package will generate the necessary file structure to allow the module's incorporation into `intRo` as well as translate user code to `intRo` compatible code and populate the necessary files. This will vastly improve `intRo`'s flexibility and allow it to be used in a wider range of curricula, including more advanced statistics courses. Additionally, we would like to utilize the expanded interactive capabilities of ggvis in order to make \texttt{intRo's} plots more engaging to students. One way to do this would be implementing linked plots, in which interactions with one plot are reflected in other plots that illustrate the same data. This would be particularly useful in the regression module so that students could explore observations with high influence and leverage.
+In addition to the current functionality, there are some practical improvements in the works that will make `intRo` more useful to both students and instructors. In particular, we have begun development on an R package which will allow `intRo` modules to be created automatically from user written R code. This package will generate the necessary file structure to allow the module's incorporation into `intRo` as well as translate user code to `intRo` compatible code and populate the necessary files. This will vastly improve `intRo's` flexibility and allow it to be used in a wider range of curricula, including more advanced statistics courses. Additionally, we would like to utilize the expanded interactive capabilities of ggvis in order to make \texttt{intRo's} plots more engaging to students. One way to do this would be implementing linked plots, in which interactions with one plot are reflected in other plots that illustrate the same data. This would be particularly useful in the regression module so that students could explore observations with high influence and leverage.
 
 We hope to use `intRo` in courses to collect feedback regarding the ease of use and functionality. This will allow us to assess its usefulness relative to software used in the past, as well as gauge areas for improvement. Furthermore, we can determine the effectiveness of code printing on generating excitement from the students about programming in R. 
 
@@ -326,4 +293,55 @@ Regardless, tools that focus on usability and extensibility in statistics educat
 
 All code and documents related to this manuscript are available at \url{https://github.com/gammarama/intRo}.
 
+# Appendix
+
+## Dynamic UI Generation
+
+`intRo's` user interface and functionality is dynamically generated depending on the set of modules enabled. The key driver to populating \texttt{server.R} and \texttt{ui.R} is the modules folder, the directory structure of which defines the placement of each module. The interface is then created with the following statement.
+
+\footnotesize
+```{r ui, eval=FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=25)}
+## Source ui
+mylist <- list()
+old_heading <- ""
+for (i in seq_along(modules)) {
+    my.module <- strsplit(modules[i], "/")[[1]]
+    if (my.module[1] != old_heading) {
+        mylist[[length(mylist) + 1]] <- Hmisc::capitalize(my.module[1])
+        old_heading <- my.module[1]
+    }
+    mylist[[length(mylist) + 1]] <- get(paste(my.module[2], "ui", sep = "_"))
+}
+
+## mylist is a list containing the different ui module code
+## Create the UI
+shinyUI(
+    navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
+               tabPanel(title="", icon=icon("home"),
+                        fluidRow(
+                            do.call(navlistPanel, c(list(id = "side-nav", widths = c(2, 10)), mylist))
+                        )
+               ), ...
+    ))
+```
+\normalsize
+
+The key piece of code being the `do.call` statement loading the list of ui elements from the module's \texttt{ui.R} file. The server functions are then dynamically generated using a similar method.
+
+\footnotesize
+```{r server, eval=FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=25)}
+shinyServer(function(input, output, session) {
+    types <- c("helper.R", "observe.R", "reactive.R", "output.R")
+    
+    modules_tosource <- file.path("modules", apply(expand.grid(modules, types), 1, paste, collapse = "/"))
+    
+    for (mod in modules_tosource) {
+        source(mod, local = TRUE)
+    }
+})
+```
+\normalsize
+In this way, we were able to have `intRo` be fully extensible, its structure and functionality dependent entirely on the modules present within the application.
+
 # References
+
