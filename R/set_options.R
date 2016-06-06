@@ -4,6 +4,7 @@
 #' @param enabled_modules The modules to enable
 #' @param theme The shinythemes theme to use
 #' @param google_analytics The google analytics tracking ID to use
+#' @importFrom utils installed.packages
 #' @examples
 #' \dontrun{
 #'     deploy_intRo()
@@ -13,9 +14,9 @@ set_options <- function(path, enabled_modules, theme, google_analytics) {
     if (is.null(enabled_modules)) enabled_modules <- c("data/transform", 
                                                        "summaries/graphical",
                                                        "summaries/numerical",
-                                                       "statistics/contingency",
-                                                       "statistics/regression",
-                                                       "statistics/t_test")
+                                                       "inference/contingency",
+                                                       "inference/regression",
+                                                       "inference/t_test")
     if (is.null(theme)) theme <- "united"
     if (is.null(google_analytics)) google_analytics <- "intRo_tracking_code"
     

@@ -1,6 +1,6 @@
 Package: intRo
 Title: Download and Run the intRo Statistical Software
-Version: 0.0.9000
+Version: 0.0.9001
 Authors@R: c(
     person("Eric", "Hare", email = "erichare@iastate.edu", role = c("aut", "cre")),
     person("Andee", "Kaplan", email = "ajkaplan@iastate.edu", role = "aut"))
@@ -24,4 +24,4 @@ Suggests:
 License: GPL-3
 LazyData: true
 VignetteBuilder: knitr
-RoxygenNote: 5.0.0
+RoxygenNote: 5.0.1
