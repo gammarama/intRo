@@ -34,11 +34,15 @@ Everywhere – distinguish between user=student (who uses what is served up) and
 
 p. 2: Another online analysis system implemented in shiny is iNZight Lite at http://lite.docker.stat.auckland.ac.nz/. It is more ambitious and therefore more complex. Also it does not have the “exposing the R code” capability.
 
+**We have included a mention of iNZight Lite, along with the shared goals and some differences with intRo.**
+
 p 3 bottom: Remove parentheses around “(and its corresponding code)” because this is actually one of the key features. 
 
 **Done**
 
 R Commander should enter the discussion around here (even though it isn’t online)
+
+**We have included R Commander in the discussion.**
 
 P 5: Fig 2 shows a simple design that should be easy for casual users (as intro students really are) to get their heads around. Not all that keen on the use of “statistics” as a category heading in Panel 2 because it reinforces the ghettoizing of the word conflicting with a message that says everything you are doing here is statistics.
 
