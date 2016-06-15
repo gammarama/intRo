@@ -18,6 +18,6 @@ nonparametric_ui <- tabPanel("Nonparametric",
                                                   
                                                   column(8,
                                                          tags$b("Nonparametric Results"),
-                                                         verbatimTextOutput("nonparametrictable")
+                                                         verbatimTextOutput("nonparametrictest")
                                                   )
                                          )

@@ -1,4 +1,4 @@
-nonparametrictable <- function (intro.data, x, y, conflevel, althyp, hypval) {
+nonparametrictest <- function (intro.data, x, y, conflevel, althyp, hypval) {
     interpolate(~(wilcox.test(x = df$x, y = df$y, conf.level = conf, alternative = althyp, mu = hypval)),
                   df = quote(intro.data),
                   x = x,
