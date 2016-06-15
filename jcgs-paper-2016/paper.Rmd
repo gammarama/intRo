@@ -279,7 +279,7 @@ All code and documents related to this manuscript are available at \url{https://
 `intRo's` user interface and functionality is dynamically generated depending on the set of modules enabled. The key driver to populating \texttt{server.R} and \texttt{ui.R} is the modules folder, the directory structure of which defines the placement of each module. The interface is then created with the following statement.
 
 \footnotesize
-```{r ui, eval=FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=25)}
+```{r ui, eval=FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=50)}
 ## Source ui
 mylist <- list()
 old_heading <- ""
@@ -308,7 +308,7 @@ shinyUI(
 The key piece of code being the `do.call` statement loading the list of ui elements from the module's \texttt{ui.R} file. The server functions are then dynamically generated using a similar method.
 
 \footnotesize
-```{r server, eval=FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=25)}
+```{r server, eval=FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=50)}
 shinyServer(function(input, output, session) {
     types <- c("helper.R", "observe.R", "reactive.R", "output.R")
     
