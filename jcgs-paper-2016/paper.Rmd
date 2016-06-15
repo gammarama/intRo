@@ -24,11 +24,11 @@ blind: false
 
 # Introduction
 
-The widespread adoption of R as a tool for statistical analysis has undoubtedly been an important development for the scientific community. However, using R in most cases still requires a basic knowledge of programming concepts which may pose a steep learning curve for the introductory statistics student. This additional time commitment may explain why introductory courses often utilize software applications such as JMP, even though instructors tend to use a tool like R in their own work. Still, some compromises must be made when using software like JMP, including dealing with software licenses and unsupported desktop platforms. **AK: This is heavy on the JMP**
+The widespread adoption of R as a tool for statistical analysis has undoubtedly been an important development for the scientific community. However, using R in most cases still requires a basic knowledge of programming concepts which may pose a steep learning curve for the introductory statistics student. This additional time commitment may explain why introductory courses often utilize point-and-click applications, even though instructors tend to use a tool like R in their own work. Still, some compromises must be made when using many graphical applications, including dealing with software licenses and unsupported desktop platforms.
 
 In teaching Introduction to Business Statistics at Iowa State University, we witnessed profound struggles by students attempting to practice introductory concepts discussed in class using current software. Scrimshaw [-@scrimshaw2001computers] notes in his manuscript that "open-ended packages, like any others, may create obstacles to learning simply through their lack of user-friendliness in the sheer mechanics of operating them, rather than any intrinsic difficulty in the content...." In our own experience teaching, students' struggles were often directly related to the use of the software and not any sort of fundamental misunderstanding of the material, in agreement with Scrimshaw's finding.
 
-Multiple software packages have recently been written in an attempt to spur interest in introductory statistics and R programming. DataCamp's [@datacamp] courses are user-friendly ways to learning basic R programming and data analysis techniques. Swirl [@swirl] is a similar interactive tool to make learning R more fun by learning it within R itself. Project MOSAIC [@mosaic] has created a suite of tools to simplify the teaching of statistics in the form of an R package. The primary goal of DataCamp and Swirl is to teach R programming, rather than facilitate the learning of introductory statistics. Project MOSAIC's goal is to faciliate this learning, but using the package requires a knowledge of R programming that the introductory student may not have. iNZight Lite [@inzight] also attempts to expose students to data analysis without requiring programming knowledge. While this tool has a lot of functionality and a very broad scope, it does not include reproducible R code, and therefore has less of a focus on spurring interest in coding for students **AK: this seems a little out of place, did we even mention the interest thing yet?**. R Commander [@fox2005] and Deducer [@fellows2012] provide a graphical front-end to many statistical functions in R, but are not web-based and thus require local installation and configuration.
+Multiple software packages have recently been written in an attempt to spur interest in  R programming and statistics. DataCamp's [@datacamp] courses are user-friendly ways to learning basic R programming and data analysis techniques. Swirl [@swirl] is a similar interactive tool to make learning R more fun by learning it within R itself. Project MOSAIC [@mosaic] has created a suite of tools to simplify the teaching of statistics in the form of an R package. The primary goal of DataCamp and Swirl is to teach R programming, rather than facilitate the learning of introductory statistics. Project MOSAIC's goal is to faciliate this learning, but using the package requires a knowledge of R programming that the introductory student may not have. R Commander [@fox2005] and Deducer [@fellows2012] provide a graphical front-end to many statistical functions in R, but are not web-based and thus require local installation and configuration. iNZight Lite [@inzight] also attempts to expose students to data analysis without requiring programming knowledge, but does not include reproducible R code, and therefore has less of a focus on spurring interest in coding for students.
 
 Upon the release of RStudio's Shiny [@shiny] it became easier for an R-based analysis to be converted to an interactive web application. This in turn led us to create an introductory statistics application which we call `intRo`, available at http://www.intro-stats.com. `intRo` offers a number of key advantages over traditional statistics software, including ease of use and an aim to foster student interest in coding. Additionally, `intRo` stands apart from new tools in that it is a supplement to an existing class, fully usable by a beginning statistics student. These advantages will be discussed at length in this text. The paper is structured as follows: section \ref{what-is-intro} introduces the application, its features and its usability, and provides motivations for the design decisions underlying it. Section \ref{understanding-intro} provides technical details on the design decisions of `intRo`, in particular, its modular and extensible structure. Section \ref{deploying-intro-instances} describes the process of deploying a classroom instance of `intRo` tailored to the individual instructor. Finally, section \ref{conclusions-and-future-work} discusses some future possibilities and limitations of the software.  
 
@@ -67,13 +67,9 @@ We've also created a documentation website that is consistent with the interface
 
 Statistics courses with a lab component can most benefit from the use of `intRo`. As students learn the aforementioned concepts, they can practice using the tools to perform the statistical tests and summaries. They simply upload a dataset and click the module appropriate to the section of the class. Once they choose the options desired by the instructor (variables, confidence levels, etc.), they can view the results and ultimately print the output for turning in. Early labs can walk the student through the limited number of button presses and clicks necessary, while later labs can more vaguely describe the intended output in hopes that the student can easily navigate the `intRo` interface to obtain the results.
 
-`intRo` has an ulterior motive as well: to get students excited about programming. By navigating about the user interface of `intRo`, students are actually creating a fully-executable R script that they can download and run locally as well as viewing the script change real-time within the application. This code creation element of `intRo` is meant to generate excitement about programming in R and empower students to feel that they can generate code as well. `intRo` uses rmarkdown's render function in order to print the results, by dymanically executing the student's R script. By default, the output will include the R code, but if the student elects to hide the source code by clicking the code toggle button at the top, the code will not appear in the printed results. This reproducibility framework has a number of key advantages:
+`intRo` has an ulterior motive as well: to get students excited about programming. By navigating about the user interface of `intRo`, students are actually creating a fully-executable R script that they can download and run locally as well as viewing the script change real-time within the application. This code creation element of `intRo` is meant to generate excitement about programming in R and empower students to feel that they can generate code as well. `intRo` uses rmarkdown's render function in order to print the results, by dymanically executing the student's R script. By default, the output will include the R code, but if the student elects to hide the source code by clicking the code toggle button at the top, the code will not appear in the printed results. 
 
-1. This eases a student who may be intimidated by programming into the idea that interacting with a user interface is really just a frontend for code. Seeing the correspondence between graphical clicks and printed code will hopefully also lessen the fear of coding that many students may have.
-
-2. An analysis created by `intRo` can be reproduced in an R session to easily assess and extend the results.
-
-3. "Printing" the results of an `intRo` analysis amounts to nothing more than executing the R code on the server, adding another layer of reproducibility.
+This reproducibility framework has three key advantages. First, this eases a student who may be intimidated by programming into the idea that interacting with a user interface is really just a frontend for code. Seeing the correspondence between graphical clicks and printed code will hopefully also lessen the fear of coding that many students may have. Second, an analysis created by `intRo` can be reproduced in an R session to easily assess and extend the results. Finally, "printing" the results of an `intRo` analysis amounts to nothing more than executing the R code on the server, adding another layer of reproducibility.
 
 On the front end, user interaction with `intRo` is split into bitesize chunks that we call modules. Modules are self-contained pieces of functionality which implement common statistical procedures that are often used in introductory statistics classes. These modules form the core of `intRo` and are discussed at length in the next section.
 
@@ -83,22 +79,18 @@ To fully understand `intRo`, it is important to expand upon two underlying conce
 
 ## Modules
 
-An `intRo` module is a set of self-contained executible R scripts that together produce a set of introductory statistics functionality. `intRo` modules were designed in this way to allow for simple dynamic creation of the user interface at run-time, as well as ease the process of converting existing analysis code to the `intRo` framework. A high-level diagram of this process is given in figure \ref{fig:app_creation_modules}. Based on the modules contained within the `modules` folder, the interface and functionality of the app is dynamically generated at runtime. **AK: We need a more detailed description of this image.**
+An `intRo` module is a set of self-contained executible R scripts that together produce a set of introductory statistics functionality. `intRo` modules were designed in this way to allow for simple dynamic creation of the user interface at run-time, as well as ease the process of converting existing analysis code to the `intRo` framework. A high-level diagram of this process is given in figure \ref{fig:app_creation_modules}. `intRo` modules are split up into multiple R scripts which are included either in Shiny's user interface or server definitions. At runtime, the `intRo` sources in the specified modules (contained in the modules folder) to dynamically generate the functionality available in the application. This allows for the specific functionality needed to be determined and adjusted by the individual course instructor. In this example, the instructor is electing to include a nonparametric module, which is not enabled by default, to allow the students to perform a wilcoxon rank sum test.
 
 \begin{figure*}[ht!]
 \centering
 \includegraphics[width=\linewidth]{images/app_creation_modules.pdf}
-\caption{This figure depicts how the \texttt{server.R} and \texttt{ui.R} files are populated using the modular structure within \texttt{intRo}.}
+\caption{This figure depicts how the Shiny \texttt{server.R} and \texttt{ui.R} files are populated using the modular structure within \texttt{intRo}. \texttt{intRo} modules are split up into multiple R scripts which are included either in Shiny's user interface or server definitions. At runtime, the \texttt{intRo} sources in the specified modules (contained in the modules folder) to dynamically generate the functionality available in the application. This allows for the specific functionality needed to be determined and adjusted by the individual course instructor. In this example, the instructor is electing to include a nonparametric module, which is not enabled by default, to allow the students to perform a wilcoxon rank sum test.}
 \label{fig:app_creation_modules}
 \end{figure*}
 
 Section \ref{dynamic-ui-generation} provides some technical details on how we implemented this. For the rest of this section, we focus on the structure and development of the modules themselves, to aid in the process of creating and deploying new modules.
 
-Modularity was a design decision we focused on from the start of `intRo's` development. There are some practical benefits to thinking of related statistics and data science functionality in terms of modules: **AK: We have too many lists in this paper.**
-
-1. Course instructors can easily enable or disable functionality depending on the exact needs of the particular class being taught. Because this is done at run-time, including new modules is as simple as downloading and placing it within `intRo's` modules folder, or removing existing modules from that folder.
-2. Errors can be more easily isolated to specific components. For instance, if an error is encountered, simply disabling the module can provide a temporary workaround while the issue is identified.
-3. Modularity helps to organize the different pieces of code into functionality chunks that make it easier for developers to maintain.
+Modularity was a design decision we focused on from the start of `intRo's` development. There are some practical benefits to thinking of related statistics and data science functionality in terms of modules. Course instructors can easily enable or disable functionality depending on the exact needs of the particular class being taught. Because this is done at run-time, including new modules is as simple as downloading and placing it within `intRo's` modules folder, or removing existing modules from that folder. Furthermore, errors can be more easily isolated to specific components. For instance, if an error is encountered, simply disabling the module can provide a temporary workaround while the issue is identified. Finally, modularity helps to organize the different pieces of code into functionality chunks that make it easier for developers to maintain.
 
 `intRo` modules are not to be confused with Shiny modules [@shinymodules]. Shiny modules are a recent feature added to Shiny which allows the bundling of inputs and outputs into a single set of functionality. They are more general and suitable for any application. `intRo` modules are specifically for statistics functionality and work within the `intRo` application only.
 
@@ -111,122 +103,108 @@ An `intRo` module consists of the following scripts:
 * *reactive.R* - Shiny reactives, typically containing data that depend on inputs.
 * *ui.R* - Shiny user interface definition, including the placement of the inputs and outputs.
 
-The modules provided with `intRo` are contained in the modules folder. The top level directory in the modules folder defines the category of the module (currently `data`, `summaries`, or `inference`). Within each of these categories is a folder named according to the name of the module. This folder houses the previously defined scripts. As an example, we will walk through the contents of the `contingency` module.
+The modules provided with `intRo` are contained in the modules folder. The top level directory in the modules folder defines the category of the module (currently `data`, `summaries`, or `inference`). Within each of these categories is a folder named according to the name of the module. This folder houses the previously defined scripts. As an example, we will walk through the contents of the `nonparametric` module as previously mentioned in this section.
 
-**AK: Should we walk through a difference models? Since this is not inference, it is confusing**
-Since the `contingency` module performs a statistical analysis, it is part of the inference category, and hence can be found in the `intRo` repository at **modules/inference/contingency**. Let's first examine *helper.R*:
+Since the `nonparametric` module performs a statistical test, it is part of the inference category, and hence can be found in the `intRo` repository at **modules/inference/nonparametric**. Let's first examine *helper.R*:
 
 ```{r, eval=FALSE}
-cont.table <- function(intro.data, x, y, type, digits) {  
-    interpolate(
-        ~ (my.tbl <- cbind(rbind(table(df$y, df$x), 
-                      Total = colSums(table(df$y, df$x))), 
-                Total = c(rowSums(table(df$y, df$x))[-(length(df$x))], 
-                          sum(table(df$y, df$x))))),
-        df = quote(intro.data),
-        x = x,
-        y = y,
-        mydir = userdir,
-        `_env` = environment(),
-        file = "code_contingency.R"
-    )
-    
-    # Additional formatting code suppressed for readability
-    ...
-
-    interpolate(~(format(round(my.tbl, digits = new.digits))), 
-                mydir = userdir, 
-                `_env` = environment(), 
-                file = "code_contingency.R",
-                append = TRUE)
+nonparametrictest <- function(intro.data, x, y, 
+                                conflevel, althyp, hypval) {
+    interpolate(~(wilcox.test(x = df$x, y = df$y, 
+                              conf.level = conf, 
+                              alternative = althyp, 
+                              mu = hypval)),
+                  df = quote(intro.data),
+                  x = x,
+                  y = y,
+                  conf = conflevel,
+                  althyp = althyp,
+                  hypval = hypval,
+                  mydir = userdir, 
+                  `_env` = environment(), 
+                  file = "code_nonparametric.R")
 }
 ```
 
-This script is most immediately similar to standard R code. In this case, a function `cont.table` is created which, depending on the values of the parameters, ultimately returns a contingency table. One important difference from a typical R script is that each call in the script is wrapped in a function called `interpolate` [@interpolate]. `interpolate` both executes the given R code on the server, and also writes the code executed to the script window at the bottom of `intRo`.
+This script is most immediately similar to standard R code. In this case, a function `nonparametrictest` is created which, depending on the values of the parameters, ultimately returns the result of a wilcoxon rank sum test. One important difference from a typical R script is that each call in the script is wrapped in a function called `interpolate` [@interpolate]. `interpolate` both executes the given R code on the server, and also writes the code executed to the script window at the bottom of `intRo`.
 
-Because all the code needed to implement a contingency table is found in the `base` and `stats` package, the `libraries.R` file is empty for the `contingency` module. `observe.R`, which defines the Shiny observers needed, is reproduced below:
+Because all the code needed to implement a wilcoxon rank sum test is found in the `base` and `stats` package, the `libraries.R` file is empty for the `nonparametric` module. Additionally, there are no reactive objects defined, so `reactive.R` is also empty. `observe.R`, which defines the Shiny observers needed, is reproduced below:
 
 ```{r, eval=FALSE}
 observe({
-    xselect <- ifelse(checkVariable(intro.data(), input$xcont),
-                      input$xcont, 
-                      intro.categoricnames()[1])
-    yselect <- ifelse(checkVariable(intro.data(), input$ycont), 
-                      input$ycont, 
-                      intro.categoricnames()[2])
-    
-    updateSelectizeInput(session, 
-                         "xcont", 
-                         choices = setdiff(intro.categoricnames(), 
-                                           yselect), 
-                         selected = xselect)
-    updateSelectizeInput(session, 
-                         "ycont", 
-                         choices = setdiff(intro.categoricnames(), 
-                                           xselect), 
-                         selected = yselect)
+    updateSelectizeInput(session, "group1_non", 
+                         choices = intro.numericnames(), 
+                         selected = ifelse(checkVariable(
+                             intro.data(), input$group1_non), 
+                             input$group1_non, 
+                             intro.numericnames()[1]))
+    updateSelectizeInput(session, "group2_non", 
+                         choices = intro.numericnames(), 
+                         selected = ifelse(checkVariable(
+                             intro.data(), input$group2_non), 
+                             input$group2_non, 
+                             intro.numericnames()[2]))
 })
 
-observeEvent(input$store_contingency, {
+observeEvent(input$store_nonparametric, {
     cat(paste0("\n\n", paste(readLines(
-        file.path(userdir, "code_contingency.R")), 
+        file.path(userdir, "code_nonparametric.R")), 
         collapse = "\n")), 
         file = file.path(userdir, "code_All.R"), 
         append = TRUE)
 })
 ```
 
-Shiny observers are a class of reactive objects within the Shiny paradigm which do not return a value [@shiny]. For further discussion of reactivity, see section \ref{reactive-design-choices}. In this example, observers are created to ensure that the choices of variable for the `contingency` module are only categorical variables. This is accomplished by utilizing the global reactive `intro.categoricnames()`, which returns a character vector containing the variables in the current dataset that are categorical. Finally, there is an event observer to store code generated from the module into the overall code script upon clicking the store button. The presence of this observer code and the definition of the button in the user interface are enforced, and must be present in any `intRo` module.
+Shiny observers are a class of reactive objects within the Shiny paradigm which do not return a value [@shiny]. For further discussion of reactivity, see section \ref{reactive-design-choices}. In this example, observers are created to ensure that the choices of variable for the `nonparametric` module are only numeric variables. This is accomplished by utilizing the global reactive `intro.numericnames()`, which returns a character vector containing the variables in the current dataset that are numeric. Finally, there is an event observer to store code generated from the module into the overall code script upon clicking the store button. The presence of this observer code and the definition of the button in the user interface are enforced, and must be present in any `intRo` module.
 
-The `output.R` and `reactive.R` code is very simple:
+The `output.R` code is very simple:
 
 ```{r, eval=FALSE}
-output$conttable <- renderTable({
-    return(intro.contingency())
+output$nonparametrictest <- renderPrint({
+    return(nonparametrictable(intro.data(), input$group1_non, 
+                              input$group2_non, input$conflevel_non, 
+                              input$althyp_non, input$hypval_non))
 })
 ```
 
-```{r, eval=FALSE}
-intro.contingency <- reactive({
-    if (is.null(intro.data())) return(NULL)
-    if (input$xcont == input$ycont || 
-        length(categoricNames(intro.data())) < 2) return(NULL)
-    
-    my.conttable <- cont.table(intro.data(), 
-                               input$xcont, input$ycont, 
-                               input$conttype, input$contdigits)
-    
-    return(my.conttable)
-})
-```
-
-`intro.contingency` is defined as a reactive object. Some small error checks are performed at the beginning to ensure that the data is present and available, and that two different categorical variables are selected. Assuming those conditions hold, a call to the previously defined `helper.R` function is made with the appropriate parameters, and the results are returned. The `output.R` script then simply uses Shiny's `renderTable` function to display the resulting table.
+The `output.R` script then simply uses Shiny's `renderPrint` function to display the resulting table.
 
 Finally, the `ui.R` code is shown below:
 
 ```{r, eval=FALSE}
-contingency_ui <- tabPanel("Contingency",
+nonparametric_ui <- tabPanel("Nonparametric",
     column(4,
          wellPanel(
-             selectizeInput("xcont", label = "X Variable (x)", 
-                            choices = categoricNames(mpg), 
-                            selected = categoricNames(mpg)[5]),
-             
-             # Additional inputs suppressed for readability
-             ...
+             selectizeInput("group1_non", label = "Group 1 (x)", 
+                            choices = numericNames(mpg), 
+                            selected = numericNames(mpg)[1]),
+             selectizeInput("group2_non", "Group 2 (y)", 
+                            choices = numericNames(mpg), 
+                            selected = numericNames(mpg)[2]),
              
              hr(),
              
-             tags$button("", id = "store_contingency", type = "button", 
-                         class = "btn action-button", 
-                         list(icon("save"), "Store Contingency Result"), 
+             selectizeInput("althyp_non", "Alternative Hypothesis", 
+                            c("Two-Sided" = "two.sided", 
+                              "Greater" = "greater", "Less" = "less")),
+             numericInput("hypval_non", "Hypothesized Value",
+                          value = 0),
+             sliderInput("conflevel_non", "Confidence Level",
+                         min=0.01, max=0.99, step=0.01, value=0.95),
+             
+             hr(),
+             
+             tags$button("", id = "store_nonparametric", type = "button", 
+                         class = "btn action-button", list(icon("save"), 
+                         "Store Nonparametric Result"), 
                          onclick = "$('#top-nav a:has(> .fa-print, 
                          .fa-code, .fa-download)').highlight();")
          )
     ),
     
     column(8,
-         tableOutput("conttable")
+         tags$b("Nonparametric Results"),
+         verbatimTextOutput("nonparametrictest")
     )
 )
 ```
@@ -242,8 +220,6 @@ Reactive programming is a programming paradigm that "tackles issues posed by eve
 intRo leverages the reactive programming nature of Shiny, and as such is designed around the idea of user input cascading through the entire application. In a typical Shiny application, users interact with inputs that act as parameters to function, which in turn yield different results. Within `intRo`, the students are able to interact with and manipulate the data underlying the entire application. This posed many challenges in the creation of `intRo` and drove design decisions, namely timely save points according to the student's workflow, and reactive updating of variable lists tied to inputs across the entire application. Because the student may experiment with different configurations or select different variables, we did not want to store all actions taken in the intRo session. Rather, each module includes a button allowing the student to explicitly store the output visible in the results panel into the R script. This way, output is only stored when the student is satisfied, and the resulting output is not cluttered with unnecessary information.
 
 In the creation of `intRo` we walked a fine line between giving the student flexibility and having realistic usability. At the same time, `intRo` was created as a consumer of another package, Shiny, in which we as developers were the beneficiaries of another team of developers' decision to balance flexibility and usability. For a tangible example, consider the graphical summaries module. We only allow variables of a type consistent with the selected plot to be displayed. This is a conscious decision that limits an `intRo` user's flexibility, while maximizing the usability (by minimizing crashes) of the application. On the flip side of this, Shiny allows much higher flexibility. For instance, the entire application (including user interface) is created dynamically upon load, based on the modules currently housed within `intRo`. However, Shiny does have limits on its flexibility based on the designers decisions for usability. One current example is the slider element. This element allows for fixed width steps from its minimum to its maximum. The JavaScript library being utilized in Shiny allows for arbitrary function calls to to generate these steps, however they must be written in plain JavaScript. This is an example of a decision made by the developers of Shiny to limit functionality in favor of usability of their package.
-
-**AK: I feel like this section could use a little more beef, but I'm not sure how**
 
 # Deploying `intRo` Instances
 
@@ -282,13 +258,13 @@ Once the process finished, the app will become available at \url{http://<user>.s
 
 # Conclusions and future work
 
-We believe **AK: we believe is weak language, consider removing** `intRo` can be a powerful and effective tool for introductory statistics education. Its modular structure allows it to be flexible enough for many different applications and curriculums. Its ease-of-use allows the student to focus her attention on the statistics task at hand, rather than struggling with software licenses and confusing interface navigation. Reproducible code generated from each analysis can be used to spark an interest in R programming in those who might otherwise not be exposed to it.
+`intRo` can be a powerful and effective tool for introductory statistics education. Its modular structure allows it to be flexible enough for many different applications and curriculums. Its ease-of-use allows the student to focus her attention on the statistics task at hand, rather than struggling with software licenses and confusing interface navigation. Reproducible code generated from each analysis can be used to spark an interest in R programming in those who might otherwise not be exposed to it.
 
 In addition to the current functionality, there are some practical improvements in the works that will make `intRo` more useful to both students and instructors. In particular, we have begun development on an R package which will allow `intRo` modules to be created automatically from user written R code. This package will generate the necessary file structure to allow the module's incorporation into `intRo` as well as translate user code to `intRo` compatible code and populate the necessary files. This will vastly improve `intRo's` flexibility and allow it to be used in a wider range of curricula, including more advanced statistics courses. Additionally, we would like to utilize the expanded interactive capabilities of ggvis in order to make \texttt{intRo's} plots more engaging to students. One way to do this would be implementing linked plots, in which interactions with one plot are reflected in other plots that illustrate the same data. This would be particularly useful in the regression module so that students could explore observations with high influence and leverage.
 
 We hope to use `intRo` in courses to collect feedback regarding the ease of use and functionality. This will allow us to assess its usefulness relative to software used in the past, as well as gauge areas for improvement. Furthermore, we can determine the effectiveness of code printing on generating excitement from the students about programming in R. 
 
-Challenges do exist with regards to the wider adoption of `intRo`. For instance, we will need to monitor how well the server hosting `intRo` handles the load of dozens of students performing data analyses at once. If performance issues are encountered, the infrastructure used may need to be expanded to handle current and future load. An unknown quantity will be how feasible it is to increase adoption of `intRo` across the department **AK: not sure about "the department"**, as well as to other universities. One limitation of `intRo` is that uploading a dataset beyond about 30,000 rows tends to be slow. Even once the data is successfully uploaded, the default modules produce results more slowly than with smaller datasets. This is a limitation that should be further investigated if and when `intRo` sees wider adoption.
+Challenges do exist with regards to the wider adoption of `intRo`. For instance, we will need to monitor how well the server hosting `intRo` handles the load of dozens of students performing data analyses at once. If performance issues are encountered, the infrastructure used may need to be expanded to handle current and future load. An unknown quantity will be how feasible it is to increase adoption of `intRo` across Iowa State, as well as to other universities. One limitation of `intRo` is that uploading a dataset beyond about 30,000 rows tends to be slow. Even once the data is successfully uploaded, the default modules produce results more slowly than with smaller datasets. This is a limitation that should be further investigated if and when `intRo` sees wider adoption.
 
 Regardless, tools that focus on usability and extensibility in statistics education, such as `intRo`, are sure to encourage the next round of innovators to be interested and excited about statistical computing.
 
@@ -347,4 +323,3 @@ shinyServer(function(input, output, session) {
 In this way, we were able to have `intRo` be fully extensible, its structure and functionality dependent entirely on the modules present within the application.
 
 # References
-
