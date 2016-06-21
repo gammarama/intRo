@@ -23,3 +23,5 @@ code_*.R
 www/code_*.html
 code_All.R
 
+.DS_Store
+
