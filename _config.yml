@@ -1,9 +1,9 @@
 name: intRo
-pygments: true
 markdown: redcarpet
 baseurl: /intRo
 permalink: :categories/:title
 rdiscount extensions: [smart]
+highlighter: rouge
 
 links:
 - name: intRo
