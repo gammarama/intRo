@@ -1,5 +1,4 @@
 name: intRo
-markdown: redcarpet
 baseurl: /intRo
 permalink: :categories/:title
 rdiscount extensions: [smart]
