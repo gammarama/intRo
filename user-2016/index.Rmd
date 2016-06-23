@@ -139,23 +139,8 @@ shinyServer(function(input, output, session) {
 ## Tradeoffs
 We encountered a number of challenges in striving to strike the balance of functionality and ease-of-use:
 
- - Storing the user's results
  - Presenting only relevant options to the user
  - Producing clean and executable R code
-
-## Storing results
- - Users must be able to print results, but only the results they want
- - Reactivity makes this somewhat challenging
-
-**Solution**: Store Buttons
-
-<img src="images/store.png" height="300"></img>
-
-## Storing results (Cont'd)
- - Each module contains, at the bottom, a Store button
- - When Store is pressed, code is stored in code panel
-     - Additional challenge: All options selected must also be stored!
- - When user goes to print results, only this particular code is executed
 
 ## Presenting choices
  - `intRo` is flexible, but must also be simple for the introductory student
@@ -174,13 +159,15 @@ Code generated must be:
 
 ## Producing clean code (Cont'd)
 
- - Each call is wrapped in a function called `interpolate` [@interpolate]
+ - Each call is wrapped in a function called `interpolate`
     - Executes the given R code on the server
     - Writes the code executed to the script window at the bottom of intRo
 
 ```{r, eval=FALSE}
 nonparametric_test <- function(intro.data, x, y, ...) {
+  ### <b>
   interpolate(~(wilcox.test(x = df$x, 
+  ### </b>
                             y = df$y, ...),
                   df = quote(intro.data),
                   x = x,
@@ -201,14 +188,6 @@ nonparametric_test <- function(intro.data, x, y, ...) {
  - Unnecessarily lengthy
 
 **Idea**: Include funcitonality in current R package to automate creation of `intRo` modules
-
-## Server load
-Limited testing has been done to assess how `intRo` handles heavy user load
- 
- - Dozens of students accessing app at once
- - Simultaneous larger computations like printing results
-
-More server resources may need to be devoted to handle this, particularly if `intRo` is more widely adopted
 
 ## More classes
  - We would like work with instructors to get `intRo` into more classes
