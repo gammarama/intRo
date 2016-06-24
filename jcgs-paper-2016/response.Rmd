@@ -52,7 +52,7 @@ P 5: Fig 2 shows a simple design that should be easy for casual users (as intro 
 
 P 6 top: When you look at the actual R code generated it can be quite complex with its pipe structures etc which I would have thought does rather limit its introductory value.
 
-**We appreciate the comment. In teaching R Workshops at Iowa State, we observed that among the majority of the introductory R students we encountered, the pipe structure was often preferred to using traditional nested function calls. TODO: modify this to show that pipe structure is used more frequently. The pipe structure is also the standard by which `ggvis` plots are created, which we are using as the backend to our graphical module. It would also be a relatively simple task for an instructor to modify or remove the piping structure in a modified version of `intRo` for use in a particular class.**
+**We appreciate the comment. In teaching R Workshops at Iowa State, we observed that among many of the introductory R students we encountered, the pipe structure was often preferred to using traditional nested function calls. The pipe structure is also the standard by which `ggvis` plots are created, which we are using as the backend to our graphical module. We do understand, however, that certain instructors may wish to include a modified version of the default modules removing the piping, which by following the procedure described in the paper would be a relatively simple task.**
  
 P 6-7: discussion of particular modules should be in a “for example” vein. There is no need to justify what particular features are and are not included. (That would be in a teaching paper.)
 
