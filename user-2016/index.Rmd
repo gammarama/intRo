@@ -17,7 +17,7 @@ Short answer: **yes**
 
  - `R` is great, but requires students to have some knowledge/interest in programming
  - `JMP`, `Deducer`, `Rcmdr` are powerful, but too big
-      - Licenses and inconsistent UI
+      - Licenses and installation
  - New tools recently released to spark an interest in `R`
       - `Swirl` and DataCamp teach `R` programming
       - Project MOSAIC facilitates learning, but assumes knowledge of `R`
