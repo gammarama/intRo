@@ -1,4 +1,5 @@
 # intRo
+[![Travis-CI Build Status](https://travis-ci.org/gammarama/intRo.svg?branch=master)](https://travis-ci.org/gammarama/intRo)
 
 ## About
 This repository contains our R Package for Downloading, Running, and Installing the intRo Statistical Software. You can use this to download and run your own instance of intRo. If you intend to use intRo for a class, you can also deploy your own customized instance of intRo to the ShinyApps.io service using this package. Note that if you only wish to demo the intRo statistical software, you can use our hosted instance available at http://www.intro-stats.com
