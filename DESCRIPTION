@@ -25,3 +25,4 @@ License: GPL-3
 LazyData: true
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1
+Remotes: rstudio/shinyapps
