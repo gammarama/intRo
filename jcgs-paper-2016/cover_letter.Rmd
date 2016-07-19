@@ -5,9 +5,10 @@ author:
  - Department of Statistics 
  - Iowa State University
 date: "`r format(Sys.time(), '%B %d, %Y')`"
-opening: To whom it may concern,
+opening: Dear Dr. Cook,
 closing: Best regards,
 address: 
+ - Dianne Cook
  - Editor
  - Journal of Computational and Graphical Statistics
 return-address:
@@ -21,10 +22,10 @@ output:
 geometry: margin=1in
 ---
 
-Thank you in advance for reviewing our manuscript "Introductory statistics with `intRo`", which I have submitted for consideration of publication in the Journal of Computational and Graphical Statistics.
+Re: Manuscript reference No. JCGS-16-045
 
-This paper details an interactive web-based statistical software application intended for use in an introductory statistics classroom. We introduce the tool as well as an accompanying R package to ease the process of deploying intRo within a curriculum. Additionally, the paper describes the process for extending the functionality in intRo in order to personalize the software.
+Thank you for the reviewers' comments and the opportunity to resubmit our manuscript, "Introductory statistics with intRo". We feel the paper is stronger as a result of incorporating the feedback. 
 
-Thank you for your consideration of our submission.
+We look forward to hearing your thoughts on our changes, and we appreciate your consideration of our resubmission.
 
 

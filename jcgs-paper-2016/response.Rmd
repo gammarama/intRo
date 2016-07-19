@@ -1,103 +1,102 @@
 ---
 title: "Response to reviewers"
-author: "Eric Hare, Andee Kaplan"
-date: "May 26, 2016"
-output: html_document
+date: "July 19, 2016"
+output: pdf_document
 ---
 
 # Reviewer 1
 
 (1) The paper seems to me inappropriate for the JCGS. Because it focuses purely on software, I think that (once the other issues are addressed) it would be more appropriate for the Journal of Statistical Software or the R Journal.
 
-**We appreciate the reviewer's perspective on the context in which our paper fits. While we are focusing on a software system, the aim of JCGS includes to "extend the use of computational and graphical methods in statistics and data analysis". It also contains "more on numerical graphical displays and methods, and perceptions." While this is an educational piece of software, this paper focuses on more general computational concepts of reproducibility, reactivity, and modularity, in the context of bringing statistical content to an end user. As such, we feel it does have a place within JCGS.**
+    **We appreciate the reviewer's perspective on the context in which our paper fits. While we are focusing on a software system, the aim of JCGS includes to "extend the use of computational and graphical methods in statistics and data analysis". It also contains "more on numerical graphical displays and methods, and perceptions." While this is an educational piece of software, this paper focuses on more general computational concepts of reproducibility, reactivity, and modularity, in the context of bringing statistical content to an end user. As such, we feel it does have a place within JCGS.**
 
 (2) Although the software looks promising, unless I've missed something, it currently has very limited functionality -- indeed, not enough to sustain most introductory statistics courses. This isn't a permanent limitation, however, since the authors have created interesting infrastructure for extending the software. In its current state, the software doesn't quite look ready for prime time.
 
-**Our intent was not for `intRo` to sustain an introductory statistics course, but rather to supplement it. In other words, limited functionality was actually a design goal from the beginning so as not to overwhelm a student seeing statistics for the first time. While we agree with the reviewer that it is likely there will be course topics that `intRo` doesn't support, if additional functionality is desired by the instructor, more modules can be added to support this. We have extended the discussion of modularity in intRo to further emphasize this idea.**
+    **Our intent was not for `intRo` to sustain an introductory statistics course, but rather to supplement it. In other words, limited functionality was actually a design goal from the beginning so as not to overwhelm a student seeing statistics for the first time. While we agree with the reviewer that it is likely there will be course topics that `intRo` doesn't support, if additional functionality is desired by the instructor, more modules can be added to support this. We have extended the discussion of modularity in intRo to further emphasize this idea.**
 
 (3) The authors ignore other (and at present, much more capable) GUIs for R -- the R Commander and Deducer. Since these are the most direct competitors to intRo -- more so than, e.g., Excel and JMP -- it seems obvious that the authors should address similarities, differences, advantages, and disadvantages. One obvious difference is that these other GUIs run on individual computers rather than being web-based, and it would also make sense to address more generally the advantages and disadvantages of the two approaches. (For example, in my tests of intRo, I noticed slow response, even with very small data sets. Of course, it's hard to know to what to attribute that -- it could as easily have been a network issue as slowness at the server end.)
 
-**We have included references and a brief discussion on some other GUIs for R, including R Commander and Deducer. We have described some of the differences in our approach to providing a front-end. As for the slow-response time in intRo, this can certainly occur in a couple of different scenarios. One would be if the student is working with a large dataset, as mentioned in Section 5. A second reason for slowdown would be if the student's internet connection is performing slowly. This is an unfortunate limitation of web-based interactive software. However, we have detailed the process by which a student may download and run an intRo instance locally to counteract this possibility.**
+    **We have included references and a brief discussion on some other GUIs for R, including R Commander and Deducer. We have described some of the differences in our approach to providing a front-end. As for the slow-response time in intRo, this can certainly occur in a couple of different scenarios. One would be if the student is working with a large dataset, as mentioned in Section 5. A second reason for slowdown would be if the student's internet connection is performing slowly. This is an unfortunate limitation of web-based interactive software. However, we have detailed the process by which a student may download and run an intRo instance locally to counteract this possibility.**
 
 # Reviewer 2
 
-The “Article Assessment” questions on the report form don’t work for a paper like this.
+(1) The “Article Assessment” questions on the report form don’t work for a paper like this.
 The authors report on some very impressive work. The simplicity of conception and execution is one of its biggest strengths. Their motivations are compelling, as is their system design and execution but I think the story-telling can be improved considerably.
 
-**We appreciate the very kind comments and hope that this revision has improved the story being told.**
+    **We appreciate the very kind comments and hope that this revision has improved the story being told.**
 
-I think the authors need to decide, “What sort of paper am I writing?” Included in the manuscript are elements of “a paper about teaching introductory statistics using a software system”, elements of “a paper about designing and building a simple extensible system”, and “a paper about how to use and extend a particular system”. I think the most compelling story for the Journal of Computational and Graphical Statistics is the designing and building of a simple online system for intro stat that is easy to learn, use and extend – and teaches R as a side effect. This would leave room for a sister publication in something like the Journal of Statistics Education which actually focusses on teaching aspects. If you buy this conception, the teaching-related aspects should be shortened, shaved of much detail and form the basis of an introductory motivational section that leads into a design brief and a plan of attack (using shiny etc). There needs to be high-level discussion of how the system is conceived and put together accompanied by high-level diagrams before descending into code fragments (much detailed code-fragment discussion could go to appendices). The paper just needs to convey the sense of how things are done. Actual details of how to customise and extend the system are provided in the system’s documentation.
+(2) I think the authors need to decide, “What sort of paper am I writing?” Included in the manuscript are elements of “a paper about teaching introductory statistics using a software system”, elements of “a paper about designing and building a simple extensible system”, and “a paper about how to use and extend a particular system”. I think the most compelling story for the Journal of Computational and Graphical Statistics is the designing and building of a simple online system for intro stat that is easy to learn, use and extend – and teaches R as a side effect. This would leave room for a sister publication in something like the Journal of Statistics Education which actually focusses on teaching aspects. If you buy this conception, the teaching-related aspects should be shortened, shaved of much detail and form the basis of an introductory motivational section that leads into a design brief and a plan of attack (using shiny etc). There needs to be high-level discussion of how the system is conceived and put together accompanied by high-level diagrams before descending into code fragments (much detailed code-fragment discussion could go to appendices). The paper just needs to convey the sense of how things are done. Actual details of how to customise and extend the system are provided in the system’s documentation.
 
-**We have taken care to significantly shift the focus away from the teaching aspects, and towards the extensible software system aspects. In particular, we have removed the lengthy teaching discussion and moved elements of it to the motivational section. We have also trimmed much of the content involving supported and unsupported functionality. Specific changes are noted in the responses to the further points raised below.**
+    **We have taken care to significantly shift the focus away from the teaching aspects, and towards the extensible software system aspects. In particular, we have removed the lengthy teaching discussion and moved elements of it to the motivational section. We have also trimmed much of the content involving supported and unsupported functionality. Specific changes are noted in the responses to the further points raised below.**
 
-Everywhere – distinguish between user=student (who uses what is served up) and user=teacher (who customises what is served up)
+(3) Everywhere – distinguish between user=student (who uses what is served up) and user=teacher (who customises what is served up)
 
-**We went through and replaced instances of "user" with either "student" or "teacher" as appropriate.**
+    **We went through and replaced instances of "user" with either "student" or "teacher" as appropriate.**
 
-p. 2: Another online analysis system implemented in shiny is iNZight Lite at http://lite.docker.stat.auckland.ac.nz/. It is more ambitious and therefore more complex. Also it does not have the “exposing the R code” capability.
+(4) p. 2: Another online analysis system implemented in shiny is iNZight Lite at http://lite.docker.stat.auckland.ac.nz/. It is more ambitious and therefore more complex. Also it does not have the “exposing the R code” capability.
 
-**We have included a mention of iNZight Lite, along with the shared goals and some differences with intRo.**
+    **We have included a mention of iNZight Lite, along with the shared goals and some differences with intRo.**
 
-p 3 bottom: Remove parentheses around “(and its corresponding code)” because this is actually one of the key features. 
+(5) p 3 bottom: Remove parentheses around “(and its corresponding code)” because this is actually one of the key features. 
 
-**Done**
+    **Done**
 
-R Commander should enter the discussion around here (even though it isn’t online)
+(6) R Commander should enter the discussion around here (even though it isn’t online)
 
-**We have included R Commander in the discussion.**
+    **We have included R Commander in the discussion.**
 
-P 5: Fig 2 shows a simple design that should be easy for casual users (as intro students really are) to get their heads around. Not all that keen on the use of “statistics” as a category heading in Panel 2 because it reinforces the ghettoizing of the word conflicting with a message that says everything you are doing here is statistics.
+(7) P 5: Fig 2 shows a simple design that should be easy for casual users (as intro students really are) to get their heads around. Not all that keen on the use of “statistics” as a category heading in Panel 2 because it reinforces the ghettoizing of the word conflicting with a message that says everything you are doing here is statistics.
 
-**We have updated the application (and the screenshot) to refer to the contingency, regression, and t-test modules category heading as "inference" rather than "statistics", to help emphasize that numerical and graphical summaries are also statistics.**
+    **We have updated the application (and the screenshot) to refer to the contingency, regression, and t-test modules category heading as "inference" rather than "statistics", to help emphasize that numerical and graphical summaries are also statistics.**
 
-P 6 top: When you look at the actual R code generated it can be quite complex with its pipe structures etc which I would have thought does rather limit its introductory value.
+(8) P 6 top: When you look at the actual R code generated it can be quite complex with its pipe structures etc which I would have thought does rather limit its introductory value.
 
-**We appreciate the comment. In teaching R Workshops at Iowa State, we observed that among many of the introductory R students we encountered, the pipe structure was often preferred to using traditional nested function calls. The pipe structure is also the standard by which `ggvis` plots are created, which we are using as the backend to our graphical module. We do understand, however, that certain instructors may wish to include a modified version of the default modules removing the piping, which by following the procedure described in the paper would be a relatively simple task.**
+    **We appreciate the comment. In teaching R Workshops at Iowa State, we observed that among many of the introductory R students we encountered, the pipe structure was often preferred to using traditional nested function calls. The pipe structure is also the standard by which `ggvis` plots are created, which we are using as the backend to our graphical module. We do understand, however, that certain instructors may wish to include a modified version of the default modules removing the piping, which by following the procedure described in the paper would be a relatively simple task.**
  
-P 6-7: discussion of particular modules should be in a “for example” vein. There is no need to justify what particular features are and are not included. (That would be in a teaching paper.)
+(9) P 6-7: discussion of particular modules should be in a “for example” vein. There is no need to justify what particular features are and are not included. (That would be in a teaching paper.)
 
-**We have removed the in-depth discussion about the particular modules, and instead more vaguely described the functionality. We have also made sure to indicate that the full documentation is available online, which covers the supported functionality of every provided module.**
+    **We have removed the in-depth discussion about the particular modules, and instead more vaguely described the functionality. We have also made sure to indicate that the full documentation is available online, which covers the supported functionality of every provided module.**
 
-P 7 top: Being able to choose only plot types that are “compatible” with the variables used does, however, preclude learning experiences of the form “this thing you want to do is not appropriate for this type of data.”
+(10) P 7 top: Being able to choose only plot types that are “compatible” with the variables used does, however, preclude learning experiences of the form “this thing you want to do is not appropriate for this type of data.”
 
-**We have also gone back and forth on this issue. The reasoning behind choosing only plot types compatible is that the user will see the different plot types available as they select different variables. So while the teaching moment could take place post-selection (by, for instance, producing an error if a plot type is used with incompatible variable types), we chose to have the teaching moment be a step earlier, where the student may see the list and wonder why the plot type they thought they wanted is not actually an option. We felt that for a lot of introductory students, seeing a red error message is a frustrating moment and can discourage them from having any sort of autonomy within the software. Further, by doing a transformation of a variable, the plot types will automatically appear if they are compatible.**
+    **We have also gone back and forth on this issue. The reasoning behind choosing only plot types compatible is that the user will see the different plot types available as they select different variables. So while the teaching moment could take place post-selection (by, for instance, producing an error if a plot type is used with incompatible variable types), we chose to have the teaching moment be a step earlier, where the student may see the list and wonder why the plot type they thought they wanted is not actually an option. We felt that for a lot of introductory students, seeing a red error message is a frustrating moment and can discourage them from having any sort of autonomy within the software. Further, by doing a transformation of a variable, the plot types will automatically appear if they are compatible.**
 
-P 8: I think this descends to details too quickly. The big features are designing for extensibility, with conceptions about switching modules on and off and adding modules, and the interface as presented being assembled on the fly when the system starts up.
+(11) P 8: I think this descends to details too quickly. The big features are designing for extensibility, with conceptions about switching modules on and off and adding modules, and the interface as presented being assembled on the fly when the system starts up.
 
-**We agree. We have restructured this portion of the paper to merely discuss the motivation behind an extensible system, with mentions of disabling and enabling modules. We have moved the details to the Understanding intRo section with the details on modules.**
+    **We agree. We have restructured this portion of the paper to merely discuss the motivation behind an extensible system, with mentions of disabling and enabling modules. We have moved the details to the Understanding intRo section with the details on modules.**
 
-P 9-10 looks like appendix stuff to me.
+(12) P 9-10 looks like appendix stuff to me.
 
-**We have move the implementation details of dynamic UI generation to the appendix.**
+    **We have move the implementation details of dynamic UI generation to the appendix.**
 
-Section 3 discusses downloading onto a local machine before customising the hosted online system which should be the focus (again conception and issues involved before any details).
+(13) Section 3 discusses downloading onto a local machine before customising the hosted online system which should be the focus (again conception and issues involved before any details).
 
-**We have moved this section to after the discussion on customizing intRo. It now comes just before the conclusion.**
+    **We have moved this section to after the discussion on customizing intRo. It now comes just before the conclusion.**
 
-P 11 near bottom: “as an application on the user’s account” puzzled me -- needs to say shinyapps.io account
+(14) P 11 near bottom: “as an application on the user’s account” puzzled me -- needs to say shinyapps.io account
 
-**Done**
+    **Done**
 
-Section 3.2 mainly belongs in up-front motivation. Table 1 is an implementation mechanism.
+(15) Section 3.2 mainly belongs in up-front motivation. Table 1 is an implementation mechanism.
 
-**We have merged remnants of Section 3.2 into Section 2 / motivation. We have also drastically cut down the content to focus this paper more on the extensible systems side, rather than the teaching side. As such, we have also removed Table 1.**
+    **We have merged remnants of Section 3.2 into Section 2 / motivation. We have also drastically cut down the content to focus this paper more on the extensible systems side, rather than the teaching side. As such, we have also removed Table 1.**
 
-P 14 top: “currently unsupported” justifications are more relevant to a teaching paper than a software design paper.
+(16) P 14 top: “currently unsupported” justifications are more relevant to a teaching paper than a software design paper.
 
-**We have removed this comment.**
+    **We have removed this comment.**
 
-P 14 Last para Section 3: could go into motivational discussion.
+(17) P 14 Last para Section 3: could go into motivational discussion.
 
-**We have moved this paragraph to the motivational discussion.**
+    **We have moved this paragraph to the motivational discussion.**
 
-Section 4.1 is a big part of what I see as the real story but descends to details too quickly.
+(18) Section 4.1 is a big part of what I see as the real story but descends to details too quickly.
 
-**We have eased the transition into this section (now Section 3.1) by talking more generally about the benefits behind a modular structure. We also have made sure to clarify that our concept of modules is not to be confused with Shiny's new modules feature**
+    **We have eased the transition into this section (now Section 3.1) by talking more generally about the benefits behind a modular structure. We also have made sure to clarify that our concept of modules is not to be confused with Shiny's new modules feature**
 
-Most of Section 4.2 looks to me like more motivation, except the interpolate stuff which is an implementation mechanism
+(19) Most of Section 4.2 looks to me like more motivation, except the interpolate stuff which is an implementation mechanism
 
-**We have merged most of the content from the former Section 4.2 (on reproducibility) with Section 2, and removed a discussion on interpolation.**
+    **We have merged most of the content from the former Section 4.2 (on reproducibility) with Section 2, and removed a discussion on interpolation.**
 
-Section 4.3: more “main story”.
+(20) Section 4.3: more “main story”.
 
-**We agree and have emphasized this section as one of the two primary pieces to the main story, the other being modularity.**
+    **We agree and have emphasized this section as one of the two primary pieces to the main story, the other being modularity.**
