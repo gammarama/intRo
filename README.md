@@ -29,3 +29,6 @@ Once intRo is downloaded, it can be ran with the specified modules by passing th
     run_intRo(enabled_modules = c("data/transform", "summaries/graphical"), theme = "cerulean")
 
 Deploying intRo accepts the same arguments as run_intRo, and an additional argument to specify a Google Analytics tracking id, if desired.
+
+
+Andee was here!
