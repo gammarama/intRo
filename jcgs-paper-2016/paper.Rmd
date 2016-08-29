@@ -22,6 +22,12 @@ bibliography: refs.bib
 blind: false
 ---
 
+# TODO
+
+- Add table
+- Email Di
+- Cite Radiant
+
 # Introduction
 
 The widespread adoption of R [@r-stat] as a tool for statistical analysis has undoubtedly been an important development for the scientific community. However, using R in most cases still requires a basic knowledge of programming concepts which may pose a steep learning curve for the introductory statistics student [@5359977]. This additional time commitment may explain why introductory courses often utilize point-and-click applications, even if the instructor himself/herself uses R in their own work. Still, some compromises must be made when using many graphical applications, including dealing with software licenses and unsupported desktop platforms.
