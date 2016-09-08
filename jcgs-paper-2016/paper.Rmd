@@ -1,5 +1,5 @@
 ---
-title: "Designing modular software for reproducible analyses: a case study in introductory statistics"
+title: "Designing modular software: a case study in introductory statistics"
 author:
   - name: Eric Hare
     affiliation: Iowa State University
