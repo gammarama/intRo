@@ -1,5 +1,5 @@
 ---
-title: "Designing modular software: a case study in introductory statistics"
+title: "Designing Modular Software: A Case Study in Introductory Statistics"
 author:
   - name: Eric Hare
     affiliation: Iowa State University
@@ -17,7 +17,7 @@ output:
 fontsize: 12pt
 abstract: |
    Modular programming is a development paradigm that emphasizes self-contained, flexible, and independent pieces of functionality. However, the rise of web-based software applications has presented new challenges for designing an extensible, modular software system. In this paper, we outline a framework for designing such a system, with a focus on reproducibility of the results. We present as a case study a Shiny-based web application called `intRo`, that allows the user to perform basic data analyses and statistical routines. Finally, we highlight some challenges we encountered when combining modular programming concepts with reactive programming as used by Shiny.
-keywords: Interactivity, Programming Paradigms, Reactive Programming, Reproducibility, Statistical Software
+keywords: Interactivity, Modularity, Programming Paradigms, Reactive Programming, Reproducibility, Statistical Software
 bibliography: refs.bib
 blind: false
 ---
@@ -37,7 +37,7 @@ Though challenging in a Graphical User Interface, a reproducibility framework ha
 
 Based on this, we believe a modern software system should be **modular**, **extensible**, **web-based**, and foster **reproducibility**. We have developed a case-study application called intRo which we will use to illustrate our method of developing a system meeting these criteria. The paper is structured as follows:. Section \ref{case-study-intro} introduces the application, its features and its usability, and provides motivations for why it was built. Section \ref{intro-design-decisions} provides technical details on how we built intRo, by walking through the underlying modularity, reproducibility, and reactive framework, as well as how it can be used to develop other software systems with these properties. Finally, section \ref{conclusions-and-future-work} discusses some future possibilities and limitations of both intRo, and modular systems in general.  
 
-# Case Study: intRo
+# Case Study: `intRo`
 
 The widespread adoption of R as a tool for statistical analysis has undoubtedly been an important development for the scientific community. However, using R in most cases still requires a basic knowledge of programming concepts which may pose a steep learning curve for the introductory statistics student [@5359977]. This additional time commitment may explain why introductory courses often utilize point-and-click applications, even if the instructor himself/herself uses R in their own work. Still, some compromises must be made when using many graphical applications, including dealing with software licenses and unsupported desktop platforms.
 
@@ -76,7 +76,7 @@ The modules included in `intRo` are split into three higher level categories - d
 
 On the front end, user interaction with `intRo` is split into bitesize chunks that we call modules. Modules are self-contained pieces of functionality which implement common statistical procedures that are often used in introductory statistics classes. These modules form the core of `intRo` and are discussed at length in the next section.
 
-# intRo Design Decisions
+# `intRo` Design Decisions
 
 In this section, we detail the design choices surrounding `intRo`'s extensibility. We have designed it in such a way that these ideas can be used in other Shiny-based software projects.
 
@@ -226,7 +226,7 @@ intRo leverages the reactive programming nature of Shiny, and as such is designe
 
 In the creation of `intRo` we walked a fine line between giving the student flexibility and having realistic usability. At the same time, `intRo` was created as a consumer of another package, Shiny, in which we as developers were the beneficiaries of another team of developers' decision to balance flexibility and usability. For a tangible example, consider the graphical summaries module. We only allow variables of a type consistent with the selected plot to be displayed. This is a conscious decision that limits an `intRo` user's flexibility, while maximizing the usability (by minimizing crashes) of the application. On the flip side of this, Shiny allows much higher flexibility. For instance, the entire application (including user interface) is created dynamically upon load, based on the modules currently housed within `intRo`. However, Shiny does have limits on its flexibility based on the designers decisions for usability. One current example is the slider element. This element allows for fixed width steps from its minimum to its maximum. The JavaScript library being utilized in Shiny allows for arbitrary function calls to to generate these steps, however they must be written in plain JavaScript. This is an example of a decision made by the developers of Shiny to limit functionality in favor of usability of their package.
 
-# Conclusions and future work
+# Conclusions and Future Work
 
 `intRo` can be a powerful and effective tool for introductory statistics education. Its modular structure allows it to be flexible enough for many different applications and curriculums. Its ease-of-use allows the student to focus her attention on the statistics task at hand, rather than struggling with software licenses and confusing interface navigation. Reproducible code generated from each analysis can be used to spark an interest in R programming in those who might otherwise not be exposed to it.
 
@@ -238,7 +238,7 @@ Challenges do exist with regards to the wider adoption of `intRo`. For instance,
 
 Regardless, tools that focus on usability and extensibility in statistics education, such as `intRo`, are sure to encourage the next round of innovators to be interested and excited about statistical computing.
 
-# Supplementary material
+# Supplementary Material
 
 All code and documents related to this manuscript are available at \url{https://github.com/gammarama/intRo}.
 
