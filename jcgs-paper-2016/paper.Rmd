@@ -31,7 +31,35 @@ Other statistics software also makes use of a number of these ideas. Microsoft E
 
 With the advantages of R clear, an approach to building statistical software and statistical learning tools would be to attempt to generate interest in programming, which could help naturally ease the transition into the use of R. Multiple software packages have recently been written in an attempt to spur this interest in R programming and statistics. DataCamp's [@datacamp] courses are user-friendly ways to learning basic R programming and data analysis techniques. Swirl [@swirl] is a similar interactive tool to make learning R more fun by learning it within R itself. Project MOSAIC [@mosaic] has created a suite of tools to simplify the teaching of statistics in the form of an R package. The primary goal of DataCamp and Swirl is to teach R programming, rather than facilitate the learning of introductory statistics. 
 
-Modern web technologies have enabled a new generation of software packages that reside solely on the web, which eliminates the issue of local installation and helps abstract away some of the more challenging programming aspects of working directly with R. Upon the release of RStudio's Shiny [@shiny] it became easier for an R-based analysis to be converted to an interactive web application. Several recent software packages have built up Shiny to provide a web-based system based on R. One such package is iNZight Lite [@inzight] which attempts to expose students to data analysis without requiring programming knowledge. Like most web-based systems, this does not include reproducible R code, which limits its useful in a scientific or academic setting. Another package is called Radiant [@radiant]
+Modern web technologies have enabled a new generation of software packages that reside solely on the web, which eliminates the issue of local installation and helps abstract away some of the more challenging programming aspects of working directly with R. Upon the release of RStudio's Shiny [@shiny] it became easier for an R-based analysis to be converted to an interactive web application. Several recent software packages have built up Shiny to provide a web-based system based on R. One such package is iNZight Lite [@inzight] which attempts to expose students to data analysis without requiring programming knowledge. Like most web-based systems, this does not include reproducible R code, which limits its useful in a scientific or academic setting. Another package is called Radiant [@radiant], which is a web-based application with the aim of furthering business education and financial analysis. While the application is modular and extensible, it does require installation and hosting and is inundated with more features than necessary for an introductory student. An overview of the comparison between the features of these statistical software packages is presented in table \ref{tab:compare}. Partial fulfillment of requirements is noted in the table, as well as a measure of the complexity of functionality offered by default. For example, `R` does have an associated GUI, however this interface is very limited, thus only partially fulfilling the behavior of a graphical user interface.
+
+```{r, echo=FALSE}
+software_compare <- data.frame("Software package" = "intRo",
+                               "GUI-based" = "Yes",
+                               "Installation required" = "No",
+                               "Modular" = "Yes",
+                               "Web-based" = "Yes",
+                               "Extensible" = "Yes",
+                               "Fosters Reproducibility" = "Yes",
+                               "Open Source" = "Yes",
+                               "Functionality" = "Limited",
+                               stringsAsFactors = FALSE)
+
+software_compare <- rbind(software_compare,
+                          c("JMP", "Yes", "Yes", "Partial", "No", "Partial", "No", "No", "Full"),
+                          c("R", "Partial", "Yes", "Yes", "No", "Yes", "Yes", "Yes", "Full"),
+                          c("R Commander", "Yes", "Yes", "No", "No", "Yes", "Yes", "Yes", "Moderate"),
+                          c("Deducer", "Yes", "Yes", "No", "No", "Yes", "Yes", "Yes", "Moderate"),
+                          c("MOSAIC", "No", "Yes", "No", "No", "No", "Yes", "Yes", "Limited"),
+                          c("iNZight Lite", "Yes", "No", "Yes", "Yes", "Partial", "No", "Yes", "Limited"),
+                          c("Radiant", "Yes", "Yes", "Yes", "Yes", "Partial", "Yes", "Yes", "Moderate"))
+
+software_compare <- software_compare[, -8]
+
+knitr::kable(software_compare, 
+             caption="\\label{tab:compare}A comparison of statistical software packages across the metrics of usability, modularity, extensibility, and reproducibility. Partial fulfillment of requirements is noted in the table, as well as a measure of the complexity of functionality offered by default.", 
+             col.names = c("Software", "GUI", "Install", "Modular", "Web-based", "Extensible", "Reproducible", "Functionality"))
+```
 
 Though challenging in a Graphical User Interface, a reproducibility framework has three key advantages. First, it eases a student who may be intimidated by programming into the idea that interacting with a user interface is really just a frontend for code. Seeing the correspondence between graphical clicks and printed code should help lessen the fear of coding that many students may have. Second, an analysis created by a reproducible software system can be brought in an R session to easily assess and extend the results. Finally, with the help of knitr and RMarkdown, "printing" the results of a reproducible software system analysis amounts to nothing more than executing the R code on the server, adding another layer of reproducibility. These concepts are important because they encourage best practices with regards to disclosure of analysis methods in research [@baggerly2011reproducible; @xie2015].
 
