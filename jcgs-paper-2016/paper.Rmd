@@ -69,7 +69,7 @@ Based on this, we believe a modern software system should be **modular**, **exte
 
 # Case Study: `intRo`
 
-The widespread adoption of R as a tool for statistical analysis has undoubtedly been an important development for the scientific community. However, using R in most cases still requires a basic knowledge of programming concepts which may pose a steep learning curve for the introductory statistics student [@5359977]. This additional time commitment may explain why introductory courses often utilize point-and-click applications, even if the instructor himself/herself uses R in their own work. Still, some compromises must be made when using many graphical applications, including dealing with software licenses and unsupported desktop platforms.
+The widespread adoption of R as a tool for statistical analysis has undoubtedly been an important development for the scientific community. However, using R in most cases still requires a basic knowledge of programming concepts which may pose a steep learning curve for the introductory statistics student [@5359977]. This additional time commitment may explain why introductory courses often utilize point-and-click applications, even if the instructor himself/herself uses R in their own work. Still, some compromises must be made when using many graphical applications, including dealing with software licenses and unsupported desktop platforms. From the instructor's perspective in particular, managing a large group of software licenses for students with various computing environments and versions could wind up being extremely cumbersome.
 
 In teaching Introduction to Business Statistics at Iowa State University, we witnessed profound struggles by students attempting to practice introductory concepts discussed in class using current software. Scrimshaw [-@scrimshaw2001computers] notes in his manuscript that "open-ended packages, like any others, may create obstacles to learning simply through their lack of user-friendliness in the sheer mechanics of operating them, rather than any intrinsic difficulty in the content...." In our own experience teaching, students' struggles were often directly related to the use of the software and not any sort of fundamental misunderstanding of the material, in agreement with Scrimshaw's finding.
 
@@ -77,12 +77,12 @@ These challenges led us to create an introductory statistics application which w
 
 Three fundamental philosophies that guided the creation of `intRo`. In particular, `intRo` is \emph{easy} to use and can be an \emph{exciting} part of learning statistics. Additionally, `intRo` is an \emph{extensible} tool, allowing for a course instructor using `intRo` to tailor the tool for his or her own classroom needs.
 
-In the development of `intRo`, we focused on aspects of the user interface (UI) and output that make it easy to pick up without extensive training. We used large, easy to click icons in the page header to help students find what they need more easily. We also made the functionality available the minimal necessary for an introductory statistics course. Figure \ref{fig:user_experience} illustrates the simple steps a student takes to generate a result in `intRo`. In this instance, a student clicks on the Graphical tab to create a mosaic plot. The student sees the plot, and elects to click the save button to store the plot and its corresponding code to the final compendium.
+In the development of `intRo`, we focused on aspects of the user interface (UI) and output that make it easy to pick up without extensive training. We used large, easy to click icons in the page header to help students find what they need more easily. We also made the functionality available the minimal necessary for an introductory statistics course. Figure \ref{fig:user_experience} presents a schematic of the simple steps a student takes to generate a result in `intRo`. In this instance, a student clicks on the Graphical tab to create a mosaic plot. The student sees the plot, and elects to click the save button to store the plot and its corresponding code to the final compendium.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{images/user_experience.pdf}
-\caption{A typical student experience of generating a result in \texttt{intRo}. In this instance, a student clicks on the Graphical tab to create a mosaic plot. The student sees the plot, and elects to click the save button to store the plot (and its corresponding code) to the final compendium.}
+\caption{A schematic of the typical student experience of generating a result in \texttt{intRo}. In this instance, a student clicks on the Graphical tab to create a mosaic plot. The student sees the plot, and elects to click the save button to store the plot (and its corresponding code) to the final compendium.}
 \label{fig:user_experience}
 \end{figure}
 
@@ -104,7 +104,7 @@ The modules included in `intRo` are split into three higher level categories - d
 
 `intRo` has an ulterior motive as well: to get students excited about programming. By navigating about the user interface of `intRo`, students are actually creating a fully-executable, reproducible R script that they can download and run locally as well as viewing the script change real-time within the application. This code creation element of `intRo` is meant to generate excitement about programming in R and empower students to feel that they can generate code as well. `intRo` uses rmarkdown's render function in order to print the results, by dymanically executing the student's R script. By default, the output will include the R code, but if the student elects to hide the source code by clicking the code toggle button at the top, the code will not appear in the printed results.
 
-On the front end, user interaction with `intRo` is split into bitesize chunks that we call modules. Modules are self-contained pieces of functionality which implement common statistical procedures that are often used in introductory statistics classes. These modules form the core of `intRo` and are discussed at length in the next section.
+On the front end, user interaction with `intRo` is split into bitesize chunks that we call modules. In `intRo`'s context, modules are self-contained pieces of functionality which implement common statistical procedures. These modules form the core functionality of `intRo` and are discussed at length in the next section.
 
 # `intRo` Design Decisions
 
@@ -125,7 +125,7 @@ Section \ref{dynamic-ui-generation} provides some technical details on how we im
 
 Modularity was a design decision we focused on from the start of `intRo's` development. There are some practical benefits to thinking of related statistics and data science functionality in terms of modules. Course instructors can easily enable or disable functionality depending on the exact needs of the particular class being taught. Because this is done at run-time, including new modules is as simple as downloading and placing it within `intRo's` modules folder, or removing existing modules from that folder. Furthermore, errors can be more easily isolated to specific components. For instance, if an error is encountered, simply disabling the module can provide a temporary workaround while the issue is identified. Finally, modularity helps to organize the different pieces of code into functionality chunks that make it easier for developers to maintain.
 
-`intRo` modules are not to be confused with Shiny modules [@shinymodules]. Shiny modules are a recent feature added to Shiny which allows the bundling of inputs and outputs into a single set of functionality. They are more general and suitable for any application. `intRo` modules are specifically for statistics functionality and work within the `intRo` application only.
+`intRo` modules are not to be confused with Shiny modules [@shinymodules]. Shiny modules are a recent feature added to Shiny which allows the bundling of inputs and outputs into a single set of functionality. They are more general and suitable for any application. `intRo` modules are for statistics functionality and work within the `intRo` application only.
 
 An `intRo` module consists of the following scripts:
 
@@ -136,9 +136,9 @@ An `intRo` module consists of the following scripts:
 * *reactive.R* - Shiny reactives, typically containing data that depend on inputs.
 * *ui.R* - Shiny user interface definition, including the placement of the inputs and outputs.
 
-The modules provided with `intRo` are contained in the modules folder. The top level directory in the modules folder defines the category of the module (currently `data`, `summaries`, or `inference`). Within each of these categories is a folder named according to the name of the module. This folder houses the previously defined scripts. As an example, we will walk through the contents of the `nonparametric` module as previously mentioned in this section.
+The modules provided with `intRo` are contained in the modules folder. The top level directory in the modules folder defines the category of the module (currently `data`, `summaries`, or `inference`). Within each of these categories is a folder named according to the name of the module. This folder houses the previously defined scripts. As an example, we will walk through the process of creating a new module called `nonparametric`, as previously mentioned in this section, which will perform a wilcoxon rank sum test.
 
-Since the `nonparametric` module performs a statistical test, it is part of the inference category, and hence can be found in the `intRo` repository at **modules/inference/nonparametric**. Let's first examine *helper.R*:
+Since the `nonparametric` module performs a statistical test, it is part of the inference category, and hence would be placed in the `intRo` repository at **modules/inference/nonparametric**. Let's first examine *helper.R*:
 
 ```{r, eval=FALSE}
 nonparametrictest <- function(intro.data, x, y, 
