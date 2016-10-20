@@ -24,8 +24,10 @@ geometry: margin=1in
 
 Re: Manuscript reference No. JCGS-16-045
 
-Thank you for the reviewers' comments and the opportunity to resubmit our manuscript, "Introductory statistics with intRo". We feel the paper is stronger as a result of incorporating the feedback. 
+Attached you will find the newest revision of our paper, written in response to the feedback we received from the reviewers, the associate editor, and yourself. 
 
-We look forward to hearing your thoughts on our changes, and we appreciate your consideration of our resubmission.
+We have attempted to restructure the paper to focus on general techniques for designing a modular software system, using intRo itself as a case study. In particular, we have re-written the title, abstract, and a substantial portion of the background to highlight this new direction.
 
+In addition to the refocusing, we have also extended our review of other software systems, and emphasized the need that intRo addresses. Table 1 provides a somewhat subjective but thorough comparison of many "competing" software systems in terms of a number of qualities, including whether or not they are web-based, the level of extensibility, and the amount of functionality. We have also done our best to address the other minor comments that were raised in the second round of reviews.
 
+We hope that this latest revision addresses the majority of the issues with the previous, and we welcome any further critiques or comments.

@@ -1,0 +1,31 @@
+---
+author: 
+ - Eric Hare
+ - PhD Student 
+ - Department of Statistics 
+ - Iowa State University
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+opening: Dear Dr. Cook,
+closing: Best regards,
+address: 
+ - Dianne Cook
+ - Editor
+ - Journal of Computational and Graphical Statistics
+return-address:
+ - Eric Hare
+ - Department of Statistics
+ - Iowa State University
+ - Ames, IA 50011
+output:
+  pdf_document:
+    template: template-letter.tex
+geometry: margin=1in
+---
+
+Re: Manuscript reference No. JCGS-16-045
+
+Thank you for the reviewers' comments and the opportunity to resubmit our manuscript, "Introductory statistics with intRo". We feel the paper is stronger as a result of incorporating the feedback. 
+
+We look forward to hearing your thoughts on our changes, and we appreciate your consideration of our resubmission.
+
+
