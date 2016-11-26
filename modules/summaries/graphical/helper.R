@@ -57,19 +57,10 @@ mosaicplot <- function (intro.data, x, y, numnames, catnames, ...) {
     
     interpolate(
         ~(intro.mosaic <- table(df[,c(x, y)]) %>%
-              prop.table %>%
-              as.data.frame %>%
-              mutate(margin_x = rep(prop.table(table(df$x)), times = length(unique(df$y))),
-                     y_height = Freq / margin_x,
-                     x_center = rep(c(0, cumsum(margin_x)[1:length(levels(df$x)) -1]), times = length(unique(df$y))) + margin_x / 2)
+              as.data.frame
     ), df = quote(intro.data), x = x, y = y, mydir = userdir, `_env` = environment(), file = "code_mosaicplot.R")
 
-  interpolate(~(ggplot(df, aes(x_center, y_height)) +
-    geom_bar(stat = "identity", aes(width = margin_x, fill = yvar), col = "black") +
-    geom_text(aes(label = xvar, x = x_center, y = 1.05), angle = 45, hjust = 0) +
-    xlim(c(0, 1.2)) +
-    ylim(c(0, 1.2)) +
-    xlab(xlabel) + ylab(ylabel) +
-    theme_bw() +
-    coord_fixed()), df = quote(intro.mosaic), xvar = as.name(x), yvar = as.name(y), xlabel = x, ylabel = y, mydir = userdir, `_env` = environment(), append = TRUE, file = "code_mosaicplot.R")
+  interpolate(~(ggplot(df) +
+    geom_mosaic(aes(weight = Freq, x = product(xvar), fill = yvar)) +
+    theme_bw()), df = quote(intro.mosaic), xvar = as.name(x), yvar = as.name(y), mydir = userdir, `_env` = environment(), append = TRUE, file = "code_mosaicplot.R")
 }
