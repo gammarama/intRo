@@ -70,11 +70,11 @@ Based on the above, we believe a modern software system should be **modular**, *
 
 # Case Study: `intRo`
 
-The widespread adoption of R as a tool for statistical analysis has undoubtedly been an important development for the scientific community. However, using R in most cases still requires a basic knowledge of programming concepts which may pose a steep learning curve for the introductory statistics student [@5359977]. This additional time commitment may explain why introductory courses often utilize point-and-click applications, even if the instructor himself/herself uses R in their own work. Still, some compromises must be made when using many graphical applications, including dealing with software licenses and unsupported desktop platforms. From the instructor's perspective in particular, managing a large group of software licenses for students with various computing environments and versions could wind up being extremely cumbersome.
+The widespread adoption of R as a tool for statistical analysis has undoubtedly been an important development for the scientific community. However, using R in most cases still requires a basic knowledge of programming concepts which may pose a steep learning curve for the introductory statistics student [@5359977]. This additional time commitment may explain why introductory courses often utilize point-and-click applications, even if the instructors use R in their own work. Still, some compromises must be made when using many graphical applications, including dealing with software licenses and unsupported desktop platforms. From the instructor's perspective in particular, managing a large group of software licenses for students with various computing environments and versions could wind up being extremely cumbersome.
 
 In teaching Introduction to Business Statistics at Iowa State University, we witnessed profound struggles by students attempting to practice introductory concepts discussed in class using current software. Scrimshaw [-@scrimshaw2001computers] notes in his manuscript that "open-ended packages, like any others, may create obstacles to learning simply through their lack of user-friendliness in the sheer mechanics of operating them, rather than any intrinsic difficulty in the content...." In our own experience teaching, students' struggles were often directly related to the use of the software and not any sort of fundamental misunderstanding of the material, in agreement with Scrimshaw's finding.
 
-These challenges led us to create an introductory statistics application which we call `intRo`, available at http://www.intro-stats.com. `intRo` offers a number of key advantages over traditional statistics software, including ease of access and an aim to foster student interest in coding. Attempting to entirely hide the programming aspect from students, even in introductory classes, is a lost opportunity to get students interested in statistical computing. It is also a lost opportunity reaching students who learn differently or have a computational background. Another advantage is its modular structure, which allows course instructors to tailor the application towards the needs of a particular class, rather than accept a piece of software as is. Additionally, `intRo` stands apart from new tools in that it is a supplement to an existing class, fully usable by a beginning statistics student. An accompanying R package, titled `intRo` and available on GitHub, assists in the downloading, running, and deploying of `intRo` instances (See Section \ref{deploying-intro-instances}).
+These challenges led us to create an introductory statistics application which we call `intRo`, available at http://www.intro-stats.com. `intRo` offers a number of key advantages over traditional statistics software, including ease of access and an aim to foster student interest in coding. Attempting to entirely hide the programming aspect from students, even in introductory classes, is a lost opportunity to get students interested in statistical computing. It is also a lost opportunity reaching students who learn differently or have a computational background. Another advantage is its modular structure, which allows course instructors to tailor the application towards the needs of a particular class, rather than accept a piece of software as is. Additionally, `intRo` stands apart from new tools in that it is a supplement to an existing class, fully usable by a beginning statistics student. An accompanying R package, titled `intRo` and available on GitHub, assists in the downloading, running, and deploying of `intRo` instances (see Section \ref{deploying-intro-instances}).
 
 Three fundamental philosophies that guided the creation of `intRo`. In particular, `intRo` is \emph{easy} to use and can be an \emph{exciting} part of learning statistics. Additionally, `intRo` is an \emph{extensible} tool, allowing for a course instructor using `intRo` to tailor the tool for his or her own classroom needs.
 
@@ -113,12 +113,12 @@ In this section, we detail the design choices surrounding `intRo`'s extensibilit
 
 ## Designing for Modularity
 
-An `intRo` module is a set of self-contained executible R scripts that together produce a set of introductory statistics functionality. `intRo` modules were designed in this way to allow for simple dynamic creation of the user interface at run-time, as well as ease the process of converting existing analysis code to the `intRo` framework. A high-level diagram of this process is given in Figure \ref{fig:app_creation_modules}. `intRo` modules are split up into multiple R scripts which are included either in Shiny's user interface or server definitions. At runtime, the `intRo` sources in the specified modules (contained in the modules folder) to dynamically generate the functionality available in the application. This allows for the specific functionality needed to be determined and adjusted by the individual course instructor. In this example, the instructor is electing to include a nonparametric module, which is not enabled by default, to allow the students to perform a wilcoxon rank sum test.
+An `intRo` module is a set of self-contained executible R scripts that together produce a set of introductory statistics functionality. `intRo` modules were designed in this way to allow for simple dynamic creation of the user interface at run-time, as well as ease the process of converting existing analysis code to the `intRo` framework. A high-level diagram of this process is given in Figure \ref{fig:app_creation_modules}. `intRo` modules are split up into multiple R scripts which are included either in Shiny's user interface or server definitions. At runtime, the `intRo` sources in the specified modules (contained in the modules folder) to dynamically generate the functionality available in the application. This allows for the specific functionality needed to be determined and adjusted by the individual course instructor. In this example, the instructor is electing to include a nonparametric module, which is not enabled by default, to allow the students to perform a Wilcoxon rank sum test.
 
 \begin{figure*}[ht!]
 \centering
 \includegraphics[width=\linewidth]{images/app_creation_modules.pdf}
-\caption{This figure depicts how the Shiny \texttt{server.R} and \texttt{ui.R} files are populated using the modular structure within \texttt{intRo}. \texttt{intRo} modules are split up into multiple R scripts which are included either in Shiny's user interface (\texttt{ui.R}) or server (\texttt{helper.R}, \texttt{libraries.R}, \texttt{observe.R}, \texttt{reactive.R}, \texttt{output.R}) definitions. At runtime, \texttt{intRo} sources in the specified modules (contained in the modules folder) to dynamically generate the functionality available in the application. This allows for the specific functionality needed to be determined and adjusted by the individual course instructor. In this example, the instructor is electing to include a nonparametric module, which is not enabled by default, to allow the students to perform a wilcoxon rank sum test.}
+\caption{This figure depicts how the Shiny \texttt{server.R} and \texttt{ui.R} files are populated using the modular structure within \texttt{intRo}. \texttt{intRo} modules are split up into multiple R scripts which are included either in Shiny's user interface (\texttt{ui.R}) or server (\texttt{helper.R}, \texttt{libraries.R}, \texttt{observe.R}, \texttt{reactive.R}, \texttt{output.R}) definitions. At runtime, \texttt{intRo} sources in the specified modules (contained in the modules folder) to dynamically generate the functionality available in the application. This allows for the specific functionality needed to be determined and adjusted by the individual course instructor. In this example, the instructor is electing to include a nonparametric module, which is not enabled by default, to allow the students to perform a Wilcoxon rank sum test.}
 \label{fig:app_creation_modules}
 \end{figure*}
 
@@ -137,55 +137,55 @@ An `intRo` module consists of the following scripts:
 * *reactive.R* - Shiny reactives, typically containing data that depend on inputs.
 * *ui.R* - Shiny user interface definition, including the placement of the inputs and outputs.
 
-The modules provided with `intRo` are contained in the modules folder. The top level directory in the modules folder defines the category of the module (currently `data`, `summaries`, or `inference`). Within each of these categories is a folder named according to the name of the module. This folder houses the previously defined scripts. As an example, we will walk through the process of creating a new module called `nonparametric`, as previously mentioned in this section, which will perform a wilcoxon rank sum test.
+The modules provided with `intRo` are contained in the modules folder. The top level directory in the modules folder defines the category of the module (currently `data`, `summaries`, or `inference`). Within each of these categories is a folder named according to the name of the module. This folder houses the previously defined scripts. As an example, we will walk through the process of creating a new module called `nonparametric`, as previously mentioned in this section, which will perform a Wilcoxon rank sum test.
 
 Since the `nonparametric` module performs a statistical test, it fits within the inference category, and hence should be placed in the `intRo` repository at **modules/inference/nonparametric**. Let's first create *helper.R*:
 
 ```{r, eval=FALSE}
 nonparametrictest <- function(intro.data, x, y, 
                                 conflevel, althyp, hypval) {
-    interpolate(~(wilcox.test(x = df$x, y = df$y, 
-                              conf.level = conf, 
-                              alternative = althyp, 
-                              mu = hypval)),
-                  df = quote(intro.data),
-                  x = x,
-                  y = y,
-                  conf = conflevel,
-                  althyp = althyp,
-                  hypval = hypval,
-                  mydir = userdir, 
-                  `_env` = environment(), 
-                  file = "code_nonparametric.R")
+  interpolate(~(wilcox.test(x = df$x, y = df$y, 
+                          conf.level = conf, 
+                          alternative = althyp, 
+                          mu = hypval)),
+              df = quote(intro.data),
+              x = x,
+              y = y,
+              conf = conflevel,
+              althyp = althyp,
+              hypval = hypval,
+              mydir = userdir, 
+              `_env` = environment(), 
+              file = "code_nonparametric.R")
 }
 ```
 
-This script is most immediately similar to standard R code. In this case, a function `nonparametrictest` is created which, depending on the values of the parameters, ultimately returns the result of a wilcoxon rank sum test. One important difference from a typical R script is that each call in the script is wrapped in a function called `interpolate` [@interpolate]. `interpolate` both executes the given R code on the server, and also writes the code executed to the script window at the bottom of `intRo`.
+This script is most immediately similar to standard R code. In this case, a function `nonparametrictest` is created which, depending on the values of the parameters, ultimately returns the result of a Wilcoxon rank sum test. One important difference from a typical R script is that each call in the script is wrapped in a function called `interpolate` [@interpolate]. `interpolate` both executes the given R code on the server, and also writes the code executed to the script window at the bottom of `intRo` (see Section \ref{designing-for-reproducibility}).
 
-Because all the code needed to implement a wilcoxon rank sum test is found in the `base` and `stats` package, the `libraries.R` file will be empty for the `nonparametric` module. Additionally, no reactive objects need be defined, so `reactive.R` will also be empty. `observe.R`, which defines the Shiny observers needed, can be written as follows:
+Because all the code needed to implement a Wilcoxon rank sum test is found in the `base` and `stats` package, the `libraries.R` file will be empty for the `nonparametric` module. Additionally, no reactive objects need be defined, so `reactive.R` will also be empty. `observe.R`, which defines the Shiny observers needed, can be written as follows:
 
 ```{r, eval=FALSE}
 observe({
-    updateSelectizeInput(session, "group1_non", 
-                         choices = intro.numericnames(), 
-                         selected = ifelse(checkVariable(
+  updateSelectizeInput(session, "group1_non", 
+                       choices = intro.numericnames(), 
+                       selected = ifelse(checkVariable(
                              intro.data(), input$group1_non), 
                              input$group1_non, 
                              intro.numericnames()[1]))
-    updateSelectizeInput(session, "group2_non", 
-                         choices = intro.numericnames(), 
-                         selected = ifelse(checkVariable(
+  updateSelectizeInput(session, "group2_non", 
+                       choices = intro.numericnames(), 
+                       selected = ifelse(checkVariable(
                              intro.data(), input$group2_non), 
                              input$group2_non, 
                              intro.numericnames()[2]))
 })
 
 observeEvent(input$store_nonparametric, {
-    cat(paste0("\n\n", paste(readLines(
-        file.path(userdir, "code_nonparametric.R")), 
-        collapse = "\n")), 
-        file = file.path(userdir, "code_All.R"), 
-        append = TRUE)
+  cat(paste0("\n\n", paste(readLines(
+    file.path(userdir, "code_nonparametric.R")), 
+    collapse = "\n")), 
+    file = file.path(userdir, "code_All.R"), 
+    append = TRUE)
 })
 ```
 
@@ -195,9 +195,9 @@ The `output.R` code can be very simple:
 
 ```{r, eval=FALSE}
 output$nonparametrictest <- renderPrint({
-    return(nonparametrictable(intro.data(), input$group1_non, 
-                              input$group2_non, input$conflevel_non, 
-                              input$althyp_non, input$hypval_non))
+  return(nonparametrictable(intro.data(), input$group1_non, 
+                            input$group2_non, input$conflevel_non, 
+                            input$althyp_non, input$hypval_non))
 })
 ```
 
@@ -207,39 +207,39 @@ Finally, a possible `ui.R` file is shown below:
 
 ```{r, eval=FALSE}
 nonparametric_ui <- tabPanel("Nonparametric",
-    column(4,
-         wellPanel(
-             selectizeInput("group1_non", label = "Group 1 (x)", 
-                            choices = numericNames(mpg), 
-                            selected = numericNames(mpg)[1]),
-             selectizeInput("group2_non", "Group 2 (y)", 
-                            choices = numericNames(mpg), 
-                            selected = numericNames(mpg)[2]),
+  column(4,
+    wellPanel(
+      selectizeInput("group1_non", label = "Group 1 (x)", 
+                     choices = numericNames(mpg), 
+                     selected = numericNames(mpg)[1]),
+      selectizeInput("group2_non", "Group 2 (y)", 
+                     choices = numericNames(mpg), 
+                     selected = numericNames(mpg)[2]),
              
-             hr(),
-             
-             selectizeInput("althyp_non", "Alternative Hypothesis", 
-                            c("Two-Sided" = "two.sided", 
-                              "Greater" = "greater", "Less" = "less")),
-             numericInput("hypval_non", "Hypothesized Value",
-                          value = 0),
-             sliderInput("conflevel_non", "Confidence Level",
-                         min=0.01, max=0.99, step=0.01, value=0.95),
-             
-             hr(),
-             
-             tags$button("", id = "store_nonparametric", type = "button", 
-                         class = "btn action-button", list(icon("save"), 
-                         "Store Nonparametric Result"), 
-                         onclick = "$('#top-nav a:has(> .fa-print, 
-                         .fa-code, .fa-download)').highlight();")
-         )
-    ),
-    
-    column(8,
-         tags$b("Nonparametric Results"),
-         verbatimTextOutput("nonparametrictest")
+      hr(),
+     
+      selectizeInput("althyp_non", "Alternative Hypothesis", 
+                     c("Two-Sided" = "two.sided", 
+                       "Greater" = "greater", "Less" = "less")),
+      numericInput("hypval_non", "Hypothesized Value",
+                   value = 0),
+      sliderInput("conflevel_non", "Confidence Level",
+                  min=0.01, max=0.99, step=0.01, value=0.95),
+     
+      hr(),
+     
+      tags$button("", id = "store_nonparametric", type = "button", 
+                  class = "btn action-button", list(icon("save"), 
+                  "Store Nonparametric Result"), 
+                  onclick = "$('#top-nav a:has(> .fa-print, 
+                  .fa-code, .fa-download)').highlight();")
     )
+  ),
+
+  column(8,
+    tags$b("Nonparametric Results"),
+    verbatimTextOutput("nonparametrictest")
+  )
 )
 ```
 
@@ -253,7 +253,7 @@ While web-based tools written using Shiny (including `intRo`) have appealing cha
 
 In essence, this procedure transcribes user actions in a GUI to R code. When run in a standard R session, the results produced will be identical to the results shown in `intRo`. The full series of actions taken by the user are transcribed and can then be exchanged by researchers, students, and developers in a manner similar to normal scripting. Even "printing" the results of an `intRo` session amounts to nothing more than executing the given code on the server, and then storing the results in an rmarkdown document, weaving the code with the results to produce a full compendium. While not strictly necessary, this lends credibility to the results produced by `intRo` in the sense that they are directly reproduced by the server every time the user clicks the print button.
 
-Reproducibility in `intRo` is accomplished with the previously mentioned `interpolate` function. `interpolate` accepts an expression and an arbitrary number of arguments as an argument, substitutes the arguments into the expression, prints the results to the console, and evaluates the parsed expression. This allows for all modules to be shoe-horned into the framework by wrapping the resulting R code in calls to `interpolate`. A possible drawback of this solution is that it requires module developers to manually wrap their functions in this call, but this could be mitigated by a package that creates modules automatically (See Section \ref{conclusions-and-future-work}).
+Reproducibility in `intRo` is accomplished with the previously mentioned `interpolate` function. `interpolate` accepts an expression and an arbitrary number of arguments as an argument, substitutes the arguments into the expression, prints the results to the console, and evaluates the parsed expression. This allows for all modules to be shoe-horned into the framework by wrapping the resulting R code in calls to `interpolate`. A possible drawback of this solution is that it requires module developers to manually wrap their functions in this call, but this could be mitigated by a package that creates modules automatically (see Section \ref{conclusions-and-future-work}).
 
 One potential enhancement to this framework would be the inclusion of state-saving and state-resuming. Because an `intRo` session is uniquely represented by the series of commands stored as code, the code itself could represent a checkpoint for resuming a new `intRo` session. Currently, beginning a new session will start the application with no memory of previous sessions. In real-world usage, state saving could allow a user to continue work later. At this time, this can only be done by taking the code and pasting it into a standard R session, although such an enhancement would likely involve minimal changes to `intRo`'s underlying structure.s
 
@@ -295,24 +295,24 @@ All code and documents related to this manuscript are available at \url{https://
 mylist <- list()
 old_heading <- ""
 for (i in seq_along(modules)) {
-    my.module <- strsplit(modules[i], "/")[[1]]
-    if (my.module[1] != old_heading) {
-        mylist[[length(mylist) + 1]] <- Hmisc::capitalize(my.module[1])
-        old_heading <- my.module[1]
-    }
-    mylist[[length(mylist) + 1]] <- get(paste(my.module[2], "ui", sep = "_"))
+  my.module <- strsplit(modules[i], "/")[[1]]
+  if (my.module[1] != old_heading) {
+    mylist[[length(mylist) + 1]] <- Hmisc::capitalize(my.module[1])
+    old_heading <- my.module[1]
+  }
+  mylist[[length(mylist) + 1]] <- get(paste(my.module[2], "ui", sep = "_"))
 }
 
 ## mylist is a list containing the different ui module code
 ## Create the UI
 shinyUI(
-    navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
-               tabPanel(title="", icon=icon("home"),
-                        fluidRow(
-                            do.call(navlistPanel, c(list(id = "side-nav", widths = c(2, 10)), mylist))
-                        )
-               ), ...
-    ))
+  navbarPage("intRo", id="top-nav",  theme = "bootstrap.min.css",
+             tabPanel(title="", icon=icon("home"),
+                      fluidRow(
+                        do.call(navlistPanel, c(list(id = "side-nav", widths = c(2, 10)), mylist))
+                      )
+             ), ...
+))
 ```
 \normalsize
 
@@ -321,13 +321,13 @@ The key piece of code being the `do.call` statement loading the list of ui eleme
 \footnotesize
 ```{r server, eval=FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=50)}
 shinyServer(function(input, output, session) {
-    types <- c("helper.R", "observe.R", "reactive.R", "output.R")
-    
-    modules_tosource <- file.path("modules", apply(expand.grid(modules, types), 1, paste, collapse = "/"))
-    
-    for (mod in modules_tosource) {
-        source(mod, local = TRUE)
-    }
+  types <- c("helper.R", "observe.R", "reactive.R", "output.R")
+
+  modules_tosource <- file.path("modules", apply(expand.grid(modules, types), 1, paste, collapse = "/"))
+
+  for (mod in modules_tosource) {
+    source(mod, local = TRUE)
+  }
 })
 ```
 \normalsize

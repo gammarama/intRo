@@ -164,7 +164,7 @@ loaded and unloaded depending on the particular use case. Open source
 modular software precipitates the possibility of extensions contributed
 by a wide array of programmers, which can allow the software to morph
 into areas that weren't anticipated early in development. In the
-statistics realm, R (R Core Team 2014) is a prime example of the virtues
+statistics realm, R (R Core Team 2016) is a prime example of the virtues
 of modular programming. As of this writing, The Comprehensive R Archive
 Network (CRAN) contains over 9000 source packages which can be installed
 and dynamically loaded in a particular session as needed.
@@ -181,7 +181,7 @@ advantages of CRAN natively, such as R Commander (Fox 2005) and Deducer
 statistical functions in R. One thing these software packages all have
 in common is the requirement of local installation and configuration,
 which means certain operating systems and platforms will not support
-their use.
+their use. For example, Excel and JMP are not supported on Linux.
 
 With the advantages of R clear, an approach to building statistical
 software and statistical learning tools would be to attempt to generate
@@ -210,8 +210,7 @@ programming knowledge. inZight Lite is currently partially but not fully
 reproducible. Another package is called Radiant (Nijs 2016), which is a
 web-based application with the aim of furthering business education and
 financial analysis. While the application is modular and extensible, it
-does require installation and hosting and is inundated with more
-features than necessary for an introductory student. An overview of the
+does require local installation and hosting. An overview of the
 comparison between the features of these statistical software packages
 is presented in Table \ref{tab:compare}. Partial fulfillment of
 requirements is noted in the table, as well as a measure of the
@@ -279,13 +278,13 @@ However, using R in most cases still requires a basic knowledge of
 programming concepts which may pose a steep learning curve for the
 introductory statistics student (Tan, Ting, and Ling 2009). This
 additional time commitment may explain why introductory courses often
-utilize point-and-click applications, even if the instructor
-himself/herself uses R in their own work. Still, some compromises must
-be made when using many graphical applications, including dealing with
-software licenses and unsupported desktop platforms. From the
-instructor's perspective in particular, managing a large group of
-software licenses for students with various computing environments and
-versions could wind up being extremely cumbersome.
+utilize point-and-click applications, even if the instructors use R in
+their own work. Still, some compromises must be made when using many
+graphical applications, including dealing with software licenses and
+unsupported desktop platforms. From the instructor's perspective in
+particular, managing a large group of software licenses for students
+with various computing environments and versions could wind up being
+extremely cumbersome.
 
 In teaching Introduction to Business Statistics at Iowa State
 University, we witnessed profound struggles by students attempting to
@@ -314,7 +313,7 @@ a piece of software as is. Additionally, \texttt{intRo} stands apart
 from new tools in that it is a supplement to an existing class, fully
 usable by a beginning statistics student. An accompanying R package,
 titled \texttt{intRo} and available on GitHub, assists in the
-downloading, running, and deploying of \texttt{intRo} instances (See
+downloading, running, and deploying of \texttt{intRo} instances (see
 Section \ref{deploying-intro-instances}).
 
 Three fundamental philosophies that guided the creation of
@@ -441,12 +440,12 @@ generate the functionality available in the application. This allows for
 the specific functionality needed to be determined and adjusted by the
 individual course instructor. In this example, the instructor is
 electing to include a nonparametric module, which is not enabled by
-default, to allow the students to perform a wilcoxon rank sum test.
+default, to allow the students to perform a Wilcoxon rank sum test.
 
 \begin{figure*}[ht!]
 \centering
 \includegraphics[width=\linewidth]{images/app_creation_modules.pdf}
-\caption{This figure depicts how the Shiny \texttt{server.R} and \texttt{ui.R} files are populated using the modular structure within \texttt{intRo}. \texttt{intRo} modules are split up into multiple R scripts which are included either in Shiny's user interface (\texttt{ui.R}) or server (\texttt{helper.R}, \texttt{libraries.R}, \texttt{observe.R}, \texttt{reactive.R}, \texttt{output.R}) definitions. At runtime, \texttt{intRo} sources in the specified modules (contained in the modules folder) to dynamically generate the functionality available in the application. This allows for the specific functionality needed to be determined and adjusted by the individual course instructor. In this example, the instructor is electing to include a nonparametric module, which is not enabled by default, to allow the students to perform a wilcoxon rank sum test.}
+\caption{This figure depicts how the Shiny \texttt{server.R} and \texttt{ui.R} files are populated using the modular structure within \texttt{intRo}. \texttt{intRo} modules are split up into multiple R scripts which are included either in Shiny's user interface (\texttt{ui.R}) or server (\texttt{helper.R}, \texttt{libraries.R}, \texttt{observe.R}, \texttt{reactive.R}, \texttt{output.R}) definitions. At runtime, \texttt{intRo} sources in the specified modules (contained in the modules folder) to dynamically generate the functionality available in the application. This allows for the specific functionality needed to be determined and adjusted by the individual course instructor. In this example, the instructor is electing to include a nonparametric module, which is not enabled by default, to allow the students to perform a Wilcoxon rank sum test.}
 \label{fig:app_creation_modules}
 \end{figure*}
 
@@ -507,7 +506,7 @@ category of the module (currently \texttt{data}, \texttt{summaries}, or
 according to the name of the module. This folder houses the previously
 defined scripts. As an example, we will walk through the process of
 creating a new module called \texttt{nonparametric}, as previously
-mentioned in this section, which will perform a wilcoxon rank sum test.
+mentioned in this section, which will perform a Wilcoxon rank sum test.
 
 Since the \texttt{nonparametric} module performs a statistical test, it
 fits within the inference category, and hence should be placed in the
@@ -518,19 +517,19 @@ Let's first create \emph{helper.R}:
 \begin{Highlighting}[]
 \NormalTok{nonparametrictest <-}\StringTok{ }\NormalTok{function(intro.data, x, y, }
                                 \NormalTok{conflevel, althyp, hypval) \{}
-    \KeywordTok{interpolate}\NormalTok{(~(}\KeywordTok{wilcox.test}\NormalTok{(}\DataTypeTok{x =} \NormalTok{df$x, }\DataTypeTok{y =} \NormalTok{df$y, }
-                              \DataTypeTok{conf.level =} \NormalTok{conf, }
-                              \DataTypeTok{alternative =} \NormalTok{althyp, }
-                              \DataTypeTok{mu =} \NormalTok{hypval)),}
-                  \DataTypeTok{df =} \KeywordTok{quote}\NormalTok{(intro.data),}
-                  \DataTypeTok{x =} \NormalTok{x,}
-                  \DataTypeTok{y =} \NormalTok{y,}
-                  \DataTypeTok{conf =} \NormalTok{conflevel,}
-                  \DataTypeTok{althyp =} \NormalTok{althyp,}
-                  \DataTypeTok{hypval =} \NormalTok{hypval,}
-                  \DataTypeTok{mydir =} \NormalTok{userdir, }
-                  \StringTok{`}\DataTypeTok{_env}\StringTok{`} \NormalTok{=}\StringTok{ }\KeywordTok{environment}\NormalTok{(), }
-                  \DataTypeTok{file =} \StringTok{"code_nonparametric.R"}\NormalTok{)}
+  \KeywordTok{interpolate}\NormalTok{(~(}\KeywordTok{wilcox.test}\NormalTok{(}\DataTypeTok{x =} \NormalTok{df$x, }\DataTypeTok{y =} \NormalTok{df$y, }
+                          \DataTypeTok{conf.level =} \NormalTok{conf, }
+                          \DataTypeTok{alternative =} \NormalTok{althyp, }
+                          \DataTypeTok{mu =} \NormalTok{hypval)),}
+              \DataTypeTok{df =} \KeywordTok{quote}\NormalTok{(intro.data),}
+              \DataTypeTok{x =} \NormalTok{x,}
+              \DataTypeTok{y =} \NormalTok{y,}
+              \DataTypeTok{conf =} \NormalTok{conflevel,}
+              \DataTypeTok{althyp =} \NormalTok{althyp,}
+              \DataTypeTok{hypval =} \NormalTok{hypval,}
+              \DataTypeTok{mydir =} \NormalTok{userdir, }
+              \StringTok{`}\DataTypeTok{_env}\StringTok{`} \NormalTok{=}\StringTok{ }\KeywordTok{environment}\NormalTok{(), }
+              \DataTypeTok{file =} \StringTok{"code_nonparametric.R"}\NormalTok{)}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -538,13 +537,14 @@ Let's first create \emph{helper.R}:
 This script is most immediately similar to standard R code. In this
 case, a function \texttt{nonparametrictest} is created which, depending
 on the values of the parameters, ultimately returns the result of a
-wilcoxon rank sum test. One important difference from a typical R script
+Wilcoxon rank sum test. One important difference from a typical R script
 is that each call in the script is wrapped in a function called
 \texttt{interpolate} (Wickham 2015). \texttt{interpolate} both executes
 the given R code on the server, and also writes the code executed to the
-script window at the bottom of \texttt{intRo}.
+script window at the bottom of \texttt{intRo} (see Section
+\ref{designing-for-reproducibility}).
 
-Because all the code needed to implement a wilcoxon rank sum test is
+Because all the code needed to implement a Wilcoxon rank sum test is
 found in the \texttt{base} and \texttt{stats} package, the
 \texttt{libraries.R} file will be empty for the \texttt{nonparametric}
 module. Additionally, no reactive objects need be defined, so
@@ -554,26 +554,26 @@ defines the Shiny observers needed, can be written as follows:
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{observe}\NormalTok{(\{}
-    \KeywordTok{updateSelectizeInput}\NormalTok{(session, }\StringTok{"group1_non"}\NormalTok{, }
-                         \DataTypeTok{choices =} \KeywordTok{intro.numericnames}\NormalTok{(), }
-                         \DataTypeTok{selected =} \KeywordTok{ifelse}\NormalTok{(}\KeywordTok{checkVariable}\NormalTok{(}
+  \KeywordTok{updateSelectizeInput}\NormalTok{(session, }\StringTok{"group1_non"}\NormalTok{, }
+                       \DataTypeTok{choices =} \KeywordTok{intro.numericnames}\NormalTok{(), }
+                       \DataTypeTok{selected =} \KeywordTok{ifelse}\NormalTok{(}\KeywordTok{checkVariable}\NormalTok{(}
                              \KeywordTok{intro.data}\NormalTok{(), input$group1_non), }
                              \NormalTok{input$group1_non, }
                              \KeywordTok{intro.numericnames}\NormalTok{()[}\DecValTok{1}\NormalTok{]))}
-    \KeywordTok{updateSelectizeInput}\NormalTok{(session, }\StringTok{"group2_non"}\NormalTok{, }
-                         \DataTypeTok{choices =} \KeywordTok{intro.numericnames}\NormalTok{(), }
-                         \DataTypeTok{selected =} \KeywordTok{ifelse}\NormalTok{(}\KeywordTok{checkVariable}\NormalTok{(}
+  \KeywordTok{updateSelectizeInput}\NormalTok{(session, }\StringTok{"group2_non"}\NormalTok{, }
+                       \DataTypeTok{choices =} \KeywordTok{intro.numericnames}\NormalTok{(), }
+                       \DataTypeTok{selected =} \KeywordTok{ifelse}\NormalTok{(}\KeywordTok{checkVariable}\NormalTok{(}
                              \KeywordTok{intro.data}\NormalTok{(), input$group2_non), }
                              \NormalTok{input$group2_non, }
                              \KeywordTok{intro.numericnames}\NormalTok{()[}\DecValTok{2}\NormalTok{]))}
 \NormalTok{\})}
 
 \KeywordTok{observeEvent}\NormalTok{(input$store_nonparametric, \{}
-    \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{, }\KeywordTok{paste}\NormalTok{(}\KeywordTok{readLines}\NormalTok{(}
-        \KeywordTok{file.path}\NormalTok{(userdir, }\StringTok{"code_nonparametric.R"}\NormalTok{)), }
-        \DataTypeTok{collapse =} \StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)), }
-        \DataTypeTok{file =} \KeywordTok{file.path}\NormalTok{(userdir, }\StringTok{"code_All.R"}\NormalTok{), }
-        \DataTypeTok{append =} \OtherTok{TRUE}\NormalTok{)}
+  \KeywordTok{cat}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{, }\KeywordTok{paste}\NormalTok{(}\KeywordTok{readLines}\NormalTok{(}
+    \KeywordTok{file.path}\NormalTok{(userdir, }\StringTok{"code_nonparametric.R"}\NormalTok{)), }
+    \DataTypeTok{collapse =} \StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)), }
+    \DataTypeTok{file =} \KeywordTok{file.path}\NormalTok{(userdir, }\StringTok{"code_All.R"}\NormalTok{), }
+    \DataTypeTok{append =} \OtherTok{TRUE}\NormalTok{)}
 \NormalTok{\})}
 \end{Highlighting}
 \end{Shaded}
@@ -597,9 +597,9 @@ The \texttt{output.R} code can be very simple:
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{output$nonparametrictest <-}\StringTok{ }\KeywordTok{renderPrint}\NormalTok{(\{}
-    \KeywordTok{return}\NormalTok{(}\KeywordTok{nonparametrictable}\NormalTok{(}\KeywordTok{intro.data}\NormalTok{(), input$group1_non, }
-                              \NormalTok{input$group2_non, input$conflevel_non, }
-                              \NormalTok{input$althyp_non, input$hypval_non))}
+  \KeywordTok{return}\NormalTok{(}\KeywordTok{nonparametrictable}\NormalTok{(}\KeywordTok{intro.data}\NormalTok{(), input$group1_non, }
+                            \NormalTok{input$group2_non, input$conflevel_non, }
+                            \NormalTok{input$althyp_non, input$hypval_non))}
 \NormalTok{\})}
 \end{Highlighting}
 \end{Shaded}
@@ -612,39 +612,39 @@ Finally, a possible \texttt{ui.R} file is shown below:
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{nonparametric_ui <-}\StringTok{ }\KeywordTok{tabPanel}\NormalTok{(}\StringTok{"Nonparametric"}\NormalTok{,}
-    \KeywordTok{column}\NormalTok{(}\DecValTok{4}\NormalTok{,}
-         \KeywordTok{wellPanel}\NormalTok{(}
-             \KeywordTok{selectizeInput}\NormalTok{(}\StringTok{"group1_non"}\NormalTok{, }\DataTypeTok{label =} \StringTok{"Group 1 (x)"}\NormalTok{, }
-                            \DataTypeTok{choices =} \KeywordTok{numericNames}\NormalTok{(mpg), }
-                            \DataTypeTok{selected =} \KeywordTok{numericNames}\NormalTok{(mpg)[}\DecValTok{1}\NormalTok{]),}
-             \KeywordTok{selectizeInput}\NormalTok{(}\StringTok{"group2_non"}\NormalTok{, }\StringTok{"Group 2 (y)"}\NormalTok{, }
-                            \DataTypeTok{choices =} \KeywordTok{numericNames}\NormalTok{(mpg), }
-                            \DataTypeTok{selected =} \KeywordTok{numericNames}\NormalTok{(mpg)[}\DecValTok{2}\NormalTok{]),}
+  \KeywordTok{column}\NormalTok{(}\DecValTok{4}\NormalTok{,}
+    \KeywordTok{wellPanel}\NormalTok{(}
+      \KeywordTok{selectizeInput}\NormalTok{(}\StringTok{"group1_non"}\NormalTok{, }\DataTypeTok{label =} \StringTok{"Group 1 (x)"}\NormalTok{, }
+                     \DataTypeTok{choices =} \KeywordTok{numericNames}\NormalTok{(mpg), }
+                     \DataTypeTok{selected =} \KeywordTok{numericNames}\NormalTok{(mpg)[}\DecValTok{1}\NormalTok{]),}
+      \KeywordTok{selectizeInput}\NormalTok{(}\StringTok{"group2_non"}\NormalTok{, }\StringTok{"Group 2 (y)"}\NormalTok{, }
+                     \DataTypeTok{choices =} \KeywordTok{numericNames}\NormalTok{(mpg), }
+                     \DataTypeTok{selected =} \KeywordTok{numericNames}\NormalTok{(mpg)[}\DecValTok{2}\NormalTok{]),}
              
-             \KeywordTok{hr}\NormalTok{(),}
-             
-             \KeywordTok{selectizeInput}\NormalTok{(}\StringTok{"althyp_non"}\NormalTok{, }\StringTok{"Alternative Hypothesis"}\NormalTok{, }
-                            \KeywordTok{c}\NormalTok{(}\StringTok{"Two-Sided"} \NormalTok{=}\StringTok{ "two.sided"}\NormalTok{, }
-                              \StringTok{"Greater"} \NormalTok{=}\StringTok{ "greater"}\NormalTok{, }\StringTok{"Less"} \NormalTok{=}\StringTok{ "less"}\NormalTok{)),}
-             \KeywordTok{numericInput}\NormalTok{(}\StringTok{"hypval_non"}\NormalTok{, }\StringTok{"Hypothesized Value"}\NormalTok{,}
-                          \DataTypeTok{value =} \DecValTok{0}\NormalTok{),}
-             \KeywordTok{sliderInput}\NormalTok{(}\StringTok{"conflevel_non"}\NormalTok{, }\StringTok{"Confidence Level"}\NormalTok{,}
-                         \DataTypeTok{min=}\FloatTok{0.01}\NormalTok{, }\DataTypeTok{max=}\FloatTok{0.99}\NormalTok{, }\DataTypeTok{step=}\FloatTok{0.01}\NormalTok{, }\DataTypeTok{value=}\FloatTok{0.95}\NormalTok{),}
-             
-             \KeywordTok{hr}\NormalTok{(),}
-             
-             \NormalTok{tags$}\KeywordTok{button}\NormalTok{(}\StringTok{""}\NormalTok{, }\DataTypeTok{id =} \StringTok{"store_nonparametric"}\NormalTok{, }\DataTypeTok{type =} \StringTok{"button"}\NormalTok{, }
-                         \DataTypeTok{class =} \StringTok{"btn action-button"}\NormalTok{, }\KeywordTok{list}\NormalTok{(}\KeywordTok{icon}\NormalTok{(}\StringTok{"save"}\NormalTok{), }
-                         \StringTok{"Store Nonparametric Result"}\NormalTok{), }
-                         \DataTypeTok{onclick =} \StringTok{"$('#top-nav a:has(> .fa-print, }
-\StringTok{                         .fa-code, .fa-download)').highlight();"}\NormalTok{)}
-         \NormalTok{)}
-    \NormalTok{),}
-    
-    \KeywordTok{column}\NormalTok{(}\DecValTok{8}\NormalTok{,}
-         \NormalTok{tags$}\KeywordTok{b}\NormalTok{(}\StringTok{"Nonparametric Results"}\NormalTok{),}
-         \KeywordTok{verbatimTextOutput}\NormalTok{(}\StringTok{"nonparametrictest"}\NormalTok{)}
+      \KeywordTok{hr}\NormalTok{(),}
+     
+      \KeywordTok{selectizeInput}\NormalTok{(}\StringTok{"althyp_non"}\NormalTok{, }\StringTok{"Alternative Hypothesis"}\NormalTok{, }
+                     \KeywordTok{c}\NormalTok{(}\StringTok{"Two-Sided"} \NormalTok{=}\StringTok{ "two.sided"}\NormalTok{, }
+                       \StringTok{"Greater"} \NormalTok{=}\StringTok{ "greater"}\NormalTok{, }\StringTok{"Less"} \NormalTok{=}\StringTok{ "less"}\NormalTok{)),}
+      \KeywordTok{numericInput}\NormalTok{(}\StringTok{"hypval_non"}\NormalTok{, }\StringTok{"Hypothesized Value"}\NormalTok{,}
+                   \DataTypeTok{value =} \DecValTok{0}\NormalTok{),}
+      \KeywordTok{sliderInput}\NormalTok{(}\StringTok{"conflevel_non"}\NormalTok{, }\StringTok{"Confidence Level"}\NormalTok{,}
+                  \DataTypeTok{min=}\FloatTok{0.01}\NormalTok{, }\DataTypeTok{max=}\FloatTok{0.99}\NormalTok{, }\DataTypeTok{step=}\FloatTok{0.01}\NormalTok{, }\DataTypeTok{value=}\FloatTok{0.95}\NormalTok{),}
+     
+      \KeywordTok{hr}\NormalTok{(),}
+     
+      \NormalTok{tags$}\KeywordTok{button}\NormalTok{(}\StringTok{""}\NormalTok{, }\DataTypeTok{id =} \StringTok{"store_nonparametric"}\NormalTok{, }\DataTypeTok{type =} \StringTok{"button"}\NormalTok{, }
+                  \DataTypeTok{class =} \StringTok{"btn action-button"}\NormalTok{, }\KeywordTok{list}\NormalTok{(}\KeywordTok{icon}\NormalTok{(}\StringTok{"save"}\NormalTok{), }
+                  \StringTok{"Store Nonparametric Result"}\NormalTok{), }
+                  \DataTypeTok{onclick =} \StringTok{"$('#top-nav a:has(> .fa-print, }
+\StringTok{                  .fa-code, .fa-download)').highlight();"}\NormalTok{)}
     \NormalTok{)}
+  \NormalTok{),}
+
+  \KeywordTok{column}\NormalTok{(}\DecValTok{8}\NormalTok{,}
+    \NormalTok{tags$}\KeywordTok{b}\NormalTok{(}\StringTok{"Nonparametric Results"}\NormalTok{),}
+    \KeywordTok{verbatimTextOutput}\NormalTok{(}\StringTok{"nonparametrictest"}\NormalTok{)}
+  \NormalTok{)}
 \NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -703,7 +703,7 @@ modules to be shoe-horned into the framework by wrapping the resulting R
 code in calls to \texttt{interpolate}. A possible drawback of this
 solution is that it requires module developers to manually wrap their
 functions in this call, but this could be mitigated by a package that
-creates modules automatically (See Section
+creates modules automatically (see Section
 \ref{conclusions-and-future-work}).
 
 One potential enhancement to this framework would be the inclusion of
@@ -1046,9 +1046,9 @@ Project Mosaic (Mosaic-Web.org) Statistics and Mathematics Teaching
 Utilities}. \url{http://CRAN.R-project.org/package=mosaic}.
 
 \hypertarget{ref-r-stat}{}
-R Core Team. 2014. \emph{R: A Language and Environment for Statistical
+R Core Team. 2016. \emph{R: A Language and Environment for Statistical
 Computing}. Vienna, Austria: R Foundation for Statistical Computing.
-\url{http://www.R-project.org/}.
+\url{https://www.R-project.org/}.
 
 \hypertarget{ref-shiny}{}
 RStudio, and Inc. 2014. \emph{Shiny: Web Application Framework for R}.
