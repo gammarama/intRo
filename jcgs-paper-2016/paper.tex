@@ -206,20 +206,19 @@ analysis to be converted to an interactive web application. Several
 recent software packages have built upon Shiny to provide a web-based
 system based on R. One such package is iNZight Lite (Wild 2015) which
 attempts to expose students to data analysis without requiring
-programming knowledge. Like most web-based systems, this does not
-include reproducible R code, which limits its usefulness in a scientific
-or academic setting. Another package is called Radiant (Nijs 2016),
-which is a web-based application with the aim of furthering business
-education and financial analysis. While the application is modular and
-extensible, it does require installation and hosting and is inundated
-with more features than necessary for an introductory student. An
-overview of the comparison between the features of these statistical
-software packages is presented in Table \ref{tab:compare}. Partial
-fulfillment of requirements is noted in the table, as well as a measure
-of the complexity of functionality offered by default. For example,
-\texttt{R} does have an associated Graphical User Interface (GUI),
-however this interface is very limited, thus only partially fulfilling
-the behavior of a GUI.
+programming knowledge. inZight Lite is currently partially but not fully
+reproducible. Another package is called Radiant (Nijs 2016), which is a
+web-based application with the aim of furthering business education and
+financial analysis. While the application is modular and extensible, it
+does require installation and hosting and is inundated with more
+features than necessary for an introductory student. An overview of the
+comparison between the features of these statistical software packages
+is presented in Table \ref{tab:compare}. Partial fulfillment of
+requirements is noted in the table, as well as a measure of the
+complexity of functionality offered by default. For example, \texttt{R}
+does have an associated Graphical User Interface (GUI), however this
+interface is very limited, thus only partially fulfilling the behavior
+of a GUI.
 
 \begin{table}[ht]
 \centering
@@ -233,7 +232,7 @@ intRo & Yes & No & Yes & Yes & Yes & Yes & Limited \\
   Rcmdr & Yes & Yes & No & No & Yes & Yes & Moderate \\ 
   Deducer & Yes & Yes & No & No & Yes & Yes & Moderate \\ 
   MOSAIC & No & Yes & No & No & No & Yes & Limited \\ 
-  iNZight Lite & Yes & No & Yes & Yes & Partial & No & Limited \\ 
+  iNZight Lite & Yes & No & Yes & Yes & Partial & Partial & Limited \\ 
   Radiant & Yes & Yes & Yes & Yes & Partial & Yes & Moderate \\ 
    \hline
 \end{tabular}
@@ -447,7 +446,7 @@ default, to allow the students to perform a wilcoxon rank sum test.
 \begin{figure*}[ht!]
 \centering
 \includegraphics[width=\linewidth]{images/app_creation_modules.pdf}
-\caption{This figure depicts how the Shiny \texttt{server.R} and \texttt{ui.R} files are populated using the modular structure within \texttt{intRo}. \texttt{intRo} modules are split up into multiple R scripts which are included either in Shiny's user interface or server definitions. At runtime, the \texttt{intRo} sources in the specified modules (contained in the modules folder) to dynamically generate the functionality available in the application. This allows for the specific functionality needed to be determined and adjusted by the individual course instructor. In this example, the instructor is electing to include a nonparametric module, which is not enabled by default, to allow the students to perform a wilcoxon rank sum test.}
+\caption{This figure depicts how the Shiny \texttt{server.R} and \texttt{ui.R} files are populated using the modular structure within \texttt{intRo}. \texttt{intRo} modules are split up into multiple R scripts which are included either in Shiny's user interface (\texttt{ui.R}) or server (\texttt{helper.R}, \texttt{libraries.R}, \texttt{observe.R}, \texttt{reactive.R}, \texttt{output.R}) definitions. At runtime, \texttt{intRo} sources in the specified modules (contained in the modules folder) to dynamically generate the functionality available in the application. This allows for the specific functionality needed to be determined and adjusted by the individual course instructor. In this example, the instructor is electing to include a nonparametric module, which is not enabled by default, to allow the students to perform a wilcoxon rank sum test.}
 \label{fig:app_creation_modules}
 \end{figure*}
 
