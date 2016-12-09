@@ -201,23 +201,25 @@ Modern web technologies have enabled a new generation of software
 packages that reside solely on the web, which eliminates the issue of
 local installation and helps abstract away some of the more challenging
 programming aspects of working directly with R. Upon the release of
-RStudio's Shiny (RStudio and Inc. 2014) it became easier for an R-based
+RStudio's Shiny (RStudio, Inc. 2014) it became easier for an R-based
 analysis to be converted to an interactive web application. Several
 recent software packages have built upon Shiny to provide a web-based
 system based on R. One such package is iNZight Lite (Wild 2015) which
 attempts to expose students to data analysis without requiring
 programming knowledge. inZight Lite is currently partially but not fully
 reproducible. Another package is called Radiant (Nijs 2016), which is a
-web-based application with the aim of furthering business education and
-financial analysis. While the application is modular and extensible, it
-does require local installation and hosting. An overview of the
-comparison between the features of these statistical software packages
-is presented in Table \ref{tab:compare}. Partial fulfillment of
-requirements is noted in the table, as well as a measure of the
-complexity of functionality offered by default. For example, \texttt{R}
-does have an associated Graphical User Interface (GUI), however this
-interface is very limited, thus only partially fulfilling the behavior
-of a GUI.
+very promising web-based application with the aim of furthering business
+education and financial analysis. While the application is modular and
+extensible, it does require local installation and hosting. Radiant is a
+business analytics platform with a host of functionality, while
+\textbf{intRo} focuses on being a simple and extensible web tool for
+learning. An overview of the comparison between the features of these
+statistical software packages is presented in Table \ref{tab:compare}.
+Partial fulfillment of requirements is noted in the table, as well as a
+measure of the complexity of functionality offered by default. For
+example, \texttt{R} does have an associated Graphical User Interface
+(GUI), however this interface is very limited, thus only partially
+fulfilling the behavior of a GUI.
 
 \begin{table}[ht]
 \centering
@@ -243,16 +245,16 @@ Though challenging in a GUI, a reproducibility framework has three key
 advantages. First, it eases a student who may be intimidated by
 programming into the idea that interacting with a user interface is
 really just a frontend for code. Seeing the correspondence between
-graphical clicks and printed code should help lessen the fear of coding
-that many students may have. Second, an analysis created by a
-reproducible software system can be brought in an R session to easily
-assess and extend the results. Finally, with the help of knitr (Xie
-2015) and rmarkdown (Allaire et al. 2014), ``printing'' the results of a
-reproducible software system analysis amounts to nothing more than
-executing the R code on the server, adding another layer of
-reproducibility. These concepts are important because they encourage
-best practices with regards to disclosure of analysis methods in
-research (Baggerly and Berry 2011; Xie 2015).
+graphical clicks and printed code lessens the fear of coding that many
+students may have. Second, an analysis created by a reproducible
+software system can be brought in an R session to easily assess and
+extend the results. Finally, with the help of knitr (Xie 2015) and
+rmarkdown (Allaire et al. 2014), ``printing'' the results of the
+analysis amounts to nothing more than executing the R code on the
+server, adding another layer of reproducibility. These concepts are
+important because they encourage best practices with regards to
+disclosure of analysis methods in research (Baggerly and Berry 2011; Xie
+2015).
 
 Based on the above, we believe a modern software system should be
 \textbf{modular}, \textbf{extensible}, \textbf{web-based}, and foster
@@ -579,13 +581,13 @@ defines the Shiny observers needed, can be written as follows:
 \end{Shaded}
 
 Shiny observers are a class of reactive objects within the Shiny
-paradigm which do not return a value (RStudio and Inc. 2014). For
-further discussion of reactivity, see Section
-\ref{designing-for-reactivity}. In this example, observers are created
-to ensure that the choices of variable for the \texttt{nonparametric}
-module are only numeric variables. This is accomplished by utilizing the
-global reactive \texttt{intro.numericnames()}, which returns a character
-vector containing the variables in the current dataset that are numeric.
+paradigm which do not return a value (RStudio, Inc. 2014). For further
+discussion of reactivity, see Section \ref{designing-for-reactivity}. In
+this example, observers are created to ensure that the choices of
+variable for the \texttt{nonparametric} module are only numeric
+variables. This is accomplished by utilizing the global reactive
+\texttt{intro.numericnames()}, which returns a character vector
+containing the variables in the current dataset that are numeric.
 Finally, there is an event observer to store code generated from the
 module into the overall code script upon clicking the store button. The
 presence of this observer code and the definition of the button in the
@@ -724,7 +726,7 @@ posed by event-driven applications by providing abstractions to express
 programs as reactions to external events and having the language
 automatically manage the flow of time (by conceptually supporting
 simultaneity), and data and computation dependencies'' (Bainomugisha et
-al. 2012). As implemented by Shiny, results automatically update when
+al. 2013). As implemented by Shiny, results automatically update when
 users interact with the interface.
 
 intRo leverages the reactive programming nature of Shiny, and as such is
@@ -1006,9 +1008,10 @@ Baggerly, Keith A, and Donald A Berry. 2011. ``Reproducible Research.''
 Association}, no. 403. American Statistical Association: 16--17.
 
 \hypertarget{ref-bainomugisha2012survey}{}
-Bainomugisha, Engineer, Andoni Lombide Carreton, Tom Van Cutsem, Stijn
-Mostinckx, and Wolfgang De Meuter. 2012. ``A Survey on Reactive
-Programming.'' In \emph{ACM Computing Surveys}. Citeseer.
+Bainomugisha, Engineer, Andoni Lombide Carreton, Tom van Cutsem, Stijn
+Mostinckx, and Wolfgang de Meuter. 2013. ``A Survey on Reactive
+Programming.'' In \emph{ACM Comput. Surv.}, 45:52:1--52:34. 4. New York,
+NY, USA: ACM.
 
 \hypertarget{ref-swirl}{}
 Carchedi, Nick, Bill Bauer, Gina Grdina, and Sean Kross. 2014.
@@ -1036,8 +1039,8 @@ Nijs, Vincent. 2016. ``Radiant - Business Analytics Using R and Shiny.''
 \url{https://radiant-rstats.github.io/docs}.
 
 \hypertarget{ref-parnas1972criteria}{}
-Parnas, David Lorge. 1972. ``On the Criteria to Be Used in Decomposing
-Systems into Modules.'' \emph{Communications of the ACM} 15 (12). ACm:
+Parnas, D. L. 1972. ``On the Criteria to Be Used in Decomposing Systems
+into Modules.'' \emph{Commun. ACM} 15 (12). New York, NY, USA: ACM:
 1053--8.
 
 \hypertarget{ref-mosaic}{}
@@ -1051,7 +1054,7 @@ Computing}. Vienna, Austria: R Foundation for Statistical Computing.
 \url{https://www.R-project.org/}.
 
 \hypertarget{ref-shiny}{}
-RStudio, and Inc. 2014. \emph{Shiny: Web Application Framework for R}.
+RStudio, Inc. 2014. \emph{Shiny: Web Application Framework for R}.
 \url{http://CRAN.R-project.org/package=shiny}.
 
 \hypertarget{ref-scrimshaw2001computers}{}
@@ -1062,7 +1065,7 @@ Ltd.
 \hypertarget{ref-szyperski1996independently}{}
 Szyperski, Clemens. 1996. ``Independently Extensible Systems-Software
 Engineering Potential and Challenges.'' \emph{Australian Computer
-Science Communications} 18. UNIVERSITY OF CANTERBURY: 203--12.
+Science Communications} 18. University of Cambridge: 203--12.
 
 \hypertarget{ref-5359977}{}
 Tan, P. H., C. Y. Ting, and S. W. Ling. 2009. ``Learning Difficulties in
