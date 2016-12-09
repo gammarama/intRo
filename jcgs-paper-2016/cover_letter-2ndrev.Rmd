@@ -1,0 +1,33 @@
+---
+author: 
+ - Eric Hare
+ - PhD Student 
+ - Department of Statistics 
+ - Iowa State University
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+opening: Dear Dr. Cook,
+closing: Best regards,
+address: 
+ - Dianne Cook
+ - Editor
+ - Journal of Computational and Graphical Statistics
+return-address:
+ - Eric Hare
+ - Department of Statistics
+ - Iowa State University
+ - Ames, IA 50011
+output:
+  pdf_document:
+    template: template-letter.tex
+geometry: margin=1in
+---
+
+Re: Manuscript reference No. JCGS-16-045
+
+Attached you will find the newest revision of our paper, written in response to the feedback we received from the reviewers, the associate editor, and yourself. 
+
+We have attempted to restructure the paper to focus on general techniques for designing a modular software system, using intRo itself as a case study. In particular, we have re-written the title, abstract, and a substantial portion of the background to highlight this new direction.
+
+In addition to the refocusing, we have also extended our review of other software systems, and emphasized the need that intRo addresses. Table 1 provides a somewhat subjective but thorough comparison of many "competing" software systems in terms of a number of qualities, including whether or not they are web-based, the level of extensibility, and the amount of functionality. We have also done our best to address the other minor comments that were raised in the second round of reviews.
+
+We hope that this latest revision addresses the majority of the issues with the previous, and we welcome any further critiques or comments.

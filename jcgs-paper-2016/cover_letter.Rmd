@@ -22,12 +22,20 @@ output:
 geometry: margin=1in
 ---
 
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
 Re: Manuscript reference No. JCGS-16-045
 
-Attached you will find the newest revision of our paper, written in response to the feedback we received from the reviewers, the associate editor, and yourself. 
+Attached you will find the newest revision of our paper. Contained is:
 
-We have attempted to restructure the paper to focus on general techniques for designing a modular software system, using intRo itself as a case study. In particular, we have re-written the title, abstract, and a substantial portion of the background to highlight this new direction.
+- **paper.pdf**, the non-blinded version of our paper
+- **paper_source.zip**, the source files for our paper, which include:
+    - **paper.tex**, the tex source
+    - **images**, a directory of figures
+    - **refs.bib**, the references
+    - **paper.pdf**, a copy of the non-blinded version of our paper
 
-In addition to the refocusing, we have also extended our review of other software systems, and emphasized the need that intRo addresses. Table 1 provides a somewhat subjective but thorough comparison of many "competing" software systems in terms of a number of qualities, including whether or not they are web-based, the level of extensibility, and the amount of functionality. We have also done our best to address the other minor comments that were raised in the second round of reviews.
+We also have included **forms.zip**, which has the two requested forms signed, as well as **response.pdf**, which has our final reviewer response.
 
-We hope that this latest revision addresses the majority of the issues with the previous, and we welcome any further critiques or comments.
+Let us know if there are any further concerns or requests.
