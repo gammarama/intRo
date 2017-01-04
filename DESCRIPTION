@@ -1,6 +1,6 @@
 Package: intRo
 Title: Download and Run the intRo Statistical Software
-Version: 0.0.9001
+Version: 0.1
 Authors@R: c(
     person("Eric", "Hare", email = "erichare@iastate.edu", role = c("aut", "cre")),
     person("Andee", "Kaplan", email = "ajkaplan@iastate.edu", role = "aut"))
@@ -17,7 +17,7 @@ Depends:
 Imports:
     git2r,
     shiny,
-    shinyapps
+    rsconnect
 Suggests:
     roxygen2,
     knitr
@@ -25,4 +25,4 @@ License: GPL-3
 LazyData: true
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1
-Remotes: rstudio/shinyapps
+Remotes: rstudio/rsconnect

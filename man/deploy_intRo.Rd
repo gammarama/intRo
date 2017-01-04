@@ -16,7 +16,7 @@ deploy_intRo(path = getwd(), enabled_modules = NULL, theme = NULL,
 
 \item{google_analytics}{The google analytics tracking ID to use}
 
-\item{...}{Additional arguments passed to the shinyapps deployApp function}
+\item{...}{Additional arguments passed to the rsconnect deployApp function}
 }
 \description{
 Deploy an instance of intRo to ShinyApps.io

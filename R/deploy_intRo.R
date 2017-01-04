@@ -4,9 +4,9 @@
 #' @param enabled_modules The modules to enable
 #' @param theme The shinythemes theme to use
 #' @param google_analytics The google analytics tracking ID to use
-#' @param ... Additional arguments passed to the shinyapps deployApp function
+#' @param ... Additional arguments passed to the rsconnect deployApp function
 #' @export
-#' @importFrom shinyapps deployApp
+#' @importFrom rsconnect deployApp
 #' @examples
 #' \dontrun{
 #'     deploy_intRo()
