@@ -8,6 +8,7 @@ This repository contains our R Package for Downloading, Running, and Installing 
 Currently, intRo is not available on CRAN, but can be installed directly from github using the **devtools** package.
 
 `devtools::install_github("gammarama/intRo")`
+`library(intRo)`
 
 ## Usage
 
