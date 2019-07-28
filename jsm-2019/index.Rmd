@@ -91,16 +91,134 @@ class: center, inverse, middle
 ### http://intro-stats.com
 
 ---
+background-image: url(images/app_creation_modules.png)
+background-position: 50% 100%
+background-size: contain
 
-# Design decisions
+# Modularity
+
+---
+# Modularity (Cont'd)
+The interface is created with the following statement
+
+```{r, tidy=FALSE, eval=FALSE}
+## Source ui
+module_info <- read.table("modules/modules.txt", header = TRUE, 
+                          sep=",")
+sapply(file.path("modules", dir("modules")[dir("modules") 
+                      != "modules.txt"], "ui.R"), source)
+## Create the UI
+shinyUI(navbarPage("intRo", theme = "bootstrap.min.css",
+               tabPanel(title="", icon=icon("home"),
+                        fluidRow(
+                          do.call(navlistPanel, #<<
+                              c(list(id = "side-nav", #<<
+                              widths = c(2, 10)), mylist)) #<<
+                        )
+               ), ...
+))
+```
+
+---
+# Modularity (Cont'd)
+The server functions are dynamically generated using a similar method
+
+```{r, eval=FALSE, tidy=FALSE}
+shinyServer(function(input, output, session) {
+  ## Module info
+  module_info <- read.table("modules/modules.txt", 
+                            header = TRUE, sep=",")
+  ## Modules
+  types <- c("helper.R", "static.R", "observe.R", 
+             "reactive.R", "output.R")
+  modules_tosource <- file.path("modules", 
+                                apply(expand.grid(
+                                module_info$module, types)
+                                , 1, paste, collapse = "/"))
+  ## Source the modules
+  for (mod in modules_tosource) {
+    source(mod, local = TRUE) #<<
+  }
+})
+```
 
 ---
 
-# Challenges (that have now been solved)
+# Other design decisions
+
+**Reproducibility** and **Ease of Use**
+
+![](images/ui_annotate.png)
+
+---
+
+# But what about Extensibility?
+
+![](https://media.giphy.com/media/3og0INAY5MLmEBubyU/giphy.gif)
+
+Module creation is currently:
+ 
+- Undocumented
+- Entirely manual
+- Unnecessarily lengthy
+
+---
+
+# Challenges 
+
+### Storing the user's results
+ 
+Users must be able to print results, but only the results they want.
+    
+### Presenting only relevant options to the user
+ 
+![](images/graphical_table.png)
+    
+---
+
+# Challenges (with even better solutions)    
+    
+### Producing clean and executable `R` code 
+ 
+Code generated must be executable on the server, executable on the user's machine, and clean for a human to read. 
+
+```{r, eval=FALSE}
+nonparametrictest <- function(intro.data, x, y, conflevel, althyp, hypval) {
+  interpolate(~(wilcox.test(x = df$x, y = df$y, #<<
+                            conf.level = conf,
+                            alternative = althyp,
+                            mu = hypval)),
+              df = quote(intro.data), x = x, y = y,
+              conf = conflevel, althyp = althyp, hypval = hypval,
+              mydir = userdir, `_env` = environment(),
+              file = "code_nonparametric.R")
+}
+```
+
+
+See https://rstudio.github.io/shinymeta for a new (**better**) implementation.
 
 ---
 
 # Get started
+
+Access at http://intro-stats.com or **host your own**!
+
+```{r eval=FALSE}
+devtools::install_github("gammarama/intRo")
+```
+
+- `download_intRo()` - pull the latest version of the application.
+- `run_intRo()` - run the application with specified options, like `enabled_modules`.
+- `deploy_intRo()`- deploy to ShinyApps.io using your account and options.
+
+```{r eval=FALSE}
+download_intRo()
+run_intRo(enabled_modules = c("data/transform", "summaries/numerical"),
+          theme = "cerulean")
+deploy_intRo(enabled_modules = c("data/transform", "summaries/numerical"),
+          theme = "cerulean")
+```
 
 ---
 
