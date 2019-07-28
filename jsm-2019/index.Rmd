@@ -1,0 +1,115 @@
+---
+title: "Designing Modular Software:"
+subtitle: "A Case Study in Introductory Statistics"
+author: "Eric Hare and **Andee Kaplan**"
+institute: "Omni Analytics and Colorado State University"
+date: "2019/07/29"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: center, middle
+
+# Background
+
+### Some things to think about when writing software
+
+---
+
+# What is modularity?
+
+### The degree to which a system's components may be separated and recombined.
+
+#### Advantages
+
+- Functionality can be dynamically loaded and unloaded depending on the **particular use case** 
+
+
+- Open source modularity allows **extensions** contributed by many people
+
+
+- A **flexible system** that can be tailored to keep software easy to use
+
+
+
+---
+
+# What else is important?
+
+### Reproducibility
+
+Encourage **best practices** with regards to disclosure of analysis methods in research
+
+### Extensibility
+
+**Expands** into areas that weren't anticipated early in development
+
+- e.g. packages in `R`, macros in Excel, add-ins in JMP
+
+### Ease of use
+
+Help users **avoid frustration**
+
+- e.g., web technologies eliminate local installation, easy to learn GUI 
+
+---
+class: center, middle
+
+# Case study: `intRo`
+
+### Statistical Analysis Software for Teaching
+
+---
+
+# Full disclosure
+
+.pull-left[
+![](images/attn.png)
+<p style="font-size: 0.9rem;font-style: italic;"><a href="https://svgsilh.com/e91e63/image/98739.html">"warning"</a> is licensed under <a href="https://creativecommons.org/licenses/cc0/1.0/?ref=ccsearch&atype=html" style="margin-right: 5px;">CC0 1.0</a><a href="https://creativecommons.org/licenses/cc0/1.0/?ref=ccsearch&atype=html" target="_blank" rel="noopener noreferrer" style="display: inline-block;white-space: none;opacity: .7;margin-top: 2px;margin-left: 3px;height: 22px !important;"><img style="height: inherit;margin-right: 3px;display: inline-block;" src="https://search.creativecommons.org/static/img/cc_icon.svg" /><img style="height: inherit;margin-right: 3px;display: inline-block;" src="https://search.creativecommons.org/static/img/cc-cc0_icon.svg" /></a></p>
+]
+
+.pull-right[
+We have an **ulterior motive** to get students excited about programming!
+
+- By navigating about the user interface of `intRo`, students are creating a fully-executable `R` script that they can download and run locally
+
+- Viewing their script change real-time within the application
+
+- This is a sneaky way to **spark curiosity** of students
+
+]
+
+---
+class: center, inverse, middle
+
+# Live demo
+
+### http://intro-stats.com
+
+---
+
+# Design decisions
+
+---
+
+# Challenges (that have now been solved)
+
+---
+
+# Get started
+
+---
+
+class: center, middle
+
+# Thanks!
+
+http://www.intro-stats.com
+
+.footnote[Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).]
+
+
