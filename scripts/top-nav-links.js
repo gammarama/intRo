@@ -27,6 +27,7 @@ $('.fa-code').parent().parent().toggleClass('active');
 
 $('a:contains("hide_me")').parent().parent().parent().css("width", "100%");
 
+/*
 var space_width = (
 $('.container').innerWidth() - 
 $('.brand').outerWidth() -
@@ -34,6 +35,10 @@ eval($('.navbar a').map(function(){
     return $(this).parent().width();
 }).get().join("+")) + 
 $('a:contains("hide_me")').parent().width() - 94);
+*/
+
+var space_width = $('a:contains("hide_me")').parent().parent().parent().width() - 600;
+
 
 //spacing of navbar
 $('a:contains("hide_me")').css("visibility", "hidden");

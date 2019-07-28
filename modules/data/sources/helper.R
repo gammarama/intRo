@@ -4,7 +4,8 @@ super_bowl_salaries <- read.csv("data/superbowl-salaries.csv")
 process_logical <- function(data, x) {
     if (is.null(x) || all(lapply(x, nchar) == 0)) return(data)
     
-    relevant_cols <- names(data)[nchar(x) > 0]
+    #relevant_cols <- names(data)[nchar(x) > 0]
+    relevant_cols <- names(data)[which(nchar(x) > 0) - 1]
     if (length(relevant_cols) == 0) return(data)
     
     my_strs <- strsplit(gsub(",", " , ", x), split = ",")
