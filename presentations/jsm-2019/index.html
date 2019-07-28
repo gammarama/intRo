@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Designing Modular Software:</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Eric Hare and Andee Kaplan" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Designing Modular Software:
+## A Case Study in Introductory Statistics
+### Eric Hare and <strong>Andee Kaplan</strong>
+### Omni Analytics and Colorado State University
+### 2019/07/29
+
+---
+
+class: center, middle
+
+# Background
+
+### Some things to think about when writing software
+
+---
+
+# What is modularity?
+
+### The degree to which a system's components may be separated and recombined.
+
+#### Advantages
+
+- Functionality can be dynamically loaded and unloaded depending on the **particular use case** 
+
+
+- Open source modularity allows **extensions** contributed by many people
+
+
+- A **flexible system** that can be tailored to keep software easy to use
+
+
+
+---
+
+# What else is important?
+
+### Reproducibility
+
+Encourage **best practices** with regards to disclosure of analysis methods in research
+
+### Extensibility
+
+**Expands** into areas that weren't anticipated early in development
+
+- e.g. packages in `R`, macros in Excel, add-ins in JMP
+
+### Ease of use
+
+Help users **avoid frustration**
+
+- e.g., web technologies eliminate local installation, easy to learn GUI 
+
+---
+class: center, middle
+
+# Case study: `intRo`
+
+### Statistical Analysis Software for Teaching
+
+---
+
+# Full disclosure
+
+.pull-left[
+![](images/attn.png)
+&lt;p style="font-size: 0.9rem;font-style: italic;"&gt;&lt;a href="https://svgsilh.com/e91e63/image/98739.html"&gt;"warning"&lt;/a&gt; is licensed under &lt;a href="https://creativecommons.org/licenses/cc0/1.0/?ref=ccsearch&amp;atype=html" style="margin-right: 5px;"&gt;CC0 1.0&lt;/a&gt;&lt;a href="https://creativecommons.org/licenses/cc0/1.0/?ref=ccsearch&amp;atype=html" target="_blank" rel="noopener noreferrer" style="display: inline-block;white-space: none;opacity: .7;margin-top: 2px;margin-left: 3px;height: 22px !important;"&gt;&lt;img style="height: inherit;margin-right: 3px;display: inline-block;" src="https://search.creativecommons.org/static/img/cc_icon.svg" /&gt;&lt;img style="height: inherit;margin-right: 3px;display: inline-block;" src="https://search.creativecommons.org/static/img/cc-cc0_icon.svg" /&gt;&lt;/a&gt;&lt;/p&gt;
+]
+
+.pull-right[
+We have an **ulterior motive** to get students excited about programming!
+
+- By navigating about the user interface of `intRo`, students are creating a fully-executable `R` script that they can download and run locally
+
+- Viewing their script change real-time within the application
+
+- This is a sneaky way to **spark curiosity** of students
+
+]
+
+---
+class: center, inverse, middle
+
+# Live demo
+
+### http://intro-stats.com
+
+---
+background-image: url(images/app_creation_modules.png)
+background-position: 50% 100%
+background-size: contain
+
+# Modularity
+
+---
+# Modularity (Cont'd)
+The interface is created with the following statement
+
+
+```r
+## Source ui
+module_info &lt;- read.table("modules/modules.txt", header = TRUE, 
+                          sep=",")
+sapply(file.path("modules", dir("modules")[dir("modules") 
+                      != "modules.txt"], "ui.R"), source)
+## Create the UI
+shinyUI(navbarPage("intRo", theme = "bootstrap.min.css",
+               tabPanel(title="", icon=icon("home"),
+                        fluidRow(
+*                         do.call(navlistPanel,
+*                             c(list(id = "side-nav",
+*                             widths = c(2, 10)), mylist))
+                        )
+               ), ...
+))
+```
+
+---
+# Modularity (Cont'd)
+The server functions are dynamically generated using a similar method
+
+
+```r
+shinyServer(function(input, output, session) {
+  ## Module info
+  module_info &lt;- read.table("modules/modules.txt", 
+                            header = TRUE, sep=",")
+  ## Modules
+  types &lt;- c("helper.R", "static.R", "observe.R", 
+             "reactive.R", "output.R")
+  modules_tosource &lt;- file.path("modules", 
+                                apply(expand.grid(
+                                module_info$module, types)
+                                , 1, paste, collapse = "/"))
+  ## Source the modules
+  for (mod in modules_tosource) {
+*   source(mod, local = TRUE)
+  }
+})
+```
+
+---
+
+# Other design decisions
+
+**Reproducibility** and **Ease of Use**
+
+![](images/ui_annotate.png)
+
+---
+
+# But what about Extensibility?
+
+![](https://media.giphy.com/media/3og0INAY5MLmEBubyU/giphy.gif)
+
+Module creation is currently:
+ 
+- Undocumented
+- Entirely manual
+- Unnecessarily lengthy
+
+---
+
+# Challenges 
+
+### Storing the user's results
+ 
+Users must be able to print results, but only the results they want.
+    
+### Presenting only relevant options to the user
+ 
+![](images/graphical_table.png)
+    
+---
+
+# Challenges (with even better solutions)    
+    
+### Producing clean and executable `R` code 
+ 
+Code generated must be executable on the server, executable on the user's machine, and clean for a human to read. 
+
+
+```r
+nonparametrictest &lt;- function(intro.data, x, y, conflevel, althyp, hypval) {
+* interpolate(~(wilcox.test(x = df$x, y = df$y,
+                            conf.level = conf,
+                            alternative = althyp,
+                            mu = hypval)),
+              df = quote(intro.data), x = x, y = y,
+              conf = conflevel, althyp = althyp, hypval = hypval,
+              mydir = userdir, `_env` = environment(),
+              file = "code_nonparametric.R")
+}
+```
+
+
+See https://rstudio.github.io/shinymeta for a new (**better**) implementation.
+
+---
+
+# Get started
+
+Access at http://intro-stats.com or **host your own**!
+
+
+```r
+devtools::install_github("gammarama/intRo")
+```
+
+- `download_intRo()` - pull the latest version of the application.
+- `run_intRo()` - run the application with specified options, like `enabled_modules`.
+- `deploy_intRo()`- deploy to ShinyApps.io using your account and options.
+
+
+```r
+download_intRo()
+run_intRo(enabled_modules = c("data/transform", "summaries/numerical"),
+          theme = "cerulean")
+deploy_intRo(enabled_modules = c("data/transform", "summaries/numerical"),
+          theme = "cerulean")
+```
+
+---
+
+class: center, middle
+
+# Thanks!
+
+http://www.intro-stats.com
+
+.footnote[Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
