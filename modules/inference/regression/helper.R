@@ -1,6 +1,6 @@
 my.lm <- function (intro.data, x, y) {
     interpolate(
-        ~(intro.regression <- lm(df$x ~ df$y, na.action = na.exclude)),
+        ~(intro.regression <- lm(df$y ~ df$x, na.action = na.exclude)),
         df = quote(intro.data),
         x = x,
         y = y,
