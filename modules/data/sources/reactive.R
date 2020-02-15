@@ -31,7 +31,7 @@ intro.categoricnames <- reactive({
 dt.options <- reactive({list(pageLength = 10,
                              searching=0,
                              destroy=1,
-                             headerCallback =  I(paste0("function(thead, data, start, end, display) {
+                             headerCallback =  JS(paste0("function(thead, data, start, end, display) {
                                                         //color code the header items
                                                         var col_types = [", 
                                                         paste(paste0("'", ifelse(grepl("factor", whatis(intro.data())$type), "categorical", ifelse(grepl("character", whatis(intro.data())$type), "categorical", "numeric")),"'"),
@@ -40,8 +40,8 @@ dt.options <- reactive({list(pageLength = 10,
                                                         var headers = $(thead).find('th');
                                                         
                                                         for(i = 0; i < col_types.length; i++) {
-                                                        if(col_types[i] == 'categorical') headers[i].style.color = '#95a5a6';
-                                                        else headers[i].style.color = '#3498db';
+                                                        if(col_types[i] == 'categorical') headers[i + 1].style.color = '#95a5a6';
+                                                        else headers[i + 1].style.color = '#3498db';
                                                         }
                                                         
                                                         if($('.dataTables_length').parent().next().find('span').length == 0) $('.dataTables_length').parent().next().append('<div, style=\"float:right\"><span style=\"color:#95a5a6\">Categorical Variable</span><span style=\"color:#3498db\">     Numeric Variable</span></div>')

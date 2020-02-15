@@ -1,4 +1,4 @@
-output$data <- renderDataTable({  
+output$data <- DT::renderDataTable({  
   return(intro.data())
 }, options = dt.options)
 

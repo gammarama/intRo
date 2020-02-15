@@ -30,6 +30,6 @@ sources_ui <- tabPanel("Sources",
                                                   ),
                                                   
                                                   column(8,
-                                                         dataTableOutput("data")
+                                                         DT::dataTableOutput("data")
                                                   )
                                          )
